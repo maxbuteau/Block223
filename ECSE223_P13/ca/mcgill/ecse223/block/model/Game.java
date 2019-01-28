@@ -42,7 +42,7 @@ public class Game
     boolean didAddAdmin = setAdmin(aAdmin);
     if (!didAddAdmin)
     {
-      throw new RuntimeException("Unable to create CreatedBy due to admin");
+      throw new RuntimeException("Unable to create game due to admin");
     }
     players = new ArrayList<Player>();
     levels = new ArrayList<Level>();
@@ -74,7 +74,7 @@ public class Game
     boolean didAddAdmin = setAdmin(aAdmin);
     if (!didAddAdmin)
     {
-      throw new RuntimeException("Unable to create CreatedBy due to admin");
+      throw new RuntimeException("Unable to create game due to admin");
     }
     players = new ArrayList<Player>();
     levels = new ArrayList<Level>();
@@ -279,9 +279,9 @@ public class Game
     admin = aAdmin;
     if (existingAdmin != null && !existingAdmin.equals(aAdmin))
     {
-      existingAdmin.removeCreatedBy(this);
+      existingAdmin.removeGame(this);
     }
-    admin.addCreatedBy(this);
+    admin.addGame(this);
     wasSet = true;
     return wasSet;
   }
@@ -300,11 +300,11 @@ public class Game
   {
     boolean wasAdded = false;
     if (players.contains(aPlayer)) { return false; }
-    Game existingPlayedBy = aPlayer.getPlayedBy();
-    boolean isNewPlayedBy = existingPlayedBy != null && !this.equals(existingPlayedBy);
-    if (isNewPlayedBy)
+    Game existingGame = aPlayer.getGame();
+    boolean isNewGame = existingGame != null && !this.equals(existingGame);
+    if (isNewGame)
     {
-      aPlayer.setPlayedBy(this);
+      aPlayer.setGame(this);
     }
     else
     {
@@ -317,8 +317,8 @@ public class Game
   public boolean removePlayer(Player aPlayer)
   {
     boolean wasRemoved = false;
-    //Unable to remove aPlayer, as it must always have a PlayedBy
-    if (!this.equals(aPlayer.getPlayedBy()))
+    //Unable to remove aPlayer, as it must always have a game
+    if (!this.equals(aPlayer.getGame()))
     {
       players.remove(aPlayer);
       wasRemoved = true;
@@ -563,7 +563,7 @@ public class Game
     this.admin = null;
     if(placeholderAdmin != null)
     {
-      placeholderAdmin.removeCreatedBy(this);
+      placeholderAdmin.removeGame(this);
     }
     for(int i=players.size(); i > 0; i--)
     {

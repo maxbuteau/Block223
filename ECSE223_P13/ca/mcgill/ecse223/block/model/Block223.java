@@ -391,9 +391,9 @@ public class Block223
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Player addPlayer(User aUser, String aPassword, Game aPlayedBy)
+  public Player addPlayer(User aUser, String aPassword, Game aGame)
   {
-    return new Player(aUser, aPassword, this, aPlayedBy);
+    return new Player(aUser, aPassword, this, aGame);
   }
 
   public boolean addPlayer(Player aPlayer)

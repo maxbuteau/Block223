@@ -42,8 +42,8 @@ class Game {
 	Double playAreaHeight;
 	Integer numberOfLevels;
 	
-	* CreatedBy-- 1 Admin;
-	1 PlayedBy-- * Player;
+	* -- 1 Admin;
+	1 -- * Player;
 	1 <@>- 1..99 Level;
 	1 <@>- * Block;
 	1 <@>- 1 Ball;

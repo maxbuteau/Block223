@@ -17,7 +17,7 @@ public class Admin extends UserRole
 
   //Admin Associations
   private Block223 block223;
-  private List<Game> CreatedBy;
+  private List<Game> games;
 
   //------------------------
   // CONSTRUCTOR
@@ -32,7 +32,7 @@ public class Admin extends UserRole
     {
       throw new RuntimeException("Unable to create admin due to block223");
     }
-    CreatedBy = new ArrayList<Game>();
+    games = new ArrayList<Game>();
   }
 
   //------------------------
@@ -57,33 +57,33 @@ public class Admin extends UserRole
     return block223;
   }
   /* Code from template association_GetMany */
-  public Game getCreatedBy(int index)
+  public Game getGame(int index)
   {
-    Game aCreatedBy = CreatedBy.get(index);
-    return aCreatedBy;
+    Game aGame = games.get(index);
+    return aGame;
   }
 
-  public List<Game> getCreatedBy()
+  public List<Game> getGames()
   {
-    List<Game> newCreatedBy = Collections.unmodifiableList(CreatedBy);
-    return newCreatedBy;
+    List<Game> newGames = Collections.unmodifiableList(games);
+    return newGames;
   }
 
-  public int numberOfCreatedBy()
+  public int numberOfGames()
   {
-    int number = CreatedBy.size();
+    int number = games.size();
     return number;
   }
 
-  public boolean hasCreatedBy()
+  public boolean hasGames()
   {
-    boolean has = CreatedBy.size() > 0;
+    boolean has = games.size() > 0;
     return has;
   }
 
-  public int indexOfCreatedBy(Game aCreatedBy)
+  public int indexOfGame(Game aGame)
   {
-    int index = CreatedBy.indexOf(aCreatedBy);
+    int index = games.indexOf(aGame);
     return index;
   }
   /* Code from template association_SetOneToMany */
@@ -106,74 +106,74 @@ public class Admin extends UserRole
     return wasSet;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfCreatedBy()
+  public static int minimumNumberOfGames()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Game addCreatedBy(String aNameOfGame, int aNumberOfBlocks, double aPlayAreaWidth, double aPlayAreaHeight, int aNumberOfLevels, Ball aBall, Paddle aPaddle, Block223 aBlock223)
+  public Game addGame(String aNameOfGame, int aNumberOfBlocks, double aPlayAreaWidth, double aPlayAreaHeight, int aNumberOfLevels, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
     return new Game(aNameOfGame, aNumberOfBlocks, aPlayAreaWidth, aPlayAreaHeight, aNumberOfLevels, this, aBall, aPaddle, aBlock223);
   }
 
-  public boolean addCreatedBy(Game aCreatedBy)
+  public boolean addGame(Game aGame)
   {
     boolean wasAdded = false;
-    if (CreatedBy.contains(aCreatedBy)) { return false; }
-    Admin existingAdmin = aCreatedBy.getAdmin();
+    if (games.contains(aGame)) { return false; }
+    Admin existingAdmin = aGame.getAdmin();
     boolean isNewAdmin = existingAdmin != null && !this.equals(existingAdmin);
     if (isNewAdmin)
     {
-      aCreatedBy.setAdmin(this);
+      aGame.setAdmin(this);
     }
     else
     {
-      CreatedBy.add(aCreatedBy);
+      games.add(aGame);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeCreatedBy(Game aCreatedBy)
+  public boolean removeGame(Game aGame)
   {
     boolean wasRemoved = false;
-    //Unable to remove aCreatedBy, as it must always have a admin
-    if (!this.equals(aCreatedBy.getAdmin()))
+    //Unable to remove aGame, as it must always have a admin
+    if (!this.equals(aGame.getAdmin()))
     {
-      CreatedBy.remove(aCreatedBy);
+      games.remove(aGame);
       wasRemoved = true;
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addCreatedByAt(Game aCreatedBy, int index)
+  public boolean addGameAt(Game aGame, int index)
   {  
     boolean wasAdded = false;
-    if(addCreatedBy(aCreatedBy))
+    if(addGame(aGame))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfCreatedBy()) { index = numberOfCreatedBy() - 1; }
-      CreatedBy.remove(aCreatedBy);
-      CreatedBy.add(index, aCreatedBy);
+      if(index > numberOfGames()) { index = numberOfGames() - 1; }
+      games.remove(aGame);
+      games.add(index, aGame);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveCreatedByAt(Game aCreatedBy, int index)
+  public boolean addOrMoveGameAt(Game aGame, int index)
   {
     boolean wasAdded = false;
-    if(CreatedBy.contains(aCreatedBy))
+    if(games.contains(aGame))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfCreatedBy()) { index = numberOfCreatedBy() - 1; }
-      CreatedBy.remove(aCreatedBy);
-      CreatedBy.add(index, aCreatedBy);
+      if(index > numberOfGames()) { index = numberOfGames() - 1; }
+      games.remove(aGame);
+      games.add(index, aGame);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addCreatedByAt(aCreatedBy, index);
+      wasAdded = addGameAt(aGame, index);
     }
     return wasAdded;
   }
@@ -186,10 +186,10 @@ public class Admin extends UserRole
     {
       placeholderBlock223.removeAdmin(this);
     }
-    for(int i=CreatedBy.size(); i > 0; i--)
+    for(int i=games.size(); i > 0; i--)
     {
-      Game aCreatedBy = CreatedBy.get(i - 1);
-      aCreatedBy.delete();
+      Game aGame = games.get(i - 1);
+      aGame.delete();
     }
     super.delete();
   }

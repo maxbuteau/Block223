@@ -16,13 +16,13 @@ public class Player extends UserRole
 
   //Player Associations
   private Block223 block223;
-  private Game PlayedBy;
+  private Game game;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Player(User aUser, String aPassword, Block223 aBlock223, Game aPlayedBy)
+  public Player(User aUser, String aPassword, Block223 aBlock223, Game aGame)
   {
     super(aUser);
     password = aPassword;
@@ -31,10 +31,10 @@ public class Player extends UserRole
     {
       throw new RuntimeException("Unable to create player due to block223");
     }
-    boolean didAddPlayedBy = setPlayedBy(aPlayedBy);
-    if (!didAddPlayedBy)
+    boolean didAddGame = setGame(aGame);
+    if (!didAddGame)
     {
-      throw new RuntimeException("Unable to create player due to PlayedBy");
+      throw new RuntimeException("Unable to create player due to game");
     }
   }
 
@@ -60,9 +60,9 @@ public class Player extends UserRole
     return block223;
   }
   /* Code from template association_GetOne */
-  public Game getPlayedBy()
+  public Game getGame()
   {
-    return PlayedBy;
+    return game;
   }
   /* Code from template association_SetOneToMany */
   public boolean setBlock223(Block223 aBlock223)
@@ -84,21 +84,21 @@ public class Player extends UserRole
     return wasSet;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setPlayedBy(Game aPlayedBy)
+  public boolean setGame(Game aGame)
   {
     boolean wasSet = false;
-    if (aPlayedBy == null)
+    if (aGame == null)
     {
       return wasSet;
     }
 
-    Game existingPlayedBy = PlayedBy;
-    PlayedBy = aPlayedBy;
-    if (existingPlayedBy != null && !existingPlayedBy.equals(aPlayedBy))
+    Game existingGame = game;
+    game = aGame;
+    if (existingGame != null && !existingGame.equals(aGame))
     {
-      existingPlayedBy.removePlayer(this);
+      existingGame.removePlayer(this);
     }
-    PlayedBy.addPlayer(this);
+    game.addPlayer(this);
     wasSet = true;
     return wasSet;
   }
@@ -111,11 +111,11 @@ public class Player extends UserRole
     {
       placeholderBlock223.removePlayer(this);
     }
-    Game placeholderPlayedBy = PlayedBy;
-    this.PlayedBy = null;
-    if(placeholderPlayedBy != null)
+    Game placeholderGame = game;
+    this.game = null;
+    if(placeholderGame != null)
     {
-      placeholderPlayedBy.removePlayer(this);
+      placeholderGame.removePlayer(this);
     }
     super.delete();
   }
@@ -126,6 +126,6 @@ public class Player extends UserRole
     return super.toString() + "["+
             "password" + ":" + getPassword()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "PlayedBy = "+(getPlayedBy()!=null?Integer.toHexString(System.identityHashCode(getPlayedBy())):"null");
+            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
   }
 }
