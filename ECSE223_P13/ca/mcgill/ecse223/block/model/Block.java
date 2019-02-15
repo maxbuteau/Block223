@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 60 "../../../../../Block223.ump"
+// line 48 "../../../../../Block223.ump"
 public class Block
 {
 
@@ -12,201 +12,143 @@ public class Block
   // STATIC VARIABLES
   //------------------------
 
-  public static final double SIDE_LENGTH = 20;
+  public static final int MIN_COLOR = 0;
+  public static final int MAX_COLOR = 255;
+  public static final int MIN_POINTS = 1;
+  public static final int MAX_POINTS = 1000;
+  public static final int SIZE = 20;
+  private static int nextId = 1;
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Block Attributes
-  private int rgb;
-  private int worth;
+  private int red;
+  private int green;
+  private int blue;
+  private int points;
+
+  //Autounique Attributes
+  private int id;
 
   //Block Associations
-  private List<BlockOccurence> blockOccurences;
-  private Block223 block223;
   private Game game;
+  private List<BlockAssignment> blockAssignments;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Block(int aRgb, int aWorth, Block223 aBlock223, Game aGame)
+  public Block(int aRed, int aGreen, int aBlue, int aPoints, Game aGame)
   {
-    rgb = aRgb;
-    worth = aWorth;
-    blockOccurences = new ArrayList<BlockOccurence>();
-    boolean didAddBlock223 = setBlock223(aBlock223);
-    if (!didAddBlock223)
-    {
-      throw new RuntimeException("Unable to create block due to block223");
-    }
+    red = aRed;
+    green = aGreen;
+    blue = aBlue;
+    points = aPoints;
+    id = nextId++;
     boolean didAddGame = setGame(aGame);
     if (!didAddGame)
     {
       throw new RuntimeException("Unable to create block due to game");
     }
+    blockAssignments = new ArrayList<BlockAssignment>();
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setRgb(int aRgb)
+  public boolean setRed(int aRed)
   {
     boolean wasSet = false;
-    rgb = aRgb;
+    red = aRed;
     wasSet = true;
     return wasSet;
   }
 
-  public boolean setWorth(int aWorth)
+  public boolean setGreen(int aGreen)
   {
     boolean wasSet = false;
-    worth = aWorth;
+    green = aGreen;
     wasSet = true;
     return wasSet;
   }
 
-  public int getRgb()
+  public boolean setBlue(int aBlue)
   {
-    return rgb;
+    boolean wasSet = false;
+    blue = aBlue;
+    wasSet = true;
+    return wasSet;
   }
 
-  public int getWorth()
+  public boolean setPoints(int aPoints)
   {
-    return worth;
-  }
-  /* Code from template association_GetMany */
-  public BlockOccurence getBlockOccurence(int index)
-  {
-    BlockOccurence aBlockOccurence = blockOccurences.get(index);
-    return aBlockOccurence;
+    boolean wasSet = false;
+    points = aPoints;
+    wasSet = true;
+    return wasSet;
   }
 
-  public List<BlockOccurence> getBlockOccurences()
+  public int getRed()
   {
-    List<BlockOccurence> newBlockOccurences = Collections.unmodifiableList(blockOccurences);
-    return newBlockOccurences;
+    return red;
   }
 
-  public int numberOfBlockOccurences()
+  public int getGreen()
   {
-    int number = blockOccurences.size();
-    return number;
+    return green;
   }
 
-  public boolean hasBlockOccurences()
+  public int getBlue()
   {
-    boolean has = blockOccurences.size() > 0;
-    return has;
+    return blue;
   }
 
-  public int indexOfBlockOccurence(BlockOccurence aBlockOccurence)
+  public int getPoints()
   {
-    int index = blockOccurences.indexOf(aBlockOccurence);
-    return index;
+    return points;
   }
-  /* Code from template association_GetOne */
-  public Block223 getBlock223()
+
+  public int getId()
   {
-    return block223;
+    return id;
   }
   /* Code from template association_GetOne */
   public Game getGame()
   {
     return game;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfBlockOccurences()
+  /* Code from template association_GetMany */
+  public BlockAssignment getBlockAssignment(int index)
   {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  public BlockOccurence addBlockOccurence(int aXPosition, int aYPosition, Block223 aBlock223, Level aLevel)
-  {
-    return new BlockOccurence(aXPosition, aYPosition, aBlock223, aLevel, this);
+    BlockAssignment aBlockAssignment = blockAssignments.get(index);
+    return aBlockAssignment;
   }
 
-  public boolean addBlockOccurence(BlockOccurence aBlockOccurence)
+  public List<BlockAssignment> getBlockAssignments()
   {
-    boolean wasAdded = false;
-    if (blockOccurences.contains(aBlockOccurence)) { return false; }
-    Block existingBlock = aBlockOccurence.getBlock();
-    boolean isNewBlock = existingBlock != null && !this.equals(existingBlock);
-    if (isNewBlock)
-    {
-      aBlockOccurence.setBlock(this);
-    }
-    else
-    {
-      blockOccurences.add(aBlockOccurence);
-    }
-    wasAdded = true;
-    return wasAdded;
+    List<BlockAssignment> newBlockAssignments = Collections.unmodifiableList(blockAssignments);
+    return newBlockAssignments;
   }
 
-  public boolean removeBlockOccurence(BlockOccurence aBlockOccurence)
+  public int numberOfBlockAssignments()
   {
-    boolean wasRemoved = false;
-    //Unable to remove aBlockOccurence, as it must always have a block
-    if (!this.equals(aBlockOccurence.getBlock()))
-    {
-      blockOccurences.remove(aBlockOccurence);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
-  {  
-    boolean wasAdded = false;
-    if(addBlockOccurence(aBlockOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
-      blockOccurences.remove(aBlockOccurence);
-      blockOccurences.add(index, aBlockOccurence);
-      wasAdded = true;
-    }
-    return wasAdded;
+    int number = blockAssignments.size();
+    return number;
   }
 
-  public boolean addOrMoveBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
+  public boolean hasBlockAssignments()
   {
-    boolean wasAdded = false;
-    if(blockOccurences.contains(aBlockOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
-      blockOccurences.remove(aBlockOccurence);
-      blockOccurences.add(index, aBlockOccurence);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addBlockOccurenceAt(aBlockOccurence, index);
-    }
-    return wasAdded;
+    boolean has = blockAssignments.size() > 0;
+    return has;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setBlock223(Block223 aBlock223)
-  {
-    boolean wasSet = false;
-    if (aBlock223 == null)
-    {
-      return wasSet;
-    }
 
-    Block223 existingBlock223 = block223;
-    block223 = aBlock223;
-    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
-    {
-      existingBlock223.removeBlock(this);
-    }
-    block223.addBlock(this);
-    wasSet = true;
-    return wasSet;
+  public int indexOfBlockAssignment(BlockAssignment aBlockAssignment)
+  {
+    int index = blockAssignments.indexOf(aBlockAssignment);
+    return index;
   }
   /* Code from template association_SetOneToMany */
   public boolean setGame(Game aGame)
@@ -227,25 +169,91 @@ public class Block
     wasSet = true;
     return wasSet;
   }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfBlockAssignments()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public BlockAssignment addBlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Game aGame)
+  {
+    return new BlockAssignment(aGridHorizontalPosition, aGridVerticalPosition, aLevel, this, aGame);
+  }
+
+  public boolean addBlockAssignment(BlockAssignment aBlockAssignment)
+  {
+    boolean wasAdded = false;
+    if (blockAssignments.contains(aBlockAssignment)) { return false; }
+    Block existingBlock = aBlockAssignment.getBlock();
+    boolean isNewBlock = existingBlock != null && !this.equals(existingBlock);
+    if (isNewBlock)
+    {
+      aBlockAssignment.setBlock(this);
+    }
+    else
+    {
+      blockAssignments.add(aBlockAssignment);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeBlockAssignment(BlockAssignment aBlockAssignment)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aBlockAssignment, as it must always have a block
+    if (!this.equals(aBlockAssignment.getBlock()))
+    {
+      blockAssignments.remove(aBlockAssignment);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addBlockAssignmentAt(BlockAssignment aBlockAssignment, int index)
+  {  
+    boolean wasAdded = false;
+    if(addBlockAssignment(aBlockAssignment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockAssignments()) { index = numberOfBlockAssignments() - 1; }
+      blockAssignments.remove(aBlockAssignment);
+      blockAssignments.add(index, aBlockAssignment);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveBlockAssignmentAt(BlockAssignment aBlockAssignment, int index)
+  {
+    boolean wasAdded = false;
+    if(blockAssignments.contains(aBlockAssignment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockAssignments()) { index = numberOfBlockAssignments() - 1; }
+      blockAssignments.remove(aBlockAssignment);
+      blockAssignments.add(index, aBlockAssignment);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addBlockAssignmentAt(aBlockAssignment, index);
+    }
+    return wasAdded;
+  }
 
   public void delete()
   {
-    for(int i=blockOccurences.size(); i > 0; i--)
-    {
-      BlockOccurence aBlockOccurence = blockOccurences.get(i - 1);
-      aBlockOccurence.delete();
-    }
-    Block223 placeholderBlock223 = block223;
-    this.block223 = null;
-    if(placeholderBlock223 != null)
-    {
-      placeholderBlock223.removeBlock(this);
-    }
     Game placeholderGame = game;
     this.game = null;
     if(placeholderGame != null)
     {
       placeholderGame.removeBlock(this);
+    }
+    for(int i=blockAssignments.size(); i > 0; i--)
+    {
+      BlockAssignment aBlockAssignment = blockAssignments.get(i - 1);
+      aBlockAssignment.delete();
     }
   }
 
@@ -253,9 +261,11 @@ public class Block
   public String toString()
   {
     return super.toString() + "["+
-            "rgb" + ":" + getRgb()+ "," +
-            "worth" + ":" + getWorth()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
+            "id" + ":" + getId()+ "," +
+            "red" + ":" + getRed()+ "," +
+            "green" + ":" + getGreen()+ "," +
+            "blue" + ":" + getBlue()+ "," +
+            "points" + ":" + getPoints()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
   }
 }

@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 53 "../../../../../Block223.ump"
+// line 61 "../../../../../Block223.ump"
 public class Level
 {
 
@@ -13,46 +13,30 @@ public class Level
   //------------------------
 
   //Level Attributes
-  private int levelNumber;
   private boolean isRandom;
 
   //Level Associations
-  private List<BlockOccurence> blockOccurences;
-  private Block223 block223;
   private Game game;
+  private List<BlockAssignment> blockAssignments;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Level(int aLevelNumber, boolean aIsRandom, Block223 aBlock223, Game aGame)
+  public Level(boolean aIsRandom, Game aGame)
   {
-    levelNumber = aLevelNumber;
     isRandom = aIsRandom;
-    blockOccurences = new ArrayList<BlockOccurence>();
-    boolean didAddBlock223 = setBlock223(aBlock223);
-    if (!didAddBlock223)
-    {
-      throw new RuntimeException("Unable to create level due to block223");
-    }
     boolean didAddGame = setGame(aGame);
     if (!didAddGame)
     {
       throw new RuntimeException("Unable to create level due to game");
     }
+    blockAssignments = new ArrayList<BlockAssignment>();
   }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setLevelNumber(int aLevelNumber)
-  {
-    boolean wasSet = false;
-    levelNumber = aLevelNumber;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setIsRandom(boolean aIsRandom)
   {
@@ -60,11 +44,6 @@ public class Level
     isRandom = aIsRandom;
     wasSet = true;
     return wasSet;
-  }
-
-  public int getLevelNumber()
-  {
-    return levelNumber;
   }
 
   public boolean getIsRandom()
@@ -76,136 +55,40 @@ public class Level
   {
     return isRandom;
   }
-  /* Code from template association_GetMany */
-  public BlockOccurence getBlockOccurence(int index)
-  {
-    BlockOccurence aBlockOccurence = blockOccurences.get(index);
-    return aBlockOccurence;
-  }
-
-  public List<BlockOccurence> getBlockOccurences()
-  {
-    List<BlockOccurence> newBlockOccurences = Collections.unmodifiableList(blockOccurences);
-    return newBlockOccurences;
-  }
-
-  public int numberOfBlockOccurences()
-  {
-    int number = blockOccurences.size();
-    return number;
-  }
-
-  public boolean hasBlockOccurences()
-  {
-    boolean has = blockOccurences.size() > 0;
-    return has;
-  }
-
-  public int indexOfBlockOccurence(BlockOccurence aBlockOccurence)
-  {
-    int index = blockOccurences.indexOf(aBlockOccurence);
-    return index;
-  }
-  /* Code from template association_GetOne */
-  public Block223 getBlock223()
-  {
-    return block223;
-  }
   /* Code from template association_GetOne */
   public Game getGame()
   {
     return game;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfBlockOccurences()
+  /* Code from template association_GetMany */
+  public BlockAssignment getBlockAssignment(int index)
   {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  public BlockOccurence addBlockOccurence(int aXPosition, int aYPosition, Block223 aBlock223, Block aBlock)
-  {
-    return new BlockOccurence(aXPosition, aYPosition, aBlock223, this, aBlock);
+    BlockAssignment aBlockAssignment = blockAssignments.get(index);
+    return aBlockAssignment;
   }
 
-  public boolean addBlockOccurence(BlockOccurence aBlockOccurence)
+  public List<BlockAssignment> getBlockAssignments()
   {
-    boolean wasAdded = false;
-    if (blockOccurences.contains(aBlockOccurence)) { return false; }
-    Level existingLevel = aBlockOccurence.getLevel();
-    boolean isNewLevel = existingLevel != null && !this.equals(existingLevel);
-    if (isNewLevel)
-    {
-      aBlockOccurence.setLevel(this);
-    }
-    else
-    {
-      blockOccurences.add(aBlockOccurence);
-    }
-    wasAdded = true;
-    return wasAdded;
+    List<BlockAssignment> newBlockAssignments = Collections.unmodifiableList(blockAssignments);
+    return newBlockAssignments;
   }
 
-  public boolean removeBlockOccurence(BlockOccurence aBlockOccurence)
+  public int numberOfBlockAssignments()
   {
-    boolean wasRemoved = false;
-    //Unable to remove aBlockOccurence, as it must always have a level
-    if (!this.equals(aBlockOccurence.getLevel()))
-    {
-      blockOccurences.remove(aBlockOccurence);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
-  {  
-    boolean wasAdded = false;
-    if(addBlockOccurence(aBlockOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
-      blockOccurences.remove(aBlockOccurence);
-      blockOccurences.add(index, aBlockOccurence);
-      wasAdded = true;
-    }
-    return wasAdded;
+    int number = blockAssignments.size();
+    return number;
   }
 
-  public boolean addOrMoveBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
+  public boolean hasBlockAssignments()
   {
-    boolean wasAdded = false;
-    if(blockOccurences.contains(aBlockOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
-      blockOccurences.remove(aBlockOccurence);
-      blockOccurences.add(index, aBlockOccurence);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addBlockOccurenceAt(aBlockOccurence, index);
-    }
-    return wasAdded;
+    boolean has = blockAssignments.size() > 0;
+    return has;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setBlock223(Block223 aBlock223)
-  {
-    boolean wasSet = false;
-    if (aBlock223 == null)
-    {
-      return wasSet;
-    }
 
-    Block223 existingBlock223 = block223;
-    block223 = aBlock223;
-    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
-    {
-      existingBlock223.removeLevel(this);
-    }
-    block223.addLevel(this);
-    wasSet = true;
-    return wasSet;
+  public int indexOfBlockAssignment(BlockAssignment aBlockAssignment)
+  {
+    int index = blockAssignments.indexOf(aBlockAssignment);
+    return index;
   }
   /* Code from template association_SetOneToAtMostN */
   public boolean setGame(Game aGame)
@@ -238,25 +121,91 @@ public class Level
     wasSet = true;
     return wasSet;
   }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfBlockAssignments()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public BlockAssignment addBlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Block aBlock, Game aGame)
+  {
+    return new BlockAssignment(aGridHorizontalPosition, aGridVerticalPosition, this, aBlock, aGame);
+  }
+
+  public boolean addBlockAssignment(BlockAssignment aBlockAssignment)
+  {
+    boolean wasAdded = false;
+    if (blockAssignments.contains(aBlockAssignment)) { return false; }
+    Level existingLevel = aBlockAssignment.getLevel();
+    boolean isNewLevel = existingLevel != null && !this.equals(existingLevel);
+    if (isNewLevel)
+    {
+      aBlockAssignment.setLevel(this);
+    }
+    else
+    {
+      blockAssignments.add(aBlockAssignment);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeBlockAssignment(BlockAssignment aBlockAssignment)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aBlockAssignment, as it must always have a level
+    if (!this.equals(aBlockAssignment.getLevel()))
+    {
+      blockAssignments.remove(aBlockAssignment);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addBlockAssignmentAt(BlockAssignment aBlockAssignment, int index)
+  {  
+    boolean wasAdded = false;
+    if(addBlockAssignment(aBlockAssignment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockAssignments()) { index = numberOfBlockAssignments() - 1; }
+      blockAssignments.remove(aBlockAssignment);
+      blockAssignments.add(index, aBlockAssignment);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveBlockAssignmentAt(BlockAssignment aBlockAssignment, int index)
+  {
+    boolean wasAdded = false;
+    if(blockAssignments.contains(aBlockAssignment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockAssignments()) { index = numberOfBlockAssignments() - 1; }
+      blockAssignments.remove(aBlockAssignment);
+      blockAssignments.add(index, aBlockAssignment);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addBlockAssignmentAt(aBlockAssignment, index);
+    }
+    return wasAdded;
+  }
 
   public void delete()
   {
-    for(int i=blockOccurences.size(); i > 0; i--)
-    {
-      BlockOccurence aBlockOccurence = blockOccurences.get(i - 1);
-      aBlockOccurence.delete();
-    }
-    Block223 placeholderBlock223 = block223;
-    this.block223 = null;
-    if(placeholderBlock223 != null)
-    {
-      placeholderBlock223.removeLevel(this);
-    }
     Game placeholderGame = game;
     this.game = null;
     if(placeholderGame != null)
     {
       placeholderGame.removeLevel(this);
+    }
+    for(int i=blockAssignments.size(); i > 0; i--)
+    {
+      BlockAssignment aBlockAssignment = blockAssignments.get(i - 1);
+      aBlockAssignment.delete();
     }
   }
 
@@ -264,9 +213,7 @@ public class Level
   public String toString()
   {
     return super.toString() + "["+
-            "levelNumber" + ":" + getLevelNumber()+ "," +
             "isRandom" + ":" + getIsRandom()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
   }
 }
