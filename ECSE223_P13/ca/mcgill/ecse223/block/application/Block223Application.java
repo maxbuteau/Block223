@@ -1,14 +1,15 @@
 package ca.mcgill.ecse223.block.application;
 
 import ca.mcgill.ecse223.block.model.Block223;
+import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
-import ca.mcgill.ecse223.block.view.Block223Page;
 
 public class Block223Application {
 	
-	private static Block223 block223;
-	private static UserRole loggedUser;
+	private static Block223 block223 = null;
+	private static UserRole currentUserRole = null;
+	private static Game currentGame = null;
 	
 	public static void main(String[] args) {
 		
@@ -21,15 +22,25 @@ public class Block223Application {
 		}
  		return block223;
 	}
-
-	public static UserRole getLoggedUser() {
-		return loggedUser;
+	
+	public static Block223 resetBlock223() {
+		block223 = Block223Persistence.load();
+		return block223;
 	}
 
-	public static void setLoggedUser(UserRole loggedUser) {
-		Block223Application.loggedUser = loggedUser;
+	public static UserRole getCurrentUserRole() {
+		return currentUserRole;
 	}
-	
-	
-	
+
+	public static void setCurrentUserRole(UserRole currentUserRole) {
+		Block223Application.currentUserRole = currentUserRole;
+	}
+
+	public static Game getCurrentGame() {
+		return currentGame;
+	}
+
+	public static void setCurrentGame(Game aGame) {
+		currentGame = aGame;
+	}
 }
