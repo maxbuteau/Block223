@@ -6,18 +6,18 @@ import ca.mcgill.ecse223.block.view.Block223Page;
 
 public class Block223Application {
 	
-	private static Block223 btms;
+	private static Block223 block223;
 	
 	public static void main(String[] args) {
 		
 	}
 
-	public static Block223 getBtms() {
-		if (btms == null) {
+	public static Block223 getBlock223() {
+		if (block223 == null) {
 			// load model
-			btms = Block223Persistence.load();
+			block223 = Block223Persistence.load();
 		}
- 		return btms;
+ 		return block223;
 	}
 	
 }
