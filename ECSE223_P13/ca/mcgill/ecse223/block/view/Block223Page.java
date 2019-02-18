@@ -1,5 +1,25 @@
 package ca.mcgill.ecse223.block.view;
 
-public class Block223Page {
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+public class Block223Page extends Application{
+
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		Pane pane = new Pane();
+		Button button = new Button();
+		pane.getChildren().add(button);
+		Scene scene = new Scene(pane, 500,500);
+		primaryStage.setScene(scene);
+		scene.getStylesheets().add("w3.css");
+		primaryStage.show();
+	}
 
 }
