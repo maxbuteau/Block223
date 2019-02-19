@@ -9,9 +9,6 @@ import javafx.stage.Stage;
 
 public class Block223Page extends Application{
 
-	private static Scene gameSelectionScene;
-	private static Scene loginScene;
-	private static Scene updateGameScene;
 	private final double SCREEN_WIDTH = 500; // to be changed
 	private final double SCREEN_HEIGHT = 500; // to be changed
 	public static void main(String[] args) {
