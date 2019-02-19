@@ -14,11 +14,10 @@ public class Block223Page extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Pane pane = new Pane();
-		Button button = new Button();
-		pane.getChildren().add(button);
 		Scene scene = new Scene(pane, 500,500);
+		//change the values accordingly ^
 		primaryStage.setScene(scene);
-		scene.getStylesheets().add("w3.css");
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 
