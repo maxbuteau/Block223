@@ -9,13 +9,15 @@ import javafx.stage.Stage;
 
 public class Block223Page extends Application{
 
+	private final double SCREEN_WIDTH = 500; // to be changed
+	private final double SCREEN_HEIGHT = 500; // to be changed
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Pane pane = new Pane();
-		Scene scene = new Scene(pane, 500,500);
+		Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		//change the values accordingly ^
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
