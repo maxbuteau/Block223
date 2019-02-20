@@ -18,53 +18,47 @@ import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
 public class Block223Page extends Application{
 	
+	private Label error;
+	
 	//LOGIN
-	Scene loginScene;
-	Label loginLabel;
-	Label loginUsernameLabel;
-	TextField loginUsernameField;
-	Label loginPasswordLabel;
-	PasswordField loginPasswordField;
-	Label loginCreateAccountLabel;
-	Button loginButton;
-	Button createItButton;
-	Label loginError;
+	private Scene loginScene;
+	private Label loginUsernameLabel;
+	private TextField loginUsernameField;
+	private Label loginPasswordLabel;
+	private PasswordField loginPasswordField;
+	private Label loginCreateAccountLabel;
+	private Button loginButton;
+	private Button createItButton;
 	
 	//REGISTER
-	Scene registerScene;
-	Label registerLabel;
-	Label registerPlayerAccountLabel;
-	Label registerAdminAccountLabel;
-	Label registerUsernamePlayerLabel;
-	TextField registerUsernamePlayerField;
-	Label registerUsernameAdminLabel;
-	TextField registerUsernameAdminField;
-	Label registerPasswordPlayerLabel;
-	PasswordField registerPasswordPlayerField;
-	Label registerPasswordAdminLabel;
-	PasswordField registerPasswordAdminField;
-	Label registerConfirmPasswordPlayerLabel;
-	PasswordField registerConfirmPasswordPlayerField;
-	Label registerConfirmPasswordAdminLabel;
-	PasswordField registerConfirmPasswordAdminField;
-	Button registerButton;
-	Label registerError;
+	private Scene registerScene;
+	private Label registerPlayerAccountLabel;
+	private Label registerAdminAccountLabel;
+	private Label registerUsernamePlayerLabel;
+	private TextField registerUsernamePlayerField;
+	private Label registerUsernameAdminLabel;
+	private TextField registerUsernameAdminField;
+	private Label registerPasswordPlayerLabel;
+	private PasswordField registerPasswordPlayerField;
+	private Label registerPasswordAdminLabel;
+	private PasswordField registerPasswordAdminField;
+	private Label registerConfirmPasswordPlayerLabel;
+	private PasswordField registerConfirmPasswordPlayerField;
+	private Label registerConfirmPasswordAdminLabel;
+	private PasswordField registerConfirmPasswordAdminField;
+	private Button registerButton;
 	
-
 	private final double SCREEN_WIDTH = 500; // to be changed
 	private final double SCREEN_HEIGHT = 500; // to be changed
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
 	@Override
-	public void start(Stage primaryStage) throws Exception {			
+	public void start(Stage primaryStage) throws Exception {
 		//LOGIN SCENE
 		VBox loginPane = new VBox(20);
 		loginPane.setAlignment(Pos.CENTER);
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
-		loginLabel = new Label("LOGIN");
-		loginLabel.setStyle("-fx-font:100 Garamond; -fx-font-weight:bold");
 		
 		HBox loginUsernameBox = new HBox(10);
 		loginUsernameBox.setAlignment(Pos.CENTER);
@@ -84,7 +78,7 @@ public class Block223Page extends Application{
 				Block223Controller.login(loginUsernameField.getText(), loginPasswordField.getText());
 			}
 			catch(InvalidInputException iie) {
-				loginError.setText(iie.getMessage());
+				error.setText(iie.getMessage());
 			}
 			
 			TOUserMode toUserMode = Block223Controller.getUserMode();
@@ -94,7 +88,7 @@ public class Block223Page extends Application{
 			}
 			loginUsernameField.clear();
 			loginPasswordField.clear();
-			loginError.setText("");
+			error.setText("");
 		});
 		
 		loginCreateAccountLabel = new Label("Don't have an account ?");
@@ -104,21 +98,18 @@ public class Block223Page extends Application{
 			primaryStage.setScene(registerScene);
 			loginUsernameField.clear();
 			loginPasswordField.clear();
-			loginError.setText("");
+			error.setText("");
 		});
 		
-		loginError = new Label();
-		loginError.setStyle("-fx-text-fill: #DC143C");
+		error = new Label();
+		error.setStyle("-fx-text-fill: #DC143C");
 		
-		loginPane.getChildren().addAll(loginLabel, loginUsernameBox, loginPasswordBox, loginButton, loginCreateAccountLabel, createItButton, loginError);
+		loginPane.getChildren().addAll(loginUsernameBox, loginPasswordBox, loginButton, loginCreateAccountLabel, createItButton, error);
 		
 		//REGISTER
 		VBox registerPane = new VBox(20);
 		registerPane.setAlignment(Pos.CENTER);
 		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
-		registerLabel = new Label("REGISTER");
-		registerLabel.setStyle("-fx-font:100 Garamond; -fx-font-weight:bold");
 		
 		HBox registerBox = new HBox(10);
 		registerBox.setAlignment(Pos.CENTER);
@@ -169,18 +160,16 @@ public class Block223Page extends Application{
 					registerPasswordAdminField.clear();
 					registerConfirmPasswordPlayerField.clear();
 					registerConfirmPasswordAdminField.clear();
-					registerError.setText("");
+					error.setText("");
 				}
 				catch(InvalidInputException iie) {
-					registerError.setText(iie.getMessage());
+					error.setText(iie.getMessage());
 				}
 			}
+			error.setText("Password and Confirm Password must be the same");
 		});
-		
-		registerError = new Label();
-		registerError.setStyle("-fx-text-fill: #DC143C");
-		
-		registerPane.getChildren().addAll(registerLabel, registerBox, registerButton, registerError);
+				
+		registerPane.getChildren().addAll(registerBox, registerButton, error);
 		
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
