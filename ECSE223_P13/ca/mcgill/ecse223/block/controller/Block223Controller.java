@@ -2,7 +2,7 @@ package ca.mcgill.ecse223.block.controller;
 
 import java.util.List;
 
-class Block223Controller {
+public class Block223Controller {
 
 	// ****************************
 	// Modifier methods
