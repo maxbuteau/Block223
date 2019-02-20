@@ -1,9 +1,12 @@
 package ca.mcgill.ecse223.block.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.application.Block223Application;
+import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.Admin;
+import ca.mcgill.ecse223.block.model.Block;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
@@ -61,7 +64,7 @@ public class Block223Controller {
 		Game game = Block223Application.getCurrentGame();
 		
 		if(Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			throw new InvalidInputException("Only yhe admin who created the game can move a block.");
+			throw new InvalidInputException("Only the admin who created the game can move a block.");
 		}
 		
 		Level aLevel = null;
@@ -176,22 +179,138 @@ public class Block223Controller {
 	// ****************************
 	// Query methods
 	// ****************************
-	public static List<TOGame> getDesignableGames() {
+	public static List<TOGame> getDesignableGames() throws InvalidInputException {
+		Block223 block223 = Block223Application.getBlock223();
+		
+		UserRole admin = Block223Application.getCurrentUserRole();
+		if(!(admin instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to access game information.");
+		}
+		ArrayList<TOGame> result = new ArrayList<TOGame>();
+		List<Game> games = block223.getGames();
+		
+		for(Game game : games) {
+			Admin gameAdmin = game.getAdmin();
+			
+			if(gameAdmin.equals(admin)) {
+				TOGame toGame = new TOGame(game.getName(), game.getLevels().size(),
+						game.getNrBlocksPerLevel(), game.getBall().getMinBallSpeedX(),
+						game.getBall().getMinBallSpeedY(), game.getBall().getBallSpeedIncreaseFactor(),
+						game.getPaddle().getMaxPaddleLength(), game.getPaddle().getMinPaddleLength());
+				
+				result.add(toGame);
+			}
+		}
+		return result;
 	}
 
 	public static TOGame getCurrentDesignableGame() {
+		Game game = Block223Application.getCurrentGame();
+		
+		TOGame toGame = new TOGame(game.getName(), game.getLevels().size(),
+				game.getNrBlocksPerLevel(), game.getBall().getMinBallSpeedX(),
+				game.getBall().getMinBallSpeedY(), game.getBall().getBallSpeedIncreaseFactor(),
+				game.getPaddle().getMaxPaddleLength(), game.getPaddle().getMinPaddleLength());
+	
+		return toGame;
 	}
 
-	public static List<TOBlock> getBlocksOfCurrentDesignableGame() {
+	public static List<TOBlock> getBlocksOfCurrentDesignableGame() throws InvalidInputException {		
+		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to access game information.");
+		}
+		if(Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to access its information.");
+		}
+		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can access its information.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		ArrayList<TOBlock> result = new ArrayList<TOBlock>();
+		List<Block> blocks = game.getBlocks();
+		
+		for(Block block : blocks) {
+			TOBlock toBlock = new TOBlock(block.getId(), block.getRed(),
+					block.getGreen(), block.getBlue(), block.getPoints());
+			
+			result.add(toBlock);
+		}
+		return result;
 	}
 
 	public static TOBlock getBlockOfCurrentDesignableGame(int id) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to access game information.");
+		}
+		if(Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to access its information.");
+		}
+		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can access its information.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		Block block = game.findBlock(id);
+		if(block == null) {
+			throw new InvalidInputException("The block does not exist.");
+		}
+		TOBlock toBlock = new TOBlock(block.getId(), block.getRed(),
+				block.getGreen(), block.getBlue(), block.getPoints());
+		
+		return toBlock;
 	}
 
 	public List<TOGridCell> getBlocksAtLevelOfCurrentDesignableGame(int level) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to access game information.");
+		}
+		if(Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to access its information.");
+		}
+		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can access its information.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		ArrayList<TOGridCell> result = new ArrayList<TOGridCell>();
+		
+		Level aLevel;
+		try {
+			aLevel = game.getLevel(level);
+		}
+		catch(IndexOutOfBoundsException e) {
+			throw new InvalidInputException("Level "+level+"does not exist for the game.");
+		}
+		List<BlockAssignment> assignments = aLevel.getBlockAssignments();
+		
+		for(BlockAssignment assignment : assignments) {
+			TOGridCell toGridCell = new TOGridCell(assignment.getGridHorizontalPosition(),
+					assignment.getGridVerticalPosition(), assignment.getBlock().getId(),
+					assignment.getBlock().getRed(), assignment.getBlock().getGreen(),
+					assignment.getBlock().getBlue(), assignment.getBlock().getPoints());
+			
+			result.add(toGridCell);
+		}
+		return result;
 	}
 
 	public static TOUserMode getUserMode() {
+		UserRole userRole = Block223Application.getCurrentUserRole();
+		
+		if(userRole == null) {
+			TOUserMode toUserMode = new TOUserMode(Mode.None);
+			return toUserMode;
+		}
+		if(userRole instanceof Player) {
+			TOUserMode toUserMode = new TOUserMode(Mode.Play);
+			return toUserMode;
+		}
+		if(userRole instanceof Admin) {
+			TOUserMode toUserMode = new TOUserMode(Mode.Design);
+			return toUserMode;
+		}
+		return null;
 	}
 
 }
