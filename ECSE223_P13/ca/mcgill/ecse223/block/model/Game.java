@@ -610,6 +610,20 @@ public class Game
     }
   }
 
+  // line 55 "../../../../../Block223.ump"
+  public Block findBlock(int id){
+    List<Block> blocks = this.getBlocks();
+   		
+   		for(Block block : blocks) {
+   			int blockId =  block.getId();
+   			
+   			if(id == blockId) {
+   				return block;
+   			}
+   		}
+   		return null;
+  }
+
 
   public String toString()
   {

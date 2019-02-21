@@ -51,6 +51,19 @@ class Game {
 		}
 	}
    
+   Block findBlock(int id) {
+   		List<Block> blocks = this.getBlocks();
+   		
+   		for(Block block : blocks) {
+   			int blockId =  block.getId();
+   			
+   			if(id == blockId) {
+   				return block;
+   			}
+   		}
+   		return null;
+   }
+   
    * -- 1 Admin admin;
    1 <@>- * Block blocks;
    1 <@>- 1..99 Level levels;
@@ -75,6 +88,19 @@ class Block {
 // random attribute not needed anymore
 // Each level is filled up with random blocks just before playing the level to reach the nrBlocksPerLevel defined in Game
 class Level {
+	BlockAssignment findBlockAssignment(int gridHorizontalPosition, int gridVerticalPosition) {
+   		List<BlockAssignment> assignments = this.getBlockAssignments();
+   		
+   		for(BlockAssignment assignment : assignments) {
+   			int h = assignment.getGridHorizontalPosition();
+   			int v = assignment.getGridVerticalPosition();
+   			
+   			if(h == gridHorizontalPosition && v == gridVerticalPosition) {
+   				return assignment;
+   			}
+   		}
+   		return null;
+   }
 }
 
 class BlockAssignment {
@@ -82,8 +108,8 @@ class BlockAssignment {
    Integer gridVerticalPosition;
    
    before setGridHorizontalPosition {
-   if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
-   	 throw new RuntimeException("The horizontal position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
+   if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+   	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
    }
    
    before setGridVerticalPosition {
