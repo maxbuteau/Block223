@@ -30,5 +30,10 @@ public class Block223Page extends Application{
 		Label quitLabel = new Label("QUIT");
 		quitLabel.setStyle("-fx-font:20 Garamond; -fx-padding:3px; -fx-text-fill: #DC143C; -fx-border-color:black;-fx-background-color:POWDERBLUE;-fx-font-weight:bold");
 	}
+	
+	public static String getResource(String res)
+	{
+		return ClassLoader.getSystemResource(res).toString();
+	}
 
 }
