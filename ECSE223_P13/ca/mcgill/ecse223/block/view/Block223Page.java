@@ -8,12 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
@@ -51,14 +52,19 @@ public class Block223Page extends Application{
 	
 	private final double SCREEN_WIDTH = 500; // to be changed
 	private final double SCREEN_HEIGHT = 500; // to be changed
+
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
 	@Override
-	public void start(Stage primaryStage) throws Exception {		
+	public void start(Stage primaryStage) throws Exception {	
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		
 		//LOGIN SCENE
-		VBox loginPane = new VBox(20);
+		VBox loginPane = new VBox(20);	
+		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		loginPane.setAlignment(Pos.CENTER);
+		loginPane.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 		HBox loginUsernameBox = new HBox(10);
@@ -109,7 +115,9 @@ public class Block223Page extends Application{
 		
 		//REGISTER
 		VBox registerPane = new VBox(20);
+		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		registerPane.setAlignment(Pos.CENTER);
+		registerPane.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 		HBox registerBox = new HBox(10);
@@ -187,4 +195,8 @@ public class Block223Page extends Application{
 		quitLabel.setStyle("-fx-font:20 Garamond; -fx-padding:3px; -fx-text-fill: #DC143C; -fx-border-color:black;-fx-background-color:POWDERBLUE;-fx-font-weight:bold");
 	}
 
+	public static String getResource(String res)
+	{
+		return ClassLoader.getSystemResource(res).toString();
+	}
 }
