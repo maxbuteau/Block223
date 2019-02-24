@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 122 "../../../../../Block223.ump"
+// line 153 "../../../../../Block223.ump"
 public class BlockAssignment
 {
 
@@ -26,6 +26,13 @@ public class BlockAssignment
 
   public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
+    // line 159 "../../../../../Block223.ump"
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+       
+       if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
+       	 throw new RuntimeException("The vertical position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
+    // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     gridVerticalPosition = aGridVerticalPosition;
     boolean didAddLevel = setLevel(aLevel);
@@ -52,7 +59,7 @@ public class BlockAssignment
   public boolean setGridHorizontalPosition(int aGridHorizontalPosition)
   {
     boolean wasSet = false;
-    // line 127 "../../../../../Block223.ump"
+    // line 168 "../../../../../Block223.ump"
     if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
        	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
     // END OF UMPLE BEFORE INJECTION
@@ -64,7 +71,7 @@ public class BlockAssignment
   public boolean setGridVerticalPosition(int aGridVerticalPosition)
   {
     boolean wasSet = false;
-    // line 132 "../../../../../Block223.ump"
+    // line 173 "../../../../../Block223.ump"
     if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
        	 throw new RuntimeException("The vertical position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
     // END OF UMPLE BEFORE INJECTION

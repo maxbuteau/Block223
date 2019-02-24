@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 140 "../../../../../Block223.ump"
+// line 181 "../../../../../Block223.ump"
 public class Ball
 {
 
@@ -57,7 +57,7 @@ public class Ball
   public boolean setMinBallSpeedX(int aMinBallSpeedX)
   {
     boolean wasSet = false;
-    // line 147 "../../../../../Block223.ump"
+    // line 188 "../../../../../Block223.ump"
     if(aMinBallSpeedX<1){
        	throw new RuntimeException("The minimum speed must be greater than 0");
        }
@@ -70,7 +70,7 @@ public class Ball
   public boolean setMinBallSpeedY(int aMinBallSpeedY)
   {
     boolean wasSet = false;
-    // line 152 "../../../../../Block223.ump"
+    // line 193 "../../../../../Block223.ump"
     if(aMinBallSpeedY<1){
        	throw new RuntimeException("The minimum speed must be greater than 0");
        }
@@ -83,7 +83,7 @@ public class Ball
   public boolean setBallSpeedIncreaseFactor(double aBallSpeedIncreaseFactor)
   {
     boolean wasSet = false;
-    // line 157 "../../../../../Block223.ump"
+    // line 198 "../../../../../Block223.ump"
     if(!(aBallSpeedIncreaseFactor>0)){
        	throw new RuntimeException("The increase factor must be greater than 0");
        }
