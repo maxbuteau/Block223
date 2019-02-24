@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 124 "../../../../../Block223.ump"
+// line 140 "../../../../../Block223.ump"
 public class Ball
 {
 
@@ -57,6 +57,11 @@ public class Ball
   public boolean setMinBallSpeedX(int aMinBallSpeedX)
   {
     boolean wasSet = false;
+    // line 147 "../../../../../Block223.ump"
+    if(aMinBallSpeedX<1){
+       	throw new RuntimeException("The minimum speed must be greater than 0");
+       }
+    // END OF UMPLE BEFORE INJECTION
     minBallSpeedX = aMinBallSpeedX;
     wasSet = true;
     return wasSet;
@@ -65,6 +70,11 @@ public class Ball
   public boolean setMinBallSpeedY(int aMinBallSpeedY)
   {
     boolean wasSet = false;
+    // line 152 "../../../../../Block223.ump"
+    if(aMinBallSpeedY<1){
+       	throw new RuntimeException("The minimum speed must be greater than 0");
+       }
+    // END OF UMPLE BEFORE INJECTION
     minBallSpeedY = aMinBallSpeedY;
     wasSet = true;
     return wasSet;
@@ -73,6 +83,11 @@ public class Ball
   public boolean setBallSpeedIncreaseFactor(double aBallSpeedIncreaseFactor)
   {
     boolean wasSet = false;
+    // line 157 "../../../../../Block223.ump"
+    if(!(aBallSpeedIncreaseFactor>0)){
+       	throw new RuntimeException("The increase factor must be greater than 0");
+       }
+    // END OF UMPLE BEFORE INJECTION
     ballSpeedIncreaseFactor = aBallSpeedIncreaseFactor;
     wasSet = true;
     return wasSet;

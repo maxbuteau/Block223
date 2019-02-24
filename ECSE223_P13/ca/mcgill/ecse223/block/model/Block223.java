@@ -4,6 +4,8 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
+
 // line 3 "../../../../../Block223.ump"
 public class Block223
 {
@@ -358,6 +360,18 @@ public class Block223
       games.remove(aGame);
     }
     
+  }
+
+  // line 9 "../../../../../Block223.ump"
+   public Game findGame(String gameName){
+    Game foundGame = null;
+	  for(Game game: Block223Application.getBlock223().getGames()) {
+		  if(game.getName().equals(gameName)) {
+			  foundGame = game;
+			  break;
+		  }
+	  }
+	return foundGame;
   }
 
 }

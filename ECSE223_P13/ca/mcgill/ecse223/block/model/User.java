@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 9 "../../../../../Block223.ump"
+// line 20 "../../../../../Block223.ump"
 public class User
 {
 
@@ -31,7 +31,7 @@ public class User
 
   public User(String aUsername, Block223 aBlock223, UserRole... allRoles)
   {
-    // line 13 "../../../../../Block223.ump"
+    // line 24 "../../../../../Block223.ump"
     if(aUsername.equals("") || aUsername == null)
          throw new RuntimeException("The username must be specified.");
     // END OF UMPLE BEFORE INJECTION

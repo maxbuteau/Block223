@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 38 "../../../../../Block223.ump"
+// line 49 "../../../../../Block223.ump"
 public class Game
 {
 
@@ -51,7 +51,7 @@ public class Game
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 49 "../../../../../Block223.ump"
+    // line 60 "../../../../../Block223.ump"
     if(name.equals("") || name == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -88,7 +88,7 @@ public class Game
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 49 "../../../../../Block223.ump"
+    // line 60 "../../../../../Block223.ump"
     if(name.equals("") || name == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -610,7 +610,7 @@ public class Game
     }
   }
 
-  // line 55 "../../../../../Block223.ump"
+  // line 71 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		

@@ -4,6 +4,17 @@ class Block223 {
    1 <@>- * User users;
    1 <@>- * UserRole roles;
    1 <@>- * Game games;
+   
+   public Game findGame(String gameName) {
+	  Game foundGame = null;
+	  for(Game game: Block223Application.getBlock223().getGames()) {
+		  if(game.getName().equals(gameName)) {
+			  foundGame = game;
+			  break;
+		  }
+	  }
+	return foundGame;
+  }   
 }
 
 class User {
@@ -48,6 +59,11 @@ class Game {
     before constructor{
 	if(name.equals("") || name == null){
 		throw new RuntimeException("The name of a game must be specified.");
+		}
+	}
+	before setNumberBlocksPerLevel{
+	if(aNrBlocksPerLevel<1){
+		throw new RuntimeException("The number of blocks must be greater than 0");
 		}
 	}
    
@@ -126,6 +142,22 @@ class Ball {
    Integer minBallSpeedX;
    Integer minBallSpeedY;
    Double ballSpeedIncreaseFactor;
+   
+   before setMinBallSpeedX{
+   if(aMinBallSpeedX<1){
+   	throw new RuntimeException("The minimum speed must be greater than 0");
+   }
+   }
+   before setMinBallSpeedY{
+   if(aMinBallSpeedY<1){
+   	throw new RuntimeException("The minimum speed must be greater than 0");
+   }
+   }
+   before setBallSpeedIncreaseFactor{
+   if(!(aBallSpeedIncreaseFactor>0)){
+   	throw new RuntimeException("The increase factor must be greater than 0");
+   }
+   }
 }
 
 class Paddle {
@@ -133,4 +165,15 @@ class Paddle {
    const Integer VERTICAL_DISTANCE = 30;
    Integer maxPaddleLength;
    Integer minPaddleLength;
+   
+   before setMinPaddleLength{
+   if(aMinPaddleLength<1){
+   	throw new RuntimeException("The minimum paddle length must be greater than 0");
+   }
+   }
+   before setMaxPaddleLength{
+   if(aMaxPaddleLength<1 || aMaxPaddleLength>400){
+   	throw new RuntimeException("The maximum paddle length must be greater than 0 and no greater than 400");
+   }
+   }
 }
