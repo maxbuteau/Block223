@@ -8,7 +8,7 @@ import java.util.*;
  * random attribute not needed anymore
  * Each level is filled up with random blocks just before playing the level to reach the nrBlocksPerLevel defined in Game
  */
-// line 106 "../../../../../Block223.ump"
+// line 137 "../../../../../Block223.ump"
 public class Level
 {
 
@@ -191,7 +191,7 @@ public class Level
     }
   }
 
-  // line 108 "../../../../../Block223.ump"
+  // line 139 "../../../../../Block223.ump"
   public BlockAssignment findBlockAssignment(int gridHorizontalPosition, int gridVerticalPosition){
     List<BlockAssignment> assignments = this.getBlockAssignments();
    		
