@@ -99,6 +99,37 @@ class Block {
    Integer green;
    Integer blue;
    Integer points;
+   
+   before setRed {
+   	
+   	if (red < 0 || red > 255) {
+   	throw new RuntimeException("Red must be between 0 and 255");
+   	}
+   
+   }
+   
+   before setGreen {
+   	
+   	if (green < 0 || green > 255) {
+   	throw new RuntimeException("Green must be between 0 and 255");
+   	}
+   
+   }
+   
+   before setBlue {
+   
+   	if (blue < 0 || blue > 255) {
+   		throw new RuntimeException("Blue must be between 0 and 255");
+   	}
+   	
+   }
+   
+   before setPoints {
+   
+   	if (points < 1 || points > 1000) {
+   		throw new RuntimeException("Points must be between 1 and 1000");
+   	}
+   }
 }
 
 // random attribute not needed anymore
@@ -123,6 +154,16 @@ class BlockAssignment {
    Integer gridHorizontalPosition;
    Integer gridVerticalPosition;
    
+   before constructor {
+   
+   if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+   	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+   
+   if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
+   	 throw new RuntimeException("The vertical position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
+   }
+   
+ 
    before setGridHorizontalPosition {
    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
    	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");

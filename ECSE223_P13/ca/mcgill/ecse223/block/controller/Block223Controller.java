@@ -183,10 +183,147 @@ public class Block223Controller {
 	}
 
 	public static void updateBlock(int id, int red, int green, int blue, int points) throws InvalidInputException {
+	
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to update a block.");
+		}
+		
+		if(Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to update a block.");
+		}
+		
+		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can update the block.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		
+		//gets all the blocks in the game
+		List<Block> gameBlockList = new ArrayList<Block>();
+		
+		gameBlockList = game.getBlocks();
+		
+		boolean redMatch = false, greenMatch = false, blueMatch = false;
+		
+		//iterates through the blockList, setting variables true if input matches existing block specs
+		for (Block block: gameBlockList) {
+			if (red == block.getRed()) {redMatch = true;}
+			if (green == block.getGreen()) {greenMatch = true;}
+			if (blue == block.getBlue()) {blueMatch = true;}
+		}
+		
+		if (redMatch && greenMatch && blueMatch) {
+			throw new InvalidInputException("A block with the same color already exists for the game");
+		}
+		
+		
+		Block block = game.findBlock(id);
+		
+		if (block == null) {
+			throw new InvalidInputException("The block does not exist");
+		}
+		
+		try {
+			
+		block.setRed(red);
+		
+		} catch (RuntimeException e) {
+			throw new InvalidInputException("Red must be between 0 and 255");
+		}
+		
+		try {
+			
+			block.setGreen(green);
+			
+			} catch (RuntimeException e) {
+				throw new InvalidInputException("Green must be between 0 and 255");
+			}
+		
+		
+		try {
+			
+			block.setBlue(blue);
+			
+			} catch (RuntimeException e) {
+				throw new InvalidInputException("Blue must be between 0 and 255");
+			}
+		
+		
+		try {
+			
+			block.setPoints(points);
+			
+			} catch (RuntimeException e) {
+				throw new InvalidInputException("Points must be between 1 and 1000");
+			}
 	}
 
 	public static void positionBlock(int id, int level, int gridHorizontalPosition, int gridVerticalPosition)
 			throws InvalidInputException {
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to update a block.");
+		}
+		
+		if(Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to update a block.");
+		}
+		
+		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can update the block.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		
+		if (level < 1 || level > game.getLevels().size()) {
+			throw new InvalidInputException("Level " + level + " does not exist for the game");
+		}
+		
+		Level gameLevel = game.getLevel(level);
+		
+		if (gameLevel.getBlockAssignments().size() >= game.getNrBlocksPerLevel()) {
+			throw new InvalidInputException("The number of blocks has reached the maximum number (" + game.getNrBlocksPerLevel() + ") allowed for this game");
+		}
+	
+		
+		List<BlockAssignment> existingBlockAssignments = new ArrayList<BlockAssignment>();
+		existingBlockAssignments = gameLevel.getBlockAssignments();
+		
+		boolean HorMatch = false, VerMatch = false;
+		
+		for (BlockAssignment blockAssignment: existingBlockAssignments) {
+			if (blockAssignment.getGridHorizontalPosition() == gridHorizontalPosition) {
+				HorMatch = true;
+			}
+			
+			if (blockAssignment.getGridVerticalPosition() == gridVerticalPosition) {
+				VerMatch = true;
+			}
+		}
+		
+		if (HorMatch && VerMatch) {
+			throw new InvalidInputException("A block already exists at location " + gridHorizontalPosition + "/" + gridVerticalPosition + "."  );
+		}
+		
+		Block block = game.findBlock(id);
+		
+		if (block == null) {
+			throw new InvalidInputException("The block does not exist");
+		}
+		
+		BlockAssignment blockAssignment;
+		
+		try {
+		
+		blockAssignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition, gameLevel, block, game);
+		
+		} catch (RuntimeException e) {
+			throw new InvalidInputException(e.getMessage());
+		}
+		
+		game.addBlockAssignment(blockAssignment);
+		
 	}
 
 	public static void moveBlock(int level, int oldGridHorizontalPosition, int oldGridVerticalPosition,
