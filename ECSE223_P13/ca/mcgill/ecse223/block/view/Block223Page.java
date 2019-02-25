@@ -199,9 +199,4 @@ public class Block223Page extends Application{
 	{
 		return ClassLoader.getSystemResource(res).toString();
 	}
-
-	public static String getResource(String res)
-	{
-		return ClassLoader.getSystemResource(res).toString();
-	}
 }
