@@ -135,7 +135,7 @@ public class Game
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
-    // line 65 "../../../../../Block223.ump"
+    // line 66 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
     		throw new RuntimeException("The number of blocks must be greater than 0");
     		}
@@ -615,7 +615,7 @@ public class Game
     }
   }
 
-  // line 71 "../../../../../Block223.ump"
+  // line 72 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		

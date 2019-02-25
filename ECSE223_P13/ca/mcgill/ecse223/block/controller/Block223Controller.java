@@ -234,29 +234,11 @@ public class Block223Controller {
 		if (block == null) {
 			throw new InvalidInputException("The block does not exist");
 		}
-		
-		try {
 			
-		block.setRed(red);
-		
-		} 
-		
 		try {
-			
+			block.setRed(red);
 			block.setGreen(green);
-			
-		} 
-		
-		
-		try {
-			
 			block.setBlue(blue);
-			
-		}
-		
-		
-		try {
-			
 			block.setPoints(points);
 			
 		} catch (RuntimeException e) {

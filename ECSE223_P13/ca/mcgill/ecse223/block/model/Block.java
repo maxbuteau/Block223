@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 91 "../../../../../Block223.ump"
+// line 92 "../../../../../Block223.ump"
 public class Block
 {
 
@@ -62,7 +62,7 @@ public class Block
   public boolean setRed(int aRed)
   {
     boolean wasSet = false;
-    // line 105 "../../../../../Block223.ump"
+    // line 106 "../../../../../Block223.ump"
     if (red < 0 || red > 255) {
        	throw new RuntimeException("Red must be between 0 and 255");
        	}
@@ -75,7 +75,7 @@ public class Block
   public boolean setGreen(int aGreen)
   {
     boolean wasSet = false;
-    // line 113 "../../../../../Block223.ump"
+    // line 114 "../../../../../Block223.ump"
     if (green < 0 || green > 255) {
        	throw new RuntimeException("Green must be between 0 and 255");
        	}
@@ -88,7 +88,7 @@ public class Block
   public boolean setBlue(int aBlue)
   {
     boolean wasSet = false;
-    // line 121 "../../../../../Block223.ump"
+    // line 122 "../../../../../Block223.ump"
     if (blue < 0 || blue > 255) {
        		throw new RuntimeException("Blue must be between 0 and 255");
        	}
@@ -101,7 +101,7 @@ public class Block
   public boolean setPoints(int aPoints)
   {
     boolean wasSet = false;
-    // line 129 "../../../../../Block223.ump"
+    // line 130 "../../../../../Block223.ump"
     if (points < 1 || points > 1000) {
        		throw new RuntimeException("Points must be between 1 and 1000");
        	}
