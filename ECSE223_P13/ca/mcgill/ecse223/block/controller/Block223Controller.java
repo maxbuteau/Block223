@@ -220,17 +220,12 @@ public class Block223Controller {
 		
 		gameBlockList = game.getBlocks();
 		
-		boolean redMatch = false, greenMatch = false, blueMatch = false;
 		
-		//iterates through the blockList, setting variables true if input matches existing block specs
+		//iterates through the blockList, throws exception if block with identical RGB value is found
 		for (Block block: gameBlockList) {
-			if (red == block.getRed()) {redMatch = true;}
-			if (green == block.getGreen()) {greenMatch = true;}
-			if (blue == block.getBlue()) {blueMatch = true;}
-		}
-		
-		if (redMatch && greenMatch && blueMatch) {
-			throw new InvalidInputException("A block with the same color already exists for the game");
+			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue) {
+				throw new InvalidInputException("A block with the same color already exists for the game");
+			}
 		}
 		
 		
