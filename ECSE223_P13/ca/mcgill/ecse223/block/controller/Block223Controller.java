@@ -295,20 +295,10 @@ public class Block223Controller {
 		List<BlockAssignment> existingBlockAssignments = new ArrayList<BlockAssignment>();
 		existingBlockAssignments = gameLevel.getBlockAssignments();
 		
-		boolean HorMatch = false, VerMatch = false;
-		
 		for (BlockAssignment blockAssignment: existingBlockAssignments) {
-			if (blockAssignment.getGridHorizontalPosition() == gridHorizontalPosition) {
-				HorMatch = true;
+			if (blockAssignment.getGridHorizontalPosition() == gridHorizontalPosition && blockAssignment.getGridVerticalPosition() == gridVerticalPosition) {
+				throw new InvalidInputException("A block already exists at location " + gridHorizontalPosition + "/" + gridVerticalPosition + "."  );
 			}
-			
-			if (blockAssignment.getGridVerticalPosition() == gridVerticalPosition) {
-				VerMatch = true;
-			}
-		}
-		
-		if (HorMatch && VerMatch) {
-			throw new InvalidInputException("A block already exists at location " + gridHorizontalPosition + "/" + gridVerticalPosition + "."  );
 		}
 		
 		Block block = game.findBlock(id);
