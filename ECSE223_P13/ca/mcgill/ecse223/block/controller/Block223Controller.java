@@ -28,6 +28,7 @@ public class Block223Controller {
 		UserRole admin = Block223Application.getCurrentUserRole();
 		if(!(admin instanceof Admin)){
 			error = "Admin privileges are required to create a game.";
+			throw new InvalidInputException(error);
 		}
 		
 		Block223 block223 = Block223Application.getBlock223();
