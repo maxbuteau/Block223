@@ -319,16 +319,11 @@ public class Block223Controller {
 
 	public static void register(String username, String playerPassword, String adminPassword)
 			throws InvalidInputException {
-		String error = "";
-
 		if (Block223Application.getCurrentUserRole() != null) {
-			error = "Cannot register a new user while a user is logged in.";
+			throw new InvalidInputException("Cannot register a new user while a user is logged in.");
 		}
 		if (playerPassword.equals(adminPassword)) {
-			error = "The passwords have to be different.";
-		}
-		if (error.length() > 0) {
-			throw new InvalidInputException(error);
+			throw new InvalidInputException("The passwords have to be different.");
 		}
 
 		Block223 block223 = Block223Application.getBlock223();
