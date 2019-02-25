@@ -49,21 +49,25 @@ public class Block223Controller {
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
 
+		String error = "";
 		Game game = Block223Application.getCurrentGame();
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required to move a block.");
+			error = error+"Admin privileges are required update game settings. ";
 		}
 		if (Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to move a block.");
+			error = error+"A game must be selected to update game settings. ";
 		}
 
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can move a block.");
+			error = error+"Only the admin who created the game can edit its settings. ";
 		}
 
 		if (nrLevels > 99 || nrLevels < 1)
-			throw new InvalidInputException("The number of levels must be between 1 and 99");
+			error = error+"The number of levels must be between 1 and 99. ";
 
+		if(error.length()>0) {
+			throw new InvalidInputException(error.trim());
+		}
 		Ball ball = game.getBall();
 		Paddle paddle = game.getPaddle();
 
@@ -76,27 +80,27 @@ public class Block223Controller {
 			ball.setMinBallSpeedX(minBallSpeedX);
 			ball.setMinBallSpeedY(minBallSpeedY);
 		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Minimum speed has to be greater than 0");
+			throw new InvalidInputException("Minimum speed has to be greater than 0.");
 		}
 
 		try {
 			ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
 		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Speed increase has to be greater than 0");
+			throw new InvalidInputException("Speed increase has to be greater than 0.");
 		}
 		try {
 			paddle.setMaxPaddleLength(maxPaddleLength);
 		} catch (RuntimeException ex) {
 			throw new InvalidInputException(
-					"Maximum length of paddle must be greater than 0 and less than or equal to 400");
+					"Maximum length of paddle must be greater than 0 and less than or equal to 400.");
 		}
 		try {
 			paddle.setMinPaddleLength(minPaddleLength);
 		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Minimum paddle length has to be greater than 0");
+			throw new InvalidInputException("Minimum paddle length has to be greater than 0.");
 		}
 		if (minPaddleLength > maxPaddleLength)
-			throw new InvalidInputException("Min paddle length has to be smaller than the max");
+			throw new InvalidInputException("Min paddle length has to be smaller than the max.");
 
 		if (nrLevels < game.numberOfLevels()) {
 			ArrayList<Level> levels = (ArrayList<Level>) game.getLevels();
@@ -117,11 +121,14 @@ public class Block223Controller {
 		UserRole user = Block223Application.getCurrentUserRole();
 		Admin gameAdmin = Block223Application.getCurrentGame().getAdmin();
 		if(!(user instanceof Admin)){
-			error = "Admin privileges are required to delete a game.";
+			error = "Admin privileges are required to delete a game. ";
 		}
-		if(!(user.getPassword().equals(gameAdmin.getPassword()))) {
-			error = "Only the admin who created the game can delete the game.";
+		if(!(user.equals(gameAdmin))) {
+			error = error+"Only the admin who created the game can delete the game. ";
 		}
+		
+		if(error.length()>0)
+			throw new InvalidInputException(error.trim());
 		try {
 			Game game = Block223Application.getBlock223().findGame(name);
 			if(game !=null) {
@@ -134,42 +141,50 @@ public class Block223Controller {
 	}
 
 	public static void selectGame(String name) throws InvalidInputException {
+		String error = "";
 		UserRole user = Block223Application.getCurrentUserRole();
 		if (!(user instanceof Admin))
-			throw new InvalidInputException("Admin privileges are required to select a game");
+			error = error+"Admin privileges are required to select a game. ";
 
 		Game game = Block223.findGame(name);
 		if (game == null)
-			throw new InvalidInputException("Game with name " + name + " does not exist");
+			error = error+"Game with name " + name + " does not exist. ";
 		if (user != game.getAdmin())
-			throw new InvalidInputException("Only the admin who created the game can select the game");
+			error = error+"Only the admin who created the game can select the game.";
+		if(error.length()>0)
+			throw new InvalidInputException(error.trim());
 		Block223Application.setCurrentGame(game);
 	}
 
 	public static void updateGame(String name, int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
 
+		String error = "";
 		Game game = Block223Application.getCurrentGame();
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required to move a block.");
+			error = error+"Admin privileges are required to update a game. ";
 		}
 		if (Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to move a block.");
+			error = error+ "A game must be selected to update it. ";
 		}
 
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can move a block.");
+			error = error+"Only the admin who created the game can update it.";
 		}
+		
+		if(error.length() > 0)
+			throw new InvalidInputException(error.trim());
+		
 
 		String currentName = game.getName();
 		if (currentName != name) {
 			try {
 				boolean check = game.setName(name);
 				if (!check) {
-					throw new InvalidInputException("Name of a game must be unique");
+					throw new InvalidInputException("A game already has this name.");
 				}
 			} catch (RuntimeException ex) {
-				throw new InvalidInputException("The name of the game must be specified");
+				throw new InvalidInputException("The name of the game must be specified.");
 			}
 		}
 
