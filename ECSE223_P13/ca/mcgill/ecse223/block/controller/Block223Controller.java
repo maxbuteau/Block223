@@ -74,7 +74,7 @@ public class Block223Controller {
 		try {
 			game.setNrBlocksPerLevel(nrBlocksPerLevel);
 		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Number of blocks has to be greater than 0");
+			throw new InvalidInputException("Number of blocks has to be greater than 0.");
 		}
 		try {
 			ball.setMinBallSpeedX(minBallSpeedX);
