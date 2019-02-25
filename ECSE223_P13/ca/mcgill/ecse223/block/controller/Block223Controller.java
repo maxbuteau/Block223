@@ -244,35 +244,29 @@ public class Block223Controller {
 			
 		block.setRed(red);
 		
-		} catch (RuntimeException e) {
-			throw new InvalidInputException("Red must be between 0 and 255");
-		}
+		} 
 		
 		try {
 			
 			block.setGreen(green);
 			
-			} catch (RuntimeException e) {
-				throw new InvalidInputException("Green must be between 0 and 255");
-			}
+		} 
 		
 		
 		try {
 			
 			block.setBlue(blue);
 			
-			} catch (RuntimeException e) {
-				throw new InvalidInputException("Blue must be between 0 and 255");
-			}
+		}
 		
 		
 		try {
 			
 			block.setPoints(points);
 			
-			} catch (RuntimeException e) {
-				throw new InvalidInputException("Points must be between 1 and 1000");
-			}
+		} catch (RuntimeException e) {
+				throw new InvalidInputException(e.getMessage());
+		}
 	}
 
 	public static void positionBlock(int id, int level, int gridHorizontalPosition, int gridVerticalPosition)
