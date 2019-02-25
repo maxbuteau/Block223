@@ -2,10 +2,12 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 import java.util.*;
 
-// line 182 "../../../../../Block223.ump"
-public class Ball
+// line 82 "../../../../../Block223Persistence.ump"
+// line 185 "../../../../../Block223.ump"
+public class Ball implements Serializable
 {
 
   //------------------------
@@ -57,7 +59,7 @@ public class Ball
   public boolean setMinBallSpeedX(int aMinBallSpeedX)
   {
     boolean wasSet = false;
-    // line 189 "../../../../../Block223.ump"
+    // line 192 "../../../../../Block223.ump"
     if(aMinBallSpeedX<1){
        	throw new RuntimeException("The minimum speed must be greater than 0");
        }
@@ -70,7 +72,7 @@ public class Ball
   public boolean setMinBallSpeedY(int aMinBallSpeedY)
   {
     boolean wasSet = false;
-    // line 194 "../../../../../Block223.ump"
+    // line 197 "../../../../../Block223.ump"
     if(aMinBallSpeedY<1){
        	throw new RuntimeException("The minimum speed must be greater than 0");
        }
@@ -83,7 +85,7 @@ public class Ball
   public boolean setBallSpeedIncreaseFactor(double aBallSpeedIncreaseFactor)
   {
     boolean wasSet = false;
-    // line 199 "../../../../../Block223.ump"
+    // line 202 "../../../../../Block223.ump"
     if(!(aBallSpeedIncreaseFactor>0)){
        	throw new RuntimeException("The increase factor must be greater than 0");
        }
@@ -131,5 +133,13 @@ public class Ball
             "minBallSpeedY" + ":" + getMinBallSpeedY()+ "," +
             "ballSpeedIncreaseFactor" + ":" + getBallSpeedIncreaseFactor()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 85 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 145021574790956578L ;
+
+  
 }

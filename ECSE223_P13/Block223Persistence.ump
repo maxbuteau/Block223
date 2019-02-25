@@ -1,0 +1,91 @@
+external interface Serializable {}
+
+class Block223 {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = -1908572468415628573L;
+	
+	public void reinitialize() {
+		User.reinitializeUniqueUserName(this.getUsers());
+		Game.reinitializeUniqueName(this.getGames());
+		Block.reinitializeAutouniqueBlockID(this.getGames());
+	}
+}
+class User {
+	depend java.io.Serializable;
+  	isA Serializable;
+  	private static final long serialVersionUID = 4267485601061759914L;
+  	
+  	public static void reinitializeUniqueUserName(List<User> users){
+  		usersByUsername = new HashMap<String, User>();
+  		for (User user : users) {
+  			usersByUsername.put(user.getUsername(), user);
+  		}
+  	}
+}
+class UserRole {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 3389752283403781197L; 
+}
+class Admin {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 2221721272607853970L; 
+}
+class Player {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = -8062584216235283243L; 
+}
+class Game {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = -4718217458307281181L;
+	
+	public static void reinitializeUniqueName(List<Game> games) {
+		gamesByName = new HashMap<String, Game>();
+		for (Game game : games) {
+			gamesByName.put(game.getName(), game);
+		}
+	}
+}	
+class Block {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 5332292624658907512L;
+	
+	public static  void reinitializeAutouniqueBlockID(List<Game> gamesList){
+    nextId = 0;
+		for (Game game : gamesList) {
+			List<Block> blocks = game.getBlocks();
+		
+			for (Block block : blocks) {
+			if (block.getId() > nextId) {
+				nextId = block.getId();
+			}
+		}
+		nextId++;
+		}
+  }
+}
+class Level {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 8431267354769315043L;
+}
+class BlockAssignment {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 8120926036616538272L;
+}
+class Ball {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 145021574790956578L;
+}
+class Paddle {
+	depend java.io.Serializable;
+	isA Serializable;
+	private static final long serialVersionUID = 6895123766580505451L;
+}

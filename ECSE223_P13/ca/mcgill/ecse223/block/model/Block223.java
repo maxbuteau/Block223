@@ -2,12 +2,13 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
+import ca.mcgill.ecse223.block.application.Block223Application;
 import java.util.*;
 
-import ca.mcgill.ecse223.block.application.Block223Application;
-
-// line 3 "../../../../../Block223.ump"
-public class Block223
+// line 3 "../../../../../Block223Persistence.ump"
+// line 5 "../../../../../Block223.ump"
+public class Block223 implements Serializable
 {
 
   //------------------------
@@ -362,7 +363,14 @@ public class Block223
     
   }
 
-  // line 9 "../../../../../Block223.ump"
+  // line 9 "../../../../../Block223Persistence.ump"
+   public void reinitialize(){
+    User.reinitializeUniqueUserName(this.getUsers());
+		Game.reinitializeUniqueName(this.getGames());
+		Block.reinitializeAutouniqueBlockID(this.getGames());
+  }
+
+  // line 12 "../../../../../Block223.ump"
    public static  Game findGame(String gameName){
     Game foundGame = null;
 	  for(Game game: Block223Application.getBlock223().getGames()) {
@@ -373,5 +381,13 @@ public class Block223
 	  }
 	return foundGame;
   }
+  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 6 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = -1908572468415628573L ;
 
+  
 }

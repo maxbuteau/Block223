@@ -312,9 +312,46 @@ public class Block223Controller {
 
 	public static void removeBlock(int level, int gridHorizontalPosition, int gridVerticalPosition)
 			throws InvalidInputException {
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to remove a block");
+		}
+		if (Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to remove a block");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		
+		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can remove a block");
+		}
+		
+		Level aLevel = game.getLevel(level);
+		
+		BlockAssignment aBlockAssignment = aLevel.findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
+		
+		if (aBlockAssignment != null) {
+			aBlockAssignment.delete();
+		}
 	}
 
 	public static void saveGame() throws InvalidInputException {
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to save a game.");
+		}
+		if (Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to save it.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		
+		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can save it.");
+		}
+		Block223 block223 = Block223Application.getBlock223();
+		
+		Block223Persistence.save(block223);
 	}
 
 	public static void register(String username, String playerPassword, String adminPassword)
@@ -327,6 +364,7 @@ public class Block223Controller {
 		}
 
 		Block223 block223 = Block223Application.getBlock223();
+		String error = "";
 
 		User user = null;
 		try {
