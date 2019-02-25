@@ -183,7 +183,7 @@ public class Block223Page extends Application{
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		//change the values accordingly ^
-		primaryStage.setScene(loginScene);
+		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
