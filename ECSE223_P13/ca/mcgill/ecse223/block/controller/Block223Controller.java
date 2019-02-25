@@ -52,67 +52,51 @@ public class Block223Controller {
 		String error = "";
 		Game game = Block223Application.getCurrentGame();
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			error = error+"Admin privileges are required update game settings. ";
+			error = error + "Admin privileges are required update game settings. ";
 		}
 		if (Block223Application.getCurrentGame() == null) {
-			error = error+"A game must be selected to update game settings. ";
+			error = error + "A game must be selected to update game settings. ";
 		}
 
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			error = error+"Only the admin who created the game can edit its settings. ";
+			error = error + "Only the admin who created the game can edit its settings. ";
 		}
 
 		if (nrLevels > 99 || nrLevels < 1)
-			error = error+"The number of levels must be between 1 and 99. ";
+			error = error + "The number of levels must be between 1 and 99. ";
 
-		if(error.length()>0) {
+		if (error.length() > 0) {
 			throw new InvalidInputException(error.trim());
 		}
+		
 		Ball ball = game.getBall();
 		Paddle paddle = game.getPaddle();
 
 		try {
 			game.setNrBlocksPerLevel(nrBlocksPerLevel);
-		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Number of blocks has to be greater than 0.");
-		}
-		try {
 			ball.setMinBallSpeedX(minBallSpeedX);
 			ball.setMinBallSpeedY(minBallSpeedY);
-		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Minimum speed has to be greater than 0.");
-		}
-
-		try {
 			ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
-		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Speed increase has to be greater than 0.");
-		}
-		try {
 			paddle.setMaxPaddleLength(maxPaddleLength);
-		} catch (RuntimeException ex) {
-			throw new InvalidInputException(
-					"Maximum length of paddle must be greater than 0 and less than or equal to 400.");
-		}
-		try {
 			paddle.setMinPaddleLength(minPaddleLength);
-		} catch (RuntimeException ex) {
-			throw new InvalidInputException("Minimum paddle length has to be greater than 0.");
-		}
-		if (minPaddleLength > maxPaddleLength)
-			throw new InvalidInputException("Min paddle length has to be smaller than the max.");
+			
+			if (minPaddleLength > maxPaddleLength)
+				throw new InvalidInputException("Min paddle length has to be smaller than the max.");
 
-		if (nrLevels < game.numberOfLevels()) {
-			ArrayList<Level> levels = (ArrayList<Level>) game.getLevels();
-			for (int a = 0; a < game.numberOfLevels() - nrLevels; a++) {
-				game.removeLevel(levels.get(levels.size() - 1));
-				levels.remove(levels.size() - 1);
+			if (nrLevels < game.numberOfLevels()) {
+				ArrayList<Level> levels = (ArrayList<Level>) game.getLevels();
+				for (int a = 0; a < game.numberOfLevels() - nrLevels; a++) {
+					game.removeLevel(levels.get(levels.size() - 1));
+					levels.remove(levels.size() - 1);
+				}
 			}
-		}
 
-		else if (nrLevels > game.numberOfLevels()) {
-			for (int a = 0; a < nrLevels - game.numberOfLevels(); a++)
-				game.addLevel();
+			else if (nrLevels > game.numberOfLevels()) {
+				for (int a = 0; a < nrLevels - game.numberOfLevels(); a++)
+					game.addLevel();
+			}
+		} catch (RuntimeException ex) {
+			throw new InvalidInputException(ex.getMessage());
 		}
 	}
 
@@ -224,7 +208,7 @@ public class Block223Controller {
 		//iterates through the blockList, throws exception if block with identical RGB value is found
 		for (Block block: gameBlockList) {
 			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue) {
-				throw new InvalidInputException("A block with the same color already exists for the game");
+				throw new InvalidInputException("A block with the same color already exists for the game.");
 			}
 		}
 		
@@ -232,7 +216,7 @@ public class Block223Controller {
 		Block block = game.findBlock(id);
 		
 		if (block == null) {
-			throw new InvalidInputException("The block does not exist");
+			throw new InvalidInputException("The block does not exist.");
 		}
 			
 		try {
@@ -250,27 +234,27 @@ public class Block223Controller {
 			throws InvalidInputException {
 		
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required to update a block.");
+			throw new InvalidInputException("Admin privileges are required to place a block.");
 		}
 		
 		if(Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to update a block.");
+			throw new InvalidInputException("A game must be selected to place a block.");
 		}
 		
 		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can update the block.");
+			throw new InvalidInputException("Only the admin who created the game can place the block.");
 		}
 		
 		Game game = Block223Application.getCurrentGame();
 		
 		if (level < 1 || level > game.getLevels().size()) {
-			throw new InvalidInputException("Level " + level + " does not exist for the game");
+			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
 		
 		Level gameLevel = game.getLevel(level);
 		
 		if (gameLevel.getBlockAssignments().size() >= game.getNrBlocksPerLevel()) {
-			throw new InvalidInputException("The number of blocks has reached the maximum number (" + game.getNrBlocksPerLevel() + ") allowed for this game");
+			throw new InvalidInputException("The number of blocks has reached the maximum number (" + game.getNrBlocksPerLevel() + ") allowed for this game.");
 		}
 	
 		
@@ -286,7 +270,7 @@ public class Block223Controller {
 		Block block = game.findBlock(id);
 		
 		if (block == null) {
-			throw new InvalidInputException("The block does not exist");
+			throw new InvalidInputException("The block does not exist.");
 		}
 		
 		BlockAssignment blockAssignment;
