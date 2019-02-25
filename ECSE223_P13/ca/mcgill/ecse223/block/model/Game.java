@@ -135,6 +135,11 @@ public class Game
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
+    // line 65 "../../../../../Block223.ump"
+    if(aNrBlocksPerLevel<1){
+    		throw new RuntimeException("The number of blocks must be greater than 0");
+    		}
+    // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
     wasSet = true;
     return wasSet;
