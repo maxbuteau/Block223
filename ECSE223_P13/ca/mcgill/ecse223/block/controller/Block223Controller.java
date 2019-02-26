@@ -155,11 +155,66 @@ public class Block223Controller {
 				maxPaddleLength, minPaddleLength);
 	}
 
-	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
+public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
+		
+		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to add a block.");
+		}
+		
+		if(Block223Application.getCurrentGame() == null){
+			throw new InvalidInputException("A game must be selected to add a block.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		
+		if(Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can add a block.");
+		}
+		
+		List<Block> gameBlockList = new ArrayList<Block>();
+		
+		gameBlockList = game.getBlocks();
+		
+		for (Block block: gameBlockList) {
+			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue) {
+				throw new InvalidInputException("A block with the same color already exists for the game.");
+			}
+		}
+		
+		Block block = null;
+		try {
+			block = new Block(red, green, blue, points, game);
+		}
+		catch(RuntimeException e) {
+			throw new InvalidInputException(e.getMessage());
+		}
+
+		
 	}
 
 	public static void deleteBlock(int id) throws InvalidInputException {
+		
+		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to delete a block.");
+		}
+		
+		if(Block223Application.getCurrentGame() == null){
+			throw new InvalidInputException("A game must be selected to delete a block.");
+		}
+		
+		Game game = Block223Application.getCurrentGame();
+		
+		if(Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can delete a block.");
+		}
+		
+		Block block = game.findBlock(id);
+		
+		if(block != null) {
+			block.delete();
+		}
 	}
+
 
 	public static void updateBlock(int id, int red, int green, int blue, int points) throws InvalidInputException {
 	
