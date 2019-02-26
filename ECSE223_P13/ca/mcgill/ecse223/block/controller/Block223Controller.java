@@ -181,9 +181,8 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 			}
 		}
 		
-		Block block = null;
 		try {
-			block = new Block(red, green, blue, points, game);
+			 new Block(red, green, blue, points, game);
 		}
 		catch(RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
