@@ -155,7 +155,7 @@ public class Block223Controller {
 				maxPaddleLength, minPaddleLength);
 	}
 
-public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
+	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
 		
 		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to add a block.");
