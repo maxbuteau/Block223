@@ -33,7 +33,7 @@ public class LastPageLayoutPane extends Pane {
 	private int currentLvl = 1;
 
 	// Default constructor that initializes said nodes and containers
-	public LastPageLayoutPane(Stage primaryStage) {
+	public LastPageLayoutPane(Stage primaryStage, double spacing) {
 		// get the current game
 		// TOGame game = Block223Application.getDesignableGame();
 
@@ -43,7 +43,7 @@ public class LastPageLayoutPane extends Pane {
 
 		playPane = new PlayAreaPane(currentLvl, game.getMinPaddleLength(), game.getMaxPaddleLength(),
 				game.getNrLevels());
-		blockPane = new BlockCreatorPane();
+		blockPane = new BlockCreatorPane(spacing);
 		settingsPane = new SettingsPane(game);
 		quitLabel = new Label("QUIT");
 		saveGame = new Button("Save game");
