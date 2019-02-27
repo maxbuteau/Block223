@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
@@ -120,7 +121,7 @@ public class Block223Page extends Application{
 			TOUserMode toUserMode = Block223Controller.getUserMode();
 
 			if(toUserMode.getMode().equals(Mode.Design)) {
-				//primaryStage.setScene(gameSelectionScene);
+				changeToGameSelectionScene(primaryStage);
 			}
 			loginUsernameField.clear();
 			loginPasswordField.clear();
@@ -209,70 +210,6 @@ public class Block223Page extends Application{
 
 		registerPane.getChildren().addAll(registerBox, registerButton, error);
 
-		// GAME SELECTION PANE
-		gameSelectionPane = new VBox(20);
-		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-		// GAME SELECTION BUTTONS
-		gameSelectionButtonRow = new HBox(20);
-		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
-		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
-		gameSelectionCreateGameButton = new Button("Create");
-		gameSelectionDeleteGameButton = new Button("Delete");
-		gameSelectionUpdateGameButton = new Button("Update");
-		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton,
-				gameSelectionDeleteGameButton);
-
-		// LIST OF GAMES
-		gameSelectionList = new ListView<String>();
-		gameSelectionListData = FXCollections.observableArrayList();
-		try {
-			List<TOGame> toGames = Block223Controller.getDesignableGames();
-			for (TOGame toGame : toGames) {
-				String toGameName = toGame.getName();
-				gameSelectionListData.add(toGameName);
-			}
-		} catch (InvalidInputException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
-		gameSelectionList.setItems(gameSelectionListData);
-		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow);
-
-		// CREATE GAME POPUP
-		gameSelectionCreateGameButton.setOnAction(e -> {
-			Stage createGameStage = new Stage();
-			createGameBox = new VBox(20);
-			Label createGameNameLabel = new Label("Game name : ");
-			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);
-			TextField createGameNameField = new TextField();
-
-			createGameNameField.setOnKeyPressed(neverUnlucky -> {
-				if(neverUnlucky.getCode().equals(KeyCode.ENTER)) {
-					try {
-						createGameStage.close();
-						Block223Controller.createGame(createGameNameField.getText());
-					} catch (InvalidInputException e1) {
-						error.setText(e1.getMessage());
-					}
-				}
-			});
-
-			createGameBox.getChildren().addAll(createGameNameLabel, createGameNameField);
-			createGameScene = new Scene(createGameBox, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6);
-			createGameStage.setScene(createGameScene);
-			createGameStage.show();
-			createGameStage.setAlwaysOnTop(true);
-			createGameStage.setResizable(false);
-			gameSelectionCreateGameButton.setDisable(true);
-			createGameStage.setOnCloseRequest(emmacona->{
-				gameSelectionCreateGameButton.setDisable(false);
-			});
-
-		});
-
-
 			Pane pane = new Pane();
 			Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
 			buttonPressSound();
@@ -290,12 +227,88 @@ public class Block223Page extends Application{
 			quitLabel.setStyle("-fx-font:20 Garamond; -fx-padding:3px; -fx-text-fill: #DC143C; -fx-border-color:black;-fx-background-color:POWDERBLUE;-fx-font-weight:bold");
 	}
 
-	public static String getResource(String res)
+	private void changeToGameSelectionScene(Stage primaryStage) {
+		
+		//SELECTION GAME
+		gameSelectionPane = new VBox(20);
+		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+		//Buttons
+		gameSelectionButtonRow = new HBox(20);
+		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
+		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
+		gameSelectionCreateGameButton = new Button("Create");
+		gameSelectionDeleteGameButton = new Button("Delete");
+		gameSelectionUpdateGameButton = new Button("Update");
+		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton,
+				gameSelectionDeleteGameButton);
+
+		//List
+		gameSelectionList = new ListView<String>();
+		gameSelectionListData = FXCollections.observableArrayList();
+
+		refreshGameSelection();
+		gameSelectionList.setItems(gameSelectionListData);
+		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow);
+
+		//Create popup
+		gameSelectionCreateGameButton.setOnAction(e -> {
+			Stage createGameStage = new Stage();
+			createGameBox = new VBox(20);
+			Label createGameNameLabel = new Label("Game name : ");
+			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);
+			TextField createGameNameField = new TextField();
+
+			createGameNameField.setOnKeyPressed(ev -> {
+				if(ev.getCode().equals(KeyCode.ENTER)) {
+					try {
+						Block223Controller.createGame(createGameNameField.getText());
+						createGameStage.close();
+					} catch (InvalidInputException e1) {
+						error.setText(e1.getMessage());
+					}
+					
+					refreshGameSelection();
+					gameSelectionCreateGameButton.setDisable(false);
+				}
+			});
+
+			createGameBox.getChildren().addAll(createGameNameLabel, createGameNameField);
+			createGameScene = new Scene(createGameBox, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6);
+			createGameStage.setScene(createGameScene);
+			createGameStage.show();
+			createGameStage.setAlwaysOnTop(true);
+			createGameStage.setResizable(false);
+			gameSelectionCreateGameButton.setDisable(true);
+			createGameStage.setOnCloseRequest(emmacona->{
+				gameSelectionCreateGameButton.setDisable(false);
+			});
+
+		});
+
+		primaryStage.setScene(gameSelectionScene);
+	}
+	
+	private void refreshGameSelection() {
+		gameSelectionList.getItems().clear();
+		System.out.println(Block223Application.getBlock223().getGames().toString());
+		try {
+			List<TOGame> toGames = Block223Controller.getDesignableGames();
+			for (TOGame toGame : toGames) {
+				String toGameName = toGame.getName();
+				gameSelectionListData.add(toGameName);
+			}
+		} catch (InvalidInputException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	private static String getResource(String res)
 	{
 		return ClassLoader.getSystemResource(res).toString();
 	}
 
-	public static void buttonPressSound() {
+	private static void buttonPressSound() {
 		sound.setCycleCount(1);
 		sound.stop();
 		sound.play();
