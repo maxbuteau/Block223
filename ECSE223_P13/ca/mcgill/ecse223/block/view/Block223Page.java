@@ -31,7 +31,9 @@ import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
 public class Block223Page extends Application{
 
-	private Label error;
+	private Label loginError;
+	private Label registerError;
+	private Label gameSelectionError;
 
 	//LOGIN
 	private Scene loginScene;
@@ -61,18 +63,14 @@ public class Block223Page extends Application{
 	private PasswordField registerConfirmPasswordAdminField;
 	private Button registerButton;
 
-	// Page Selection page (create, update, delete games)
+	//GAME SELECTION
 	private Scene gameSelectionScene;
 	private VBox gameSelectionPane;
 	private HBox gameSelectionButtonRow;
-
 	private ListView<String> gameSelectionList;
 	private ObservableList<String> gameSelectionListData;
-
 	private Button gameSelectionCreateGameButton;
-	private Button gameSelectionDeleteGameButton;
 	private Button gameSelectionUpdateGameButton;
-
 	private Scene createGameScene;
 	private VBox createGameBox;
 
@@ -113,9 +111,12 @@ public class Block223Page extends Application{
 		loginButton.setOnAction(e -> {
 			try {
 				Block223Controller.login(loginUsernameField.getText(), loginPasswordField.getText());
+				loginUsernameField.clear();
+				loginPasswordField.clear();
+				loginError.setText("");
 			}
 			catch(InvalidInputException iie) {
-				error.setText(iie.getMessage());
+				loginError.setText(iie.getMessage());
 			}
 
 			TOUserMode toUserMode = Block223Controller.getUserMode();
@@ -123,9 +124,6 @@ public class Block223Page extends Application{
 			if(toUserMode.getMode().equals(Mode.Design)) {
 				changeToGameSelectionScene(primaryStage);
 			}
-			loginUsernameField.clear();
-			loginPasswordField.clear();
-			error.setText("");
 		});
 
 		loginCreateAccountLabel = new Label("Don't have an account ?");
@@ -135,13 +133,13 @@ public class Block223Page extends Application{
 			primaryStage.setScene(registerScene);
 			loginUsernameField.clear();
 			loginPasswordField.clear();
-			error.setText("");
+			loginError.setText("");
 		});
 
-		error = new Label();
-		error.setStyle("-fx-text-fill: #DC143C");
+		loginError = new Label();
+		loginError.setStyle("-fx-text-fill: #DC143C");
 
-		loginPane.getChildren().addAll(loginUsernameBox, loginPasswordBox, loginButton, loginCreateAccountLabel, createItButton, error);
+		loginPane.getChildren().addAll(loginUsernameBox, loginPasswordBox, loginButton, loginCreateAccountLabel, createItButton, loginError);
 
 		//REGISTER
 		VBox registerPane = new VBox(20);
@@ -199,16 +197,19 @@ public class Block223Page extends Application{
 					registerPasswordAdminField.clear();
 					registerConfirmPasswordPlayerField.clear();
 					registerConfirmPasswordAdminField.clear();
-					error.setText("");
+					registerError.setText("");
 				}
 				catch(InvalidInputException iie) {
-					error.setText(iie.getMessage());
+					registerError.setText(iie.getMessage());
 				}
 			}
-			error.setText("Password and Confirm Password must be the same");
+			registerError.setText("Password and Confirm Password must be the same");
 		});
+		
+		registerError = new Label();
+		registerError.setStyle("-fx-text-fill: #DC143C");
 
-		registerPane.getChildren().addAll(registerBox, registerButton, error);
+		registerPane.getChildren().addAll(registerBox, registerButton, registerError);
 
 			Pane pane = new Pane();
 			Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -238,20 +239,7 @@ public class Block223Page extends Application{
 		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
 		gameSelectionCreateGameButton = new Button("Create");
-		gameSelectionDeleteGameButton = new Button("Delete");
-		gameSelectionUpdateGameButton = new Button("Update");
-		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton,
-				gameSelectionDeleteGameButton);
-
-		//List
-		gameSelectionList = new ListView<String>();
-		gameSelectionListData = FXCollections.observableArrayList();
-
-		refreshGameSelection();
-		gameSelectionList.setItems(gameSelectionListData);
-		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow);
-
-		//Create popup
+		
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Stage createGameStage = new Stage();
 			createGameBox = new VBox(20);
@@ -265,7 +253,7 @@ public class Block223Page extends Application{
 						Block223Controller.createGame(createGameNameField.getText());
 						createGameStage.close();
 					} catch (InvalidInputException e1) {
-						error.setText(e1.getMessage());
+						gameSelectionError.setText(e1.getMessage());
 					}
 					
 					refreshGameSelection();
@@ -286,12 +274,26 @@ public class Block223Page extends Application{
 
 		});
 
+		gameSelectionUpdateGameButton = new Button("Update");
+		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton);
+
+		//List
+		gameSelectionList = new ListView<String>();
+		gameSelectionListData = FXCollections.observableArrayList();
+		
+		//error
+		gameSelectionError = new Label();
+		gameSelectionError.setStyle("-fx-text-fill: #DC143C");
+
+		refreshGameSelection();
+		gameSelectionList.setItems(gameSelectionListData);
+		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow, gameSelectionError);
+
 		primaryStage.setScene(gameSelectionScene);
 	}
 	
 	private void refreshGameSelection() {
 		gameSelectionList.getItems().clear();
-		System.out.println(Block223Application.getBlock223().getGames().toString());
 		try {
 			List<TOGame> toGames = Block223Controller.getDesignableGames();
 			for (TOGame toGame : toGames) {
