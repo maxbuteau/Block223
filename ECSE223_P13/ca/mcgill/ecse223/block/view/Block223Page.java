@@ -31,11 +31,14 @@ import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
 public class Block223Page extends Application{
 
+	private Image background;
+	
 	private Label loginError;
 	private Label registerError;
 	private Label gameSelectionError;
 
 	//LOGIN
+	private VBox loginPane;
 	private Scene loginScene;
 	private Label loginUsernameLabel;
 	private TextField loginUsernameField;
@@ -64,6 +67,7 @@ public class Block223Page extends Application{
 	private Button registerButton;
 
 	//GAME SELECTION
+	private VBox registerPane;
 	private Scene gameSelectionScene;
 	private VBox gameSelectionPane;
 	private HBox gameSelectionButtonRow;
@@ -86,10 +90,10 @@ public class Block223Page extends Application{
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {	
-		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 
 		//LOGIN SCENE
-		VBox loginPane = new VBox(20);	
+		loginPane = new VBox(20);	
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		loginPane.setAlignment(Pos.CENTER);
 		loginPane.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
@@ -142,7 +146,7 @@ public class Block223Page extends Application{
 		loginPane.getChildren().addAll(loginUsernameBox, loginPasswordBox, loginButton, loginCreateAccountLabel, createItButton, loginError);
 
 		//REGISTER
-		VBox registerPane = new VBox(20);
+		registerPane = new VBox(20);
 		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		registerPane.setAlignment(Pos.CENTER);
 		registerPane.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
@@ -232,6 +236,7 @@ public class Block223Page extends Application{
 		
 		//SELECTION GAME
 		gameSelectionPane = new VBox(20);
+		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//Buttons
@@ -305,12 +310,12 @@ public class Block223Page extends Application{
 		}
 	}
 	
-	private static String getResource(String res)
+	public static String getResource(String res)
 	{
 		return ClassLoader.getSystemResource(res).toString();
 	}
 
-	private static void buttonPressSound() {
+	public static void buttonPressSound() {
 		sound.setCycleCount(1);
 		sound.stop();
 		sound.play();
