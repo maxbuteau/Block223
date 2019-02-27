@@ -420,9 +420,9 @@ public class Block223Controller {
 		Block223 block223 = Block223Application.getBlock223();
 		String error = "";
 
-		User user = null;
+		User user;
+		Player player = new Player(playerPassword, block223);
 		try {
-			Player player = new Player(playerPassword, block223);
 			user = new User(username, block223, player);
 		} catch (RuntimeException e) {
 			error = e.getMessage();
@@ -430,6 +430,7 @@ public class Block223Controller {
 			if (error.equals("Cannot create due to duplicate username")) {
 				error = "The username has already been taken.";
 			}
+			player.delete();
 			throw new InvalidInputException(error);
 		}
 
@@ -448,7 +449,8 @@ public class Block223Controller {
 		if (Block223Application.getCurrentUserRole() != null) {
 			throw new InvalidInputException("Cannot login a user while a user is already logged in.");
 		}
-
+		
+		Block223Application.resetBlock223();
 		User user = User.getWithUsername(username);
 
 		if (user == null) {
@@ -463,7 +465,6 @@ public class Block223Controller {
 
 			if (rolePassword.equals(password)) {
 				Block223Application.setCurrentUserRole(role);
-				Block223Application.resetBlock223();
 				didMatch = true;
 			}
 		}
