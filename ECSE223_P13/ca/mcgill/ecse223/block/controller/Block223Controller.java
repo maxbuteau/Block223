@@ -32,9 +32,9 @@ public class Block223Controller {
 		Block223 block223 = Block223Application.getBlock223();
 		try {
 			Game newGame = new Game(name, 1, (Admin) admin, 1, 1, 1, 10, 10, block223);
-			block223.addGame(newGame);
 		}
 		catch(RuntimeException e) {
+			System.out.println();
 			if(e.equals("Cannot create due to duplicate name")) {
 				throw new InvalidInputException("The name of a game must be unique.");
 			}
@@ -95,6 +95,7 @@ public class Block223Controller {
 	public static void deleteGame(String name) throws InvalidInputException {
 		UserRole user = Block223Application.getCurrentUserRole();
 		Admin gameAdmin = Block223Application.getCurrentGame().getAdmin();
+		Block223 block223 = Block223Application.getBlock223();
 		if(!(user instanceof Admin)){
 			throw new InvalidInputException("Admin privileges are required to delete a game.");
 		}
@@ -102,9 +103,10 @@ public class Block223Controller {
 			throw new InvalidInputException("Only the admin who created the game can delete the game.");
 		}
 		try {
-			Game game = Block223Application.getBlock223().findGame(name);
+			Game game = Block223.findGame(name);
 			if(game !=null) {
 				game.delete();
+				Block223Persistence.save(block223);
 			}	
 		}catch(RuntimeException e){
 			throw new InvalidInputException(e.getMessage());
@@ -483,7 +485,6 @@ public class Block223Controller {
 	// ****************************
 	public static List<TOGame> getDesignableGames() throws InvalidInputException {
 		Block223 block223 = Block223Application.getBlock223();
-
 		UserRole admin = Block223Application.getCurrentUserRole();
 		if (!(admin instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to access game information.");
