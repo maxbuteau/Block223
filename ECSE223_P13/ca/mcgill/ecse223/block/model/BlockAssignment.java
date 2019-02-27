@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 
-// line 154 "../../../../../Block223.ump"
-public class BlockAssignment
+// line 77 "../../../../../Block223Persistence.ump"
+// line 157 "../../../../../Block223.ump"
+public class BlockAssignment implements Serializable
 {
 
   //------------------------
@@ -26,12 +28,12 @@ public class BlockAssignment
 
   public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
-    // line 160 "../../../../../Block223.ump"
-    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
-       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+    // line 163 "../../../../../Block223.ump"
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING)))
+       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING))+".");
        
-       if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
-       	 throw new RuntimeException("The vertical position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
+       if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+       	 throw new RuntimeException("The vertical position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
     // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     gridVerticalPosition = aGridVerticalPosition;
@@ -59,9 +61,9 @@ public class BlockAssignment
   public boolean setGridHorizontalPosition(int aGridHorizontalPosition)
   {
     boolean wasSet = false;
-    // line 169 "../../../../../Block223.ump"
-    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
-       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+    // line 172 "../../../../../Block223.ump"
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING)))
+       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING))+".");
     // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     wasSet = true;
@@ -71,9 +73,9 @@ public class BlockAssignment
   public boolean setGridVerticalPosition(int aGridVerticalPosition)
   {
     boolean wasSet = false;
-    // line 174 "../../../../../Block223.ump"
-    if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
-       	 throw new RuntimeException("The vertical position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
+    // line 177 "../../../../../Block223.ump"
+    if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+       	 throw new RuntimeException("The vertical position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
     // END OF UMPLE BEFORE INJECTION
     gridVerticalPosition = aGridVerticalPosition;
     wasSet = true;
@@ -193,5 +195,13 @@ public class BlockAssignment
             "  " + "level = "+(getLevel()!=null?Integer.toHexString(System.identityHashCode(getLevel())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "block = "+(getBlock()!=null?Integer.toHexString(System.identityHashCode(getBlock())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 80 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 8120926036616538272L ;
+
+  
 }

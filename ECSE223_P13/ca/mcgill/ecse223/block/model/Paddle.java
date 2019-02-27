@@ -2,10 +2,12 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 import java.util.*;
 
-// line 205 "../../../../../Block223.ump"
-public class Paddle
+// line 87 "../../../../../Block223Persistence.ump"
+// line 208 "../../../../../Block223.ump"
+public class Paddle implements Serializable
 {
 
   //------------------------
@@ -55,7 +57,7 @@ public class Paddle
   public boolean setMaxPaddleLength(int aMaxPaddleLength)
   {
     boolean wasSet = false;
-    // line 217 "../../../../../Block223.ump"
+    // line 220 "../../../../../Block223.ump"
     if(aMaxPaddleLength<1 || aMaxPaddleLength>400){
        	throw new RuntimeException("The maximum paddle length must be greater than 0 and no greater than 400");
        }
@@ -68,7 +70,7 @@ public class Paddle
   public boolean setMinPaddleLength(int aMinPaddleLength)
   {
     boolean wasSet = false;
-    // line 212 "../../../../../Block223.ump"
+    // line 215 "../../../../../Block223.ump"
     if(aMinPaddleLength<1){
        	throw new RuntimeException("The minimum paddle length must be greater than 0");
        }
@@ -110,5 +112,13 @@ public class Paddle
             "maxPaddleLength" + ":" + getMaxPaddleLength()+ "," +
             "minPaddleLength" + ":" + getMinPaddleLength()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 90 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 6895123766580505451L ;
+
+  
 }

@@ -2,10 +2,12 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 import java.util.*;
 
-// line 92 "../../../../../Block223.ump"
-public class Block
+// line 53 "../../../../../Block223Persistence.ump"
+// line 95 "../../../../../Block223.ump"
+public class Block implements Serializable
 {
 
   //------------------------
@@ -62,7 +64,7 @@ public class Block
   public boolean setRed(int aRed)
   {
     boolean wasSet = false;
-    // line 106 "../../../../../Block223.ump"
+    // line 109 "../../../../../Block223.ump"
     if (red < 0 || red > 255) {
        	throw new RuntimeException("Red must be between 0 and 255");
        	}
@@ -75,7 +77,7 @@ public class Block
   public boolean setGreen(int aGreen)
   {
     boolean wasSet = false;
-    // line 114 "../../../../../Block223.ump"
+    // line 117 "../../../../../Block223.ump"
     if (green < 0 || green > 255) {
        	throw new RuntimeException("Green must be between 0 and 255");
        	}
@@ -88,7 +90,7 @@ public class Block
   public boolean setBlue(int aBlue)
   {
     boolean wasSet = false;
-    // line 122 "../../../../../Block223.ump"
+    // line 125 "../../../../../Block223.ump"
     if (blue < 0 || blue > 255) {
        		throw new RuntimeException("Blue must be between 0 and 255");
        	}
@@ -101,7 +103,7 @@ public class Block
   public boolean setPoints(int aPoints)
   {
     boolean wasSet = false;
-    // line 130 "../../../../../Block223.ump"
+    // line 133 "../../../../../Block223.ump"
     if (points < 1 || points > 1000) {
        		throw new RuntimeException("Points must be between 1 and 1000");
        	}
@@ -277,6 +279,21 @@ public class Block
     }
   }
 
+  // line 59 "../../../../../Block223Persistence.ump"
+   public static  void reinitializeAutouniqueBlockID(List<Game> gamesList){
+    nextId = 0;
+		for (Game game : gamesList) {
+			List<Block> blocks = game.getBlocks();
+		
+			for (Block block : blocks) {
+			if (block.getId() > nextId) {
+				nextId = block.getId();
+			}
+		}
+		nextId++;
+		}
+  }
+
 
   public String toString()
   {
@@ -287,5 +304,13 @@ public class Block
             "blue" + ":" + getBlue()+ "," +
             "points" + ":" + getPoints()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 56 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 5332292624658907512L ;
+
+  
 }

@@ -14,6 +14,8 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import ca.mcgill.ecse223.block.controller.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
@@ -53,6 +55,8 @@ public class Block223Page extends Application{
 	private final double SCREEN_WIDTH = 500; // to be changed
 	private final double SCREEN_HEIGHT = 500; // to be changed
 
+	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
+	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -182,10 +186,12 @@ public class Block223Page extends Application{
 		
 		Pane pane = new Pane();
 		Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
+		buttonPressSound();
 		//change the values accordingly ^
 		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 		
 		
 		/* Louis' comment: Did a first draft of the QUIT label which can be found below.
@@ -198,5 +204,13 @@ public class Block223Page extends Application{
 	public static String getResource(String res)
 	{
 		return ClassLoader.getSystemResource(res).toString();
+	}
+	
+	public static void buttonPressSound() {
+		sound.setCycleCount(1);
+		sound.stop();
+		sound.play();
+		sound.setVolume(0.5);
+		
 	}
 }
