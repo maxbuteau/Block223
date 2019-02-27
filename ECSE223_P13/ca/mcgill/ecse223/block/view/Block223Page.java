@@ -188,7 +188,7 @@ public class Block223Page extends Application{
 		Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		buttonPressSound();
 		//change the values accordingly ^
-		primaryStage.setScene(scene);
+		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));

@@ -157,7 +157,7 @@ public class Block223Controller {
 				maxPaddleLength, minPaddleLength);
 	}
 
-public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
+	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
 		
 		if(!(Block223Application.getCurrentUserRole() instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to add a block.");
@@ -183,9 +183,8 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 			}
 		}
 		
-		Block block = null;
 		try {
-			block = new Block(red, green, blue, points, game);
+			 new Block(red, green, blue, points, game);
 		}
 		catch(RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
@@ -270,15 +269,15 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 			throws InvalidInputException {
 		
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required to place a block.");
+			throw new InvalidInputException("Admin privileges are required to position a block.");
 		}
 		
 		if(Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to place a block.");
+			throw new InvalidInputException("A game must be selected to position a block.");
 		}
 		
 		if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can place the block.");
+			throw new InvalidInputException("Only the admin who created the game can position a block.");
 		}
 		
 		Game game = Block223Application.getCurrentGame();
@@ -423,9 +422,9 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 		Block223 block223 = Block223Application.getBlock223();
 		String error = "";
 
-		User user = null;
+		User user;
+		Player player = new Player(playerPassword, block223);
 		try {
-			Player player = new Player(playerPassword, block223);
 			user = new User(username, block223, player);
 		} catch (RuntimeException e) {
 			error = e.getMessage();
@@ -433,6 +432,7 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 			if (error.equals("Cannot create due to duplicate username")) {
 				error = "The username has already been taken.";
 			}
+			player.delete();
 			throw new InvalidInputException(error);
 		}
 
@@ -451,7 +451,8 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 		if (Block223Application.getCurrentUserRole() != null) {
 			throw new InvalidInputException("Cannot login a user while a user is already logged in.");
 		}
-
+		
+		Block223Application.resetBlock223();
 		User user = User.getWithUsername(username);
 
 		if (user == null) {
@@ -466,7 +467,6 @@ public static void addBlock(int red, int green, int blue, int points) throws Inv
 
 			if (rolePassword.equals(password)) {
 				Block223Application.setCurrentUserRole(role);
-				Block223Application.resetBlock223();
 				didMatch = true;
 			}
 		}
