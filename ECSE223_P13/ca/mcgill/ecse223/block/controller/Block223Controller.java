@@ -419,6 +419,7 @@ public class Block223Controller {
 
 		Block223 block223 = Block223Application.getBlock223();
 		String error = "";
+
 		User user = null;
 		try {
 			Player player = new Player(playerPassword, block223);

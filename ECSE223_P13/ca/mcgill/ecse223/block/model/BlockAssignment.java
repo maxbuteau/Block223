@@ -29,8 +29,13 @@ public class BlockAssignment implements Serializable
   public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
     // line 163 "../../../../../Block223.ump"
+<<<<<<< HEAD
     if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING)))
        	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING))+".");
+=======
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+>>>>>>> branch 'master' of https://github.com/W2019-ECSE223/ecse223-group-project-p-13.git
        
        if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
        	 throw new RuntimeException("The vertical position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
@@ -62,8 +67,13 @@ public class BlockAssignment implements Serializable
   {
     boolean wasSet = false;
     // line 172 "../../../../../Block223.ump"
+<<<<<<< HEAD
     if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING)))
        	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING))+".");
+=======
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
+       	 throw new RuntimeException("The horizontal position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+>>>>>>> branch 'master' of https://github.com/W2019-ECSE223/ecse223-group-project-p-13.git
     // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     wasSet = true;
@@ -74,8 +84,13 @@ public class BlockAssignment implements Serializable
   {
     boolean wasSet = false;
     // line 177 "../../../../../Block223.ump"
+<<<<<<< HEAD
     if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)))
        	 throw new RuntimeException("The vertical position must be between 1 and "+ (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))+".");
+=======
+    if (aGridVerticalPosition <= 0 || aGridVerticalPosition > (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
+       	 throw new RuntimeException("The vertical position must be between 1 and "+ (Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING)+".");
+>>>>>>> branch 'master' of https://github.com/W2019-ECSE223/ecse223-group-project-p-13.git
     // END OF UMPLE BEFORE INJECTION
     gridVerticalPosition = aGridVerticalPosition;
     wasSet = true;
