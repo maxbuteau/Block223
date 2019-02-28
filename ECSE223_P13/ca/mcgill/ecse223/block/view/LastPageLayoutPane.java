@@ -90,7 +90,7 @@ public class LastPageLayoutPane extends Pane {
 		nextLvl.setFitHeight(spacing*4);
 		nextLvl.setFitWidth(spacing*4);
 		level = new Label("Level 1");
-		level.setStyle("-fx-font:20 Garamond;");
+		level.setStyle("-fx-font:24 Garamond; -fx-text-fill: white;-fx-font-weight: bold;");
 		level.setTranslateY(spacing*5/4);
 		changeLevel.getChildren().addAll(previousLvl, level, nextLvl);
 		

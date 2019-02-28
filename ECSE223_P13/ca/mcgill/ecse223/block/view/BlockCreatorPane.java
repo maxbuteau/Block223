@@ -36,7 +36,7 @@ public class BlockCreatorPane extends VBox {
 	private Label errorMessage;
 	
 	public BlockCreatorPane(double spacing) {
-		
+		this.setStyle("-fx-background-color: white;");
 		blockCreatorLabel = new Label("Create Block");
 		
 		blockCreatorColor = new HBox(spacing/2);
@@ -82,8 +82,8 @@ public class BlockCreatorPane extends VBox {
 		this.getChildren().addAll(blockCreatorLabel, blockCreatorColor, blockCreatorWorth, createBlock, errorMessage);
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(spacing);
-		this.setBorder(new Border(new BorderStroke(Color.BLACK, 
-	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
+	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
 		this.setPadding(new Insets(spacing, spacing, spacing, spacing));
 		setStyles();
 	}
@@ -93,7 +93,7 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorWorthLabel.setStyle("-fx-font:15 Garamond;");
 		blockCreatorLabel.setStyle("-fx-font:23 Garamond;");
 		createBlock.setStyle("-fx-font:23 Garamond;");
-		
+this.setOpacity(0.75);
 	}
 	
 

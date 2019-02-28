@@ -3,6 +3,7 @@ package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOGame;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -24,13 +25,14 @@ import javafx.scene.paint.Color;
 public class SettingsPane extends Pane{
 
 	//Define the constant values
-	private final int MAX_BLOCKS = 1000; //change
-	private final int MIN_BLOCKS = 0;
-	private final int MAX_LEVELS = 99;
-	private final int MIN_LEVELS = 1;
+	private final TOConstant constants = Block223Controller.getConstants();
+	private final int MAX_BLOCKS = constants.getMaxHorizontalBlocks()*constants.getMaxVerticalBlocks(); //change
+	private final int MIN_BLOCKS = 1;
+	private final int MAX_LEVELS = constants.getMaxNrLevels();
+	private final int MIN_LEVELS = constants.getMinNrLevels();
 	private final double MAX_INCR = 5; //arbitrarily set the max to 5
 	private final double MIN_INCR = 0;
-	private final double MAX_PADDLE = 400; //maximum is the play area size, but that wouldnt be very fun
+	private final double MAX_PADDLE = constants.getPlayAreaSide();
 	private final double MIN_PADDLE = 1; //arbitrarily set the minimum length to 1 pixel
 	private final double MAX_SPEED = 200; //maximum speed arbitrarily set to 200pix/s
 	private final double MIN_SPEED = 1; //arbitrarily set the minimum speed to 1 pixel/second
@@ -75,13 +77,14 @@ public class SettingsPane extends Pane{
 	private double spacing;
 	
 	SettingsPane(TOGame game, double spacing){
+		this.setStyle("-fx-background-color: white;");
 		//initialize sliders with their last saved values as default value
 		minYSpeedSlider = new Slider(MIN_SPEED, MAX_SPEED, game.getMinBallSpeedY());
 		minXSpeedSlider = new Slider(MIN_SPEED, MAX_SPEED, game.getMinBallSpeedX());
 		maxPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMaxPaddleLength());
 		minPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMinPaddleLength());
 		increasingFactorSlider = new Slider(MIN_INCR, MAX_INCR, game.getBallSpeedIncreaseFactor());
-		nrLevelsSlider = new Slider(MIN_LEVELS, MAX_LEVELS, game.getNrLevels());
+		nrLevelsSlider = new Slider(MIN_LEVELS, MAX_LEVELS, game.getNrLevels()+1);
 		nrBlocksSlider = new Slider(MIN_BLOCKS, MAX_BLOCKS, game.getNrBlocksPerLevel());
 		
 		//initialize the labels
@@ -146,6 +149,13 @@ public class SettingsPane extends Pane{
 		
 		//we'll use a separate method to set the styles
 		setStyles();
+		try {
+			Block223Controller.setGameDetails((int)nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
+					(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
+					(int)minPaddleSlider.getValue(), (int)maxPaddleSlider.getValue());
+		} catch (InvalidInputException e1) {
+			errorMsg.setText(e1.getMessage());
+		}
 	
 	}
 
@@ -157,8 +167,9 @@ public class SettingsPane extends Pane{
 		errorMsg.setStyle("-fx-font:23 Garamond;-fx-text-fill: #FF0000");
 		save.setStyle("-fx-font:16 Garamond;");
 		//this.setStyle("-fx-border-color: black");
-		this.setBorder(new Border(new BorderStroke(Color.BLACK, 
-	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
+	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
+		this.setOpacity(0.75);
 		
 	}
 
