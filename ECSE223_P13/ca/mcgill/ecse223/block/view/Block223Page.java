@@ -30,6 +30,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.Toolkit;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.application.Block223Application;
@@ -90,9 +91,12 @@ public class Block223Page extends Application{
 	private Button toolboxColorPickerButton;
 	private Scene toolboxScene;	
 	private static Pane selectedPane = new Pane();
+	
+	//DESIGN PAGE
+	private Scene gameDesignScene;
 
-	private final double SCREEN_WIDTH = 500; // to be changed
-	private final double SCREEN_HEIGHT = 500; // to be changed
+	private final double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	private final double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 60;
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
@@ -105,7 +109,7 @@ public class Block223Page extends Application{
 	public void start(Stage primaryStage) throws Exception {	
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		primaryStage.setResizable(false);
-		primaryStage.setFullScreen(true);
+
 		//LOGIN SCENE
 		VBox loginPane = new VBox(20);	
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
@@ -123,6 +127,11 @@ public class Block223Page extends Application{
 		loginPasswordBox.setAlignment(Pos.CENTER);
 		loginPasswordLabel = new Label("Password : ");
 		loginPasswordField = new PasswordField();
+		loginPasswordField.setOnKeyPressed(e -> {
+			if(e.getCode().equals(KeyCode.ENTER)) {
+				loginButton.fire();
+			}
+		});
 		loginPasswordBox.getChildren().addAll(loginPasswordLabel, loginPasswordField);
 
 		loginButton = new Button("Login");
@@ -174,7 +183,7 @@ public class Block223Page extends Application{
 		HBox registerUsernamePlayer = new HBox(10);
 		registerUsernamePlayerLabel = new Label("Username : ");
 		registerUsernamePlayerField = new TextField();
-		registerUsernamePlayerField.setOnKeyPressed(e -> registerUsernameAdminField.setText(registerUsernamePlayerField.getText()));
+		registerUsernamePlayerField.setOnKeyReleased(e -> registerUsernameAdminField.setText(registerUsernamePlayerField.getText()));
 		registerUsernamePlayer.getChildren().addAll(registerUsernamePlayerLabel, registerUsernamePlayerField);
 		HBox registerPasswordPlayer = new HBox(10);
 		registerPasswordPlayerLabel = new Label("Password : ");
@@ -254,7 +263,6 @@ public class Block223Page extends Application{
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		primaryStage.setFullScreen(true);
 		//Buttons
 		gameSelectionButtonRow = new HBox(20);
 		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
@@ -321,7 +329,6 @@ public class Block223Page extends Application{
 		gameSelectionList.setItems(gameSelectionListData);
 		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow, gameSelectionError);
 		primaryStage.setScene(gameSelectionScene);
-		primaryStage.setFullScreen(true);
 		primaryStage.setResizable(false);
 	}
 
@@ -331,85 +338,11 @@ public class Block223Page extends Application{
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 
-		primaryStage.setScene(new Scene(l));
-		primaryStage.setFullScreen(true);
+		gameDesignScene = new Scene(l, SCREEN_WIDTH, SCREEN_HEIGHT); 
+		primaryStage.setScene(gameDesignScene);
 		primaryStage.setResizable(false);
 		
 	}
-	private void setToolboxPane() {
-		Stage toolboxStage = new Stage();
-		toolboxBox = new VBox(20);
-		Label toolboxLabel = new Label("Block toolbox");
-		toolboxLabel.setTranslateX(SCREEN_WIDTH/6);
-
-		//Color picker
-		ColorPicker toolboxColorPicker = new ColorPicker();
-
-		//Slider worth
-		Slider toolboxWorthSlider = new Slider(1,1000, 500); //need to get min and max from block.java
-
-		//grid of blocks for toolbox
-		TilePane blockTilePane = new TilePane();
-		blockTilePane.setPadding(new Insets(30, 0, 30, 0));
-		blockTilePane.setVgap(20);
-		blockTilePane.setHgap(20);
-		blockTilePane.setAlignment(Pos.CENTER);
-		blockTilePane.setPrefColumns(4);
-		try {
-			List<TOBlock> toBlocks = Block223Controller.getBlocksOfCurrentDesignableGame();
-			for(TOBlock toBlock : toBlocks) {
-				//Getting block color for each block
-				Color blockColor = new Color(toBlock.getRed(), toBlock.getGreen(), toBlock.getBlue(), 100);
-				Pane toBlockPane = new Pane();
-				toBlockPane.setBackground(new Background(new BackgroundFill(blockColor, CornerRadii.EMPTY, Insets.EMPTY)));
-
-				//Getting worth and id for each block
-				Label toBlockId = new Label(String.valueOf(toBlock.getId()));
-				Label toBlockWorth = new Label(String.valueOf(toBlock.getPoints()));
-
-				//Adding color, worth, and id for each block in tile
-				blockTilePane.getChildren().addAll(toBlockPane, toBlockId, toBlockWorth);
-
-				//Adding shadow to selected block in toolbox
-				toBlockPane.setOnMouseClicked(ciao -> {
-					selectedPane.setEffect(null);
-					DropShadow dropShadow = new DropShadow();
-					dropShadow.setRadius(10);
-					dropShadow.setColor(Color.CHARTREUSE);
-					toBlockPane.setEffect(dropShadow);
-					selectedPane = toBlockPane;
-
-
-				}
-						);
-				//change selected block color
-				toolboxColorPicker.setOnMouseClicked(colorEvent -> {
-					BackgroundFill slectedColor = new BackgroundFill(toolboxColorPicker.getValue(),CornerRadii.EMPTY, Insets.EMPTY);
-					toBlockPane.setBackground(new Background(slectedColor));
-				});
-
-				//change selected block worth
-				toolboxWorthSlider.setOnMouseDragged(worthEvent -> {
-					toolboxWorthSlider.getValue();
-				});
-
-			}
-		} catch (InvalidInputException e1) {
-			e1.printStackTrace();
-		}
-
-		toolboxDeleteButton = new Button("Delete block");
-		toolboxColorPickerButton = new Button("Select block color");
-		toolboxBox.getChildren().addAll(blockTilePane, toolboxDeleteButton, toolboxColorPickerButton);
-
-		toolboxScene = new Scene(toolboxBox, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6);
-		toolboxStage.setScene(toolboxScene);
-		toolboxStage.show();
-		toolboxStage.setAlwaysOnTop(true);
-		toolboxStage.setResizable(false);
-		toolboxButton.setDisable(true);
-	}
-
 
 	private void refreshGameSelection() {
 		gameSelectionList.getItems().clear();
@@ -439,6 +372,10 @@ public class Block223Page extends Application{
 
 	public static ChosenBlock getChosenBlock() {
 		return chosenBlock;
+	}
+	
+	public static void setChosenBlock(String id) {
+		chosenBlock = new ChosenBlock(id);
 	}
 }
 

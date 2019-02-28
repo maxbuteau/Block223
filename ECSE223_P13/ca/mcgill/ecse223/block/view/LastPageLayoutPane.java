@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class LastPageLayoutPane extends Pane {
 
 	// Define the class nodes and containers:
-	private Text error;
+	private Label error;
 	private DesignGridPane designPane;
 	private BlockCreatorPane blockPane;
 	private SettingsPane settingsPane;
@@ -60,7 +60,7 @@ public class LastPageLayoutPane extends Pane {
 		changeLevel = new HBox();
 		levelAndBlockContainer = new VBox(spacing*2);
 		motherContainer = new HBox(spacing*3);
-		error = new Text("                                                                           ");
+		error = new Label("");
 		error.setStyle("-fx-text-fill: #DC143C;");
 
 		// Everything is now initialized. Call a method to paint the pane.
@@ -153,7 +153,6 @@ public class LastPageLayoutPane extends Pane {
 		VBox fullCont = new VBox(spacing);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
-		primaryStage.setFullScreen(true);
 
 	}
 	

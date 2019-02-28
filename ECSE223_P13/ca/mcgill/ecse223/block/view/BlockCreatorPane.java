@@ -2,6 +2,7 @@ package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.model.Block;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -36,6 +37,8 @@ public class BlockCreatorPane extends VBox {
 	private Label errorMessage;
 	
 	public BlockCreatorPane(double spacing) {
+		TOConstant constants = Block223Controller.getConstants();
+		
 		this.setStyle("-fx-background-color: white;");
 		blockCreatorLabel = new Label("Create Block");
 		
@@ -53,7 +56,7 @@ public class BlockCreatorPane extends VBox {
 		
 		blockCreatorWorth = new HBox(spacing/2);
 		blockCreatorWorthLabel = new Label("Worth : ");
-		blockCreatorWorthSlider = new Slider(Block.MIN_POINTS, Block.MAX_POINTS, (Block.MAX_POINTS+Block.MIN_POINTS)/2);
+		blockCreatorWorthSlider = new Slider(constants.getMinPoints(), constants.getMaxPoints(), (constants.getMaxPoints()+constants.getMinPoints())/2);
 		blockCreatorWorthSlider.valueProperty().addListener(e -> {
 			createBlock.setText(""+(int)blockCreatorWorthSlider.getValue());
 			sliderValue.setText(""+(int)blockCreatorWorthSlider.getValue());
@@ -63,16 +66,17 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorWorth.setPrefWidth(spacing*12);
 		
 		createBlock = new Button(""+(int)blockCreatorWorthSlider.getValue());
-		createBlock.setMinWidth(4*Block.SIZE);
-		createBlock.setMinHeight(4*Block.SIZE);
+		createBlock.setMinWidth(4*constants.getSize());
+		createBlock.setMinHeight(4*constants.getSize());
 		createBlock.setOnAction(e -> {
 			Color color = blockCreatorColorPicker.getValue();
 			try {
-				Block223Controller.addBlock((int)color.getRed(), (int)color.getGreen(), (int)color.getBlue(), (int) blockCreatorWorthSlider.getValue());
+				Block223Controller.addBlock((int)(color.getRed()*255), (int)(color.getGreen()*255), (int)(color.getBlue()*255), (int)blockCreatorWorthSlider.getValue());
 			}
 			catch(InvalidInputException iie) {
 				errorMessage.setText(iie.getMessage());
 			}
+			ToolboxView.refreshToolbox();
 		});
 		
 		errorMessage = new Label();
@@ -93,7 +97,7 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorWorthLabel.setStyle("-fx-font:15 Garamond;");
 		blockCreatorLabel.setStyle("-fx-font:23 Garamond;");
 		createBlock.setStyle("-fx-font:23 Garamond;");
-this.setOpacity(0.75);
+		this.setOpacity(0.75);
 	}
 	
 
