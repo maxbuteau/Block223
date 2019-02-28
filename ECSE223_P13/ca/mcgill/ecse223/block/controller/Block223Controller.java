@@ -32,6 +32,7 @@ public class Block223Controller {
 		Block223 block223 = Block223Application.getBlock223();
 		try {
 			Game newGame = new Game(name, 1, (Admin) admin, 1, 1, 1, 10, 10, block223);
+			block223.addGame(newGame);
 		}
 		catch(RuntimeException e) {
 			System.out.println();
@@ -119,6 +120,7 @@ public class Block223Controller {
 			throw new InvalidInputException("Admin privileges are required to select a game.");
 
 		Game game = Block223.findGame(name);
+		System.out.println(game.getName());
 		if (game == null)
 			throw new InvalidInputException("Game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
@@ -509,7 +511,6 @@ public class Block223Controller {
 
 	public static TOGame getCurrentDesignableGame() {
 		Game game = Block223Application.getCurrentGame();
-
 		TOGame toGame = new TOGame(game.getName(), game.getLevels().size(), game.getNrBlocksPerLevel(),
 				game.getBall().getMinBallSpeedX(), game.getBall().getMinBallSpeedY(),
 				game.getBall().getBallSpeedIncreaseFactor(), game.getPaddle().getMaxPaddleLength(),

@@ -41,11 +41,11 @@ public class LastPageLayoutPane extends Pane {
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
-		// TOGame game = Block223Application.getDesignableGame();
+		 TOGame game = Block223Controller.getCurrentDesignableGame();
 
 		this.spacing = spacing;
 		// Test game for now
-		game = new TOGame("name", 5, 5, 5, 5, 5, 5, 7);
+		//game = new TOGame("name", 5, 5, 5, 5, 5, 5, 7);
 		// Instantiate all fields
 
 		designPane = new DesignGridPane(currentLvl, this);
@@ -59,7 +59,7 @@ public class LastPageLayoutPane extends Pane {
 		blockToolbox.setStyle("-fx-font:18 Garamond;");
 		changeLevel = new HBox();
 		levelAndBlockContainer = new VBox(spacing*2);
-		motherContainer = new HBox(spacing*4);
+		motherContainer = new HBox(spacing*3);
 		error = new Text("                                                                           ");
 		error.setStyle("-fx-text-fill: #DC143C;");
 
@@ -127,7 +127,7 @@ public class LastPageLayoutPane extends Pane {
 			blockToolboxStage = new Stage();
 			blockToolboxStage.setAlwaysOnTop(true);
 			blockToolboxStage.initOwner(primaryStage);
-			blockToolboxStage.setScene(new Scene(new BlockToolboxPane()));
+			blockToolboxStage.setScene(new Scene(new ToolboxView()));
 			blockToolboxStage.setResizable(false);
 			blockToolboxStage.show();
 			blockToolbox.setDisable(true);
@@ -150,7 +150,7 @@ public class LastPageLayoutPane extends Pane {
 		});
 		HBox lowerButts = new HBox(spacing*15);
 		lowerButts.getChildren().addAll(error, saveGame, quitLabel);
-		VBox fullCont = new VBox(spacing*2);
+		VBox fullCont = new VBox(spacing);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
 

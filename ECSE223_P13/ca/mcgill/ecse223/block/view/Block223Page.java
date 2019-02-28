@@ -104,7 +104,8 @@ public class Block223Page extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {	
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
-
+		primaryStage.setResizable(false);
+		primaryStage.setMaximized(true);
 		//LOGIN SCENE
 		VBox loginPane = new VBox(20);	
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
@@ -173,7 +174,7 @@ public class Block223Page extends Application{
 		HBox registerUsernamePlayer = new HBox(10);
 		registerUsernamePlayerLabel = new Label("Username : ");
 		registerUsernamePlayerField = new TextField();
-		registerUsernamePlayerField.setOnKeyTyped(e -> registerUsernameAdminField.setText(registerUsernamePlayerField.getText()));
+		registerUsernamePlayerField.setOnKeyPressed(e -> registerUsernameAdminField.setText(registerUsernamePlayerField.getText()));
 		registerUsernamePlayer.getChildren().addAll(registerUsernamePlayerLabel, registerUsernamePlayerField);
 		HBox registerPasswordPlayer = new HBox(10);
 		registerPasswordPlayerLabel = new Label("Password : ");
@@ -249,8 +250,12 @@ public class Block223Page extends Application{
 
 		//SELECTION GAME
 		gameSelectionPane = new VBox(20);
+		
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		primaryStage.setMaximized(true);
 		//Buttons
 		gameSelectionButtonRow = new HBox(20);
 		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
@@ -292,10 +297,21 @@ public class Block223Page extends Application{
 		});
 
 		gameSelectionUpdateGameButton = new Button("Update");
+		gameSelectionUpdateGameButton.setOnAction(e->{
+			try {
+				Block223Controller.selectGame(gameSelectionList.getSelectionModel().getSelectedItem());
+			} catch (InvalidInputException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			setGameUpdateScene(primaryStage, 20, loginScene);
+		});
 		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton);
 
 		//List
 		gameSelectionList = new ListView<String>();
+		gameSelectionList.setStyle("-fx-background-color: transparent;");
+		gameSelectionPane.setPadding(new Insets(20,20,20,20));
 		gameSelectionListData = FXCollections.observableArrayList();
 
 		//error
@@ -306,10 +322,20 @@ public class Block223Page extends Application{
 		gameSelectionList.setItems(gameSelectionListData);
 		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow, gameSelectionError);
 
+		primaryStage.setResizable(false);
 		primaryStage.setScene(gameSelectionScene);
 	}
 
 
+	private void setGameUpdateScene(Stage primaryStage, double spacing, Scene login) {
+		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing, login);
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		primaryStage.setMaximized(true);
+		primaryStage.setResizable(false);
+		primaryStage.setScene(new Scene(l));
+		
+	}
 	private void setToolboxPane() {
 		Stage toolboxStage = new Stage();
 		toolboxBox = new VBox(20);
@@ -398,7 +424,7 @@ public class Block223Page extends Application{
 		}
 	}
 
-	private static String getResource(String res)
+	public static String getResource(String res)
 	{
 		return ClassLoader.getSystemResource(res).toString();
 	}

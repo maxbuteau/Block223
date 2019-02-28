@@ -2,6 +2,7 @@ package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.model.Ball;
 import ca.mcgill.ecse223.block.model.Block;
 import ca.mcgill.ecse223.block.model.Game;
@@ -17,38 +18,37 @@ import javafx.stage.Stage;
 
 public class DesignGridPane extends GridPane {
 
-	private static final int MAX_HORIZONTAL_BLOCKS = (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING));
-	private static final int MAX_VERTICAL_BLOCKS = (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING));
 	private static final int OUTLINE_WIDTH = 3;
+	private int initialX = 0;
+	private int initialY = 0;
 	
 	public DesignGridPane(int level, LastPageLayoutPane lastPageLayoutPane) {
-		this.setPrefSize(390, 390);
+		TOConstant toConstants = Block223Controller.getConstants();
 		
-		GridPane grid = new GridPane();
-		grid.setHgap(Game.COLUMNS_PADDING);
-		grid.setVgap(Game.ROW_PADDING);
-		grid.setPadding(new Insets(Game.WALL_PADDING));
+		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide());
+		this.setHgap(toConstants.getColumnsPadding());
+		this.setVgap(toConstants.getRowPadding());
+		this.setPadding(new Insets(toConstants.getWallPadding()));
 
-		int initialX;
-		int initialY;
 		
-		for (int i = 0; i < MAX_HORIZONTAL_BLOCKS; i++) {
-			for (int j = 0; j < MAX_VERTICAL_BLOCKS; j++) {
+		
+		for (int i = 0; i < toConstants.getMaxHorizontalBlocks(); i++) {
+			for (int j = 0; j < toConstants.getMaxVerticalBlocks(); j++) {
 				Rectangle blockBox = new Rectangle();
-				blockBox.setWidth(Block.SIZE);
-				blockBox.setHeight(Block.SIZE);
+				blockBox.setWidth(toConstants.getSize());
+				blockBox.setHeight(toConstants.getSize());
 				blockBox.setFill(Color.WHITE);
 				blockBox.setStroke(Color.BLACK);
 				blockBox.setStrokeWidth(OUTLINE_WIDTH);
-				grid.add(blockBox, i, j);
+				this.add(blockBox, i, j);
 				blockBox.setOnMouseClicked(e -> {		
 					if(e.getButton() == MouseButton.PRIMARY) {
 						ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 						if (chosenBlock != null) {
 							Object o = e.getSource();
 							Rectangle clickedRectangle = (Rectangle) o;
-							int x = grid.getRowIndex(clickedRectangle);
-							int y = grid.getColumnIndex(clickedRectangle);
+							int x = this.getRowIndex(clickedRectangle);
+							int y = this.getColumnIndex(clickedRectangle);
 							try {
 								Block223Controller.positionBlock(chosenBlock.getId(), level, x+1, y+1);
 							} catch (InvalidInputException e1) {
@@ -60,8 +60,8 @@ public class DesignGridPane extends GridPane {
 					if(e.getButton() == MouseButton.SECONDARY) {
 						Object o = e.getSource();
 						Rectangle clickedRectangle = (Rectangle) o;
-						int x = grid.getRowIndex(clickedRectangle);
-						int y = grid.getColumnIndex(clickedRectangle);
+						int x = this.getRowIndex(clickedRectangle);
+						int y = this.getColumnIndex(clickedRectangle);
 						try {
 							Block223Controller.removeBlock(level, x+1, y+1);
 						} catch (InvalidInputException e1) {
@@ -72,8 +72,8 @@ public class DesignGridPane extends GridPane {
 				blockBox.setOnDragDetected(e -> {
 					Object o = e.getSource();
 					Rectangle clickedRectangle = (Rectangle) o;
-					int x = grid.getRowIndex(clickedRectangle);
-					int y = grid.getColumnIndex(clickedRectangle);
+					int x = this.getRowIndex(clickedRectangle);
+					int y = this.getColumnIndex(clickedRectangle);
 					initialX = x+1;
 					initialY = y+1;
 				});
@@ -81,8 +81,8 @@ public class DesignGridPane extends GridPane {
 				blockBox.setOnDragDropped(e -> {
 					Object o = e.getSource();
 					Rectangle clickedRectangle = (Rectangle) o;
-					int x = grid.getRowIndex(clickedRectangle);
-					int y = grid.getColumnIndex(clickedRectangle);
+					int x = this.getRowIndex(clickedRectangle);
+					int y = this.getColumnIndex(clickedRectangle);
 					try {
 						Block223Controller.moveBlock(level, initialX, initialY, x, y);
 					} catch (InvalidInputException e1) {
