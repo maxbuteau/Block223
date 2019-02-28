@@ -2,6 +2,7 @@ package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.model.Ball;
 import ca.mcgill.ecse223.block.model.Block;
 import ca.mcgill.ecse223.block.model.Game;
@@ -17,26 +18,26 @@ import javafx.stage.Stage;
 
 public class DesignGidPane extends GridPane {
 
-	private static final int MAX_HORIZONTAL_BLOCKS = (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING));
-	private static final int MAX_VERTICAL_BLOCKS = (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING));
 	private static final int OUTLINE_WIDTH = 3;
 	
 	public DesignGidPane(int level, LastPageLayoutPane lastPageLayoutPane) {
+		TOConstant toConstants = Block223Controller.getConstants();
+		
 		this.setPrefSize(390, 390);
 		
 		GridPane grid = new GridPane();
-		grid.setHgap(Game.COLUMNS_PADDING);
-		grid.setVgap(Game.ROW_PADDING);
-		grid.setPadding(new Insets(Game.WALL_PADDING));
+		grid.setHgap(toConstants.getColumnsPadding());
+		grid.setVgap(toConstants.getRowPadding());
+		grid.setPadding(new Insets(toConstants.getWallPadding()));
 
 		int initialX;
 		int initialY;
 		
-		for (int i = 0; i < MAX_HORIZONTAL_BLOCKS; i++) {
-			for (int j = 0; j < MAX_VERTICAL_BLOCKS; j++) {
+		for (int i = 0; i < toConstants.getMaxHorizontalBlocks(); i++) {
+			for (int j = 0; j < toConstants.getMaxVerticalBlocks(); j++) {
 				Rectangle blockBox = new Rectangle();
-				blockBox.setWidth(Block.SIZE);
-				blockBox.setHeight(Block.SIZE);
+				blockBox.setWidth(toConstants.getSize());
+				blockBox.setHeight(toConstants.getSize());
 				blockBox.setFill(Color.WHITE);
 				blockBox.setStroke(Color.BLACK);
 				blockBox.setStrokeWidth(OUTLINE_WIDTH);
