@@ -34,3 +34,21 @@ class TOUserMode {
   Mode mode;
 }
 
+class TOConstant {
+  Integer minNrLevels;
+   Integer maxNrLevels;
+   Integer playAreaSide;
+  Integer wallPadding;
+   Integer columnsPadding;
+   Integer rowPadding;
+   Integer minColor;
+   Integer maxColor;
+   Integer minPoints;
+   Integer maxPoints;
+   Integer size;
+   Integer ballDiameter;
+   Integer paddleWidth;
+   Integer verticalDistance;
+   Integer maxHorizontalBlocks;
+   Integer maxVerticalBlocks;
+}

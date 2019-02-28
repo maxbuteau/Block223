@@ -614,5 +614,26 @@ public class Block223Controller {
 		}
 		return null;
 	}
+	
+	public static TOConstant getConstants() {
+		return new TOConstant(
+				Game.MIN_NR_LEVELS,
+				Game.MAX_NR_LEVELS,
+				Game.PLAY_AREA_SIDE,
+				Game.WALL_PADDING,
+				Game.COLUMNS_PADDING,
+				Game.ROW_PADDING, 
+				Block.MIN_COLOR,
+				Block.MAX_COLOR,
+				Block.MIN_POINTS,
+				Block.MAX_POINTS,
+				Block.SIZE,
+				Ball.BALL_DIAMETER,
+				Paddle.PADDLE_WIDTH,
+				Paddle.VERTICAL_DISTANCE,
+				(1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING)),
+				(1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING))
+				);
+	}
 
 }

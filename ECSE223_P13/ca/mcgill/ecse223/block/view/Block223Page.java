@@ -414,20 +414,6 @@ public class Block223Page extends Application{
 	public static ChosenBlock getChosenBlock() {
 		return chosenBlock;
 	}
-
-	private class ChosenBlock{
-		private int id;
-
-		public ChosenBlock(String id) {
-			this.id = Integer.parseInt(id);
-		}
-
-		public int getId() {
-			return id;
-		}
-
-	}
-
 }
 
 class ChosenBlock {
