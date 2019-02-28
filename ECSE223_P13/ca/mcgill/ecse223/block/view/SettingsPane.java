@@ -72,7 +72,9 @@ public class SettingsPane extends Pane{
 	//Save button
 	private Button save = new Button("Save parameters");
 	
-	SettingsPane(TOGame game){
+	private double spacing;
+	
+	SettingsPane(TOGame game, double spacing){
 		//initialize sliders with their last saved values as default value
 		minYSpeedSlider = new Slider(MIN_SPEED, MAX_SPEED, game.getMinBallSpeedY());
 		minXSpeedSlider = new Slider(MIN_SPEED, MAX_SPEED, game.getMinBallSpeedX());
@@ -99,25 +101,25 @@ public class SettingsPane extends Pane{
 		grid1.addColumn(0, increasingFactorLabel, minXSpeedLabel, minYSpeedLabel);
 		grid1.addColumn(1, increasingFactorSlider, minXSpeedSlider, minYSpeedSlider);
 		grid1.addColumn(2, increasingFactorValue, minXSpeedValue, minYSpeedValue);
-		grid1.setPadding(new Insets(8));
-		grid1.setHgap(3);
-		grid1.setVgap(2);
+		grid1.setPadding(new Insets(spacing/5*2));
+		grid1.setHgap(spacing/20*3);
+		grid1.setVgap(spacing/10);
 		
 		GridPane grid2 = new GridPane();
 		grid2.addColumn(0, minPaddleLabel, maxPaddleLabel);
 		grid2.addColumn(1, minPaddleSlider, maxPaddleSlider);
 		grid2.addColumn(2, minPaddleValue, maxPaddleValue);
-		grid2.setPadding(new Insets(8));
-		grid2.setHgap(3);
-		grid2.setVgap(2);
+		grid2.setPadding(new Insets(spacing/5*2));
+		grid2.setHgap(spacing/20*3);
+		grid2.setVgap(spacing/10);
 		
 		GridPane grid3 = new GridPane();
 		grid3.addColumn(0, nrBlocksLabel, nrLevelsLabel);
 		grid3.addColumn(1, nrBlocksSlider, nrLevelsSlider);
 		grid3.addColumn(2, nrBlocksValue, nrLevelsValue);
-		grid3.setPadding(new Insets(8));
-		grid3.setHgap(3);
-		grid3.setVgap(2);
+		grid3.setPadding(new Insets(spacing/5*2));
+		grid3.setHgap(3/20*spacing);
+		grid3.setVgap(spacing/10);
 		
 		VBox v1 = new VBox();
 		v1.getChildren().addAll(ballParams, grid1);
@@ -128,14 +130,14 @@ public class SettingsPane extends Pane{
 		VBox v3 = new VBox();
 		v3.getChildren().addAll(paddleParams, grid2);
 		
-		HBox gameBox = new HBox(10);
-		gameBox.setPadding(new Insets(10,0,10,0));
+		HBox gameBox = new HBox(spacing/2);
+		gameBox.setPadding(new Insets(spacing/2,0,spacing/2,0));
 		gameBox.getChildren().addAll(gameName, gameTF);
 		
-		save.setTranslateX(100);
+		save.setTranslateX(spacing*5);
 		
-		VBox v4 = new VBox();
-		v4.setPadding(new Insets(20,20,20,20));
+		VBox v4 = new VBox(spacing*3/4);
+		v4.setPadding(new Insets(spacing,spacing,spacing,spacing));
 		v4.getChildren().addAll(gameBox, v1,v2,v3, errorMsg, save);
 		
 		this.getChildren().add(v4);
@@ -148,11 +150,12 @@ public class SettingsPane extends Pane{
 	}
 
 	private void setStyles() {
-		ballParams.setStyle("-fx-font:20 Garamond;");
-		levelParam.setStyle("-fx-font:20 Garamond;");
-		paddleParams.setStyle("-fx-font:20 Garamond;");
-		gameName.setStyle("-fx-font:20 Garamond;");
-		errorMsg.setStyle("-fx-font:20 Garamond;-fx-text-fill: #FF0000");
+		ballParams.setStyle("-fx-font:23 Garamond;");
+		levelParam.setStyle("-fx-font:23 Garamond;");
+		paddleParams.setStyle("-fx-font:23 Garamond;");
+		gameName.setStyle("-fx-font:23 Garamond;");
+		errorMsg.setStyle("-fx-font:23 Garamond;-fx-text-fill: #FF0000");
+		save.setStyle("-fx-font:16 Garamond;");
 		//this.setStyle("-fx-border-color: black");
 		this.setBorder(new Border(new BorderStroke(Color.BLACK, 
 	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
