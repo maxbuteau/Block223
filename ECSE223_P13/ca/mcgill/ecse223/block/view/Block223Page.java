@@ -105,7 +105,7 @@ public class Block223Page extends Application{
 	public void start(Stage primaryStage) throws Exception {	
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		primaryStage.setResizable(false);
-		primaryStage.setMaximized(true);
+		primaryStage.setFullScreen(true);
 		//LOGIN SCENE
 		VBox loginPane = new VBox(20);	
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
@@ -234,7 +234,6 @@ public class Block223Page extends Application{
 		buttonPressSound();
 		//change the values accordingly ^
 		primaryStage.setScene(loginScene);
-		primaryStage.setResizable(false);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 
@@ -255,7 +254,7 @@ public class Block223Page extends Application{
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		primaryStage.setMaximized(true);
+		primaryStage.setFullScreen(true);
 		//Buttons
 		gameSelectionButtonRow = new HBox(20);
 		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
@@ -321,9 +320,9 @@ public class Block223Page extends Application{
 		refreshGameSelection();
 		gameSelectionList.setItems(gameSelectionListData);
 		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow, gameSelectionError);
-
-		primaryStage.setResizable(false);
 		primaryStage.setScene(gameSelectionScene);
+		primaryStage.setFullScreen(true);
+		primaryStage.setResizable(false);
 	}
 
 
@@ -331,9 +330,10 @@ public class Block223Page extends Application{
 		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing, login);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		primaryStage.setMaximized(true);
-		primaryStage.setResizable(false);
+
 		primaryStage.setScene(new Scene(l));
+		primaryStage.setFullScreen(true);
+		primaryStage.setResizable(false);
 		
 	}
 	private void setToolboxPane() {

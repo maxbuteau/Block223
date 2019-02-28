@@ -153,6 +153,7 @@ public class LastPageLayoutPane extends Pane {
 		VBox fullCont = new VBox(spacing);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
+		primaryStage.setFullScreen(true);
 
 	}
 	
