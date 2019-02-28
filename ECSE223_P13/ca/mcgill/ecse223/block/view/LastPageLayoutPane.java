@@ -1,7 +1,10 @@
 package ca.mcgill.ecse223.block.view;
 
+import ca.mcgill.ecse223.block.controller.Block223Controller;
+import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOGame;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,15 +14,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LastPageLayoutPane extends Pane {
 
 	// Define the class nodes and containers:
-	private PlayAreaPane playPane;
+	private Text error;
+	private DesignGridPane designPane;
 	private BlockCreatorPane blockPane;
 	private SettingsPane settingsPane;
-	private Label quitLabel;
+	private Button quitLabel;
 	private HBox changeLevel;
 	private Button blockToolbox;
 	private Button saveGame;
@@ -31,54 +36,62 @@ public class LastPageLayoutPane extends Pane {
 	private Stage blockToolboxStage;
 
 	private int currentLvl = 1;
+	private double spacing;
 
 	// Default constructor that initializes said nodes and containers
-	public LastPageLayoutPane(Stage primaryStage, double spacing) {
+	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
 		// TOGame game = Block223Application.getDesignableGame();
 
+		this.spacing = spacing;
 		// Test game for now
 		game = new TOGame("name", 5, 5, 5, 5, 5, 5, 7);
 		// Instantiate all fields
 
-		playPane = new PlayAreaPane(currentLvl, game.getMinPaddleLength(), game.getMaxPaddleLength(),
-				game.getNrLevels());
+		designPane = new DesignGridPane(currentLvl, this);
 		blockPane = new BlockCreatorPane(spacing);
-		settingsPane = new SettingsPane(game);
-		quitLabel = new Label("QUIT");
+		settingsPane = new SettingsPane(game, spacing);
+		quitLabel = new Button("Log out");
+		quitLabel.setStyle("-fx-font:18 Garamond;");
 		saveGame = new Button("Save game");
+		saveGame.setStyle("-fx-font:18 Garamond;");
 		blockToolbox = new Button("Block Toolbox");
+		blockToolbox.setStyle("-fx-font:18 Garamond;");
 		changeLevel = new HBox();
-		levelAndBlockContainer = new VBox();
-		motherContainer = new HBox(75);
+		levelAndBlockContainer = new VBox(spacing*2);
+		motherContainer = new HBox(spacing*4);
+		error = new Text("                                                                           ");
+		error.setStyle("-fx-text-fill: #DC143C;");
 
 		// Everything is now initialized. Call a method to paint the pane.
-		paint(primaryStage);
+		paint(primaryStage, login);
 	}
 
 	// Paints the pane
-	private void paint(Stage primaryStage) {
+	private void paint(Stage primaryStage, Scene login) {
 
 		// Fill the containers with their subcontainers/nodes
-		motherContainer.getChildren().addAll(playPane, levelAndBlockContainer, settingsPane);
+		motherContainer.getChildren().addAll(designPane, levelAndBlockContainer, settingsPane);
 		levelAndBlockContainer.getChildren().addAll(blockPane, blockToolbox, changeLevel);
+		levelAndBlockContainer.setAlignment(Pos.CENTER);
+		changeLevel.setTranslateX(spacing*2);
 
 		// add some additional settings to them
-		motherContainer.setPadding(new Insets(40, 20, 40, 20));
-		levelAndBlockContainer.setPadding(new Insets(10));
+		motherContainer.setPadding(new Insets(spacing*2, spacing, 2*spacing, spacing));
+		levelAndBlockContainer.setPadding(new Insets(spacing/2));
 
 		// Create the change level feature
 		ImageView previousLvl = new ImageView(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/arrow.png"));
 		previousLvl.setRotate(270);
-		previousLvl.setFitHeight(80);
-		previousLvl.setFitWidth(80);
+		previousLvl.setFitHeight(spacing*4);
+		previousLvl.setFitWidth(spacing*4);
 		ImageView nextLvl = new ImageView(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/arrow.png"));
 		nextLvl.setRotate(90);
-		nextLvl.setFitHeight(80);
-		nextLvl.setFitWidth(80);
+		nextLvl.setFitHeight(spacing*4);
+		nextLvl.setFitWidth(spacing*4);
 		level = new Label("Level 1");
 		level.setStyle("-fx-font:20 Garamond;");
-		level.setTranslateY(25);
+		level.setTranslateY(spacing*5/4);
 		changeLevel.getChildren().addAll(previousLvl, level, nextLvl);
 		
 		//initialize the sfx
@@ -91,8 +104,7 @@ public class LastPageLayoutPane extends Pane {
 		previousLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl > 1) {
-				playPane = new PlayAreaPane(--currentLvl, game.getMinPaddleLength(), game.getMaxPaddleLength(),
-						game.getNrLevels());
+				designPane = new DesignGridPane(--currentLvl, this);
 				level.setText("Level "+currentLvl);
 			}
 			else {
@@ -103,8 +115,7 @@ public class LastPageLayoutPane extends Pane {
 		nextLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl < game.getNrLevels()) {
-				playPane = new PlayAreaPane(++currentLvl, game.getMinPaddleLength(), game.getMaxPaddleLength(),
-						game.getNrLevels());
+				designPane = new DesignGridPane(++currentLvl, this);
 				level.setText("Level "+currentLvl);
 			}
 			else {
@@ -124,16 +135,29 @@ public class LastPageLayoutPane extends Pane {
 				blockToolbox.setDisable(false);
 			});
 		});
-		
-		
-		
-		// TODO add images and make pretty, block toolbox, sound when clicking
+		quitLabel.setOnAction(e->{
+			Block223Controller.logout();
+			primaryStage.setScene(login);		
+		});
+		saveGame.setOnAction(e->{
+			try {
+				Block223Controller.saveGame();
+			} catch (InvalidInputException e1) {
+				errorSFX.stop();
+				errorSFX.play();
+				error.setText(e1.getMessage());
+			}
+		});
+		HBox lowerButts = new HBox(spacing*15);
+		lowerButts.getChildren().addAll(error, saveGame, quitLabel);
+		VBox fullCont = new VBox(spacing*2);
+		fullCont.getChildren().addAll(motherContainer, lowerButts);
+		this.getChildren().add(fullCont);
 
-		// Set the label style to the following:
-		quitLabel.setStyle(
-				"-fx-font:20 Garamond; -fx-padding:3px; -fx-text-fill: #DC143C; -fx-border-color:black;-fx-background-color:POWDERBLUE;-fx-font-weight:bold");
-		this.getChildren().add(motherContainer);
-
+	}
+	
+	public void setErrorMessage(String errorMsg) {
+		error.setText(errorMsg);
 	}
 
 }

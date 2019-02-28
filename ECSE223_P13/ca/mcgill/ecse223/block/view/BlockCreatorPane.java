@@ -3,11 +3,17 @@ package ca.mcgill.ecse223.block.view;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.model.Block;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -33,7 +39,8 @@ public class BlockCreatorPane extends VBox {
 		
 		blockCreatorLabel = new Label("Create Block");
 		
-		blockCreatorColor = new HBox(10);
+		blockCreatorColor = new HBox(spacing/2);
+		
 		blockCreatorColor.setAlignment(Pos.CENTER);
 		blockCreatorColorLabel =  new Label("Color : ");
 		blockCreatorColorPicker = new ColorPicker();
@@ -44,8 +51,7 @@ public class BlockCreatorPane extends VBox {
 		});
 		blockCreatorColor.getChildren().addAll(blockCreatorColorLabel, blockCreatorColorPicker);	
 		
-		blockCreatorWorth = new HBox(10);
-		blockCreatorWorth.setAlignment(Pos.CENTER);
+		blockCreatorWorth = new HBox(spacing/2);
 		blockCreatorWorthLabel = new Label("Worth : ");
 		blockCreatorWorthSlider = new Slider(Block.MIN_POINTS, Block.MAX_POINTS, (Block.MAX_POINTS+Block.MIN_POINTS)/2);
 		blockCreatorWorthSlider.valueProperty().addListener(e -> {
@@ -54,6 +60,7 @@ public class BlockCreatorPane extends VBox {
 		});
 		sliderValue = new Label(""+(int)blockCreatorWorthSlider.getValue());
 		blockCreatorWorth.getChildren().addAll(blockCreatorWorthLabel, blockCreatorWorthSlider, sliderValue);
+		blockCreatorWorth.setPrefWidth(spacing*12);
 		
 		createBlock = new Button(""+(int)blockCreatorWorthSlider.getValue());
 		createBlock.setMinWidth(4*Block.SIZE);
@@ -75,6 +82,20 @@ public class BlockCreatorPane extends VBox {
 		this.getChildren().addAll(blockCreatorLabel, blockCreatorColor, blockCreatorWorth, createBlock, errorMessage);
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(spacing);
+		this.setBorder(new Border(new BorderStroke(Color.BLACK, 
+	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+		this.setPadding(new Insets(spacing, spacing, spacing, spacing));
+		setStyles();
 	}
+
+	private void setStyles() {
+		blockCreatorColorLabel.setStyle("-fx-font:15 Garamond;");
+		blockCreatorWorthLabel.setStyle("-fx-font:15 Garamond;");
+		blockCreatorLabel.setStyle("-fx-font:23 Garamond;");
+		createBlock.setStyle("-fx-font:23 Garamond;");
+		
+	}
+	
+
 	
 }
