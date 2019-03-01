@@ -203,7 +203,7 @@ public class SettingsPane extends Pane{
 			try {
 				Block223Controller.updateGame(gameTF.getText(), (int)nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
-						(int)minPaddleSlider.getValue(), (int)maxPaddleSlider.getValue());
+						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
 			} catch (InvalidInputException e1) {
 				errorMsg.setText(e1.getMessage());
 			}
