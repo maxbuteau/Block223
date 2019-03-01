@@ -3,6 +3,8 @@ package ca.mcgill.ecse223.block.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.javafx.UnmodifiableArrayList;
+
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.Admin;
@@ -33,7 +35,7 @@ public class Block223Controller {
 
 		if(Block223.findGame(name) == null) {
 			Game newGame = new Game(name, 1, (Admin) admin, 1, 1, 1, 10, 10, block223);
-//			newGame.addLevel();
+			newGame.addLevel();
 		} else throw new InvalidInputException("The name of a game must be unique.");
 
 	}
@@ -70,16 +72,11 @@ public class Block223Controller {
 			if (minPaddleLength > maxPaddleLength)
 				throw new InvalidInputException("Min paddle length has to be smaller than the max.");
 
-			if (nrLevels < game.numberOfLevels()) {
-				ArrayList<Level> levels = (ArrayList<Level>) game.getLevels();
-				for (int a = 0; a < game.numberOfLevels() - nrLevels; a++) {
-					game.removeLevel(levels.get(levels.size() - 1));
-					levels.remove(levels.size() - 1);
+			List<Level> levels = game.getLevels();
+				while(nrLevels < game.numberOfLevels()) {
+					levels.get(levels.size()-1).delete();
 				}
-			}
-
-			else if (nrLevels > game.numberOfLevels()) {
-				for (int a = 0; a < nrLevels - game.numberOfLevels(); a++)
+				while(nrLevels > game.numberOfLevels()) {
 					game.addLevel();
 			}
 		} catch (RuntimeException ex) {

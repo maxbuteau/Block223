@@ -149,13 +149,6 @@ public class SettingsPane extends Pane{
 		
 		//we'll use a separate method to set the styles
 		setStyles();
-		try {
-			Block223Controller.setGameDetails((int)nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
-					(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
-					(int)minPaddleSlider.getValue(), (int)maxPaddleSlider.getValue());
-		} catch (InvalidInputException e1) {
-			errorMsg.setText(e1.getMessage());
-		}
 	
 	}
 

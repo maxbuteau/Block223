@@ -41,7 +41,7 @@ public class LastPageLayoutPane extends Pane {
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
-		 TOGame game = Block223Controller.getCurrentDesignableGame();
+		 this.game = Block223Controller.getCurrentDesignableGame();
 
 		this.spacing = spacing;
 		// Test game for now
@@ -117,6 +117,7 @@ public class LastPageLayoutPane extends Pane {
 			if (currentLvl < game.getNrLevels()) {
 				designPane = new DesignGridPane(++currentLvl, this);
 				level.setText("Level "+currentLvl);
+				
 			}
 			else {
 				errorSFX.play();
