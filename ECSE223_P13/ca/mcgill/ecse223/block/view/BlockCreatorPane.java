@@ -33,6 +33,7 @@ public class BlockCreatorPane extends VBox {
 	private Label sliderValue;
 	
 	private Button createBlock;
+	private Button addToToolBox;
 	
 	private Label errorMessage;
 	
@@ -68,7 +69,9 @@ public class BlockCreatorPane extends VBox {
 		createBlock = new Button(""+(int)blockCreatorWorthSlider.getValue());
 		createBlock.setMinWidth(4*constants.getSize());
 		createBlock.setMinHeight(4*constants.getSize());
-		createBlock.setOnAction(e -> {
+		
+		addToToolBox = new Button("Add Block");
+		addToToolBox.setOnAction(e -> {
 			Color color = blockCreatorColorPicker.getValue();
 			try {
 				Block223Controller.addBlock((int)(color.getRed()*255), (int)(color.getGreen()*255), (int)(color.getBlue()*255), (int)blockCreatorWorthSlider.getValue());
@@ -79,11 +82,12 @@ public class BlockCreatorPane extends VBox {
 			ToolboxView.refreshToolbox();
 		});
 		
+		
 		errorMessage = new Label();
 		errorMessage.setStyle("-fx-text-fill: #DC143C");
 		
 		
-		this.getChildren().addAll(blockCreatorLabel, blockCreatorColor, blockCreatorWorth, createBlock, errorMessage);
+		this.getChildren().addAll(blockCreatorLabel, blockCreatorColor, blockCreatorWorth, createBlock, addToToolBox, errorMessage);
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(spacing);
 		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
@@ -97,9 +101,11 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorWorthLabel.setStyle("-fx-font:15 Garamond;");
 		blockCreatorLabel.setStyle("-fx-font:23 Garamond;");
 		createBlock.setStyle("-fx-font:23 Garamond;");
+		addToToolBox.setStyle("-fx-font:15 Garamond");
 		this.setOpacity(0.75);
 	}
 	
 
 	
 }
+
