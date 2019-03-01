@@ -28,19 +28,14 @@ public class Block223Controller {
 		if(!(admin instanceof Admin)){
 			throw new InvalidInputException("Admin privileges are required to create a game.");
 		}
-		
+
 		Block223 block223 = Block223Application.getBlock223();
-		try {
+
+		if(Block223.findGame(name) == null) {
 			Game newGame = new Game(name, 1, (Admin) admin, 1, 1, 1, 10, 10, block223);
 			newGame.addLevel();
-		}
-		catch(RuntimeException e) {
-			if(e.equals("Cannot create due to duplicate name")) {
-				throw new InvalidInputException("The name of a game must be unique.");
-			}
+		} else throw new InvalidInputException("The name of a game must be unique.");
 
-		}
-		
 	}
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
