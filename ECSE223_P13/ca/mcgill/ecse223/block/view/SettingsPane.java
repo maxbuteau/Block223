@@ -75,9 +75,10 @@ public class SettingsPane extends Pane{
 	private Button save = new Button("Save parameters");
 	
 	private double spacing;
-	
-	SettingsPane(TOGame game, double spacing){
+	private LastPageLayoutPane x;
+	SettingsPane(TOGame game, double spacing, LastPageLayoutPane x){
 		this.setStyle("-fx-background-color: white;");
+		this.x = x;
 		//initialize sliders with their last saved values as default value
 		minYSpeedSlider = new Slider(MIN_SPEED, MAX_SPEED, game.getMinBallSpeedY());
 		minXSpeedSlider = new Slider(MIN_SPEED, MAX_SPEED, game.getMinBallSpeedX());
@@ -197,7 +198,7 @@ public class SettingsPane extends Pane{
 				Block223Controller.updateGame(gameTF.getText(), (int)nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
 						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
-				LastPageLayoutPane.refresh();
+				x.refresh();
 			} catch (InvalidInputException e1) {
 				errorMsg.setText(e1.getMessage());
 			}

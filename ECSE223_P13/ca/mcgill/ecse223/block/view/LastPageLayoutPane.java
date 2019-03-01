@@ -52,7 +52,7 @@ public class LastPageLayoutPane extends Pane {
 
 		designPane = new DesignGridPane(currentLvl, this);
 		blockPane = new BlockCreatorPane(spacing);
-		settingsPane = new SettingsPane(game, spacing);
+		settingsPane = new SettingsPane(game, spacing, this);
 		quitButton = new Button("Log out");
 		quitButton.setStyle("-fx-font:18 Garamond;");
 		saveGame = new Button("Save game");
@@ -167,8 +167,16 @@ public class LastPageLayoutPane extends Pane {
 		error.setText(errorMsg);
 	}
 
-	public static void refresh() {
+	public void refresh() {
 		game = Block223Controller.getCurrentDesignableGame();
+		if(currentLvl>game.getNrLevels()) {
+		this.level.setText("Level "+game.getNrLevels());
+		currentLvl = game.getNrLevels();
+		motherContainer.getChildren().remove(0);
+		designPane = new DesignGridPane(currentLvl, this);
+		motherContainer.getChildren().add(0,designPane);
+		
+		}
 	}
 	
 }
