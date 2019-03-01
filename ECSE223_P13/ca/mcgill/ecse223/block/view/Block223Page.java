@@ -43,10 +43,10 @@ public class Block223Page extends Application{
 
 	private Label loginError;
 	private Label registerError;
-	private Label gameSelectionError;
+	private static Label gameSelectionError;
 
 	//LOGIN
-	private Scene loginScene;
+	private static Scene loginScene;
 	private Label loginUsernameLabel;
 	private TextField loginUsernameField;
 	private Label loginPasswordLabel;
@@ -74,22 +74,22 @@ public class Block223Page extends Application{
 	private Button registerButton;
 
 	//GAME SELECTION
-	private Scene gameSelectionScene;
-	private VBox gameSelectionPane;
-	private HBox gameSelectionButtonRow;
-	private ListView<String> gameSelectionList;
-	private ObservableList<String> gameSelectionListData;
-	private Button gameSelectionCreateGameButton;
-	private Button gameSelectionUpdateGameButton;
-	private Scene createGameScene;
-	private VBox createGameBox;
-	private Button gameSelectionLogoutButton;
+	private static Scene gameSelectionScene;
+	private static VBox gameSelectionPane;
+	private static HBox gameSelectionButtonRow;
+	private static ListView<String> gameSelectionList;
+	private static ObservableList<String> gameSelectionListData;
+	private static Button gameSelectionCreateGameButton;
+	private static Button gameSelectionUpdateGameButton;
+	private static Scene createGameScene;
+	private static VBox createGameBox;
+	private static Button gameSelectionLogoutButton;
 	
 	//DESIGN PAGE
-	private Scene gameDesignScene;
+	private static Scene gameDesignScene;
 
-	private final double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	private final double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 60;
+	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 60;
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
@@ -104,63 +104,11 @@ public class Block223Page extends Application{
 		primaryStage.setResizable(false);
 
 		//LOGIN SCENE
-		VBox loginPane = new VBox(20);	
+		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene, registerScene);
+		loginPane.setSpacing(20);
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		loginPane.setAlignment(Pos.CENTER);
-		loginPane.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-		HBox loginUsernameBox = new HBox(10);
-		loginUsernameBox.setAlignment(Pos.CENTER);
-		loginUsernameLabel = new Label("Username : ");
-		loginUsernameField =  new TextField();
-		loginUsernameBox.getChildren().addAll(loginUsernameLabel, loginUsernameField);
-
-		HBox loginPasswordBox = new HBox(10);
-		loginPasswordBox.setAlignment(Pos.CENTER);
-		loginPasswordLabel = new Label("Password : ");
-		loginPasswordField = new PasswordField();
-		loginPasswordField.setOnKeyPressed(e -> {
-			if(e.getCode().equals(KeyCode.ENTER)) {
-				loginButton.fire();
-			}
-		});
-		loginPasswordBox.getChildren().addAll(loginPasswordLabel, loginPasswordField);
-
-		loginButton = new Button("Login");
-		loginButton.setOnAction(e -> {
-			try {
-				Block223Controller.login(loginUsernameField.getText(), loginPasswordField.getText());
-				loginPasswordField.clear();
-				loginUsernameField.clear();
-				loginError.setText("");
-			}
-			catch(InvalidInputException iie) {
-				loginError.setText(iie.getMessage());
-			}
-
-			TOUserMode toUserMode = Block223Controller.getUserMode();
-
-			if(toUserMode.getMode().equals(Mode.Design)) {
-				changeToGameSelectionScene(primaryStage);
-			}
-		});
-
-		loginCreateAccountLabel = new Label("Don't have an account ?");
-
-		createItButton = new Button("Create it here");
-		createItButton.setOnAction(e -> {
-			primaryStage.setScene(registerScene);
-			loginUsernameField.clear();
-			loginPasswordField.clear();
-			loginError.setText("");
-		});
-
-		loginError = new Label();
-		loginError.setStyle("-fx-text-fill: #DC143C");
-
-		loginPane.getChildren().addAll(loginUsernameBox, loginPasswordBox, loginButton, loginCreateAccountLabel, createItButton, loginError);
-
+		
 		//REGISTER
 		VBox registerPane = new VBox(20);
 		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
@@ -247,7 +195,7 @@ public class Block223Page extends Application{
 		quitLabel.setStyle("-fx-font:20 Garamond; -fx-padding:3px; -fx-text-fill: #DC143C; -fx-border-color:black;-fx-background-color:POWDERBLUE;-fx-font-weight:bold");
 	}
 
-	private void changeToGameSelectionScene(Stage primaryStage) {
+	public static void changeToGameSelectionScene(Stage primaryStage) {
 
 		//SELECTION GAME
 		gameSelectionPane = new VBox(20);
@@ -332,7 +280,7 @@ public class Block223Page extends Application{
 	}
 
 
-	private void setGameUpdateScene(Stage primaryStage, double spacing, Scene login) {
+	private static void setGameUpdateScene(Stage primaryStage, double spacing, Scene login) {
 		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing, login);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
@@ -343,7 +291,7 @@ public class Block223Page extends Application{
 		
 	}
 
-	private void refreshGameSelection() {
+	private static void refreshGameSelection() {
 		gameSelectionList.getItems().clear();
 		try {
 			List<TOGame> toGames = Block223Controller.getDesignableGames();
