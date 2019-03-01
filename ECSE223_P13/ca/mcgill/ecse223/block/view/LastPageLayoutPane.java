@@ -30,7 +30,8 @@ public class LastPageLayoutPane extends Pane {
 	private Button saveGame;
 	private VBox levelAndBlockContainer;
 	private HBox motherContainer;
-	private TOGame game;
+	private static TOGame game;
+	private static LastPageLayoutPane LPLP;
 	private Label level;
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
@@ -41,7 +42,8 @@ public class LastPageLayoutPane extends Pane {
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
-		 this.game = Block223Controller.getCurrentDesignableGame();
+		game = Block223Controller.getCurrentDesignableGame();
+		LPLP = this;
 
 		this.spacing = spacing;
 		// Test game for now
@@ -104,7 +106,9 @@ public class LastPageLayoutPane extends Pane {
 		previousLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl > 1) {
+				motherContainer.getChildren().remove(0);
 				designPane = new DesignGridPane(--currentLvl, this);
+				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 			}
 			else {
@@ -115,7 +119,9 @@ public class LastPageLayoutPane extends Pane {
 		nextLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl < game.getNrLevels()) {
+				motherContainer.getChildren().remove(0);
 				designPane = new DesignGridPane(++currentLvl, this);
+				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 				
 			}
@@ -161,4 +167,8 @@ public class LastPageLayoutPane extends Pane {
 		error.setText(errorMsg);
 	}
 
+	public static void refresh() {
+		game = Block223Controller.getCurrentDesignableGame();
+	}
+	
 }

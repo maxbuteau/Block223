@@ -197,6 +197,7 @@ public class SettingsPane extends Pane{
 				Block223Controller.updateGame(gameTF.getText(), (int)nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
 						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
+				LastPageLayoutPane.refresh();
 			} catch (InvalidInputException e1) {
 				errorMsg.setText(e1.getMessage());
 			}
