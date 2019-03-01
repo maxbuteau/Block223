@@ -50,7 +50,7 @@ public class LastPageLayoutPane extends Pane {
 		//game = new TOGame("name", 5, 5, 5, 5, 5, 5, 7);
 		// Instantiate all fields
 
-		designPane = new DesignGridPane(currentLvl, this);
+		designPane = new DesignGridPane(currentLvl-1, this);
 		blockPane = new BlockCreatorPane(spacing);
 		settingsPane = new SettingsPane(game, spacing, this);
 		quitButton = new Button("Log out");
@@ -107,7 +107,7 @@ public class LastPageLayoutPane extends Pane {
 			errorSFX.stop();
 			if (currentLvl > 1) {
 				motherContainer.getChildren().remove(0);
-				designPane = new DesignGridPane(--currentLvl, this);
+				designPane = new DesignGridPane(--currentLvl-1, this);
 				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 			}
@@ -120,7 +120,7 @@ public class LastPageLayoutPane extends Pane {
 			errorSFX.stop();
 			if (currentLvl < game.getNrLevels()) {
 				motherContainer.getChildren().remove(0);
-				designPane = new DesignGridPane(++currentLvl, this);
+				designPane = new DesignGridPane(++currentLvl-1, this);
 				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 				
@@ -169,7 +169,7 @@ public class LastPageLayoutPane extends Pane {
 
 	public void refresh() {
 		game = Block223Controller.getCurrentDesignableGame();
-		if(currentLvl>game.getNrLevels()) {
+		if(currentLvl>game.getNrLevels()-1) {
 		this.level.setText("Level "+game.getNrLevels());
 		currentLvl = game.getNrLevels();
 		motherContainer.getChildren().remove(0);

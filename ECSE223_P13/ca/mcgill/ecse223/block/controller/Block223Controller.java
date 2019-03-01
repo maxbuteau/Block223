@@ -73,10 +73,10 @@ public class Block223Controller {
 				throw new InvalidInputException("Min paddle length has to be smaller than the max.");
 
 			List<Level> levels = game.getLevels();
-				while(nrLevels < game.numberOfLevels()) {
+				while(nrLevels < levels.size()) {
 					levels.get(levels.size()-1).delete();
 				}
-				while(nrLevels > game.numberOfLevels()) {
+				while(nrLevels > levels.size()) {
 					game.addLevel();
 			}
 		} catch (RuntimeException ex) {
@@ -567,7 +567,7 @@ public class Block223Controller {
 		try {
 			aLevel = game.getLevel(level);
 		} catch (IndexOutOfBoundsException e) {
-			throw new InvalidInputException("Level " + level + "does not exist for the game.");
+			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
 		List<BlockAssignment> assignments = aLevel.getBlockAssignments();
 

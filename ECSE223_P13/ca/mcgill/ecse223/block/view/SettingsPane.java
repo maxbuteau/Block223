@@ -195,7 +195,7 @@ public class SettingsPane extends Pane{
 		//Button action listener
 		save.setOnAction(e->{
 			try {
-				Block223Controller.updateGame(gameTF.getText(), (int)nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
+				Block223Controller.updateGame(gameTF.getText(),(int) nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
 						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
 				x.refresh();
