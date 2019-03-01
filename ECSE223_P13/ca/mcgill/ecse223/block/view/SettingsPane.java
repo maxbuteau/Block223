@@ -84,7 +84,7 @@ public class SettingsPane extends Pane{
 		maxPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMaxPaddleLength());
 		minPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMinPaddleLength());
 		increasingFactorSlider = new Slider(MIN_INCR, MAX_INCR, game.getBallSpeedIncreaseFactor());
-		nrLevelsSlider = new Slider(MIN_LEVELS, MAX_LEVELS, game.getNrLevels()+1);
+		nrLevelsSlider = new Slider(MIN_LEVELS, MAX_LEVELS, game.getNrLevels());
 		nrBlocksSlider = new Slider(MIN_BLOCKS, MAX_BLOCKS, 50);//game.getNrBlocksPerLevel()
 		
 		//initialize the labels
