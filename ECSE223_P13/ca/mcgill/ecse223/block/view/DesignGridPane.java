@@ -68,7 +68,33 @@ public class DesignGridPane extends GridPane {
 			Pane block = (Pane) designGridPane.getChildren().get(y*toConstants.getMaxVerticalBlocks()+x);
 			block.setOpacity(1);
 			block.setStyle("-fx-background-color: #"+blockColor.toString().substring(2, 8)+";");
+			
+			block.setOnDragDetected(e -> {
+				int xx = designGridPane.getRowIndex(block);
+				int yy = designGridPane.getColumnIndex(block);
+				initialX = xx+1;
+				initialY = yy+1;
+				block.startFullDrag();
+			});
+					
+			block.setOnMouseDragged(e -> {
+				block.setTranslateX(e.getX());
+				block.setTranslateY(e.getY());
+			});
+			
+			block.setOnMouseDragReleased(e -> {
+				int xx = designGridPane.getRowIndex(block);
+				int yy = designGridPane.getColumnIndex(block);
+				try {
+					Block223Controller.moveBlock(designGridPane.level, initialX, initialY, xx+1, yy+1);
+				} catch (InvalidInputException e1) {
+					lastPageLayoutPane.setErrorMessage(e1.getMessage());
+				}
+				refresh();
+			});
 		}
+		
+
 
 	}
 	
@@ -109,29 +135,7 @@ public class DesignGridPane extends GridPane {
 					}
 				});
 				
-				blockBox.setOnDragDetected(e -> {
-					int x = designGridPane.getRowIndex(blockBox);
-					int y = designGridPane.getColumnIndex(blockBox);
-					initialX = x+1;
-					initialY = y+1;
-					blockBox.startFullDrag();
-				});
-						
-				blockBox.setOnMouseDragged(e -> {
-					blockBox.setTranslateX(e.getX());
-					blockBox.setTranslateY(e.getY());
-				});
 				
-				blockBox.setOnMouseDragReleased(e -> {
-					int x = designGridPane.getRowIndex(blockBox);
-					int y = designGridPane.getColumnIndex(blockBox);
-					try {
-						Block223Controller.moveBlock(designGridPane.level, initialX, initialY, x+1, y+1);
-					} catch (InvalidInputException e1) {
-						lastPageLayoutPane.setErrorMessage(e1.getMessage());
-					}
-					refresh();
-				});
 			}
 		}
 	}
