@@ -20,11 +20,11 @@ import javafx.stage.Stage;
 public class LastPageLayoutPane extends Pane {
 
 	// Define the class nodes and containers:
-	private Label error;
+	private Label error = new Label();
 	private DesignGridPane designPane;
 	private BlockCreatorPane blockPane;
 	private SettingsPane settingsPane;
-	private Button quitLabel;
+	private Button quitButton;
 	private HBox changeLevel;
 	private Button blockToolbox;
 	private Button saveGame;
@@ -51,8 +51,8 @@ public class LastPageLayoutPane extends Pane {
 		designPane = new DesignGridPane(currentLvl, this);
 		blockPane = new BlockCreatorPane(spacing);
 		settingsPane = new SettingsPane(game, spacing);
-		quitLabel = new Button("Log out");
-		quitLabel.setStyle("-fx-font:18 Garamond;");
+		quitButton = new Button("Log out");
+		quitButton.setStyle("-fx-font:18 Garamond;");
 		saveGame = new Button("Save game");
 		saveGame.setStyle("-fx-font:18 Garamond;");
 		blockToolbox = new Button("Block Toolbox");
@@ -135,7 +135,7 @@ public class LastPageLayoutPane extends Pane {
 				blockToolbox.setDisable(false);
 			});
 		});
-		quitLabel.setOnAction(e->{
+		quitButton.setOnAction(e->{
 			Block223Controller.logout();
 			primaryStage.setScene(login);		
 		});
@@ -149,7 +149,7 @@ public class LastPageLayoutPane extends Pane {
 			}
 		});
 		HBox lowerButts = new HBox(spacing*15);
-		lowerButts.getChildren().addAll(error, saveGame, quitLabel);
+		lowerButts.getChildren().addAll(error, saveGame, quitButton);
 		VBox fullCont = new VBox(spacing);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);

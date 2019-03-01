@@ -83,14 +83,7 @@ public class Block223Page extends Application{
 	private Button gameSelectionUpdateGameButton;
 	private Scene createGameScene;
 	private VBox createGameBox;
-
-	//TOOLBOX
-	private Button toolboxButton;
-	private VBox toolboxBox;
-	private Button toolboxDeleteButton;
-	private Button toolboxColorPickerButton;
-	private Scene toolboxScene;	
-	private static Pane selectedPane = new Pane();
+	private Button gameSelectionLogoutButton;
 	
 	//DESIGN PAGE
 	private Scene gameDesignScene;
@@ -138,8 +131,8 @@ public class Block223Page extends Application{
 		loginButton.setOnAction(e -> {
 			try {
 				Block223Controller.login(loginUsernameField.getText(), loginPasswordField.getText());
-				loginUsernameField.clear();
 				loginPasswordField.clear();
+				loginUsernameField.clear();
 				loginError.setText("");
 			}
 			catch(InvalidInputException iie) {
@@ -267,7 +260,7 @@ public class Block223Page extends Application{
 		gameSelectionButtonRow = new HBox(20);
 		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
-		gameSelectionCreateGameButton = new Button("Create");
+		gameSelectionCreateGameButton = new Button("Create Game");
 
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Stage createGameStage = new Stage();
@@ -303,17 +296,23 @@ public class Block223Page extends Application{
 
 		});
 
-		gameSelectionUpdateGameButton = new Button("Update");
+		gameSelectionUpdateGameButton = new Button("Update Game");
 		gameSelectionUpdateGameButton.setOnAction(e->{
 			try {
 				Block223Controller.selectGame(gameSelectionList.getSelectionModel().getSelectedItem());
 			} catch (InvalidInputException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				gameSelectionError.setText(e1.getMessage());
 			}
 			setGameUpdateScene(primaryStage, 20, loginScene);
 		});
-		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton);
+		
+		gameSelectionLogoutButton = new Button("Logout");
+		gameSelectionLogoutButton.setOnAction(e -> {
+			Block223Controller.logout();
+			primaryStage.setScene(loginScene);	
+		});
+		
+		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
 
 		//List
 		gameSelectionList = new ListView<String>();

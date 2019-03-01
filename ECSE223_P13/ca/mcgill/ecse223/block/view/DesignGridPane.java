@@ -1,5 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 
+import java.lang.reflect.GenericArrayType;
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
@@ -22,17 +24,18 @@ import javafx.stage.Stage;
 public class DesignGridPane extends GridPane {
 
 	private static final int OUTLINE_WIDTH = 3;
-	private int initialX = 0;
-	private int initialY = 0;
-	private TOConstant toConstants;
-	private LastPageLayoutPane lastPageLayoutPane;
-	private int level;
-	private boolean onDrag = false;
+	private static int initialX;
+	private static int initialY;
+	private static TOConstant toConstants;
+	private static LastPageLayoutPane lastPageLayoutPane;
+	private static int level;
+	private static DesignGridPane designGridPane;
 	
 	public DesignGridPane(int level, LastPageLayoutPane lastPageLayoutPane) {
 		toConstants = Block223Controller.getConstants();
 		this.lastPageLayoutPane = lastPageLayoutPane;
 		this.level = level;
+		designGridPane = this;
 		
 		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide());
 		this.setHgap(toConstants.getColumnsPadding());
@@ -40,12 +43,13 @@ public class DesignGridPane extends GridPane {
 		this.setPadding(new Insets(toConstants.getWallPadding()));
 		
 		displayGrid();
+		refresh();
 	}
 	
-	private void refresh() {
-		this.getChildren().clear();
+	public static void refresh() {
+		designGridPane.getChildren().clear();
 		displayGrid();
-		List<TOGridCell> gridCells = null;
+		List<TOGridCell> gridCells = new ArrayList<TOGridCell>();
 		try {
 			gridCells = Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(level);
 		} catch (InvalidInputException e) {
@@ -60,33 +64,32 @@ public class DesignGridPane extends GridPane {
 					(double)gridCell.getGreen()/toConstants.getMaxColor(),
 					(double)gridCell.getBlue()/toConstants.getMaxColor(),
 					1);
-			
-			Pane block = (Pane) this.getChildren().get(y*toConstants.getMaxVerticalBlocks()+x);
+
+			Pane block = (Pane) designGridPane.getChildren().get(y*toConstants.getMaxVerticalBlocks()+x);
 			block.setOpacity(1);
 			block.setStyle("-fx-background-color: #"+blockColor.toString().substring(2, 8)+";");
 		}
+
 	}
 	
-	private void displayGrid() {
+	public static void displayGrid() {
 		for (int i = 0; i < toConstants.getMaxHorizontalBlocks(); i++) {
 			for (int j = 0; j < toConstants.getMaxVerticalBlocks(); j++) {
 				Pane blockBox = new Pane();
 				blockBox.setStyle("-fx-background-color: #FFFFFF;");
 				blockBox.setOpacity(0.5);
 				blockBox.setPrefSize(toConstants.getSize(), toConstants.getSize());
-				this.add(blockBox, i, j);
+				designGridPane.add(blockBox, i, j);
 				
 				blockBox.setOnMouseClicked(e -> {		
 					if(e.getButton() == MouseButton.PRIMARY) {
 						ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 						if (chosenBlock != null) {
-							Object o = e.getSource();
-							Pane clickedPane = (Pane) o;
-							int x = this.getRowIndex(clickedPane);
-							int y = this.getColumnIndex(clickedPane);
+							int x = designGridPane.getRowIndex(blockBox);
+							int y = designGridPane.getColumnIndex(blockBox);
 							
 							try {
-								Block223Controller.positionBlock(chosenBlock.getId(), this.level, x+1, y+1);
+								Block223Controller.positionBlock(chosenBlock.getId(), designGridPane.level, x+1, y+1);
 							} catch (InvalidInputException e1) {
 								lastPageLayoutPane.setErrorMessage(e1.getMessage());
 							}
@@ -95,12 +98,10 @@ public class DesignGridPane extends GridPane {
 					}
 					
 					if(e.getButton() == MouseButton.SECONDARY) {
-						Object o = e.getSource();
-						Pane clickedPane = (Pane) o;
-						int x = this.getRowIndex(clickedPane);
-						int y = this.getColumnIndex(clickedPane);
+						int x = designGridPane.getRowIndex(blockBox);
+						int y = designGridPane.getColumnIndex(blockBox);
 						try {
-							Block223Controller.removeBlock(this.level, x+1, y+1);
+							Block223Controller.removeBlock(designGridPane.level, x+1, y+1);
 						} catch (InvalidInputException e1) {
 							lastPageLayoutPane.setErrorMessage(e1.getMessage());
 						}
@@ -109,33 +110,27 @@ public class DesignGridPane extends GridPane {
 				});
 				
 				blockBox.setOnDragDetected(e -> {
-					Object o = e.getSource();
-					Pane clickedPane = (Pane) o;
-					int x = this.getRowIndex(clickedPane);
-					int y = this.getColumnIndex(clickedPane);
+					int x = designGridPane.getRowIndex(blockBox);
+					int y = designGridPane.getColumnIndex(blockBox);
 					initialX = x+1;
 					initialY = y+1;
-					onDrag = true;
+					blockBox.startFullDrag();
+				});
+						
+				blockBox.setOnMouseDragged(e -> {
+					blockBox.setTranslateX(e.getX());
+					blockBox.setTranslateY(e.getY());
 				});
 				
-				blockBox.setOnMouseReleased(e -> {
-					if(onDrag) {
-						Object o = e.getSource();
-						Pane clickedPane = (Pane) o;
-						int x = this.getRowIndex(clickedPane);
-						int y = this.getColumnIndex(clickedPane);
-						try {
-							Block223Controller.moveBlock(this.level, initialX, initialY, x+1, y+1);
-							System.out.println(initialX);
-							System.out.println(initialY);
-							System.out.println(x);
-							System.out.println(y);
-						} catch (InvalidInputException e1) {
-							lastPageLayoutPane.setErrorMessage(e1.getMessage());
-						}
-						refresh();
-						onDrag = false;
+				blockBox.setOnMouseDragReleased(e -> {
+					int x = designGridPane.getRowIndex(blockBox);
+					int y = designGridPane.getColumnIndex(blockBox);
+					try {
+						Block223Controller.moveBlock(designGridPane.level, initialX, initialY, x+1, y+1);
+					} catch (InvalidInputException e1) {
+						lastPageLayoutPane.setErrorMessage(e1.getMessage());
 					}
+					refresh();
 				});
 			}
 		}

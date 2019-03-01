@@ -37,7 +37,7 @@ public class ToolboxView extends VBox {
 	private static Button toolboxDeleteButton;
 	private static Button toolboxUpdateButton;
 	private static ColorPicker toolboxColorPicker;
-	private Slider toolboxWorthSlider;
+	private static Slider toolboxWorthSlider;
 	
 	private static VBox selectedPane;
 	private static Pane previousPane = new Pane();
@@ -83,7 +83,7 @@ public class ToolboxView extends VBox {
 				Color blockColor = new Color((double)toBlock.getRed()/255, (double)toBlock.getGreen()/255, (double)toBlock.getBlue()/255, 1);
 				Pane toBlockPane = new Pane();
 				toBlockPane.setStyle("-fx-background-color: #"+blockColor.toString().substring(2, 8)+";");
-				toBlockPane.setPrefSize(constants.getSize(), constants.getSize());
+				toBlockPane.setPrefSize(constants.getSize()*2, constants.getSize()*2);
 
 				//Getting worth and id for each block
 				Label toBlockId = new Label(String.valueOf(toBlock.getId()));
@@ -95,14 +95,13 @@ public class ToolboxView extends VBox {
 				toolboxVBox.getChildren().addAll(toBlockPane, toBlockId, toBlockWorth);
 				blockFlowPane.getChildren().addAll(toolboxVBox);
 
-				toBlockPane.setOnMouseClicked(ciao -> {
+				toolboxVBox.setOnMouseClicked(ciao -> {
 					previousPane.setEffect(null);
-					selectedPane = toolboxVBox;
 					DropShadow dropShadow = new DropShadow();
 					dropShadow.setRadius(10);
 					dropShadow.setColor(Color.CHARTREUSE);
 					toBlockPane.setEffect(dropShadow);
-					String id = ((Label)selectedPane.getChildren().get(1)).getText();
+					String id = ((Label)((VBox)ciao.getSource()).getChildren().get(1)).getText();
 					Block223Page.setChosenBlock(id);
 					previousPane = toBlockPane;
 				});
@@ -114,28 +113,35 @@ public class ToolboxView extends VBox {
 		}
 
 		toolboxUpdateButton.setOnAction(e -> {
-			Label idLabel = (Label) selectedPane.getChildren().get(1);
-			Label worthLabel = (Label) selectedPane.getChildren().get(2);
+			ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 			Color color = toolboxColorPicker.getValue();
+			int worth = (int)toolboxWorthSlider.getValue();
 
-			try {
-				Block223Controller.updateBlock(Integer.parseInt(idLabel.getText()), (int)color.getRed(), (int)color.getGreen(), (int)color.getBlue(), Integer.parseInt(worthLabel.getText()));
+			if(chosenBlock != null) {
+				try {
+					Block223Controller.updateBlock(chosenBlock.getId(), (int)(color.getRed()*255), (int)(color.getGreen()*255), (int)(color.getBlue()*255), worth);
+				}
+				catch(InvalidInputException iie) {
+					System.out.println("fuck");
+					toolboxError.setText(iie.getMessage());
+				}
+				refreshToolbox();
+				DesignGridPane.refresh();
 			}
-			catch(InvalidInputException iie) {
-				toolboxError.setText(iie.getMessage());
-			}
-			refreshToolbox();
 		});
 
 		toolboxDeleteButton.setOnAction(e -> {
-			Label idLabel = (Label) selectedPane.getChildren().get(1);
+			ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 
-			try {
-				Block223Controller.deleteBlock(Integer.parseInt(idLabel.getText()));
-			} catch (InvalidInputException iie) {
-				toolboxError.setText(iie.getMessage());
+			if(chosenBlock != null) {
+				try {
+					Block223Controller.deleteBlock(chosenBlock.getId());
+				} catch (InvalidInputException iie) {
+					toolboxError.setText(iie.getMessage());
+				}
+				refreshToolbox();
+				DesignGridPane.refresh();
 			}
-			refreshToolbox();
 		});
 	}
 }
