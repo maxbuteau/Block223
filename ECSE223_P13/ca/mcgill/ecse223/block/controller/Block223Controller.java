@@ -265,7 +265,7 @@ public class Block223Controller {
 
 		Level aLevel = null;
 		try {
-			aLevel = game.getLevel(level);
+			aLevel = game.getLevel(level-1);
 		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
@@ -325,7 +325,7 @@ public class Block223Controller {
 
 		Level aLevel = null;
 		try {
-			aLevel = game.getLevel(level);
+			aLevel = game.getLevel(level-1);
 		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + "does not exist for the game.");
 		}
@@ -366,7 +366,7 @@ public class Block223Controller {
 			throw new InvalidInputException("Only the admin who created the game can remove a block");
 		}
 
-		Level aLevel = game.getLevel(level);
+		Level aLevel = game.getLevel(level-1);
 
 		BlockAssignment aBlockAssignment = aLevel.findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
 
@@ -563,7 +563,7 @@ public class Block223Controller {
 
 		Level aLevel;
 		try {
-			aLevel = game.getLevel(level);
+			aLevel = game.getLevel(level-1);
 		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
