@@ -1,6 +1,5 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,20 +7,12 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOGridCell;
-import ca.mcgill.ecse223.block.model.Ball;
-import ca.mcgill.ecse223.block.model.Block;
-import ca.mcgill.ecse223.block.model.Game;
-import ca.mcgill.ecse223.block.model.Paddle;
-import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
-public class DesignGridPane extends GridPane {
+public class DesignGridPane extends Pane {
 
 	private static final int OUTLINE_WIDTH = 3;
 	private static int initialX;
@@ -29,25 +20,30 @@ public class DesignGridPane extends GridPane {
 	private static TOConstant toConstants;
 	private static LastPageLayoutPane lastPageLayoutPane;
 	private static int level;
-	private static DesignGridPane designGridPane;
+	private static GridPane designGridPane;
+	private static DesignGridPane designPane;
+	private static Pane temp = new Pane();
 	
 	public DesignGridPane(int level, LastPageLayoutPane lastPageLayoutPane) {
 		toConstants = Block223Controller.getConstants();
 		DesignGridPane.lastPageLayoutPane = lastPageLayoutPane;
 		DesignGridPane.level = level;
-		designGridPane = this;
-		
+		designGridPane = new GridPane();
+		designPane = this;
 		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide());
-		this.setHgap(toConstants.getColumnsPadding());
-		this.setVgap(toConstants.getRowPadding());
-		this.setPadding(new Insets(toConstants.getWallPadding()));
-		
+		designGridPane.setHgap(toConstants.getColumnsPadding());
+		designGridPane.setVgap(toConstants.getRowPadding());
+		designGridPane.setPadding(new Insets(toConstants.getWallPadding()));
+		designPane.getChildren().add(designGridPane);
+		if(!lastPageLayoutPane.getChildren().contains(temp))
+		lastPageLayoutPane.getChildren().add(temp);
 		displayGrid();
 		refresh();
 	}
 	
 	public static void refresh() {
 		designGridPane.getChildren().clear();
+		temp.setPrefSize(toConstants.getSize(), toConstants.getSize());
 		displayGrid();
 		List<TOGridCell> gridCells = new ArrayList<TOGridCell>();
 		try {
@@ -72,6 +68,7 @@ public class DesignGridPane extends GridPane {
 			
 		}
 
+
 	}
 	
 	public static void displayGrid() {
@@ -83,6 +80,8 @@ public class DesignGridPane extends GridPane {
 				blockBox.setPrefSize(toConstants.getSize(), toConstants.getSize());
 				designGridPane.add(blockBox, i, j);
 				
+				
+				temp.setVisible(false);
 				blockBox.setOnMouseClicked(e -> {		
 					if(e.getButton() == MouseButton.PRIMARY) {
 						ChosenBlock chosenBlock = Block223Page.getChosenBlock();
@@ -112,23 +111,34 @@ public class DesignGridPane extends GridPane {
 				});
 				
 				blockBox.setOnDragDetected(e -> {
+					temp.setStyle(blockBox.getStyle());
+					
+					
+					
 					initialX = GridPane.getRowIndex(blockBox)+1;
 					initialY = GridPane.getColumnIndex(blockBox)+1;
 					blockBox.startFullDrag();
+					blockBox.setVisible(false);
 				});
 						
 				blockBox.setOnMouseDragged(e -> {
+					temp.setVisible(true);
+					temp.setLayoutX(e.getSceneX()-toConstants.getSize()/2);
+					temp.setLayoutY(e.getSceneY()-toConstants.getSize()/2);
 					blockBox.setTranslateX(e.getX());
 					blockBox.setTranslateY(e.getY());
 				});
 				
 				blockBox.setOnMouseDragReleased(e -> {
 					try {
+						temp.setVisible(false);
+						blockBox.setVisible(true);
+						
 						Block223Controller.moveBlock(DesignGridPane.level, initialX, initialY, GridPane.getRowIndex(blockBox)+1, GridPane.getColumnIndex(blockBox)+1);
 					} catch (InvalidInputException e1) {
 						lastPageLayoutPane.setErrorMessage(e1.getMessage());
 					}
-					refresh();
+					finally{refresh();}
 				});
 				
 				
