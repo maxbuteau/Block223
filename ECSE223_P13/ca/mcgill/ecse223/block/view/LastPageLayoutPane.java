@@ -56,7 +56,7 @@ public class LastPageLayoutPane extends Pane {
 		blockToolbox = new Button("Block Toolbox");
 		blockToolbox.setStyle("-fx-font:18 Garamond;");
 		changeLevel = new HBox();
-		levelAndBlockContainer = new VBox(spacing*2);
+		levelAndBlockContainer = new VBox(spacing);
 		motherContainer = new HBox(spacing*3);
 		error = new Label("");
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
@@ -159,7 +159,7 @@ public class LastPageLayoutPane extends Pane {
 		});
 		HBox lowerButts = new HBox(spacing*15);
 		lowerButts.getChildren().addAll(error, saveGame, quitButton);
-		VBox fullCont = new VBox(spacing);
+		VBox fullCont = new VBox(spacing/2);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
 

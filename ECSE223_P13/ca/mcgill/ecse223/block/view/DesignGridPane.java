@@ -68,6 +68,8 @@ public class DesignGridPane extends GridPane {
 			Pane block = (Pane) designGridPane.getChildren().get(y*toConstants.getMaxVerticalBlocks()+x);
 			block.setOpacity(1);
 			block.setStyle("-fx-background-color: #"+blockColor.toString().substring(2, 8)+";");
+			
+			
 		}
 
 	}
@@ -110,10 +112,8 @@ public class DesignGridPane extends GridPane {
 				});
 				
 				blockBox.setOnDragDetected(e -> {
-					int x = GridPane.getRowIndex(blockBox);
-					int y = GridPane.getColumnIndex(blockBox);
-					initialX = x+1;
-					initialY = y+1;
+					initialX = GridPane.getRowIndex(blockBox)+1;
+					initialY = GridPane.getColumnIndex(blockBox)+1;
 					blockBox.startFullDrag();
 				});
 						
@@ -123,15 +123,15 @@ public class DesignGridPane extends GridPane {
 				});
 				
 				blockBox.setOnMouseDragReleased(e -> {
-					int x = GridPane.getRowIndex(blockBox);
-					int y = GridPane.getColumnIndex(blockBox);
 					try {
-						Block223Controller.moveBlock(DesignGridPane.level, initialX, initialY, x+1, y+1);
+						Block223Controller.moveBlock(DesignGridPane.level, initialX, initialY, GridPane.getRowIndex(blockBox)+1, GridPane.getColumnIndex(blockBox)+1);
 					} catch (InvalidInputException e1) {
 						lastPageLayoutPane.setErrorMessage(e1.getMessage());
 					}
 					refresh();
 				});
+				
+				
 			}
 		}
 	}
