@@ -391,7 +391,12 @@ public class Block223Controller {
 		}
 		Block223 block223 = Block223Application.getBlock223();
 
-		Block223Persistence.save(block223);
+		try{
+			Block223Persistence.save(block223);
+		}
+		catch (RuntimeException ex) {
+			throw ex;
+		}
 	}
 
 	public static void register(String username, String playerPassword, String adminPassword)
