@@ -48,6 +48,7 @@ public class ToolboxView extends VBox {
 	private final double SCREEN_WIDTH = 600; // to be changed
 	public ToolboxView() {
 		super(20);
+		previousPane = new Pane();
 		Label toolboxLabel = new Label("Block toolbox");
 		toolboxLabel.setTranslateX(SCREEN_WIDTH/6);
 		constants = Block223Controller.getConstants();
@@ -172,9 +173,6 @@ public class ToolboxView extends VBox {
 				}
 			});	
 		}
-	}
-	public static void setPrevPane(Pane x) {
-		previousPane = x;
 	}
 }
 

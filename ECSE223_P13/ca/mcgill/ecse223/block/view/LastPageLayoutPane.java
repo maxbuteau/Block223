@@ -141,7 +141,6 @@ public class LastPageLayoutPane extends Pane {
 			blockToolbox.setDisable(true);
 			blockToolboxStage.setOnCloseRequest(ex->{
 				blockToolbox.setDisable(false);
-				ToolboxView.setPrevPane(new Pane());
 			});
 		});
 		quitButton.setOnAction(e->{

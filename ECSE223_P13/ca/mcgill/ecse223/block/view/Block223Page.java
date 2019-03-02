@@ -63,7 +63,7 @@ public class Block223Page extends Application{
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 60;
 
-	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
+	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/My Recording 1.wav"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 
 	public static void main(String[] args) {
