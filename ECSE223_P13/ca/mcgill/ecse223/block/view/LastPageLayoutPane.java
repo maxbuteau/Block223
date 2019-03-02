@@ -106,7 +106,8 @@ public class LastPageLayoutPane extends Pane {
 			errorSFX.stop();
 			if (currentLvl > 1) {
 				motherContainer.getChildren().remove(0);
-				designPane = new DesignGridPane(--currentLvl-1, this);
+				currentLvl -= 1;
+				designPane = new DesignGridPane(currentLvl, this);
 				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 			}
@@ -119,7 +120,8 @@ public class LastPageLayoutPane extends Pane {
 			errorSFX.stop();
 			if (currentLvl < game.getNrLevels()) {
 				motherContainer.getChildren().remove(0);
-				designPane = new DesignGridPane(++currentLvl-1, this);
+				currentLvl += 1;
+				designPane = new DesignGridPane(currentLvl, this);
 				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 				
