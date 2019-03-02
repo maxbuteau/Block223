@@ -59,7 +59,7 @@ public class LastPageLayoutPane extends Pane {
 		levelAndBlockContainer = new VBox(spacing*2);
 		motherContainer = new HBox(spacing*3);
 		error = new Label("");
-		error.setStyle("-fx-text-fill: #DC143C;");
+		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
 		quitButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		blockToolbox.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		saveGame.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
@@ -141,6 +141,7 @@ public class LastPageLayoutPane extends Pane {
 			blockToolbox.setDisable(true);
 			blockToolboxStage.setOnCloseRequest(ex->{
 				blockToolbox.setDisable(false);
+				ToolboxView.setPrevPane(new Pane());
 			});
 		});
 		quitButton.setOnAction(e->{

@@ -1,5 +1,6 @@
 package ca.mcgill.ecse223.block.view;
 
+import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -163,10 +164,14 @@ public class Block223Page extends Application{
 		gameSelectionUpdateGameButton.setOnAction(e->{
 			try {
 				Block223Controller.selectGame(gameSelectionList.getSelectionModel().getSelectedItem());
+				setGameUpdateScene(primaryStage, 20, loginScene);
 			} catch (InvalidInputException e1) {
 				gameSelectionError.setText(e1.getMessage());
 			}
-			setGameUpdateScene(primaryStage, 20, loginScene);
+			catch (NullPointerException e2) {
+				gameSelectionError.setText("A game must be selected to update it.");
+			}
+
 		});
 
 		gameSelectionLogoutButton = new Button("Logout");
@@ -189,6 +194,9 @@ public class Block223Page extends Application{
 				refreshGameSelection();
 			} catch (InvalidInputException e1) {
 				gameSelectionError.setText(e1.getMessage());
+			}
+			catch (NullPointerException e2) {
+				gameSelectionError.setText("A game must be selected to delete it.");
 			}
 		});
 
@@ -235,10 +243,10 @@ public class Block223Page extends Application{
 	}
 
 	private static void buttonPressSound() {
-		sound.setCycleCount(1);
+		sound.setCycleCount(Animation.INDEFINITE);
 		sound.stop();
 		sound.play();
-		sound.setVolume(0.5);
+		sound.setVolume(1);
 
 	}
 

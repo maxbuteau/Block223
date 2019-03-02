@@ -43,12 +43,9 @@ public class ToolboxView extends VBox {
 	private static Label toolboxWorthSliderValue;
 	private static HBox toolboxSliderBox;
 
-	private static VBox selectedPane;
 	private static Pane previousPane = new Pane();
 
-	private final double SCREEN_WIDTH = 500; // to be changed
-	private final double SCREEN_HEIGHT = 500; // to be changed
-
+	private final double SCREEN_WIDTH = 600; // to be changed
 	public ToolboxView() {
 		super(20);
 		Label toolboxLabel = new Label("Block toolbox");
@@ -98,11 +95,13 @@ public class ToolboxView extends VBox {
 			try {
 				List<TOBlock> toBlocks = Block223Controller.getBlocksOfCurrentDesignableGame();
 				for(TOBlock toBlock : toBlocks) {
+					
 					//Getting block color for each block
 					Color blockColor = new Color((double)toBlock.getRed()/255, (double)toBlock.getGreen()/255, (double)toBlock.getBlue()/255, 1);
 					Pane toBlockPane = new Pane();
 					toBlockPane.setStyle("-fx-background-color: #"+blockColor.toString().substring(2, 8)+";");
 					toBlockPane.setPrefSize(constants.getSize()*2, constants.getSize()*2);
+					
 
 					//Getting worth and id for each block
 					Label toBlockId = new Label(String.valueOf(toBlock.getId()));
@@ -114,6 +113,15 @@ public class ToolboxView extends VBox {
 					toolboxVBox.getChildren().addAll(toBlockPane, toBlockId, toBlockWorth);
 					blockFlowPane.getChildren().addAll(toolboxVBox);
 
+					if(previousPane.getEffect()==null) {
+						DropShadow dropShadow = new DropShadow();
+						dropShadow.setRadius(10);
+						dropShadow.setColor(Color.CHARTREUSE);
+						toBlockPane.setEffect(dropShadow);
+						String id = (((Label)toolboxVBox.getChildren().get(1)).getText());
+						Block223Page.setChosenBlock(id);
+						previousPane = toBlockPane;
+					}
 					toolboxVBox.setOnMouseClicked(ciao -> {
 						previousPane.setEffect(null);
 						DropShadow dropShadow = new DropShadow();
@@ -155,6 +163,7 @@ public class ToolboxView extends VBox {
 				if(chosenBlock != null) {
 					try {
 						Block223Controller.deleteBlock(chosenBlock.getId());
+						previousPane = new Pane();
 					} catch (InvalidInputException iie) {
 						toolboxError.setText(iie.getMessage());
 					}
@@ -163,6 +172,9 @@ public class ToolboxView extends VBox {
 				}
 			});	
 		}
+	}
+	public static void setPrevPane(Pane x) {
+		previousPane = x;
 	}
 }
 

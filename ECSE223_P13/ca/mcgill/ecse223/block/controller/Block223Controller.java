@@ -96,7 +96,11 @@ public class Block223Controller {
 		Game game = Block223.findGame(name);
 		if (game != null) {
 			game.delete();
-			Block223Persistence.save(block223);
+			try {
+			Block223Persistence.save(block223);}
+			catch(RuntimeException ex) {
+				throw new InvalidInputException(ex.getMessage());
+			}
 		}
 	}
 
