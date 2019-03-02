@@ -4,6 +4,7 @@ import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
+import javafx.application.Application;
 
 public class Block223Application {
 	
@@ -12,6 +13,7 @@ public class Block223Application {
 	private static Game currentGame = null;
 	
 	public static void main(String[] args) {
+		Application.launch(args);
 		
 	}
 

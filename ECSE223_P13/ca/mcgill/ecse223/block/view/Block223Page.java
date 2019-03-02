@@ -84,6 +84,7 @@ public class Block223Page extends Application{
 	private static VBox createGameBox;
 	private static Button gameSelectionLogoutButton;
 	private static Button gameSelectionDeleteButton;
+	private static Label gameSelectionName;
 	
 	//DESIGN PAGE
 	private static Scene gameDesignScene;
@@ -94,13 +95,8 @@ public class Block223Page extends Application{
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 
-	public static void main(String[] args) {
-		Application.launch(args);
-
-	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {	
-		WebView x = new WebView();
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		primaryStage.setResizable(false);
 
@@ -194,14 +190,16 @@ public class Block223Page extends Application{
 		//SELECTION GAME
 		gameSelectionPane = new VBox(20);
 		gameSelectionPane.setPadding(new Insets(30,30,30,30));
+		gameSelectionName = new Label("Game names");
+		gameSelectionName.setTranslateX(SCREEN_WIDTH/3.7);
+		gameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
 		
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		//Buttons
-		gameSelectionButtonRow = new HBox(20);
-		gameSelectionButtonRow.setAlignment(Pos.BOTTOM_CENTER);
+		gameSelectionButtonRow = new HBox(30);
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
 		gameSelectionCreateGameButton = new Button("Create Game");
 
@@ -260,7 +258,7 @@ public class Block223Page extends Application{
 		});
 		
 		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton,gameSelectionDeleteButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
-
+		gameSelectionButtonRow.setTranslateX(SCREEN_WIDTH/5.3);
 		//List
 		gameSelectionList = new ListView<String>();
 		gameSelectionList.setStyle("-fx-background-color: transparent;");
@@ -282,7 +280,7 @@ public class Block223Page extends Application{
 
 		refreshGameSelection();
 		gameSelectionList.setItems(gameSelectionListData);
-		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow, gameSelectionError);
+		gameSelectionPane.getChildren().addAll(gameSelectionName,gameSelectionList, gameSelectionButtonRow, gameSelectionError);
 		primaryStage.setScene(gameSelectionScene);
 		gameSelectionScene.getStylesheets().add(getResource("ca/mcgill/ecse223/block/view/resources/style.css"));
 		primaryStage.setResizable(false);

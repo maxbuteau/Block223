@@ -1,7 +1,8 @@
 .label{
 	-fx-text-fill: #FFFFFF;
 	-fx-font-weight: bold;
-	-fx-font-size: 11pt;
+-fx-font:23 Garamond;
+-fx-font-weight: bold;
 }
 .button{    -fx-background-color: 
         #a6b5c9,
