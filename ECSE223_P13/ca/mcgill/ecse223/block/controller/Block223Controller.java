@@ -395,7 +395,7 @@ public class Block223Controller {
 			Block223Persistence.save(block223);
 		}
 		catch (RuntimeException ex) {
-			throw ex;
+			throw new InvalidInputException(ex.getMessage());
 		}
 	}
 
