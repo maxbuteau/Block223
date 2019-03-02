@@ -164,6 +164,7 @@ public class SettingsPane extends Pane{
 		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
 	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
 		this.setOpacity(0.75);
+		save.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		
 	}
 

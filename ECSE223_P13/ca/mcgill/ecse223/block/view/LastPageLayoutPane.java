@@ -46,8 +46,6 @@ public class LastPageLayoutPane extends Pane {
 		LPLP = this;
 
 		this.spacing = spacing;
-		// Test game for now
-		//game = new TOGame("name", 5, 5, 5, 5, 5, 5, 7);
 		// Instantiate all fields
 
 		designPane = new DesignGridPane(currentLvl-1, this);
@@ -64,6 +62,9 @@ public class LastPageLayoutPane extends Pane {
 		motherContainer = new HBox(spacing*3);
 		error = new Label("");
 		error.setStyle("-fx-text-fill: #DC143C;");
+		quitButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+		blockToolbox.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+		saveGame.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		// Everything is now initialized. Call a method to paint the pane.
 		paint(primaryStage, login);

@@ -72,7 +72,7 @@ public class LoginPane extends VBox{
 			}
 		});
 
-		loginCreateAccountLabel = new Label("Don't have an account ?");
+		loginCreateAccountLabel = new Label("Don't have an account?");
 
 		createItButton = new Button("Create it here");
 		createItButton.setOnAction(e -> {

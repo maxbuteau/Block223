@@ -69,6 +69,7 @@ public class BlockCreatorPane extends VBox {
 		createBlock = new Button(""+(int)blockCreatorWorthSlider.getValue());
 		createBlock.setMinWidth(4*constants.getSize());
 		createBlock.setMinHeight(4*constants.getSize());
+		createBlock.setStyle("");
 		
 		addToToolBox = new Button("Add Block");
 		addToToolBox.setOnAction(e -> {
@@ -81,6 +82,7 @@ public class BlockCreatorPane extends VBox {
 			}
 			ToolboxView.refreshToolbox();
 		});
+		addToToolBox.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		
 		
 		errorMessage = new Label();
