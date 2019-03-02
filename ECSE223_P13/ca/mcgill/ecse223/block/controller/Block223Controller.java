@@ -36,7 +36,6 @@ public class Block223Controller {
 			newGame.addLevel();
 		} else
 			throw new InvalidInputException("The name of a game must be unique.");
-
 	}
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
