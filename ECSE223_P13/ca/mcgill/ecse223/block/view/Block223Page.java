@@ -84,6 +84,7 @@ public class Block223Page extends Application{
 	private static Scene createGameScene;
 	private static VBox createGameBox;
 	private static Button gameSelectionLogoutButton;
+	private static Button gameSelectionDeleteButton;
 	
 	//DESIGN PAGE
 	private static Scene gameDesignScene;
@@ -186,14 +187,7 @@ public class Block223Page extends Application{
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
-
-
-		/* Louis' comment: Did a first draft of the QUIT label which can be found below.
-		 * Let me know if you can find a better style (font, colors, etc.) for it.
-		 */
-		Label quitLabel = new Label("QUIT");
-		quitLabel.setStyle("-fx-font:20 Garamond; -fx-padding:3px; -fx-text-fill: #DC143C; -fx-border-color:black;-fx-background-color:POWDERBLUE;-fx-font-weight:bold");
-	}
+		}
 
 	public static void changeToGameSelectionScene(Stage primaryStage) {
 
@@ -210,6 +204,8 @@ public class Block223Page extends Application{
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
 		gameSelectionCreateGameButton = new Button("Create Game");
 
+		gameSelectionDeleteButton = new Button("Delete game");
+		
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Stage createGameStage = new Stage();
 			createGameBox = new VBox(20);
@@ -230,6 +226,8 @@ public class Block223Page extends Application{
 					gameSelectionCreateGameButton.setDisable(false);
 				}
 			});
+			
+			
 
 			createGameBox.getChildren().addAll(createGameNameLabel, createGameNameField);
 			createGameScene = new Scene(createGameBox, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6);
@@ -260,13 +258,22 @@ public class Block223Page extends Application{
 			primaryStage.setScene(loginScene);	
 		});
 		
-		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
+		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton,gameSelectionDeleteButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
 
 		//List
 		gameSelectionList = new ListView<String>();
 		gameSelectionList.setStyle("-fx-background-color: transparent;");
 		gameSelectionPane.setPadding(new Insets(20,20,20,20));
 		gameSelectionListData = FXCollections.observableArrayList();
+		
+		gameSelectionDeleteButton.setOnAction(f->{
+			try {
+				Block223Controller.deleteGame(gameSelectionList.getSelectionModel().getSelectedItem());
+				refreshGameSelection();
+			} catch (InvalidInputException e1) {
+				gameSelectionError.setText(e1.getMessage());
+			}
+		});
 
 		//error
 		gameSelectionError = new Label();
@@ -323,6 +330,9 @@ public class Block223Page extends Application{
 	
 	public static void setChosenBlock(String id) {
 		chosenBlock = new ChosenBlock(id);
+	}
+	public static Scene getLoginScene() {
+		return loginScene;
 	}
 }
 

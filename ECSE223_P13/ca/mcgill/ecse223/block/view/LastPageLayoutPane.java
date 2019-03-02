@@ -144,7 +144,8 @@ public class LastPageLayoutPane extends Pane {
 		});
 		quitButton.setOnAction(e->{
 			Block223Controller.logout();
-			primaryStage.setScene(login);		
+			primaryStage.setScene(Block223Page.getLoginScene());
+			
 		});
 		saveGame.setOnAction(e->{
 			try {
