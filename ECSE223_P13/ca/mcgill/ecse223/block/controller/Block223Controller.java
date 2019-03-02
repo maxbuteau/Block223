@@ -611,5 +611,22 @@ public class Block223Controller {
 				(1 + (Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE - Game.WALL_PADDING - Paddle.PADDLE_WIDTH
 						- Ball.BALL_DIAMETER - Block.SIZE) / (Block.SIZE + Game.ROW_PADDING)));
 	}
+	
+	//helper method
+	//dont use it anymore
+//	public static boolean isBlockAtPosition(int level, int gridHorizontalPosition, int gridVerticalPosition) throws InvalidInputException {
+//		try {
+//			List<TOGridCell> x = new ArrayList<TOGridCell>();
+//			x = getBlocksAtLevelOfCurrentDesignableGame(level);
+//			for (TOGridCell gridCell : x) {
+//				if(gridCell.getGridHorizontalPosition() == gridHorizontalPosition && gridCell.getGridVerticalPosition()==gridVerticalPosition)
+//					return true;
+//			}
+//			return false;
+//		}
+//		catch(InvalidInputException ex) {
+//			throw new InvalidInputException(ex.getMessage());
+//		}
+//	}
 
 }

@@ -14,7 +14,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LastPageLayoutPane extends Pane {
@@ -36,7 +35,6 @@ public class LastPageLayoutPane extends Pane {
 	private Stage blockToolboxStage;
 
 	private int currentLvl = 1;
-	private static LastPageLayoutPane l;
 	private double spacing;
 
 	// Default constructor that initializes said nodes and containers
@@ -44,7 +42,6 @@ public class LastPageLayoutPane extends Pane {
 		// get the current game
 		game = Block223Controller.getCurrentDesignableGame();
 
-		l=this;
 		this.spacing = spacing;
 		// Instantiate all fields
 
@@ -182,14 +179,5 @@ public class LastPageLayoutPane extends Pane {
 		
 		}
 	}
-
-//	public static double getOffsetX() {
-//		// TODO Auto-generated method stub
-//		return spacing;
-//	}
-//	public static double getOffsetY() {
-//		// TODO Auto-generated method stub
-//		return spacing*2;
-//	}
 	
 }
