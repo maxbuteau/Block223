@@ -23,12 +23,11 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.web.WebView;
 
 import java.awt.Toolkit;
 import java.util.List;
@@ -101,6 +100,7 @@ public class Block223Page extends Application{
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {	
+		WebView x = new WebView();
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		primaryStage.setResizable(false);
 
@@ -193,6 +193,7 @@ public class Block223Page extends Application{
 
 		//SELECTION GAME
 		gameSelectionPane = new VBox(20);
+		gameSelectionPane.setPadding(new Insets(30,30,30,30));
 		
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -283,6 +284,7 @@ public class Block223Page extends Application{
 		gameSelectionList.setItems(gameSelectionListData);
 		gameSelectionPane.getChildren().addAll(gameSelectionList, gameSelectionButtonRow, gameSelectionError);
 		primaryStage.setScene(gameSelectionScene);
+		gameSelectionScene.getStylesheets().add(getResource("ca/mcgill/ecse223/block/view/resources/style.css"));
 		primaryStage.setResizable(false);
 	}
 
