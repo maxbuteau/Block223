@@ -12,10 +12,10 @@ public class Block223Application {
 	private static UserRole currentUserRole = null;
 	private static Game currentGame = null;
 	
-	public static void main(String[] args) {
-		Application.launch(args);
-		
-	}
+//	public static void main(String[] args) {
+//		Application.launch(args);
+//		
+//	}
 
 	public static Block223 getBlock223() {
 		if (block223 == null) {

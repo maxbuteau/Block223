@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Glow;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -74,7 +73,6 @@ public class SettingsPane extends Pane{
 	//Save button
 	private Button save = new Button("Save parameters");
 	
-	private double spacing;
 	private LastPageLayoutPane x;
 	SettingsPane(TOGame game, double spacing, LastPageLayoutPane x){
 		this.setStyle("-fx-background-color: white;");
@@ -86,7 +84,7 @@ public class SettingsPane extends Pane{
 		minPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMinPaddleLength());
 		increasingFactorSlider = new Slider(MIN_INCR, MAX_INCR, game.getBallSpeedIncreaseFactor());
 		nrLevelsSlider = new Slider(MIN_LEVELS, MAX_LEVELS, game.getNrLevels());
-		nrBlocksSlider = new Slider(MIN_BLOCKS, MAX_BLOCKS, 50);//game.getNrBlocksPerLevel()
+		nrBlocksSlider = new Slider(MIN_BLOCKS, MAX_BLOCKS, game.getNrBlocksPerLevel());
 		
 		//initialize the labels
 		nrBlocksValue = new Label(""+game.getNrBlocksPerLevel());

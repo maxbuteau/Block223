@@ -7,70 +7,40 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.scene.web.WebView;
 
 import java.awt.Toolkit;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.*;
-import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
 public class Block223Page extends Application{
 
 	private static ChosenBlock chosenBlock;	
 
-	private Label loginError;
 	private Label registerError;
 	private static Label gameSelectionError;
 
 	//LOGIN
 	private static Scene loginScene;
-	private Label loginUsernameLabel;
-	private TextField loginUsernameField;
-	private Label loginPasswordLabel;
-	private PasswordField loginPasswordField;
-	private Label loginCreateAccountLabel;
-	private Button loginButton;
-	private Button createItButton;
 
 	//REGISTER
-	private Scene registerScene;
-	private Label registerPlayerAccountLabel;
-	private Label registerAdminAccountLabel;
-	private Label registerUsernamePlayerLabel;
-	private TextField registerUsernamePlayerField;
-	private Label registerUsernameAdminLabel;
-	private TextField registerUsernameAdminField;
-	private Label registerPasswordPlayerLabel;
-	private PasswordField registerPasswordPlayerField;
-	private Label registerPasswordAdminLabel;
-	private PasswordField registerPasswordAdminField;
-	private Label registerConfirmPasswordPlayerLabel;
-	private PasswordField registerConfirmPasswordPlayerField;
-	private Label registerConfirmPasswordAdminLabel;
-	private PasswordField registerConfirmPasswordAdminField;
-	private Button registerButton;
+	private static Scene registerScene;
 
 	//GAME SELECTION
 	private static Scene gameSelectionScene;
@@ -85,7 +55,7 @@ public class Block223Page extends Application{
 	private static Button gameSelectionLogoutButton;
 	private static Button gameSelectionDeleteButton;
 	private static Label gameSelectionName;
-	
+
 	//DESIGN PAGE
 	private static Scene gameDesignScene;
 
@@ -95,96 +65,44 @@ public class Block223Page extends Application{
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 
+	public static void main(String[] args) {
+		Application.launch(args);
+
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {	
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		primaryStage.setResizable(false);
 
+		//REGISTER SCENE
+		RegisterPane registerPane = new RegisterPane(primaryStage);
+		registerPane.setSpacing(20);
+		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 		//LOGIN SCENE
-		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene, registerScene);
+		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
 		loginPane.setSpacing(20);
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
-		//REGISTER
-		VBox registerPane = new VBox(20);
-		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		registerPane.setAlignment(Pos.CENTER);
-		registerPane.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
-		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		HBox registerBox = new HBox(10);
-		registerBox.setAlignment(Pos.CENTER);
 
-		VBox registerPlayerBox = new VBox(10);
-		registerPlayerAccountLabel = new Label("Player Account");
-		HBox registerUsernamePlayer = new HBox(10);
-		registerUsernamePlayerLabel = new Label("Username : ");
-		registerUsernamePlayerField = new TextField();
-		registerUsernamePlayerField.setOnKeyReleased(e -> registerUsernameAdminField.setText(registerUsernamePlayerField.getText()));
-		registerUsernamePlayer.getChildren().addAll(registerUsernamePlayerLabel, registerUsernamePlayerField);
-		HBox registerPasswordPlayer = new HBox(10);
-		registerPasswordPlayerLabel = new Label("Password : ");
-		registerPasswordPlayerField = new PasswordField();
-		registerPasswordPlayer.getChildren().addAll(registerPasswordPlayerLabel, registerPasswordPlayerField);
-		HBox registerConfirmPasswordPlayer = new HBox(10);
-		registerConfirmPasswordPlayerLabel = new Label("Confirm\nPassword : ");
-		registerConfirmPasswordPlayerField = new PasswordField();
-		registerConfirmPasswordPlayer.getChildren().addAll(registerConfirmPasswordPlayerLabel, registerConfirmPasswordPlayerField);
-		registerPlayerBox.getChildren().addAll(registerPlayerAccountLabel, registerUsernamePlayer, registerPasswordPlayer, registerConfirmPasswordPlayer);
-		VBox registerAdminBox = new VBox(10);
-		registerAdminAccountLabel = new Label("Admin Account");
-		HBox registerUsernameAdmin = new HBox(10);
-		registerUsernameAdminLabel = new Label("Username : ");
-		registerUsernameAdminField = new TextField();
-		registerUsernameAdminField.setEditable(false);
-		registerUsernameAdmin.getChildren().addAll(registerUsernameAdminLabel, registerUsernameAdminField);
-		HBox registerPasswordAdmin = new HBox(10);
-		registerPasswordAdminLabel = new Label("Password : ");
-		registerPasswordAdminField = new PasswordField();
-		registerPasswordAdmin.getChildren().addAll(registerPasswordAdminLabel, registerPasswordAdminField);
-		HBox registerConfirmPasswordAdmin = new HBox(10);
-		registerConfirmPasswordAdminLabel = new Label("Confirm\nPassword : ");
-		registerConfirmPasswordAdminField = new PasswordField();
-		registerConfirmPasswordAdmin.getChildren().addAll(registerConfirmPasswordAdminLabel, registerConfirmPasswordAdminField);
-		registerAdminBox.getChildren().addAll(registerAdminAccountLabel, registerUsernameAdmin, registerPasswordAdmin, registerConfirmPasswordAdmin);	
-
-		registerBox.getChildren().addAll(registerPlayerBox, registerAdminBox);
-		registerButton = new Button("Register");
-		registerButton.setOnAction(e -> {			
-			if(registerPasswordPlayerField.getText().equals(registerConfirmPasswordPlayerField.getText()) && registerPasswordAdminField.getText().equals(registerConfirmPasswordAdminField.getText())) {
-				try {
-					Block223Controller.register(registerUsernamePlayerField.getText(), registerPasswordPlayerField.getText(), registerPasswordAdminField.getText());
-					primaryStage.setScene(loginScene);
-					registerUsernamePlayerField.clear();
-					registerUsernameAdminField.clear();
-					registerPasswordPlayerField.clear();
-					registerPasswordAdminField.clear();
-					registerConfirmPasswordPlayerField.clear();
-					registerConfirmPasswordAdminField.clear();
-					registerError.setText("");
-				}
-				catch(InvalidInputException iie) {
-					registerError.setText(iie.getMessage());
-				}
-			}
-			registerError.setText("Password and Confirm Password must be the same");
-		});
-
-		registerError = new Label();
-		registerError.setStyle("-fx-text-fill: #DC143C");
-
-		registerPane.getChildren().addAll(registerBox, registerButton, registerError);
-
-		Pane pane = new Pane();
-		Scene scene = new Scene(pane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		buttonPressSound();
 		//change the values accordingly ^
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
-		}
-
+	}
+	
+	public static Scene getLoginScene() {
+		return loginScene;
+	}
+	
+	public static Scene getRegisterScene() {
+		return registerScene;
+	}
+	
 	public static void changeToGameSelectionScene(Stage primaryStage) {
 
 		//SELECTION GAME
@@ -193,7 +111,7 @@ public class Block223Page extends Application{
 		gameSelectionName = new Label("Game names");
 		gameSelectionName.setTranslateX(SCREEN_WIDTH/3.7);
 		gameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
-		
+
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
@@ -204,7 +122,7 @@ public class Block223Page extends Application{
 		gameSelectionCreateGameButton = new Button("Create Game");
 
 		gameSelectionDeleteButton = new Button("Delete game");
-		
+
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Stage createGameStage = new Stage();
 			createGameBox = new VBox(20);
@@ -225,8 +143,8 @@ public class Block223Page extends Application{
 					gameSelectionCreateGameButton.setDisable(false);
 				}
 			});
-			
-			
+
+
 
 			createGameBox.getChildren().addAll(createGameNameLabel, createGameNameField);
 			createGameScene = new Scene(createGameBox, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6);
@@ -250,13 +168,13 @@ public class Block223Page extends Application{
 			}
 			setGameUpdateScene(primaryStage, 20, loginScene);
 		});
-		
+
 		gameSelectionLogoutButton = new Button("Logout");
 		gameSelectionLogoutButton.setOnAction(e -> {
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
 		});
-		
+
 		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton,gameSelectionDeleteButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
 		gameSelectionButtonRow.setTranslateX(SCREEN_WIDTH/5.3);
 		//List
@@ -264,7 +182,7 @@ public class Block223Page extends Application{
 		gameSelectionList.setStyle("-fx-background-color: transparent;");
 		gameSelectionPane.setPadding(new Insets(20,20,20,20));
 		gameSelectionListData = FXCollections.observableArrayList();
-		
+
 		gameSelectionDeleteButton.setOnAction(f->{
 			try {
 				Block223Controller.deleteGame(gameSelectionList.getSelectionModel().getSelectedItem());
@@ -295,7 +213,7 @@ public class Block223Page extends Application{
 		gameDesignScene = new Scene(l, SCREEN_WIDTH, SCREEN_HEIGHT); 
 		primaryStage.setScene(gameDesignScene);
 		primaryStage.setResizable(false);
-		
+
 	}
 
 	private static void refreshGameSelection() {
@@ -327,12 +245,9 @@ public class Block223Page extends Application{
 	public static ChosenBlock getChosenBlock() {
 		return chosenBlock;
 	}
-	
+
 	public static void setChosenBlock(String id) {
 		chosenBlock = new ChosenBlock(id);
-	}
-	public static Scene getLoginScene() {
-		return loginScene;
 	}
 }
 

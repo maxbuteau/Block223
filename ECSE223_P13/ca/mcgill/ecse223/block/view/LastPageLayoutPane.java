@@ -31,7 +31,6 @@ public class LastPageLayoutPane extends Pane {
 	private VBox levelAndBlockContainer;
 	private HBox motherContainer;
 	private static TOGame game;
-	private static LastPageLayoutPane LPLP;
 	private Label level;
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
@@ -43,12 +42,11 @@ public class LastPageLayoutPane extends Pane {
 	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
 		game = Block223Controller.getCurrentDesignableGame();
-		LPLP = this;
 
 		this.spacing = spacing;
 		// Instantiate all fields
 
-		designPane = new DesignGridPane(currentLvl-1, this);
+		designPane = new DesignGridPane(currentLvl, this);
 		blockPane = new BlockCreatorPane(spacing);
 		settingsPane = new SettingsPane(game, spacing, this);
 		quitButton = new Button("Log out");

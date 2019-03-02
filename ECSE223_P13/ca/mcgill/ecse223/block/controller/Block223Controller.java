@@ -3,8 +3,6 @@ package ca.mcgill.ecse223.block.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.javafx.UnmodifiableArrayList;
-
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.Admin;
@@ -262,19 +260,20 @@ public class Block223Controller {
 
 		Game game = Block223Application.getCurrentGame();
 
-		if (level < 1 || level > game.getLevels().size()) {
+		Level aLevel = null;
+		try {
+			aLevel = game.getLevel(level);
+		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
 
-		Level gameLevel = game.getLevel(level);
-
-		if (gameLevel.getBlockAssignments().size() >= game.getNrBlocksPerLevel()) {
+		if (aLevel.getBlockAssignments().size() >= game.getNrBlocksPerLevel()) {
 			throw new InvalidInputException("The number of blocks has reached the maximum number ("
 					+ game.getNrBlocksPerLevel() + ") allowed for this game.");
 		}
 
 		List<BlockAssignment> existingBlockAssignments = new ArrayList<BlockAssignment>();
-		existingBlockAssignments = gameLevel.getBlockAssignments();
+		existingBlockAssignments = aLevel.getBlockAssignments();
 
 		for (BlockAssignment blockAssignment : existingBlockAssignments) {
 			if (blockAssignment.getGridHorizontalPosition() == gridHorizontalPosition
@@ -294,7 +293,7 @@ public class Block223Controller {
 
 		try {
 
-			blockAssignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition, gameLevel, block, game);
+			blockAssignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition, aLevel, block, game);
 
 		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
