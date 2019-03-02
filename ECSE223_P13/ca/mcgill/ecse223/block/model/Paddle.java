@@ -58,8 +58,8 @@ public class Paddle implements Serializable
   {
     boolean wasSet = false;
     // line 220 "../../../../../Block223.ump"
-    if(aMaxPaddleLength<1 || aMaxPaddleLength>400){
-       	throw new RuntimeException("The maximum paddle length must be greater than 0 and no greater than 400");
+    if(aMaxPaddleLength<1 || aMaxPaddleLength>Game.PLAY_AREA_SIDE){
+       	throw new RuntimeException("The maximum paddle length must be greater than 0 and no greater than "+Game.PLAY_AREA_SIDE);
        }
     // END OF UMPLE BEFORE INJECTION
     maxPaddleLength = aMaxPaddleLength;

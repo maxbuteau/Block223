@@ -50,8 +50,13 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorColorPicker = new ColorPicker();
 		blockCreatorColorPicker.setOnAction(e -> {
 			Color color = blockCreatorColorPicker.getValue();
+			try {
 			String hexFormat = "#"+Integer.toHexString(color.hashCode()).substring(0, 6).toUpperCase();
 			createBlock.setStyle("-fx-background-color: "+hexFormat);
+			}
+			catch(StringIndexOutOfBoundsException ex) {
+				createBlock.setStyle("-fx-background-color: black;");
+			}
 		});
 		blockCreatorColor.getChildren().addAll(blockCreatorColorLabel, blockCreatorColorPicker);	
 		
