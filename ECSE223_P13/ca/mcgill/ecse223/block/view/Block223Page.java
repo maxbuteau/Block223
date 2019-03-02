@@ -188,8 +188,8 @@ public class Block223Page extends Application{
 	public static void changeToGameSelectionScene(Stage primaryStage) {
 
 		//SELECTION GAME
-		gameSelectionPane = new VBox(20);
-		gameSelectionPane.setPadding(new Insets(30,30,30,30));
+		gameSelectionPane = new VBox(80);
+		gameSelectionPane.setPadding(new Insets(60,60,60,60));
 		gameSelectionName = new Label("Game names");
 		gameSelectionName.setTranslateX(SCREEN_WIDTH/3.7);
 		gameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
