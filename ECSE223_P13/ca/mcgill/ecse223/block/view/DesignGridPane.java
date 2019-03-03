@@ -93,6 +93,7 @@ public class DesignGridPane extends Pane {
 							try {
 								Block223Controller.positionBlock(chosenBlock.getId(), DesignGridPane.level, x + 1,
 										y + 1);
+								lastPageLayoutPane.setErrorMessage("");
 							} catch (InvalidInputException e1) {
 								lastPageLayoutPane.setErrorMessage(e1.getMessage());
 							}
@@ -105,6 +106,7 @@ public class DesignGridPane extends Pane {
 						int y = GridPane.getColumnIndex(blockBox);
 						try {
 							Block223Controller.removeBlock(DesignGridPane.level, x + 1, y + 1);
+							lastPageLayoutPane.setErrorMessage("");
 						} catch (InvalidInputException e1) {
 							lastPageLayoutPane.setErrorMessage(e1.getMessage());
 						}
@@ -155,6 +157,7 @@ public class DesignGridPane extends Pane {
 						designGridPane.getChildren().remove(temp2);
 						Block223Controller.moveBlock(DesignGridPane.level, initialX, initialY,
 								GridPane.getRowIndex(blockBox) + 1, GridPane.getColumnIndex(blockBox) + 1);
+						lastPageLayoutPane.setErrorMessage("");
 						
 						
 					} catch (InvalidInputException e1) {

@@ -151,6 +151,7 @@ public class LastPageLayoutPane extends Pane {
 		});
 		saveGame.setOnAction(e->{
 			try {
+				error.setText("");
 				Block223Controller.saveGame();
 			} catch (InvalidInputException e1) {
 				errorSFX.stop();

@@ -157,7 +157,9 @@ public class SettingsPane extends Pane{
 		levelParam.setStyle("-fx-font:23 Garamond;");
 		paddleParams.setStyle("-fx-font:23 Garamond;");
 		gameName.setStyle("-fx-font:23 Garamond;");
-		errorMsg.setStyle("-fx-font:23 Garamond;-fx-text-fill: #FF0000");
+		errorMsg.setStyle("-fx-font:20 Garamond;-fx-text-fill: #FF0000");
+		errorMsg.setWrapText(true);
+		errorMsg.setPrefWidth(this.getBoundsInParent().getWidth()*2.7);
 		save.setStyle("-fx-font:16 Garamond;");
 		//this.setStyle("-fx-border-color: black");
 		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
@@ -195,6 +197,7 @@ public class SettingsPane extends Pane{
 		//Button action listener
 		save.setOnAction(e->{
 			try {
+				errorMsg.setText("");
 				Block223Controller.updateGame(gameTF.getText(),(int) nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
 						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
