@@ -390,10 +390,7 @@ class Block223ControllerTest {
 			Block223Controller.selectGame("test");
 			Block223Controller.addBlock(1, 1, 1, 1);
 			Block223Controller.logout();
-
-			Block223Controller.register("I'm a player", "123","456");
-			Block223Controller.login("I'm a player", "123");
-			Block223Controller.selectGame("test");
+			Block223Controller.login("I'm an admin", "123");
 			Block223Controller.deleteBlock(0);
 		});
 
