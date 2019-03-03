@@ -245,11 +245,10 @@ class Block223ControllerTest {
 			Block223Controller.register("I'm an admin", "123","456");
 			Block223Controller.login("I'm an admin", "456");
 			Block223Controller.createGame("test");
-			Block223Controller.logout();
-
-			Block223Controller.register("I'm a player", "123","456");
-			Block223Controller.login("I'm a player", "123");
 			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm an admin", "123");
+			
 			Block223Controller.updateGame("test", 1, 1, 1, 1, 1.0, 1, 1);
 		});
 		//no game selected
