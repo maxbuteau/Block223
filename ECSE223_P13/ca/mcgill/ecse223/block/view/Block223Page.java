@@ -61,11 +61,6 @@ public class Block223Page extends Application{
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/My Recording 1.wav"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 
-	public static void main(String[] args) {
-		Application.launch(args);
-
-	}
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {	
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
