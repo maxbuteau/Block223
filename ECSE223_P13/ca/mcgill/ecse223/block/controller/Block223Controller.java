@@ -623,6 +623,9 @@ public class Block223Controller {
 						- Ball.BALL_DIAMETER - Block.SIZE) / (Block.SIZE + Game.ROW_PADDING)));
 	}
 	
+	// ****************************
+	//Helper method to get the highest number of blocks in a level in a particular game
+	// ****************************
 	public static int HighestNrOfBlocksInLevel(Game agame) {
 		List<Level> levels = agame.getLevels();
 		ArrayList<Integer> nrBlocksInLevel = new ArrayList<Integer>();

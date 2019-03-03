@@ -161,6 +161,7 @@ public class LastPageLayoutPane extends Pane {
 			helpStage.setScene(new Scene(new HelpView()));
 			helpStage.setResizable(false);
 			helpStage.show();
+			helpStage.setTitle("Help");
 			
 		});
 		saveGame.setOnAction(e->{
@@ -182,7 +183,7 @@ public class LastPageLayoutPane extends Pane {
 	}
 
 	public void setErrorMessage(String errorMsg) {
-		error.setText(errorMsg);
+		error.setText("     "+errorMsg);
 	}
 
 	public void refresh() {
