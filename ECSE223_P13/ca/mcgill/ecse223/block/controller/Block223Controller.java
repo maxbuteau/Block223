@@ -123,7 +123,7 @@ public class Block223Controller {
 			throw new InvalidInputException("Game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
 			throw new InvalidInputException("Only the admin who created the game can select the game.");
-		Block223Application.setCurrentGame(game);
+		else Block223Application.setCurrentGame(game);
 	}
 
 	public static void updateGame(String name, int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
@@ -142,13 +142,17 @@ public class Block223Controller {
 		}
 
 		String currentName = game.getName();
-		if (name == null) {
-			throw new InvalidInputException("The game name must be specified");
+		if(Block223Application.getBlock223().findGame(name) != null) {
+			throw new InvalidInputException("The name of a game must be unique.");
 		}
-		if (currentName != name) {
+		if (name.equals("")) {
+			throw new InvalidInputException("The name of a game must be specified.");
+		}
+		try{
 			game.setName(name);
-		} else
-			throw new InvalidInputException("A game already has this name.");
+		}catch (RuntimeException ex) {
+			throw new InvalidInputException(ex.getMessage());
+		}
 
 		int highestNrBlocks = HighestNrOfBlocksInLevel(game);
 
@@ -157,8 +161,14 @@ public class Block223Controller {
 
 			throw new InvalidInputException("The number of blocks cannot be set to a value smaller than the number of blocks already in a level ("+highestNrBlocks+")");
 		}
-		setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor,
-				maxPaddleLength, minPaddleLength);
+		if(currentName != name) {
+			try {
+				setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor,
+						maxPaddleLength, minPaddleLength);
+			}catch(RuntimeException e) {
+				throw new InvalidInputException(e.getMessage());
+			}
+		}
 	}
 
 	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
