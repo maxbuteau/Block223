@@ -341,6 +341,9 @@ public class Block223Controller {
 			throw new InvalidInputException("A block already exists at location " + newGridHorizontalPosition + "/"
 					+ newGridVerticalPosition + ".");
 		}
+//		TOConstant constants = getConstants();
+//		if(newGridVerticalPosition > constants.getMaxVerticalBlocks()-1 || newGridHorizontalPosition > constants.getMaxHorizontalBlocks()-1)
+//			throw new InvalidInputException("The final position is not within the grid.");
 
 		try {
 			oldAssignment.setGridHorizontalPosition(newGridHorizontalPosition);

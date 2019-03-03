@@ -35,6 +35,7 @@ public class LastPageLayoutPane extends Pane {
 	private Stage blockToolboxStage;
 
 	private int currentLvl = 1;
+	private static double Spacing;
 	private double spacing;
 
 	// Default constructor that initializes said nodes and containers
@@ -43,6 +44,7 @@ public class LastPageLayoutPane extends Pane {
 		game = Block223Controller.getCurrentDesignableGame();
 
 		this.spacing = spacing;
+		Spacing = spacing;
 		// Instantiate all fields
 
 		designPane = new DesignGridPane(currentLvl, this);
@@ -178,6 +180,12 @@ public class LastPageLayoutPane extends Pane {
 		motherContainer.getChildren().add(0,designPane);
 		
 		}
+	}
+	public static double getOffX() {
+		return Spacing;
+	}
+	public static double getOffY() {
+		return Spacing*2;
 	}
 	
 }
