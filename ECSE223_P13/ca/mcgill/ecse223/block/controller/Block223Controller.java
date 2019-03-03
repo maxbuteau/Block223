@@ -1,6 +1,7 @@
 package ca.mcgill.ecse223.block.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.application.Block223Application;
@@ -140,8 +141,19 @@ public class Block223Controller {
 		} else
 			throw new InvalidInputException("A game already has this name.");
 
+		List<Level> levels = game.getLevels();
+		ArrayList<Integer> nrBlocksInLevel = new ArrayList();
+		
+		for (Level level : levels) {
+			nrBlocksInLevel.add(level.getBlockAssignments().size());
+		}
+		int highestNrBlocks = Collections.max(nrBlocksInLevel);
+		
 		setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor,
 				maxPaddleLength, minPaddleLength);
+		if (nrBlocksPerLevel < highestNrBlocks) {
+			throw new InvalidInputException("The number of blocks cannot be set to a value smaller than the number of blocks already in a level");
+		}
 	}
 
 	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
