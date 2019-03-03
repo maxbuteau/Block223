@@ -305,11 +305,12 @@ class Block223ControllerTest {
 			Block223Controller.register("I'm an admin", "123","456");
 			Block223Controller.login("I'm an admin", "456");
 			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
 			Block223Controller.logout();
 
 			Block223Controller.register("I'm another admin", "123","456");
 			Block223Controller.login("I'm another admin", "456");
-			Block223Controller.selectGame("test");
+			
 			Block223Controller.addBlock(1, 1, 1, 1);
 		});
 
