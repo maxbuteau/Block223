@@ -33,7 +33,7 @@ public class RegisterPane extends VBox {
 	private Button registerButton;
 	private Button backLoginButton;
 
-	public RegisterPane(Stage primaryStage, StackPane p, Scene scene) {
+	public RegisterPane(Stage primaryStage) {
 
 		this.setAlignment(Pos.CENTER);
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
@@ -102,7 +102,7 @@ public class RegisterPane extends VBox {
 		
 		backLoginButton = new Button("Back to Login Screen");
 		backLoginButton.setOnAction(e -> {
-			scene.setRoot(p);
+			primaryStage.setScene(Block223Page.getLoginScene());
 		});
 		buttonBox.getChildren().addAll(registerButton, backLoginButton);
 

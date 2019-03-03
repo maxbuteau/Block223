@@ -180,9 +180,11 @@ public class LastPageLayoutPane extends Pane {
 		});
 		HBox lowerButts = new HBox(spacing*4);
 		lowerButts.getChildren().addAll(error, saveGame, quitButton, helpButton);
-		VBox fullCont = new VBox(spacing/4);
+		VBox fullCont = new VBox(spacing/10);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
+		error.setWrapText(true);
+		error.setMaxWidth(500);
 
 	}
 

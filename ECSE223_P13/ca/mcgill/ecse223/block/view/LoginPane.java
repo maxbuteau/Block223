@@ -27,7 +27,7 @@ public class LoginPane extends VBox{
 	private Button loginButton;
 	private Button createItButton;
 
-	public LoginPane(Stage primaryStage, Scene gameSelectionScene, StackPane p, Scene scene) {
+	public LoginPane(Stage primaryStage, Scene gameSelectionScene) {
 		this.setAlignment(Pos.CENTER);
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
@@ -71,8 +71,8 @@ public class LoginPane extends VBox{
 
 		createItButton = new Button("Create it here");
 		createItButton.setOnAction(e -> {
-			scene.setRoot(p);
-			//primaryStage.setScene(Block223Page.getRegisterScene());
+			
+			primaryStage.setScene(Block223Page.getRegisterScene());
 			loginUsernameField.clear();
 			loginPasswordField.clear();
 			loginError.setText("");

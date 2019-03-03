@@ -34,8 +34,6 @@ public class Block223Page extends Application{
 	private static ChosenBlock chosenBlock;	
 
 	private static Label gameSelectionError;
-
-	private static Scene scene;
 	//LOGIN
 	private static Scene loginScene;
 
@@ -60,7 +58,7 @@ public class Block223Page extends Application{
 	private static Scene gameDesignScene;
 
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 60;
+	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 100;
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
@@ -79,28 +77,25 @@ public class Block223Page extends Application{
 		primaryStage.setResizable(false);
 
 		//REGISTER SCENE
-		StackPane loginStack = new StackPane();
-		scene = new Scene(loginStack, SCREEN_WIDTH,SCREEN_HEIGHT);
-		StackPane registerStack = new StackPane();
-		RegisterPane registerPane = new RegisterPane(primaryStage, loginStack, scene);
+	
+		RegisterPane registerPane = new RegisterPane(primaryStage);
 		registerPane.setSpacing(20);
-		registerStack.getChildren().addAll(bg2, registerPane);
-//		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-//		registerScene = new Scene(registerStack, SCREEN_WIDTH, SCREEN_HEIGHT);
+	registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//LOGIN SCENE
 		
-		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene, registerStack, scene);
+		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
 		loginPane.setSpacing(20);
-		loginStack.getChildren().addAll(bg, loginPane);
-//		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-//		loginScene = new Scene(loginStack, SCREEN_WIDTH, SCREEN_HEIGHT);
+	
+		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
 		
 		buttonPressSound();
 		//change the values accordingly ^
-		primaryStage.setScene(scene);
+		primaryStage.setScene(loginScene);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 	}
