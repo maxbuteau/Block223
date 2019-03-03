@@ -184,7 +184,7 @@ public class LastPageLayoutPane extends Pane {
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
 		error.setWrapText(true);
-		error.setMaxWidth(500);
+		error.setMaxWidth(400);
 
 	}
 
