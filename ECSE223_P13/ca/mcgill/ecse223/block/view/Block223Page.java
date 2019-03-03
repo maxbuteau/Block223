@@ -85,16 +85,16 @@ public class Block223Page extends Application{
 		RegisterPane registerPane = new RegisterPane(primaryStage, loginStack, scene);
 		registerPane.setSpacing(20);
 		registerStack.getChildren().addAll(bg2, registerPane);
-		//registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		//registerScene = new Scene(registerStack, SCREEN_WIDTH, SCREEN_HEIGHT);
+//		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+//		registerScene = new Scene(registerStack, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//LOGIN SCENE
 		
 		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene, registerStack, scene);
 		loginPane.setSpacing(20);
 		loginStack.getChildren().addAll(bg, loginPane);
-		//loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		//loginScene = new Scene(loginStack, SCREEN_WIDTH, SCREEN_HEIGHT);
+//		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+//		loginScene = new Scene(loginStack, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
 		
