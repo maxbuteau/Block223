@@ -1,6 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
@@ -201,6 +202,10 @@ public class SettingsPane extends Pane{
 			} catch (InvalidInputException e1) {
 				errorMsg.setText(e1.getMessage());
 			}
+			if ((int)nrBlocksSlider.getValue() < Block223Controller.HighestNrOfBlocksInLevel(Block223Application.getCurrentGame())) {
+				nrBlocksSlider.setValue(Block223Controller.HighestNrOfBlocksInLevel(Block223Application.getCurrentGame()));
+			}
+			
 		});
 		
 		//TODO update paddle, level block
