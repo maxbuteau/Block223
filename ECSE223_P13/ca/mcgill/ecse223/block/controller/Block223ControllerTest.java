@@ -389,6 +389,8 @@ class Block223ControllerTest {
 			Block223Controller.register("I'm an admin", "123","456");
 			Block223Controller.login("I'm an admin", "456");
 			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.addBlock(1, 1, 1, 1);
 			Block223Controller.logout();
 
 			Block223Controller.register("I'm a player", "123","456");
@@ -402,6 +404,7 @@ class Block223ControllerTest {
 			Block223Controller.register("I'm an admin", "123","456");
 			Block223Controller.login("I'm an admin", "456");
 			Block223Controller.createGame("test");
+			Block223Controller.addBlock(1, 1, 1, 1);
 			Block223Controller.deleteBlock(0);
 		});
 
@@ -415,6 +418,7 @@ class Block223ControllerTest {
 			Block223Controller.register("I'm another admin", "123","456");
 			Block223Controller.login("I'm another admin", "456");
 			Block223Controller.selectGame("test");
+			Block223Controller.addBlock(1, 1, 1, 1);
 			Block223Controller.deleteBlock(0);
 		});
 
@@ -433,7 +437,7 @@ class Block223ControllerTest {
 				Block223Controller.register("I'm a player", "123","456");
 				Block223Controller.login("I'm a player", "123");
 				Block223Controller.selectGame("test");
-				Block223Controller.updateBlock(0, 0, 0, 0, 0);
+				Block223Controller.updateBlock(0, 1, 1, 1, 1);
 			});
 
 			//no game selected
@@ -441,7 +445,7 @@ class Block223ControllerTest {
 				Block223Controller.register("I'm an admin", "123","456");
 				Block223Controller.login("I'm an admin", "456");
 				Block223Controller.createGame("test");
-				Block223Controller.updateBlock(0, 0, 0, 0, 0);
+				Block223Controller.updateBlock(0, 1, 1, 1, 1);
 			});
 
 			//not correct admin
@@ -454,8 +458,80 @@ class Block223ControllerTest {
 				Block223Controller.register("I'm another admin", "123","456");
 				Block223Controller.login("I'm another admin", "456");
 				Block223Controller.selectGame("test");
-				Block223Controller.updateBlock(0, 0, 0, 0, 0);
+				Block223Controller.updateBlock(0, 1, 1, 1, 1);
 			});
+			
+			//red out of range
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 0, 1, 1, 1);
+			});
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 256, 1, 1, 1);
+			});
+
+			//green out of range
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 1, 0, 1, 1);
+			});
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 1, 256, 1, 1);
+			});
+			//blue out of range
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(1, 1, 0, 1, 1);
+			});
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 1, 1, 256, 1);
+			});
+
+			//points out of range
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 1, 1, 1, 0);
+			});
+			Assertions.assertThrows(InvalidInputException.class, () ->{
+				Block223Controller.register("I'm an admin", "123","456");
+				Block223Controller.login("I'm an admin", "456");
+				Block223Controller.createGame("test");
+				Block223Controller.selectGame("test");
+				Block223Controller.addBlock(1, 1, 1, 1);
+				Block223Controller.updateBlock(0, 1, 1, 1, 1001);
+			});
+
 			
 		}
 	
