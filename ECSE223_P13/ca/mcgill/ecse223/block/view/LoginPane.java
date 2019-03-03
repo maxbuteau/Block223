@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -26,7 +27,7 @@ public class LoginPane extends VBox{
 	private Button loginButton;
 	private Button createItButton;
 
-	public LoginPane(Stage primaryStage, Scene gameSelectionScene) {
+	public LoginPane(Stage primaryStage, Scene gameSelectionScene, StackPane p, Scene scene) {
 		this.setAlignment(Pos.CENTER);
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
@@ -70,7 +71,8 @@ public class LoginPane extends VBox{
 
 		createItButton = new Button("Create it here");
 		createItButton.setOnAction(e -> {
-			primaryStage.setScene(Block223Page.getRegisterScene());
+			scene.setRoot(p);
+			//primaryStage.setScene(Block223Page.getRegisterScene());
 			loginUsernameField.clear();
 			loginPasswordField.clear();
 			loginError.setText("");

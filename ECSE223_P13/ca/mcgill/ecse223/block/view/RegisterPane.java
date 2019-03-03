@@ -3,11 +3,13 @@ package ca.mcgill.ecse223.block.view;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -31,7 +33,7 @@ public class RegisterPane extends VBox {
 	private Button registerButton;
 	private Button backLoginButton;
 
-	public RegisterPane(Stage primaryStage) {
+	public RegisterPane(Stage primaryStage, StackPane p, Scene scene) {
 
 		this.setAlignment(Pos.CENTER);
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
@@ -100,7 +102,7 @@ public class RegisterPane extends VBox {
 		
 		backLoginButton = new Button("Back to Login Screen");
 		backLoginButton.setOnAction(e -> {
-			primaryStage.setScene(Block223Page.getLoginScene());
+			scene.setRoot(p);
 		});
 		buttonBox.getChildren().addAll(registerButton, backLoginButton);
 

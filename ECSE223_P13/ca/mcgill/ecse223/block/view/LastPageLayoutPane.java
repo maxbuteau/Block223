@@ -165,7 +165,7 @@ public class LastPageLayoutPane extends Pane {
 		this.getChildren().add(fullCont);
 
 	}
-	
+
 	public void setErrorMessage(String errorMsg) {
 		error.setText(errorMsg);
 	}

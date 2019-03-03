@@ -11,14 +11,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.Toolkit;
@@ -32,6 +35,7 @@ public class Block223Page extends Application{
 
 	private static Label gameSelectionError;
 
+	private static Scene scene;
 	//LOGIN
 	private static Scene loginScene;
 
@@ -62,26 +66,41 @@ public class Block223Page extends Application{
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {	
+	public void start(Stage primaryStage) throws Exception {
+		
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		ImageView bg = new ImageView(background);
+		bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+		bg.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		Image background2 = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		ImageView bg2 = new ImageView(background2);
+		bg2.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+		bg2.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		primaryStage.setResizable(false);
 
 		//REGISTER SCENE
-		RegisterPane registerPane = new RegisterPane(primaryStage);
+		StackPane loginStack = new StackPane();
+		scene = new Scene(loginStack, SCREEN_WIDTH,SCREEN_HEIGHT);
+		StackPane registerStack = new StackPane();
+		RegisterPane registerPane = new RegisterPane(primaryStage, loginStack, scene);
 		registerPane.setSpacing(20);
-		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+		registerStack.getChildren().addAll(bg2, registerPane);
+		//registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		//registerScene = new Scene(registerStack, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//LOGIN SCENE
-		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
+		
+		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene, registerStack, scene);
 		loginPane.setSpacing(20);
-		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
-		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+		loginStack.getChildren().addAll(bg, loginPane);
+		//loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		//loginScene = new Scene(loginStack, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
+		
 		buttonPressSound();
 		//change the values accordingly ^
-		primaryStage.setScene(loginScene);
+		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 	}
