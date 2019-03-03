@@ -32,7 +32,7 @@ public class Block223Controller {
 
 		Block223 block223 = Block223Application.getBlock223();
 
-		if(name == null) {
+		if(name == null || name == null) {
 			throw new InvalidInputException("The name of a game must be specified.");
 		}
 		if (Block223.findGame(name) != null) {
@@ -145,7 +145,7 @@ public class Block223Controller {
 		if(Block223.findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
-		if (name.equals("")) {
+		if (name.equals("")|| name == null) {
 			throw new InvalidInputException("The name of a game must be specified.");
 		}
 		try{
