@@ -46,9 +46,11 @@ class Block223ControllerTest {
 	void setGameDetailsNotAdminTest() {
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("I'm a player", "123","456");
-			Block223Controller.login("I'm a player", "123");
+			Block223Controller.login("I'm a player", "456");
 			Block223Controller.createGame("test");
 			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm a player", "123");
 			Block223Controller.setGameDetails(1, 1, 1, 1, 1.0, 1, 1);
 		});
 	}
