@@ -162,6 +162,10 @@ public class LastPageLayoutPane extends Pane {
 			helpStage.setResizable(false);
 			helpStage.show();
 			helpStage.setTitle("Help");
+			helpButton.setDisable(true);
+			helpStage.setOnCloseRequest(ex->{
+				helpButton.setDisable(false);
+			});
 			
 		});
 		saveGame.setOnAction(e->{
