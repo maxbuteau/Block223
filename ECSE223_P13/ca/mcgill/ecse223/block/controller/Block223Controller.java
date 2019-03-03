@@ -142,7 +142,7 @@ public class Block223Controller {
 		}
 
 		String currentName = game.getName();
-		if(Block223Application.getBlock223().findGame(name) != null) {
+		if(Block223.findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
 		if (name.equals("")) {
