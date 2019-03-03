@@ -32,12 +32,21 @@ public class Block223Controller {
 
 		Block223 block223 = Block223Application.getBlock223();
 
-		if (Block223.findGame(name) == null) {
+		if(name == null) {
+			throw new InvalidInputException("The name of a game must be specified.");
+		}
+		if (Block223.findGame(name) != null) {
+			throw new InvalidInputException("The name of a game must be unique.");
+		}
+		try {
 			Game newGame = new Game(name, 1, (Admin) admin, 1, 1, 1, 10, 10, block223);
 			newGame.addLevel();
-		} else
-			throw new InvalidInputException("The name of a game must be unique.");
+		}
+		catch (RuntimeException ex) {
+			throw new InvalidInputException(ex.getMessage());
+		}
 	}
+
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
@@ -97,7 +106,7 @@ public class Block223Controller {
 		if (game != null) {
 			game.delete();
 			try {
-			Block223Persistence.save(block223);}
+				Block223Persistence.save(block223);}
 			catch(RuntimeException ex) {
 				throw new InvalidInputException(ex.getMessage());
 			}
@@ -140,12 +149,12 @@ public class Block223Controller {
 			game.setName(name);
 		} else
 			throw new InvalidInputException("A game already has this name.");
-		
+
 		int highestNrBlocks = HighestNrOfBlocksInLevel(game);
-		
+
 		if (nrBlocksPerLevel < highestNrBlocks) {
 			nrBlocksPerLevel = highestNrBlocks;
-			
+
 			throw new InvalidInputException("The number of blocks cannot be set to a value smaller than the number of blocks already in a level ("+highestNrBlocks+")");
 		}
 		setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor,
@@ -349,9 +358,9 @@ public class Block223Controller {
 			throw new InvalidInputException("A block already exists at location " + newGridHorizontalPosition + "/"
 					+ newGridVerticalPosition + ".");
 		}
-//		TOConstant constants = getConstants();
-//		if(newGridVerticalPosition > constants.getMaxVerticalBlocks()-1 || newGridHorizontalPosition > constants.getMaxHorizontalBlocks()-1)
-//			throw new InvalidInputException("The final position is not within the grid.");
+		//		TOConstant constants = getConstants();
+		//		if(newGridVerticalPosition > constants.getMaxVerticalBlocks()-1 || newGridHorizontalPosition > constants.getMaxHorizontalBlocks()-1)
+		//			throw new InvalidInputException("The final position is not within the grid.");
 
 		try {
 			oldAssignment.setGridHorizontalPosition(newGridHorizontalPosition);
@@ -622,14 +631,14 @@ public class Block223Controller {
 				(1 + (Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE - Game.WALL_PADDING - Paddle.PADDLE_WIDTH
 						- Ball.BALL_DIAMETER - Block.SIZE) / (Block.SIZE + Game.ROW_PADDING)));
 	}
-	
+
 	// ****************************
 	//Helper method to get the highest number of blocks in a level in a particular game
 	// ****************************
 	public static int HighestNrOfBlocksInLevel(Game agame) {
 		List<Level> levels = agame.getLevels();
 		ArrayList<Integer> nrBlocksInLevel = new ArrayList<Integer>();
-		
+
 		for (Level level : levels) {
 			nrBlocksInLevel.add(level.getBlockAssignments().size());
 		}
