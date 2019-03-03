@@ -137,6 +137,7 @@ public class DesignGridPane extends Pane {
 				});
 
 				blockBox.setOnMouseDragged(e -> {
+					if (blockBox.getOpacity() <0.6) {
 					temp.setVisible(true);
 					temp.setLayoutX(e.getSceneX() - toConstants.getSize() / 2);
 					temp.setLayoutY(e.getSceneY() - toConstants.getSize() / 2);
@@ -147,7 +148,7 @@ public class DesignGridPane extends Pane {
 					}
 					if(e.getSceneY()<lastPageLayoutPane.getOffY() || e.getSceneY()>designGridPane.getHeight()+lastPageLayoutPane.getOffY()) {
 						refresh();
-					}
+					}}
 				});
 
 				blockBox.setOnMouseDragReleased(e -> {
