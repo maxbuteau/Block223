@@ -58,7 +58,7 @@ public class Block223Page extends Application{
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 60;
 
-	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/My Recording 1.wav"));
+	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
 
 	public static void main(String[] args) {
@@ -238,11 +238,9 @@ public class Block223Page extends Application{
 	}
 
 	private static void buttonPressSound() {
-		sound.setCycleCount(Animation.INDEFINITE);
 		sound.stop();
 		sound.play();
 		sound.setVolume(1);
-
 	}
 
 	public static ChosenBlock getChosenBlock() {
