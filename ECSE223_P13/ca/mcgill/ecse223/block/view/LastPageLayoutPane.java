@@ -33,6 +33,8 @@ public class LastPageLayoutPane extends Pane {
 	private Label level;
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
+	private Button helpButton;
+	private Stage helpStage;
 
 	private int currentLvl = 1;
 	private static double Spacing;
@@ -64,6 +66,9 @@ public class LastPageLayoutPane extends Pane {
 		quitButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		blockToolbox.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		saveGame.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+		helpButton = new Button("Help");
+		helpButton.setStyle("-fx-font:18 Garamond;");
+		helpButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		// Everything is now initialized. Call a method to paint the pane.
 		paint(primaryStage, login);
@@ -149,6 +154,15 @@ public class LastPageLayoutPane extends Pane {
 			primaryStage.setScene(Block223Page.getLoginScene());
 			
 		});
+		helpButton.setOnAction(e->{
+			helpStage = new Stage();
+			helpStage.setAlwaysOnTop(true);
+			helpStage.initOwner(primaryStage);
+			helpStage.setScene(new Scene(new HelpView()));
+			helpStage.setResizable(false);
+			helpStage.show();
+			
+		});
 		saveGame.setOnAction(e->{
 			try {
 				error.setText("");
@@ -160,7 +174,7 @@ public class LastPageLayoutPane extends Pane {
 			}
 		});
 		HBox lowerButts = new HBox(spacing*4);
-		lowerButts.getChildren().addAll(error, saveGame, quitButton);
+		lowerButts.getChildren().addAll(error, saveGame, quitButton, helpButton);
 		VBox fullCont = new VBox(spacing/4);
 		fullCont.getChildren().addAll(motherContainer, lowerButts);
 		this.getChildren().add(fullCont);
