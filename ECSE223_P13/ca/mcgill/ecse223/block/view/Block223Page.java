@@ -145,6 +145,7 @@ public class Block223Page extends Application{
 					try {
 						Block223Controller.createGame(createGameNameField.getText());
 						createGameStage.close();
+						gameSelectionError.setText("");
 					} catch (InvalidInputException e1) {
 						gameSelectionError.setText(e1.getMessage());
 					}
@@ -174,6 +175,7 @@ public class Block223Page extends Application{
 			try {
 				Block223Controller.selectGame(gameSelectionList.getSelectionModel().getSelectedItem());
 				setGameUpdateScene(primaryStage, 20, loginScene);
+				gameSelectionError.setText("");
 			} catch (InvalidInputException e1) {
 				gameSelectionError.setText(e1.getMessage());
 			}
@@ -201,6 +203,7 @@ public class Block223Page extends Application{
 			try {
 				Block223Controller.deleteGame(gameSelectionList.getSelectionModel().getSelectedItem());
 				refreshGameSelection();
+				gameSelectionError.setText("");
 			} catch (InvalidInputException e1) {
 				gameSelectionError.setText(e1.getMessage());
 			}

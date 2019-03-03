@@ -97,7 +97,7 @@ public class RegisterPane extends VBox {
 					registerError.setText(iie.getMessage());
 				}
 			}
-			registerError.setText("Password and Confirm Password must be the same");
+			//registerError.setText("Password and Confirm Password must be the same");
 		});
 		
 		backLoginButton = new Button("Back to Login Screen");
