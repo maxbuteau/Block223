@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -17,39 +16,32 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-public class LastPageLayoutPane extends BorderPane {
+public class LastPageLayoutPane extends Pane {
 
 	// Define the class nodes and containers:
 	private Label error = new Label();
+	private DesignGridPane designPane;
+	private BlockCreatorPane blockPane;
+	private SettingsPane settingsPane;
+	private Button quitButton;
+	private HBox changeLevel;
+	private Button blockToolbox;
+	private Button saveGame;
+	private VBox levelAndBlockContainer;
+	private HBox motherContainer;
 	private static TOGame game;
+	private Label level;
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
-	private Stage helpStage;
-	
-	private VBox settingsBox;
-	private SettingsPane settingsPane;
-
-	private VBox blockCreatorBox;
-	private BlockCreatorPane blockPane;
-	private Button blockToolbox;
-
-	private VBox gridBox;
-	private DesignGridPane designPane;
-	private HBox changeLevel;
-	private Label level;
-
-	private VBox buttons_error;
-	private HBox buttons;
-	private Button quitButton;
-	private Button saveGame;
 	private Button helpButton;
+	private Stage helpStage;
 
 	private int currentLvl = 1;
 	private static double Spacing;
 	private double spacing;
 
 	// Default constructor that initializes said nodes and containers
-	public LastPageLayoutPane(Stage primaryStage, double spacing) {
+	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
 		game = Block223Controller.getCurrentDesignableGame();
 
@@ -67,6 +59,8 @@ public class LastPageLayoutPane extends BorderPane {
 		blockToolbox = new Button("Block Toolbox");
 		blockToolbox.setStyle("-fx-font:18 Garamond;");
 		changeLevel = new HBox();
+		levelAndBlockContainer = new VBox(spacing);
+		motherContainer = new HBox(spacing*3);
 		error = new Label("");
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
 		quitButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
@@ -77,12 +71,23 @@ public class LastPageLayoutPane extends BorderPane {
 		helpButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		// Everything is now initialized. Call a method to paint the pane.
-		paint(primaryStage);
+		paint(primaryStage, login);
 	}
 
 	// Paints the pane
-	private void paint(Stage primaryStage) {
-		//Create the change level feature
+	private void paint(Stage primaryStage, Scene login) {
+
+		// Fill the containers with their subcontainers/nodes
+		motherContainer.getChildren().addAll(designPane, levelAndBlockContainer, settingsPane);
+		levelAndBlockContainer.getChildren().addAll(blockPane, blockToolbox, changeLevel);
+		levelAndBlockContainer.setAlignment(Pos.CENTER);
+		changeLevel.setTranslateX(spacing*2);
+
+		// add some additional settings to them
+		motherContainer.setPadding(new Insets(spacing*2, spacing, 2*spacing, spacing));
+		levelAndBlockContainer.setPadding(new Insets(spacing/2));
+
+		// Create the change level feature
 		ImageView previousLvl = new ImageView(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/arrow.png"));
 		previousLvl.setRotate(270);
 		previousLvl.setFitHeight(spacing*4);
@@ -95,38 +100,7 @@ public class LastPageLayoutPane extends BorderPane {
 		level.setStyle("-fx-font:24 Garamond; -fx-text-fill: white;-fx-font-weight: bold;");
 		level.setTranslateY(spacing*5/4);
 		changeLevel.getChildren().addAll(previousLvl, level, nextLvl);
-
-		buttons_error = new VBox(20);
-		buttons = new HBox(20);
-		buttons.getChildren().addAll(saveGame, quitButton, helpButton);
-		buttons.setAlignment(Pos.CENTER);
-		buttons_error.setAlignment(Pos.CENTER);
-		error.setAlignment(Pos.CENTER);
-		buttons_error.setPadding(new Insets(0, 0, 50, 0));
-		buttons_error.getChildren().addAll(buttons, error);
-
-		gridBox = new VBox(20);
-		gridBox.getChildren().addAll(designPane, changeLevel);
-		gridBox.setAlignment(Pos.CENTER);
-		changeLevel.setTranslateX(spacing*4);
-		gridBox.setPadding(new Insets(0, 0, 0, 50));
 		
-		blockCreatorBox = new VBox(20);
-		blockCreatorBox.getChildren().addAll(blockPane, blockToolbox);
-		blockCreatorBox.setAlignment(Pos.CENTER);
-		blockCreatorBox.setPadding(new Insets(0, 200, 0, 200));
-
-		settingsBox = new VBox(20);
-		settingsBox.getChildren().addAll(settingsPane);
-		settingsBox.setAlignment(Pos.CENTER);
-		settingsBox.setPadding(new Insets(0, 50, 0, 0));
-		
-		// Fill the containers with their subcontainers/nodes
-		this.setCenter(blockCreatorBox);
-		this.setRight(settingsBox);
-		this.setLeft(gridBox);
-		this.setBottom(buttons_error);
-
 		//initialize the sfx
 		errorSFXmedia = new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/ErrorSFX.mp3"));
 		MediaPlayer errorSFX = new MediaPlayer(errorSFXmedia);
@@ -137,32 +111,32 @@ public class LastPageLayoutPane extends BorderPane {
 		previousLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl > 1) {
-				((VBox) this.getLeft()).getChildren().remove(0);
+				motherContainer.getChildren().remove(0);
 				currentLvl -= 1;
 				designPane = new DesignGridPane(currentLvl, this);
-				((VBox) this.getLeft()).getChildren().add(0,designPane);
+				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
 			}
 			else {
 				errorSFX.play();
 			}
 		});
-
+		
 		nextLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl < game.getNrLevels()) {
-				((VBox) this.getLeft()).getChildren().remove(0);
+				motherContainer.getChildren().remove(0);
 				currentLvl += 1;
 				designPane = new DesignGridPane(currentLvl, this);
-				((VBox) this.getLeft()).getChildren().add(0,designPane);
+				motherContainer.getChildren().add(0,designPane);
 				level.setText("Level "+currentLvl);
-
+				
 			}
 			else {
 				errorSFX.play();
 			}
 		});
-
+		
 		blockToolbox.setOnAction(e->{
 			blockToolboxStage = new Stage();
 			blockToolboxStage.setAlwaysOnTop(true);
@@ -178,7 +152,7 @@ public class LastPageLayoutPane extends BorderPane {
 		quitButton.setOnAction(e->{
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
-
+			
 		});
 		helpButton.setOnAction(e->{
 			helpStage = new Stage();
@@ -192,7 +166,7 @@ public class LastPageLayoutPane extends BorderPane {
 			helpStage.setOnCloseRequest(ex->{
 				helpButton.setDisable(false);
 			});
-
+			
 		});
 		saveGame.setOnAction(e->{
 			try {
@@ -204,25 +178,29 @@ public class LastPageLayoutPane extends BorderPane {
 				error.setText(e1.getMessage());
 			}
 		});
-
+		HBox lowerButts = new HBox(spacing*4);
+		lowerButts.getChildren().addAll(error, saveGame, quitButton, helpButton);
+		VBox fullCont = new VBox(spacing/10);
+		fullCont.getChildren().addAll(motherContainer, lowerButts);
+		this.getChildren().add(fullCont);
 		error.setWrapText(true);
-		error.setMaxWidth(Block223Page.getScreenWidth());
+		error.setMaxWidth(400);
 
 	}
 
 	public void setErrorMessage(String errorMsg) {
-		error.setText(errorMsg);
+		error.setText("     "+errorMsg);
 	}
 
 	public void refresh() {
 		game = Block223Controller.getCurrentDesignableGame();
 		if(currentLvl>game.getNrLevels()-1) {
-			this.level.setText("Level "+game.getNrLevels());
-			currentLvl = game.getNrLevels();
-			((VBox) this.getLeft()).getChildren().remove(0);
-			designPane = new DesignGridPane(currentLvl, this);
-			((VBox) this.getLeft()).getChildren().add(0,designPane);
-
+		this.level.setText("Level "+game.getNrLevels());
+		currentLvl = game.getNrLevels();
+		motherContainer.getChildren().remove(0);
+		designPane = new DesignGridPane(currentLvl, this);
+		motherContainer.getChildren().add(0,designPane);
+		
 		}
 	}
 	public static double getOffX() {
@@ -231,5 +209,5 @@ public class LastPageLayoutPane extends BorderPane {
 	public static double getOffY() {
 		return Spacing*2;
 	}
-
+	
 }
