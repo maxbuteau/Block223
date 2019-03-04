@@ -121,6 +121,11 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
+    // line 69 "../../../../../Block223.ump"
+    if(aName == null || aName.equals("")){
+    	throw new RuntimeException("The name of a game must be specified");
+    	}
+    // END OF UMPLE BEFORE INJECTION
     String anOldName = getName();
     if (hasWithName(aName)) {
       return wasSet;
@@ -137,9 +142,9 @@ public class Game implements Serializable
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
-    // line 69 "../../../../../Block223.ump"
+    // line 75 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
-    		throw new RuntimeException("The number of blocks must be greater than 0");
+    		throw new RuntimeException("The number of blocks per level must be greater than zero.");
     		}
     // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
@@ -625,7 +630,7 @@ public class Game implements Serializable
 		}
   }
 
-  // line 75 "../../../../../Block223.ump"
+  // line 81 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		
