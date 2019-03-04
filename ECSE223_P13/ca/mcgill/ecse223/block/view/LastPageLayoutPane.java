@@ -47,7 +47,6 @@ public class LastPageLayoutPane extends BorderPane {
 	private int currentLvl = 1;
 	private static double Spacing;
 	private double spacing;
-	private final double offset = 50;
 
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing) {
@@ -103,24 +102,24 @@ public class LastPageLayoutPane extends BorderPane {
 		buttons.setAlignment(Pos.CENTER);
 		buttons_error.setAlignment(Pos.CENTER);
 		error.setAlignment(Pos.CENTER);
-		buttons_error.setPadding(new Insets(0, 0, offset, 0));
+		buttons_error.setPadding(new Insets(0, 0, 50, 0));
 		buttons_error.getChildren().addAll(buttons, error);
 
 		gridBox = new VBox(20);
 		gridBox.getChildren().addAll(designPane, changeLevel);
 		gridBox.setAlignment(Pos.CENTER);
 		changeLevel.setTranslateX(spacing*4);
-		gridBox.setPadding(new Insets(0, 0, 0, offset));
+		gridBox.setPadding(new Insets(0, 0, 0, 50));
 		
 		blockCreatorBox = new VBox(20);
 		blockCreatorBox.getChildren().addAll(blockPane, blockToolbox);
 		blockCreatorBox.setAlignment(Pos.CENTER);
-		blockCreatorBox.setPadding(new Insets(0, 4*offset, 0, 4*offset));
+		blockCreatorBox.setPadding(new Insets(0, 200, 0, 200));
 
 		settingsBox = new VBox(20);
 		settingsBox.getChildren().addAll(settingsPane);
 		settingsBox.setAlignment(Pos.CENTER);
-		settingsBox.setPadding(new Insets(0, offset, 0, 0));
+		settingsBox.setPadding(new Insets(0, 50, 0, 0));
 		
 		// Fill the containers with their subcontainers/nodes
 		this.setCenter(blockCreatorBox);
