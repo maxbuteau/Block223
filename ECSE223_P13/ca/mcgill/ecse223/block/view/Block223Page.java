@@ -169,7 +169,7 @@ public class Block223Page extends Application{
 		gameSelectionUpdateGameButton.setOnAction(e->{
 			try {
 				Block223Controller.selectGame(gameSelectionList.getSelectionModel().getSelectedItem());
-				setGameUpdateScene(primaryStage, 20);
+				setGameUpdateScene(primaryStage, 20, loginScene);
 				gameSelectionError.setText("");
 			} catch (InvalidInputException e1) {
 				gameSelectionError.setText(e1.getMessage());
@@ -220,8 +220,8 @@ public class Block223Page extends Application{
 	}
 
 
-	private static void setGameUpdateScene(Stage primaryStage, double spacing) {
-		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing);
+	private static void setGameUpdateScene(Stage primaryStage, double spacing, Scene login) {
+		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing, login);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
 
@@ -262,15 +262,6 @@ public class Block223Page extends Application{
 	public static void setChosenBlock(String id) {
 		chosenBlock = new ChosenBlock(id);
 	}
-
-	public static double getScreenWidth() {
-		return SCREEN_WIDTH;
-	}
-
-	public static double getScreenHeight() {
-		return SCREEN_HEIGHT;
-	}
-	
 }
 
 class ChosenBlock {

@@ -60,7 +60,6 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorColor.getChildren().addAll(blockCreatorColorLabel, blockCreatorColorPicker);	
 		
 		blockCreatorWorth = new HBox(spacing/2);
-		blockCreatorWorth.setAlignment(Pos.CENTER);
 		blockCreatorWorthLabel = new Label("Worth : ");
 		blockCreatorWorthSlider = new Slider(constants.getMinPoints(), constants.getMaxPoints(), (constants.getMaxPoints()+constants.getMinPoints())/2);
 		blockCreatorWorthSlider.valueProperty().addListener(e -> {
