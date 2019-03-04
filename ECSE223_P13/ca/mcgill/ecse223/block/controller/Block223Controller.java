@@ -439,6 +439,9 @@ public class Block223Controller {
 		if (playerPassword.equals(adminPassword)) {
 			throw new InvalidInputException("The passwords have to be different.");
 		}
+		if (playerPassword.equals("")|| playerPassword== null) {
+			throw new InvalidInputException("The player password needs to be specified.");
+		}
 
 		Block223 block223 = Block223Application.getBlock223();
 		String error = "";
@@ -449,7 +452,6 @@ public class Block223Controller {
 			user = new User(username, block223, player);
 		} catch (RuntimeException e) {
 			error = e.getMessage();
-
 			if (error.equals("Cannot create due to duplicate username")) {
 				error = "The username has already been taken.";
 			}
