@@ -43,7 +43,12 @@ public class LastPageLayoutPane extends Pane {
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing, Scene login) {
 		// get the current game
-		game = Block223Controller.getCurrentDesignableGame();
+		error.setText("");
+		try {
+			game = Block223Controller.getCurrentDesignableGame();
+		} catch (InvalidInputException e) {
+			error.setText(e.getMessage());
+		}
 
 		this.spacing = spacing;
 		Spacing = spacing;
@@ -193,7 +198,12 @@ public class LastPageLayoutPane extends Pane {
 	}
 
 	public void refresh() {
-		game = Block223Controller.getCurrentDesignableGame();
+		error.setText("");
+		try {
+			game = Block223Controller.getCurrentDesignableGame();
+		} catch (InvalidInputException e) {
+			error.setText(e.getMessage());
+		}
 		if(currentLvl>game.getNrLevels()-1) {
 		this.level.setText("Level "+game.getNrLevels());
 		currentLvl = game.getNrLevels();
