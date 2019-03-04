@@ -123,7 +123,7 @@ public class Game implements Serializable
     boolean wasSet = false;
     // line 69 "../../../../../Block223.ump"
     if(aName == null || aName.equals("")){
-    	throw new RuntimeException("The name of a game must be specified");
+    	throw new RuntimeException("The name of a game must be specified.");
     	}
     // END OF UMPLE BEFORE INJECTION
     String anOldName = getName();
