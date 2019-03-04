@@ -530,8 +530,19 @@ public class Block223Controller {
 		return result;
 	}
 
-	public static TOGame getCurrentDesignableGame() {
+	public static TOGame getCurrentDesignableGame() throws InvalidInputException {
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
+			throw new InvalidInputException("Admin privileges are required to access game information.");
+		}
 		Game game = Block223Application.getCurrentGame();
+
+		if (game == null) {
+			throw new InvalidInputException("A game must be selected to access its information.");
+		}
+
+		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can access its information.");
+		}
 		TOGame toGame = new TOGame(game.getName(), game.getLevels().size(), game.getNrBlocksPerLevel(),
 				game.getBall().getMinBallSpeedX(), game.getBall().getMinBallSpeedY(),
 				game.getBall().getBallSpeedIncreaseFactor(), game.getPaddle().getMaxPaddleLength(),

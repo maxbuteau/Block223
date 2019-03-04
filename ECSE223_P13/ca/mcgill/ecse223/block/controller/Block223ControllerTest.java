@@ -822,17 +822,17 @@ class Block223ControllerTest {
 			Block223Controller.login("I'm an admin", "456");
 			Block223Controller.register("I'am another user", "123","456");
 		});
-		
+
 		//passwords have to be different
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("I'm an admin", "123","123");
 		});
-		
+
 		//player password needs to be specified
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("I'm an admin", "","123");
 		});
-		
+
 		//username has already been taken
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("I'm an admin", "123","456");
@@ -840,7 +840,7 @@ class Block223ControllerTest {
 			Block223Controller.logout();
 			Block223Controller.register("I'm an admin", "789","101112");
 		});
-		
+
 		//username must be specified
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("", "123","456");
@@ -857,13 +857,13 @@ class Block223ControllerTest {
 			Block223Controller.login("I'm an admin", "456");
 			Block223Controller.login("I'am another user", "123");
 		});
-		
+
 		//username and password do not match (empty)
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("I'm an admin", "123","456");
 			Block223Controller.login("I'm an admin", "");
 		});
-		
+
 		//username and password do not match
 		Assertions.assertThrows(InvalidInputException.class, () ->{
 			Block223Controller.register("I'm an admin", "123","456");
@@ -874,6 +874,210 @@ class Block223ControllerTest {
 	//LOGOUT EXCEPTION CHECKING
 	//no exception is thrown for this feature
 
+	//QUERY METHODS
 
+	//GET CURRENT DESIGNABLE GAMES
+	@Test
+	void getGamesTest() {
+		//not admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm an admin", "123");
+			Block223Controller.getDesignableGames();
+		});
+
+		//game not selected
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.getDesignableGames();
+		});
+
+		//not correct admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+
+			Block223Controller.register("I'm another admin", "123","456");
+			Block223Controller.login("I'm another admin", "456");
+			Block223Controller.getDesignableGames();
+		});
+	}
+	//GET CURRENT DESIGNABLE GAME 
+	@Test
+	void getGameTest() {
+		//not admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm an admin", "123");
+			Block223Controller.getCurrentDesignableGame();
+		});
+
+		//game not selected
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.getCurrentDesignableGame();
+		});
+
+		//not correct admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+
+			Block223Controller.register("I'm another admin", "123","456");
+			Block223Controller.login("I'm another admin", "456");
+			Block223Controller.getCurrentDesignableGame();
+		});	
+	}
+	//GET BLOCK OF CURRENT DESIGNABLE GAME
+	@Test
+	void blocksTest() {
+		//not admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm an admin", "123");
+			Block223Controller.getBlocksOfCurrentDesignableGame();
+		});
+
+		//game not selected
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.getBlocksOfCurrentDesignableGame();
+		});
+
+		//not correct admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+
+			Block223Controller.register("I'm another admin", "123","456");
+			Block223Controller.login("I'm another admin", "456");
+			Block223Controller.getBlocksOfCurrentDesignableGame();
+		});	
+	}
+	//GET BLOCKS OF CURRENT DESIGNABLE GAME
+	@Test
+	void blockTest() {
+		//not admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm an admin", "123");
+			Block223Controller.getBlockOfCurrentDesignableGame(0);
+		});
+
+		//game not selected
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.getBlockOfCurrentDesignableGame(0);
+		});
+
+		//not correct admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+
+			Block223Controller.register("I'm another admin", "123","456");
+			Block223Controller.login("I'm another admin", "456");
+			Block223Controller.getBlockOfCurrentDesignableGame(0);
+		});	
+
+		//block does not exist
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.setGameDetails(1, 1, 1, 1, 1.0, 1, 1);
+			Block223Controller.getBlockOfCurrentDesignableGame(0);
+		});
+	}
+
+	//getBlocksAtLevelOfCurrentDesignableGame
+	@Test
+	void blocksAtLevelTest() {
+		//not admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+			Block223Controller.login("I'm an admin", "123");
+			Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(1);
+		});
+
+		//game not selected
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(1);
+		});
+
+		//not correct admin
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.logout();
+
+			Block223Controller.register("I'm another admin", "123","456");
+			Block223Controller.login("I'm another admin", "456");
+			Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(1);
+		});	
+		
+		//Level does not exist
+		Assertions.assertThrows(InvalidInputException.class, () ->{
+			Block223Controller.register("I'm an admin", "123","456");
+			Block223Controller.login("I'm an admin", "456");
+			Block223Controller.createGame("test");
+			Block223Controller.selectGame("test");
+			Block223Controller.addBlock(1, 1, 1, 1);
+			Block223Controller.setGameDetails(10, 1, 1, 1, 1.0, 1, 1);
+			Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(11);
+		});
+	}
+	
+	//getUserMode
+	//no exception
+
+	//getConstants
+	//no exception
 
 }
