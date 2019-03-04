@@ -47,7 +47,7 @@ public class LastPageLayoutPane extends Pane {
 		try {
 			game = Block223Controller.getCurrentDesignableGame();
 		} catch (InvalidInputException e) {
-			error.setText(e.getMessage());
+			Block223Page.changeToGameSelectionScene(primaryStage);
 		}
 
 		this.spacing = spacing;
