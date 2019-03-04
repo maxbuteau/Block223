@@ -53,14 +53,14 @@ public class Block223Controller {
 
 		Game game = Block223Application.getCurrentGame();
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required update game settings.");
+			throw new InvalidInputException("Admin privileges are required to define game settings.");
 		}
 		if (Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to update game settings.");
+			throw new InvalidInputException("A game must be selected to define game settings.");
 		}
 
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can edit its settings.");
+			throw new InvalidInputException("Only the admin who created the game can define its game settings.");
 		}
 
 		if (nrLevels > 99 || nrLevels < 1)
@@ -120,7 +120,7 @@ public class Block223Controller {
 
 		Game game = Block223.findGame(name);
 		if (game == null)
-			throw new InvalidInputException("Game with name " + name + " does not exist.");
+			throw new InvalidInputException("A game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
 			throw new InvalidInputException("Only the admin who created the game can select the game.");
 		else Block223Application.setCurrentGame(game);
@@ -131,14 +131,14 @@ public class Block223Controller {
 
 		Game game = Block223Application.getCurrentGame();
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required to update a game.");
+			throw new InvalidInputException("Admin privileges are required to define game settings.");
 		}
 		if (Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to update it.");
+			throw new InvalidInputException("A game must be selected to define game settings.");
 		}
 
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can update it.");
+			throw new InvalidInputException("Only the admin who created the game can define its game settings.");
 		}
 
 		String currentName = game.getName();
@@ -240,7 +240,7 @@ public class Block223Controller {
 		}
 
 		if (Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can update the block.");
+			throw new InvalidInputException("Only the admin who created the game update a block.");
 		}
 
 		Game game = Block223Application.getCurrentGame();
