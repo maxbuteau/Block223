@@ -44,6 +44,7 @@ public class DesignGridPane extends Pane {
 //			lastPageLayoutPane.getChildren().add(temp2);
 		displayGrid();
 		refresh();
+		this.setOnMouseDragReleased(e->{refresh();});
 	}
 
 	public static void refresh() {
@@ -151,11 +152,15 @@ public class DesignGridPane extends Pane {
 					}}
 				});
 
+				
 				blockBox.setOnMouseDragReleased(e -> {
 					try {
+						
 						temp.setVisible(false);
 						blockBox.setVisible(true);
 						designGridPane.getChildren().remove(temp2);
+						if(GridPane.getRowIndex(blockBox) ==null || GridPane.getColumnIndex(blockBox)==null)
+							refresh();
 						Block223Controller.moveBlock(DesignGridPane.level, initialX, initialY,
 								GridPane.getRowIndex(blockBox) + 1, GridPane.getColumnIndex(blockBox) + 1);
 						lastPageLayoutPane.setErrorMessage("");
