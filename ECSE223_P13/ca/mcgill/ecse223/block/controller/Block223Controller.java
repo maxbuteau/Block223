@@ -133,7 +133,7 @@ public class Block223Controller {
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to define game settings.");
 		}
-		if (Block223Application.getCurrentGame() == null) {
+		if (game == null) {
 			throw new InvalidInputException("A game must be selected to define game settings.");
 		}
 
@@ -142,7 +142,7 @@ public class Block223Controller {
 		}
 
 		String currentName = game.getName();
-		if(!name.equals(currentName))
+		//if(!name.equals(currentName))
 		if(Block223.findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
@@ -161,7 +161,7 @@ public class Block223Controller {
 		if (nrBlocksPerLevel < highestNrBlocks) {
 			nrBlocksPerLevel = highestNrBlocks;
 
-			throw new InvalidInputException("The number of blocks cannot be set to a value smaller than the number of blocks already in a level ("+highestNrBlocks+")");
+			throw new InvalidInputException("The maximum number of blocks per level cannot be less than the number of existing blocks in a level.");
 		}
 		if(currentName != name) {
 			try {

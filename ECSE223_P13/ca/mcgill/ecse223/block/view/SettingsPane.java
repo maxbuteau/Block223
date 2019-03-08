@@ -198,7 +198,12 @@ public class SettingsPane extends Pane{
 		save.setOnAction(e->{
 			try {
 				errorMsg.setText("");
-				Block223Controller.updateGame(gameTF.getText(),(int) nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
+				String gameName = gameTF.getText();
+				if(gameName.contentEquals(Block223Controller.getCurrentDesignableGame().getName()))
+					Block223Controller.setGameDetails((int) nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
+						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
+						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
+				else Block223Controller.updateGame(gameTF.getText(),(int) nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
 						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
 				x.refresh();
