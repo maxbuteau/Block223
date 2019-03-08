@@ -356,7 +356,7 @@ public class Block223Controller {
 		try {
 			aLevel = game.getLevel(level-1);
 		} catch (IndexOutOfBoundsException e) {
-			throw new InvalidInputException("Level " + level + "does not exist for the game.");
+			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
 
 		BlockAssignment oldAssignment = aLevel.findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition);
@@ -417,7 +417,7 @@ public class Block223Controller {
 		}
 
 		Game game = Block223Application.getCurrentGame();
-
+		
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
 			throw new InvalidInputException("Only the admin who created the game can save it.");
 		}
@@ -436,18 +436,22 @@ public class Block223Controller {
 		if (Block223Application.getCurrentUserRole() != null) {
 			throw new InvalidInputException("Cannot register a new user while a user is logged in.");
 		}
-		if (playerPassword.equals(adminPassword)) {
+		if (playerPassword != null && playerPassword.equals(adminPassword)) {
 			throw new InvalidInputException("The passwords have to be different.");
-		}
-		if (playerPassword.equals("")|| playerPassword== null) {
-			throw new InvalidInputException("The player password needs to be specified.");
 		}
 
 		Block223 block223 = Block223Application.getBlock223();
 		String error = "";
 
 		User user;
-		Player player = new Player(playerPassword, block223);
+		Player player;
+		
+		try {
+			player = new Player(playerPassword, block223);
+		} catch(RuntimeException e) {
+			throw new InvalidInputException(e.getMessage());
+		}
+		
 		try {
 			user = new User(username, block223, player);
 		} catch (RuntimeException e) {
