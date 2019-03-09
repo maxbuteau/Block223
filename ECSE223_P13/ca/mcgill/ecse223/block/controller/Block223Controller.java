@@ -101,12 +101,13 @@ public class Block223Controller {
 		if (!(user instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to delete a game.");
 		}
+		Game game = Block223.findGame(name);
+		if (game != null) {
 		if (!(user.equals(Block223.findGame(name).getAdmin()))) {
 			throw new InvalidInputException("Only the admin who created the game can delete the game.");
 		}
 
-		Game game = Block223.findGame(name);
-		if (game != null) {
+		
 			game.delete();
 			try {
 				Block223Persistence.save(block223);}
