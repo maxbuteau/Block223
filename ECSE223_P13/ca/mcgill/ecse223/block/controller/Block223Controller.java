@@ -55,6 +55,9 @@ public class Block223Controller {
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to define game settings.");
 		}
+		if( minBallSpeedX <=0 && minBallSpeedY <=0) {
+			throw new InvalidInputException("The minimum speed of the ball must be greater than zero.");
+		}
 		if (Block223Application.getCurrentGame() == null) {
 			throw new InvalidInputException("A game must be selected to define game settings.");
 		}
