@@ -123,7 +123,7 @@ public class Block223Controller {
 
 		Game game = Block223.findGame(name);
 		if (game == null)
-			throw new InvalidInputException("Game with name " + name + " does not exist.");
+			throw new InvalidInputException("A game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
 			throw new InvalidInputException("Only the admin who created the game can select the game.");
 		else Block223Application.setCurrentGame(game);

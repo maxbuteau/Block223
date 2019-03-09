@@ -144,7 +144,16 @@ public class Game implements Serializable
     boolean wasSet = false;
     // line 75 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
-    		throw new RuntimeException("The number of blocks per level must be greater than zero.");
+    			throw new RuntimeException("The number of blocks per level must be greater than zero.");
+    		}
+    		int max = 0;
+    		List<Level> l = this.getLevels();
+    		for (int a =0; a<l.size();a++) {
+    			if(max<l.get(a).getBlockAssignments().size())
+    				max = l.get(a).getBlockAssignments().size();
+    		}
+    		if(aNrBlocksPerLevel<max){
+    			throw new RuntimeException("The maximum number of blocks per level cannot be less than the number of existing blocks in a level.");
     		}
     // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
@@ -630,7 +639,7 @@ public class Game implements Serializable
 		}
   }
 
-  // line 81 "../../../../../Block223.ump"
+  // line 90 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		
