@@ -257,7 +257,7 @@ public class Block223Controller {
 		// iterates through the blockList, throws exception if block with identical RGB
 		// value is found
 		for (Block block : gameBlockList) {
-			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue) {
+			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue && block.getId()!=id) {
 				throw new InvalidInputException("A block with the same color already exists for the game.");
 			}
 		}
