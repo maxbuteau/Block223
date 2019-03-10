@@ -244,7 +244,7 @@ public class Block223Controller {
 		}
 
 		if (Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can update the block.");
+			throw new InvalidInputException("Only the admin who created the game can update a block.");
 		}
 
 		Game game = Block223Application.getCurrentGame();
@@ -390,16 +390,16 @@ public class Block223Controller {
 			throws InvalidInputException {
 
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
-			throw new InvalidInputException("Admin privileges are required to remove a block");
+			throw new InvalidInputException("Admin privileges are required to remove a block.");
 		}
 		if (Block223Application.getCurrentGame() == null) {
-			throw new InvalidInputException("A game must be selected to remove a block");
+			throw new InvalidInputException("A game must be selected to remove a block.");
 		}
 
 		Game game = Block223Application.getCurrentGame();
 
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
-			throw new InvalidInputException("Only the admin who created the game can remove a block");
+			throw new InvalidInputException("Only the admin who created the game can remove a block.");
 		}
 
 		Level aLevel = game.getLevel(level-1);
