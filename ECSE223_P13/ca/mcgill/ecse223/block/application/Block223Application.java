@@ -32,6 +32,11 @@ public class Block223Application {
 	}
 	
 	public static Block223 resetBlock223() {
+		if(block223 != null) {
+			block223.delete();
+		}
+		setCurrentGame(null);
+		
 		block223 = Block223Persistence.load();
 		return block223;
 	}
