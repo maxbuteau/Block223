@@ -1,0 +1,29 @@
+use Block223.ump;
+
+class GameOccurence {
+	Integer nbOfPoints;
+	Integer currentLevel;
+	Integer nbOfLives;
+	autounique gameOccurenceID;
+
+	* <@>- 1 Game;
+	1 <@>- 1 BallOccurence;
+	1 <@>- 1 PaddleOccurence;
+}
+
+class BallOccurence {
+	Integer ballPositionX = PLAY_AREA_SIDE/2;
+	Integer ballPositionY = PLAY_AREA_SIDE/2;
+	Integer currentBallSpeedX = minBallSpeedX * ballSpeedIncreaseFactor * currentLevel;
+	Integer currentBallSpeedY = minBallSpeedY * ballSpeedIncreaseFactor * currentLevel;
+	Integer ballDirection;
+	
+	* <@>- 1 Ball;
+}
+
+class PaddleOccurence {
+	Integer currentPaddleLength;
+	Integer paddlePositionX = PLAY_AREA_SIDE/2 - (currentPaddleLength/2);
+
+	* <@>- 1 Paddle;
+}
