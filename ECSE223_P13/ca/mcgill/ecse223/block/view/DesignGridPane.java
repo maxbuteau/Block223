@@ -27,7 +27,7 @@ public class DesignGridPane extends Pane {
 	public DesignGridPane(int level, LastPageLayoutPane lastPageLayoutPane) {
 		toConstants = Block223Controller.getConstants();
 		DesignGridPane.lastPageLayoutPane = lastPageLayoutPane;
-		DesignGridPane.level = level;
+		DesignGridPane.level = level+1;
 		designGridPane = new GridPane();
 		designPane = this;
 		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide());
