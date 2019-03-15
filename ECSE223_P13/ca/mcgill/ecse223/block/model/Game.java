@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 41 "../../../../../Block223Persistence.ump"
-// line 52 "../../../../../Block223.ump"
+// line 53 "../../../../../Block223.ump"
 public class Game implements Serializable
 {
 
@@ -37,6 +37,7 @@ public class Game implements Serializable
   //Game Attributes
   private String name;
   private int nrBlocksPerLevel;
+  private boolean isPublished;
 
   //Game Associations
   private Admin admin;
@@ -55,12 +56,13 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 63 "../../../../../Block223.ump"
+    // line 65 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
     // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
+    isPublished = false;
     if (!setName(aName))
     {
       throw new RuntimeException("Cannot create due to duplicate name");
@@ -94,13 +96,14 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 63 "../../../../../Block223.ump"
+    // line 65 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
     // END OF UMPLE BEFORE INJECTION
     name = aName;
     nrBlocksPerLevel = aNrBlocksPerLevel;
+    isPublished = false;
     boolean didAddAdmin = setAdmin(aAdmin);
     if (!didAddAdmin)
     {
@@ -127,7 +130,7 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 69 "../../../../../Block223.ump"
+    // line 71 "../../../../../Block223.ump"
     if(aName == null || aName.equals("")){
     	throw new RuntimeException("The name of a game must be specified.");
     	}
@@ -148,7 +151,7 @@ public class Game implements Serializable
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
-    // line 75 "../../../../../Block223.ump"
+    // line 77 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
     			throw new RuntimeException("The number of blocks per level must be greater than zero.");
     		}
@@ -163,6 +166,14 @@ public class Game implements Serializable
     		}
     // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setIsPublished(boolean aIsPublished)
+  {
+    boolean wasSet = false;
+    isPublished = aIsPublished;
     wasSet = true;
     return wasSet;
   }
@@ -185,6 +196,16 @@ public class Game implements Serializable
   public int getNrBlocksPerLevel()
   {
     return nrBlocksPerLevel;
+  }
+
+  public boolean getIsPublished()
+  {
+    return isPublished;
+  }
+  /* Code from template attribute_IsBoolean */
+  public boolean isIsPublished()
+  {
+    return isPublished;
   }
   /* Code from template association_GetOne */
   public Admin getAdmin()
@@ -859,7 +880,7 @@ public class Game implements Serializable
 		}
   }
 
-  // line 90 "../../../../../Block223.ump"
+  // line 92 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		
@@ -878,7 +899,8 @@ public class Game implements Serializable
   {
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
-            "nrBlocksPerLevel" + ":" + getNrBlocksPerLevel()+ "]" + System.getProperties().getProperty("line.separator") +
+            "nrBlocksPerLevel" + ":" + getNrBlocksPerLevel()+ "," +
+            "isPublished" + ":" + getIsPublished()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "admin = "+(getAdmin()!=null?Integer.toHexString(System.identityHashCode(getAdmin())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "ball = "+(getBall()!=null?Integer.toHexString(System.identityHashCode(getBall())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "paddle = "+(getPaddle()!=null?Integer.toHexString(System.identityHashCode(getPaddle())):"null") + System.getProperties().getProperty("line.separator") +

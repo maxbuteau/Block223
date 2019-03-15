@@ -11,6 +11,8 @@ class GameOccurence {
 	1 <@>- 1 BallOccurence;
 	1 <@>- 1 PaddleOccurence;
 	1 <@>- * BlockOccurence;
+ 
+	
 }
 
 class BallOccurence {

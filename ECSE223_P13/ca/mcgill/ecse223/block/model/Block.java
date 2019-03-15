@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 53 "../../../../../Block223Persistence.ump"
-// line 110 "../../../../../Block223.ump"
+// line 112 "../../../../../Block223.ump"
 public class Block implements Serializable
 {
 
@@ -45,22 +45,22 @@ public class Block implements Serializable
 
   public Block(int aRed, int aGreen, int aBlue, int aPoints, Game aGame)
   {
-    // line 124 "../../../../../Block223.ump"
+    // line 126 "../../../../../Block223.ump"
     if (aRed < MIN_COLOR || aRed > MAX_COLOR) {
        	throw new RuntimeException("Red must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
     // END OF UMPLE BEFORE INJECTION
-    // line 132 "../../../../../Block223.ump"
+    // line 134 "../../../../../Block223.ump"
     if (aGreen < MIN_COLOR || aGreen > MAX_COLOR) {
        	throw new RuntimeException("Green must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
     // END OF UMPLE BEFORE INJECTION
-    // line 140 "../../../../../Block223.ump"
+    // line 142 "../../../../../Block223.ump"
     if (aBlue < MIN_COLOR || aBlue > MAX_COLOR) {
        		throw new RuntimeException("Blue must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
     // END OF UMPLE BEFORE INJECTION
-    // line 148 "../../../../../Block223.ump"
+    // line 150 "../../../../../Block223.ump"
     if (aPoints < MIN_POINTS || aPoints > MAX_POINTS) {
        		throw new RuntimeException("Points must be between "+MIN_POINTS+" and "+MAX_POINTS+".");
        	}
@@ -86,7 +86,7 @@ public class Block implements Serializable
   public boolean setRed(int aRed)
   {
     boolean wasSet = false;
-    // line 124 "../../../../../Block223.ump"
+    // line 126 "../../../../../Block223.ump"
     if (aRed < MIN_COLOR || aRed > MAX_COLOR) {
        	throw new RuntimeException("Red must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
@@ -99,7 +99,7 @@ public class Block implements Serializable
   public boolean setGreen(int aGreen)
   {
     boolean wasSet = false;
-    // line 132 "../../../../../Block223.ump"
+    // line 134 "../../../../../Block223.ump"
     if (aGreen < MIN_COLOR || aGreen > MAX_COLOR) {
        	throw new RuntimeException("Green must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
@@ -112,7 +112,7 @@ public class Block implements Serializable
   public boolean setBlue(int aBlue)
   {
     boolean wasSet = false;
-    // line 140 "../../../../../Block223.ump"
+    // line 142 "../../../../../Block223.ump"
     if (aBlue < MIN_COLOR || aBlue > MAX_COLOR) {
        		throw new RuntimeException("Blue must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
@@ -125,7 +125,7 @@ public class Block implements Serializable
   public boolean setPoints(int aPoints)
   {
     boolean wasSet = false;
-    // line 148 "../../../../../Block223.ump"
+    // line 150 "../../../../../Block223.ump"
     if (aPoints < MIN_POINTS || aPoints > MAX_POINTS) {
        		throw new RuntimeException("Points must be between "+MIN_POINTS+" and "+MAX_POINTS+".");
        	}

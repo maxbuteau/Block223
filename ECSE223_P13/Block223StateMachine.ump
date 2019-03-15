@@ -1,0 +1,78 @@
+use Block223Play.ump;
+
+class GameOccurence {
+
+gameState {
+   
+    Idle {
+      startGame() [hasEnoughBlockAssignments()] / { 
+      	initializeBlockAssignments();
+      	save();
+      } -> Paused;
+      startGame() [!hasEnoughBlockAssignments()] / { 
+      	initializeBlockAssignments();
+      	placeRandomBlocks();
+      	save();
+      } -> Paused;
+    }
+    
+    Paused { 
+      spaceBarHit() -> Play;
+    }
+    
+    Play {
+      spaceBarHit() / { 
+      	save();
+      } -> Paused;
+      
+      move() [isBlockHit() && isLastBlockHit()] / { 
+        deleteBlock();
+        incrementLevel();
+        getCurrentLevelBlocks();
+        save();
+      } -> Paused;
+      
+      move() [isOutOfBounds() && hasRemainingLives()] / { 
+      	decrementLifeCount();
+      	resetBallPosition();
+      	save();
+      } -> Paused;
+      
+      move() [isLastBlockHit() && isLastLevel() ] / {
+      	createScore();
+      	deleteCurrentGame();
+      	save();
+      } -> Done;
+      
+      move() [isOutOfBounds() && !hasRemainingLives()] / { 
+      	createScore();
+      	deleteCurrentGame();
+      	save();
+      } -> Done;
+      
+      move() [isBlockHit() && !isLastBlockHit()] / {
+      	deleteBlock();
+      	changeBallDirection();
+      } -> Play;
+      
+      move() [isWallHit() || isPaddleHit()] / { 
+      	changeBallDirection();
+      } -> Play;
+  
+      move() [!(isBlockHit() && isWallHit() && isPaddleHit() isOutOfBounds())] -> Play;
+    }
+    
+    Done {}
+
+}
+
+private boolean isBlockHit() {}
+private boolean isLastBlockHit() {}
+private boolean isLastLevel() {}
+private boolean isPaddleHit() {}
+private boolean isWallHit() {}
+private boolean isOutOfBounds() {}
+private boolean hasEnoughBlockAssignments() {}
+private boolean hasRemainingLives() {}
+}
+

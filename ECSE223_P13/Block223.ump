@@ -1,4 +1,5 @@
 namespace ca.mcgill.ecse223.block.model;
+use Block223Play.ump;
 
 use Block223Persistence.ump;
 
@@ -58,6 +59,7 @@ class Game {
    const Integer ROW_PADDING = 2;
    unique name;
    Integer nrBlocksPerLevel;
+   lazy Boolean isPublished;
    
     before constructor{
 	if(aName.equals("") || aName == null){

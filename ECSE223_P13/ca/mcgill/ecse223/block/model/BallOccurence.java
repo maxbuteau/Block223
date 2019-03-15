@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 16 "../../../../../Block223Play.ump"
+// line 18 "../../../../../Block223Play.ump"
 public class BallOccurence
 {
 
