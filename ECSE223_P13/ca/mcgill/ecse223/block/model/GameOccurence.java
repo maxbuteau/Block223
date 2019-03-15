@@ -208,9 +208,17 @@ public class GameOccurence
           wasEventProcessed = true;
           break;
         }
-        if (isOutOfBounds()&&hasRemainingLives())
+        if (isWallHit()||isPaddleHit())
         {
         // line 36 "../../../../../Block223StateMachine.ump"
+          changeBallDirection();
+          setGameState(GameState.Play);
+          wasEventProcessed = true;
+          break;
+        }
+        if (isOutOfBounds()&&hasRemainingLives())
+        {
+        // line 40 "../../../../../Block223StateMachine.ump"
           decrementLifeCount();
       	resetBallPosition();
       	save();
@@ -220,7 +228,7 @@ public class GameOccurence
         }
         if (isLastBlockHit()&&isLastLevel())
         {
-        // line 42 "../../../../../Block223StateMachine.ump"
+        // line 46 "../../../../../Block223StateMachine.ump"
           createScore();
       	deleteCurrentGame();
       	save();
@@ -230,8 +238,9 @@ public class GameOccurence
         }
         if (isOutOfBounds()&&!(hasRemainingLives()))
         {
-        // line 48 "../../../../../Block223StateMachine.ump"
-          createScore();
+        // line 52 "../../../../../Block223StateMachine.ump"
+           
+      	createScore();
       	deleteCurrentGame();
       	save();
           setGameState(GameState.Done);
@@ -240,17 +249,9 @@ public class GameOccurence
         }
         if (isBlockHit()&&!(isLastBlockHit()))
         {
-        // line 54 "../../../../../Block223StateMachine.ump"
+        // line 58 "../../../../../Block223StateMachine.ump"
           deleteBlock();
       	changeBallDirection();
-          setGameState(GameState.Play);
-          wasEventProcessed = true;
-          break;
-        }
-        if (isWallHit()||isPaddleHit())
-        {
-        // line 59 "../../../../../Block223StateMachine.ump"
-          changeBallDirection();
           setGameState(GameState.Play);
           wasEventProcessed = true;
           break;
