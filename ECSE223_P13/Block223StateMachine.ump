@@ -6,11 +6,11 @@ gameState {
    
     Idle {
       startGame() [hasEnoughBlockAssignments()] / { 
-      	initializeBlockAssignments();
+      	getCurrentLevelBlocks();
       	save();
       } -> Paused;
       startGame() [!hasEnoughBlockAssignments()] / { 
-      	initializeBlockAssignments();
+      	getCurrentLevelBlocks();
       	placeRandomBlocks();
       	save();
       } -> Paused;
@@ -29,6 +29,9 @@ gameState {
         deleteBlock();
         incrementLevel();
         getCurrentLevelBlocks();
+        if(!hasEnoughBlockAssignments()){
+        placeRandomBlocks();
+        }
         save();
       } -> Paused;
       
@@ -59,7 +62,7 @@ gameState {
       	changeBallDirection();
       } -> Play;
   
-      move() [!(isBlockHit() && isWallHit() && isPaddleHit() isOutOfBounds())] -> Play;
+      move() [!(isBlockHit() && isWallHit() && isPaddleHit() && isOutOfBounds())] -> Play;
     }
     
     Done {}
@@ -74,5 +77,15 @@ private boolean isWallHit() {}
 private boolean isOutOfBounds() {}
 private boolean hasEnoughBlockAssignments() {}
 private boolean hasRemainingLives() {}
+private void deleteBlock(){}
+private void deleteCurrentGame(){}
+private void createScore(){}
+private void save(){}
+private void getCurrentLevelBlocks(){}
+private void placeRandomBlocks(){}
+private void incrementLevel(){}
+private void decrementLifeCount(){}
+private void resetBallPosition(){}
+private void changeBallDirection(){}
 }
 
