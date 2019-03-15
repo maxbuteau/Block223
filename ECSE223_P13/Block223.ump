@@ -7,6 +7,8 @@ class Block223 {
    1 <@>- * User users;
    1 <@>- * UserRole roles;
    1 <@>- * Game games;
+   1 <@>- * GameOccurence;
+   1 <@>- * Score;
    
    public static Game findGame(String gameName) {
 	  Game foundGame = null;
