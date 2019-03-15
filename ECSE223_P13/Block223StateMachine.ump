@@ -33,6 +33,10 @@ gameState {
         save();
       } -> Paused;
       
+      move() [isWallHit() || isPaddleHit()] / { 
+      	changeBallDirection();
+      } -> Play;
+      
       move() [isOutOfBounds() && hasRemainingLives()] / { 
       	decrementLifeCount();
       	resetBallPosition();
@@ -45,7 +49,7 @@ gameState {
       	save();
       } -> Done;
       
-      move() [isOutOfBounds() && !hasRemainingLives()] / { 
+      move() [isOutOfBounds() && !hasRemainingLives()] / {Â 
       	createScore();
       	deleteCurrentGame();
       	save();
@@ -55,11 +59,7 @@ gameState {
       	deleteBlock();
       	changeBallDirection();
       } -> Play;
-      
-      move() [isWallHit() || isPaddleHit()] / { 
-      	changeBallDirection();
-      } -> Play;
-  
+     
       move() [!(isBlockHit() && isWallHit() && isPaddleHit() && isOutOfBounds())] -> Play;
     }
     
