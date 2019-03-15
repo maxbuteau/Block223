@@ -1,3 +1,5 @@
+use Block223.ump;
+
 class GameOccurence {
 	const MAX_NUM_OF_LIVES = 3;
 	const MIN_NUM_OF_LIVES = 0;
@@ -10,7 +12,6 @@ class GameOccurence {
 	1 <@>- 1 PaddleOccurence;
 	1 <@>- * BlockOccurence;
  
-	
 }
 
 class BallOccurence {
@@ -19,14 +20,14 @@ class BallOccurence {
 	defaulted Integer ballDirectionX = 0;
 	defaulted Integer ballDirectionY = 1;
 	
-	* <@>- 1 Ball;
+	* -- 1 Ball;
 }
 
 class PaddleOccurence {
 	Integer currentPaddleLength;
 	Integer paddlePositionX = Game.PLAY_AREA_SIDE/2 - (currentPaddleLength/2);
 
-	* <@>- 1 Paddle;
+	* -- 1 Paddle;
 }
 
 class BlockOccurence {
@@ -38,6 +39,7 @@ class BlockOccurence {
 
 class Score {
 	Integer nbOfPoints;
+	String username;
 	
 	* -- 1 Player;
 	* -- 1 Game;

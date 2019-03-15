@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 82 "../../../../../Block223Persistence.ump"
-// line 204 "../../../../../Block223.ump"
+// line 201 "../../../../../Block223.ump"
 public class Ball implements Serializable
 {
 
@@ -26,8 +26,8 @@ public class Ball implements Serializable
   private double ballSpeedIncreaseFactor;
 
   //Ball Associations
-  private List<BallOccurence> ballOccurences;
   private Game game;
+  private List<BallOccurence> ballOccurences;
 
   //------------------------
   // CONSTRUCTOR
@@ -38,12 +38,12 @@ public class Ball implements Serializable
     minBallSpeedX = aMinBallSpeedX;
     minBallSpeedY = aMinBallSpeedY;
     ballSpeedIncreaseFactor = aBallSpeedIncreaseFactor;
-    ballOccurences = new ArrayList<BallOccurence>();
     if (aGame == null || aGame.getBall() != null)
     {
       throw new RuntimeException("Unable to create Ball due to aGame");
     }
     game = aGame;
+    ballOccurences = new ArrayList<BallOccurence>();
   }
 
   public Ball(int aMinBallSpeedX, int aMinBallSpeedY, double aBallSpeedIncreaseFactor, String aNameForGame, int aNrBlocksPerLevelForGame, Admin aAdminForGame, Paddle aPaddleForGame, Block223 aBlock223ForGame)
@@ -51,8 +51,8 @@ public class Ball implements Serializable
     minBallSpeedX = aMinBallSpeedX;
     minBallSpeedY = aMinBallSpeedY;
     ballSpeedIncreaseFactor = aBallSpeedIncreaseFactor;
-    ballOccurences = new ArrayList<BallOccurence>();
     game = new Game(aNameForGame, aNrBlocksPerLevelForGame, aAdminForGame, this, aPaddleForGame, aBlock223ForGame);
+    ballOccurences = new ArrayList<BallOccurence>();
   }
 
   //------------------------
@@ -78,7 +78,7 @@ public class Ball implements Serializable
   public boolean setBallSpeedIncreaseFactor(double aBallSpeedIncreaseFactor)
   {
     boolean wasSet = false;
-    // line 212 "../../../../../Block223.ump"
+    // line 209 "../../../../../Block223.ump"
     if(!(aBallSpeedIncreaseFactor>0)){
        	throw new RuntimeException("The speed increase factor of the ball must be greater than zero.");
        }
@@ -101,6 +101,11 @@ public class Ball implements Serializable
   public double getBallSpeedIncreaseFactor()
   {
     return ballSpeedIncreaseFactor;
+  }
+  /* Code from template association_GetOne */
+  public Game getGame()
+  {
+    return game;
   }
   /* Code from template association_GetMany */
   public BallOccurence getBallOccurence(int index)
@@ -131,11 +136,6 @@ public class Ball implements Serializable
   {
     int index = ballOccurences.indexOf(aBallOccurence);
     return index;
-  }
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfBallOccurences()
@@ -212,18 +212,16 @@ public class Ball implements Serializable
 
   public void delete()
   {
-    while (ballOccurences.size() > 0)
-    {
-      BallOccurence aBallOccurence = ballOccurences.get(ballOccurences.size() - 1);
-      aBallOccurence.delete();
-      ballOccurences.remove(aBallOccurence);
-    }
-    
     Game existingGame = game;
     game = null;
     if (existingGame != null)
     {
       existingGame.delete();
+    }
+    for(int i=ballOccurences.size(); i > 0; i--)
+    {
+      BallOccurence aBallOccurence = ballOccurences.get(i - 1);
+      aBallOccurence.delete();
     }
   }
 

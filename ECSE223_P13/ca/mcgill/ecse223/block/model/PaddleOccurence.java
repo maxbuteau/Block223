@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 25 "../../../../../Block223Play.ump"
+// line 27 "../../../../../Block223Play.ump"
 public class PaddleOccurence
 {
 
@@ -112,11 +112,11 @@ public class PaddleOccurence
 
   public void delete()
   {
-    Paddle existingPaddle = paddle;
-    paddle = null;
-    if (existingPaddle != null)
+    Paddle placeholderPaddle = paddle;
+    this.paddle = null;
+    if(placeholderPaddle != null)
     {
-      existingPaddle.delete();
+      placeholderPaddle.removePaddleOccurence(this);
     }
     GameOccurence existingGameOccurence = gameOccurence;
     gameOccurence = null;

@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 39 "../../../../../Block223Play.ump"
+// line 41 "../../../../../Block223Play.ump"
 public class Score
 {
 
@@ -13,6 +13,7 @@ public class Score
 
   //Score Attributes
   private int nbOfPoints;
+  private String username;
 
   //Score Associations
   private Player player;
@@ -22,9 +23,10 @@ public class Score
   // CONSTRUCTOR
   //------------------------
 
-  public Score(int aNbOfPoints, Player aPlayer, Game aGame)
+  public Score(int aNbOfPoints, String aUsername, Player aPlayer, Game aGame)
   {
     nbOfPoints = aNbOfPoints;
+    username = aUsername;
     boolean didAddPlayer = setPlayer(aPlayer);
     if (!didAddPlayer)
     {
@@ -49,9 +51,22 @@ public class Score
     return wasSet;
   }
 
+  public boolean setUsername(String aUsername)
+  {
+    boolean wasSet = false;
+    username = aUsername;
+    wasSet = true;
+    return wasSet;
+  }
+
   public int getNbOfPoints()
   {
     return nbOfPoints;
+  }
+
+  public String getUsername()
+  {
+    return username;
   }
   /* Code from template association_GetOne */
   public Player getPlayer()
@@ -122,7 +137,8 @@ public class Score
   public String toString()
   {
     return super.toString() + "["+
-            "nbOfPoints" + ":" + getNbOfPoints()+ "]" + System.getProperties().getProperty("line.separator") +
+            "nbOfPoints" + ":" + getNbOfPoints()+ "," +
+            "username" + ":" + getUsername()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "player = "+(getPlayer()!=null?Integer.toHexString(System.identityHashCode(getPlayer())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
   }

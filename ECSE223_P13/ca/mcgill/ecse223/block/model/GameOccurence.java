@@ -4,8 +4,8 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 1 "../../../../../Block223Play.ump"
 // line 1 "../../../../../Block223StateMachine.ump"
+// line 3 "../../../../../Block223Play.ump"
 public class GameOccurence
 {
 
@@ -239,8 +239,7 @@ public class GameOccurence
         if (isOutOfBounds()&&!(hasRemainingLives()))
         {
         // line 52 "../../../../../Block223StateMachine.ump"
-           
-      	createScore();
+          createScore();
       	deleteCurrentGame();
       	save();
           setGameState(GameState.Done);
