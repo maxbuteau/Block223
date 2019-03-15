@@ -27,6 +27,7 @@ public class Ball implements Serializable
 
   //Ball Associations
   private Game game;
+  private List<BallOccurence> ballOccurences;
 
   //------------------------
   // CONSTRUCTOR
@@ -42,6 +43,7 @@ public class Ball implements Serializable
       throw new RuntimeException("Unable to create Ball due to aGame");
     }
     game = aGame;
+    ballOccurences = new ArrayList<BallOccurence>();
   }
 
   public Ball(int aMinBallSpeedX, int aMinBallSpeedY, double aBallSpeedIncreaseFactor, String aNameForGame, int aNrBlocksPerLevelForGame, Admin aAdminForGame, Paddle aPaddleForGame, Block223 aBlock223ForGame)
@@ -50,6 +52,7 @@ public class Ball implements Serializable
     minBallSpeedY = aMinBallSpeedY;
     ballSpeedIncreaseFactor = aBallSpeedIncreaseFactor;
     game = new Game(aNameForGame, aNrBlocksPerLevelForGame, aAdminForGame, this, aPaddleForGame, aBlock223ForGame);
+    ballOccurences = new ArrayList<BallOccurence>();
   }
 
   //------------------------
@@ -104,6 +107,108 @@ public class Ball implements Serializable
   {
     return game;
   }
+  /* Code from template association_GetMany */
+  public BallOccurence getBallOccurence(int index)
+  {
+    BallOccurence aBallOccurence = ballOccurences.get(index);
+    return aBallOccurence;
+  }
+
+  public List<BallOccurence> getBallOccurences()
+  {
+    List<BallOccurence> newBallOccurences = Collections.unmodifiableList(ballOccurences);
+    return newBallOccurences;
+  }
+
+  public int numberOfBallOccurences()
+  {
+    int number = ballOccurences.size();
+    return number;
+  }
+
+  public boolean hasBallOccurences()
+  {
+    boolean has = ballOccurences.size() > 0;
+    return has;
+  }
+
+  public int indexOfBallOccurence(BallOccurence aBallOccurence)
+  {
+    int index = ballOccurences.indexOf(aBallOccurence);
+    return index;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfBallOccurences()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public BallOccurence addBallOccurence(int aBallDirectionX, int aBallDirectionY, GameOccurence aGameOccurence)
+  {
+    return new BallOccurence(aBallDirectionX, aBallDirectionY, this, aGameOccurence);
+  }
+
+  public boolean addBallOccurence(BallOccurence aBallOccurence)
+  {
+    boolean wasAdded = false;
+    if (ballOccurences.contains(aBallOccurence)) { return false; }
+    Ball existingBall = aBallOccurence.getBall();
+    boolean isNewBall = existingBall != null && !this.equals(existingBall);
+    if (isNewBall)
+    {
+      aBallOccurence.setBall(this);
+    }
+    else
+    {
+      ballOccurences.add(aBallOccurence);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeBallOccurence(BallOccurence aBallOccurence)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aBallOccurence, as it must always have a ball
+    if (!this.equals(aBallOccurence.getBall()))
+    {
+      ballOccurences.remove(aBallOccurence);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addBallOccurenceAt(BallOccurence aBallOccurence, int index)
+  {  
+    boolean wasAdded = false;
+    if(addBallOccurence(aBallOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBallOccurences()) { index = numberOfBallOccurences() - 1; }
+      ballOccurences.remove(aBallOccurence);
+      ballOccurences.add(index, aBallOccurence);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveBallOccurenceAt(BallOccurence aBallOccurence, int index)
+  {
+    boolean wasAdded = false;
+    if(ballOccurences.contains(aBallOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBallOccurences()) { index = numberOfBallOccurences() - 1; }
+      ballOccurences.remove(aBallOccurence);
+      ballOccurences.add(index, aBallOccurence);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addBallOccurenceAt(aBallOccurence, index);
+    }
+    return wasAdded;
+  }
 
   public void delete()
   {
@@ -113,6 +218,13 @@ public class Ball implements Serializable
     {
       existingGame.delete();
     }
+    while (ballOccurences.size() > 0)
+    {
+      BallOccurence aBallOccurence = ballOccurences.get(ballOccurences.size() - 1);
+      aBallOccurence.delete();
+      ballOccurences.remove(aBallOccurence);
+    }
+    
   }
 
 

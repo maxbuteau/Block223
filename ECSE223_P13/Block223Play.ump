@@ -1,29 +1,48 @@
 use Block223.ump;
 
 class GameOccurence {
-	Integer nbOfPoints;
+	const MAX_NUM_OF_LIVES = 3;
+	const MIN_NUM_OF_LIVES = 0;
 	Integer currentLevel;
-	Integer nbOfLives;
+	Integer nbOfLives = MAX_NUM_OF_LIVES;
 	autounique gameOccurenceID;
 
-	* <@>- 1 Game;
+	* -- 1 Game;
 	1 <@>- 1 BallOccurence;
 	1 <@>- 1 PaddleOccurence;
+	1 <@>- * BlockOccurence;
 }
 
 class BallOccurence {
-	Integer ballPositionX = PLAY_AREA_SIDE/2;
-	Integer ballPositionY = PLAY_AREA_SIDE/2;
-	Integer currentBallSpeedX = minBallSpeedX * ballSpeedIncreaseFactor * currentLevel;
-	Integer currentBallSpeedY = minBallSpeedY * ballSpeedIncreaseFactor * currentLevel;
-	Integer ballDirection;
+	defaulted Integer ballPositionX = Game.PLAY_AREA_SIDE/2;
+	defaulted Integer ballPositionY = Game.PLAY_AREA_SIDE/2;
+	Integer ballDirectionX;
+	Integer ballDirectionY;
 	
 	* <@>- 1 Ball;
 }
 
 class PaddleOccurence {
 	Integer currentPaddleLength;
-	Integer paddlePositionX = PLAY_AREA_SIDE/2 - (currentPaddleLength/2);
+	Integer paddlePositionX = Game.PLAY_AREA_SIDE/2 - (currentPaddleLength/2);
 
 	* <@>- 1 Paddle;
 }
+
+class BlockOccurence {
+	Integer gridHorizontalPosition;
+	Integer gridVerticalPosition;
+	
+	* -- 1 Block;
+}
+
+class Score {
+	Integer nbOfPoints;
+	
+	* -- 1 Player;
+	* -- 1 Game;
+}
+
+
+
+

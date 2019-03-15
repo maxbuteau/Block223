@@ -37,6 +37,7 @@ public class Block implements Serializable
   //Block Associations
   private Game game;
   private List<BlockAssignment> blockAssignments;
+  private List<BlockOccurence> blockOccurences;
 
   //------------------------
   // CONSTRUCTOR
@@ -75,6 +76,7 @@ public class Block implements Serializable
       throw new RuntimeException("Unable to create block due to game");
     }
     blockAssignments = new ArrayList<BlockAssignment>();
+    blockOccurences = new ArrayList<BlockOccurence>();
   }
 
   //------------------------
@@ -192,6 +194,36 @@ public class Block implements Serializable
     int index = blockAssignments.indexOf(aBlockAssignment);
     return index;
   }
+  /* Code from template association_GetMany */
+  public BlockOccurence getBlockOccurence(int index)
+  {
+    BlockOccurence aBlockOccurence = blockOccurences.get(index);
+    return aBlockOccurence;
+  }
+
+  public List<BlockOccurence> getBlockOccurences()
+  {
+    List<BlockOccurence> newBlockOccurences = Collections.unmodifiableList(blockOccurences);
+    return newBlockOccurences;
+  }
+
+  public int numberOfBlockOccurences()
+  {
+    int number = blockOccurences.size();
+    return number;
+  }
+
+  public boolean hasBlockOccurences()
+  {
+    boolean has = blockOccurences.size() > 0;
+    return has;
+  }
+
+  public int indexOfBlockOccurence(BlockOccurence aBlockOccurence)
+  {
+    int index = blockOccurences.indexOf(aBlockOccurence);
+    return index;
+  }
   /* Code from template association_SetOneToMany */
   public boolean setGame(Game aGame)
   {
@@ -283,6 +315,78 @@ public class Block implements Serializable
     }
     return wasAdded;
   }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfBlockOccurences()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public BlockOccurence addBlockOccurence(int aGridHorizontalPosition, int aGridVerticalPosition, GameOccurence aGameOccurence)
+  {
+    return new BlockOccurence(aGridHorizontalPosition, aGridVerticalPosition, this, aGameOccurence);
+  }
+
+  public boolean addBlockOccurence(BlockOccurence aBlockOccurence)
+  {
+    boolean wasAdded = false;
+    if (blockOccurences.contains(aBlockOccurence)) { return false; }
+    Block existingBlock = aBlockOccurence.getBlock();
+    boolean isNewBlock = existingBlock != null && !this.equals(existingBlock);
+    if (isNewBlock)
+    {
+      aBlockOccurence.setBlock(this);
+    }
+    else
+    {
+      blockOccurences.add(aBlockOccurence);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeBlockOccurence(BlockOccurence aBlockOccurence)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aBlockOccurence, as it must always have a block
+    if (!this.equals(aBlockOccurence.getBlock()))
+    {
+      blockOccurences.remove(aBlockOccurence);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
+  {  
+    boolean wasAdded = false;
+    if(addBlockOccurence(aBlockOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
+      blockOccurences.remove(aBlockOccurence);
+      blockOccurences.add(index, aBlockOccurence);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
+  {
+    boolean wasAdded = false;
+    if(blockOccurences.contains(aBlockOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
+      blockOccurences.remove(aBlockOccurence);
+      blockOccurences.add(index, aBlockOccurence);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addBlockOccurenceAt(aBlockOccurence, index);
+    }
+    return wasAdded;
+  }
 
   public void delete()
   {
@@ -296,6 +400,11 @@ public class Block implements Serializable
     {
       BlockAssignment aBlockAssignment = blockAssignments.get(i - 1);
       aBlockAssignment.delete();
+    }
+    for(int i=blockOccurences.size(); i > 0; i--)
+    {
+      BlockOccurence aBlockOccurence = blockOccurences.get(i - 1);
+      aBlockOccurence.delete();
     }
   }
 
