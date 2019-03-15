@@ -80,7 +80,7 @@ private boolean hasEnoughBlockAssignments() {}
 private boolean hasRemainingLives() {}
 private void doDeleteBlock(){} //don't forget to increment score when block is deleted //don't forget to update score
 private void doDeleteCurrentGame(){}
-private void doDreateScore(){}
+private void doCreateScore(){}
 private void doGetCurrentLevelBlocks(){}
 private void doPlaceRandomBlocks(){}
 private void doIncrementLevel(){}
@@ -89,5 +89,7 @@ private void doResetBallPosition(){}
 private void doWallHit(){}
 private void doBlockHit(){}
 private void doPaddleHit(){}
+private Double getNextX(){}
+private Double getNextY(){}
 }
 

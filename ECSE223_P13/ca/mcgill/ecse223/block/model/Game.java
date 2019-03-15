@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 41 "../../../../../Block223Persistence.ump"
-// line 52 "../../../../../Block223.ump"
+// line 55 "../../../../../Block223.ump"
 public class Game implements Serializable
 {
 
@@ -46,9 +46,9 @@ public class Game implements Serializable
   private List<BlockAssignment> blockAssignments;
   private Ball ball;
   private Paddle paddle;
-  private Block223 block223;
   private List<GameOccurence> gameOccurences;
   private List<Score> scores;
+  private Block223 block223;
 
   //------------------------
   // CONSTRUCTOR
@@ -56,7 +56,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 64 "../../../../../Block223.ump"
+    // line 67 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -85,18 +85,18 @@ public class Game implements Serializable
       throw new RuntimeException("Unable to create Game due to aPaddle");
     }
     paddle = aPaddle;
+    gameOccurences = new ArrayList<GameOccurence>();
+    scores = new ArrayList<Score>();
     boolean didAddBlock223 = setBlock223(aBlock223);
     if (!didAddBlock223)
     {
       throw new RuntimeException("Unable to create game due to block223");
     }
-    gameOccurences = new ArrayList<GameOccurence>();
-    scores = new ArrayList<Score>();
   }
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 64 "../../../../../Block223.ump"
+    // line 67 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -114,13 +114,13 @@ public class Game implements Serializable
     blockAssignments = new ArrayList<BlockAssignment>();
     ball = new Ball(aMinBallSpeedXForBall, aMinBallSpeedYForBall, aBallSpeedIncreaseFactorForBall, this);
     paddle = new Paddle(aMaxPaddleLengthForPaddle, aMinPaddleLengthForPaddle, this);
+    gameOccurences = new ArrayList<GameOccurence>();
+    scores = new ArrayList<Score>();
     boolean didAddBlock223 = setBlock223(aBlock223);
     if (!didAddBlock223)
     {
       throw new RuntimeException("Unable to create game due to block223");
     }
-    gameOccurences = new ArrayList<GameOccurence>();
-    scores = new ArrayList<Score>();
   }
 
   //------------------------
@@ -130,7 +130,7 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 70 "../../../../../Block223.ump"
+    // line 73 "../../../../../Block223.ump"
     if(aName == null || aName.equals("")){
     	throw new RuntimeException("The name of a game must be specified.");
     	}
@@ -151,7 +151,7 @@ public class Game implements Serializable
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
-    // line 76 "../../../../../Block223.ump"
+    // line 79 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
     			throw new RuntimeException("The number of blocks per level must be greater than zero.");
     		}
@@ -312,11 +312,6 @@ public class Game implements Serializable
   {
     return paddle;
   }
-  /* Code from template association_GetOne */
-  public Block223 getBlock223()
-  {
-    return block223;
-  }
   /* Code from template association_GetMany */
   public GameOccurence getGameOccurence(int index)
   {
@@ -376,6 +371,11 @@ public class Game implements Serializable
   {
     int index = scores.indexOf(aScore);
     return index;
+  }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
   }
   /* Code from template association_SetOneToMany */
   public boolean setAdmin(Admin aAdmin)
@@ -648,34 +648,15 @@ public class Game implements Serializable
     }
     return wasAdded;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setBlock223(Block223 aBlock223)
-  {
-    boolean wasSet = false;
-    if (aBlock223 == null)
-    {
-      return wasSet;
-    }
-
-    Block223 existingBlock223 = block223;
-    block223 = aBlock223;
-    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
-    {
-      existingBlock223.removeGame(this);
-    }
-    block223.addGame(this);
-    wasSet = true;
-    return wasSet;
-  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfGameOccurences()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public GameOccurence addGameOccurence(int aCurrentLevel, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence)
+  public GameOccurence addGameOccurence(int aCurrentLevel, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223)
   {
-    return new GameOccurence(aCurrentLevel, this, aBallOccurence, aPaddleOccurence);
+    return new GameOccurence(aCurrentLevel, this, aBallOccurence, aPaddleOccurence, aBlock223);
   }
 
   public boolean addGameOccurence(GameOccurence aGameOccurence)
@@ -745,9 +726,9 @@ public class Game implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Score addScore(int aNbOfPoints, String aUsername, Player aPlayer)
+  public Score addScore(int aNbOfPoints, Player aPlayer, Block223 aBlock223)
   {
-    return new Score(aNbOfPoints, aUsername, aPlayer, this);
+    return new Score(aNbOfPoints, aPlayer, this, aBlock223);
   }
 
   public boolean addScore(Score aScore)
@@ -811,6 +792,25 @@ public class Game implements Serializable
     }
     return wasAdded;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeGame(this);
+    }
+    block223.addGame(this);
+    wasSet = true;
+    return wasSet;
+  }
 
   public void delete()
   {
@@ -854,12 +854,6 @@ public class Game implements Serializable
     {
       existingPaddle.delete();
     }
-    Block223 placeholderBlock223 = block223;
-    this.block223 = null;
-    if(placeholderBlock223 != null)
-    {
-      placeholderBlock223.removeGame(this);
-    }
     for(int i=gameOccurences.size(); i > 0; i--)
     {
       GameOccurence aGameOccurence = gameOccurences.get(i - 1);
@@ -869,6 +863,12 @@ public class Game implements Serializable
     {
       Score aScore = scores.get(i - 1);
       aScore.delete();
+    }
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeGame(this);
     }
   }
 
@@ -880,7 +880,7 @@ public class Game implements Serializable
 		}
   }
 
-  // line 91 "../../../../../Block223.ump"
+  // line 94 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 53 "../../../../../Block223Persistence.ump"
-// line 111 "../../../../../Block223.ump"
+// line 114 "../../../../../Block223.ump"
 public class Block implements Serializable
 {
 
@@ -35,9 +35,9 @@ public class Block implements Serializable
   private int id;
 
   //Block Associations
+  private List<BlockOccurence> blockOccurences;
   private Game game;
   private List<BlockAssignment> blockAssignments;
-  private List<BlockOccurence> blockOccurences;
 
   //------------------------
   // CONSTRUCTOR
@@ -45,22 +45,22 @@ public class Block implements Serializable
 
   public Block(int aRed, int aGreen, int aBlue, int aPoints, Game aGame)
   {
-    // line 125 "../../../../../Block223.ump"
+    // line 128 "../../../../../Block223.ump"
     if (aRed < MIN_COLOR || aRed > MAX_COLOR) {
        	throw new RuntimeException("Red must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
     // END OF UMPLE BEFORE INJECTION
-    // line 133 "../../../../../Block223.ump"
+    // line 136 "../../../../../Block223.ump"
     if (aGreen < MIN_COLOR || aGreen > MAX_COLOR) {
        	throw new RuntimeException("Green must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
     // END OF UMPLE BEFORE INJECTION
-    // line 141 "../../../../../Block223.ump"
+    // line 144 "../../../../../Block223.ump"
     if (aBlue < MIN_COLOR || aBlue > MAX_COLOR) {
        		throw new RuntimeException("Blue must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
     // END OF UMPLE BEFORE INJECTION
-    // line 149 "../../../../../Block223.ump"
+    // line 152 "../../../../../Block223.ump"
     if (aPoints < MIN_POINTS || aPoints > MAX_POINTS) {
        		throw new RuntimeException("Points must be between "+MIN_POINTS+" and "+MAX_POINTS+".");
        	}
@@ -70,13 +70,13 @@ public class Block implements Serializable
     blue = aBlue;
     points = aPoints;
     id = nextId++;
+    blockOccurences = new ArrayList<BlockOccurence>();
     boolean didAddGame = setGame(aGame);
     if (!didAddGame)
     {
       throw new RuntimeException("Unable to create block due to game");
     }
     blockAssignments = new ArrayList<BlockAssignment>();
-    blockOccurences = new ArrayList<BlockOccurence>();
   }
 
   //------------------------
@@ -86,7 +86,7 @@ public class Block implements Serializable
   public boolean setRed(int aRed)
   {
     boolean wasSet = false;
-    // line 125 "../../../../../Block223.ump"
+    // line 128 "../../../../../Block223.ump"
     if (aRed < MIN_COLOR || aRed > MAX_COLOR) {
        	throw new RuntimeException("Red must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
@@ -99,7 +99,7 @@ public class Block implements Serializable
   public boolean setGreen(int aGreen)
   {
     boolean wasSet = false;
-    // line 133 "../../../../../Block223.ump"
+    // line 136 "../../../../../Block223.ump"
     if (aGreen < MIN_COLOR || aGreen > MAX_COLOR) {
        	throw new RuntimeException("Green must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
@@ -112,7 +112,7 @@ public class Block implements Serializable
   public boolean setBlue(int aBlue)
   {
     boolean wasSet = false;
-    // line 141 "../../../../../Block223.ump"
+    // line 144 "../../../../../Block223.ump"
     if (aBlue < MIN_COLOR || aBlue > MAX_COLOR) {
        		throw new RuntimeException("Blue must be between " +MIN_COLOR+ " and "+MAX_COLOR+".");
        	}
@@ -125,7 +125,7 @@ public class Block implements Serializable
   public boolean setPoints(int aPoints)
   {
     boolean wasSet = false;
-    // line 149 "../../../../../Block223.ump"
+    // line 152 "../../../../../Block223.ump"
     if (aPoints < MIN_POINTS || aPoints > MAX_POINTS) {
        		throw new RuntimeException("Points must be between "+MIN_POINTS+" and "+MAX_POINTS+".");
        	}
@@ -158,6 +158,36 @@ public class Block implements Serializable
   public int getId()
   {
     return id;
+  }
+  /* Code from template association_GetMany */
+  public BlockOccurence getBlockOccurence(int index)
+  {
+    BlockOccurence aBlockOccurence = blockOccurences.get(index);
+    return aBlockOccurence;
+  }
+
+  public List<BlockOccurence> getBlockOccurences()
+  {
+    List<BlockOccurence> newBlockOccurences = Collections.unmodifiableList(blockOccurences);
+    return newBlockOccurences;
+  }
+
+  public int numberOfBlockOccurences()
+  {
+    int number = blockOccurences.size();
+    return number;
+  }
+
+  public boolean hasBlockOccurences()
+  {
+    boolean has = blockOccurences.size() > 0;
+    return has;
+  }
+
+  public int indexOfBlockOccurence(BlockOccurence aBlockOccurence)
+  {
+    int index = blockOccurences.indexOf(aBlockOccurence);
+    return index;
   }
   /* Code from template association_GetOne */
   public Game getGame()
@@ -194,35 +224,77 @@ public class Block implements Serializable
     int index = blockAssignments.indexOf(aBlockAssignment);
     return index;
   }
-  /* Code from template association_GetMany */
-  public BlockOccurence getBlockOccurence(int index)
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfBlockOccurences()
   {
-    BlockOccurence aBlockOccurence = blockOccurences.get(index);
-    return aBlockOccurence;
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public BlockOccurence addBlockOccurence(int aGridHorizontalPosition, int aGridVerticalPosition, GameOccurence aGameOccurence)
+  {
+    return new BlockOccurence(aGridHorizontalPosition, aGridVerticalPosition, this, aGameOccurence);
   }
 
-  public List<BlockOccurence> getBlockOccurences()
+  public boolean addBlockOccurence(BlockOccurence aBlockOccurence)
   {
-    List<BlockOccurence> newBlockOccurences = Collections.unmodifiableList(blockOccurences);
-    return newBlockOccurences;
+    boolean wasAdded = false;
+    if (blockOccurences.contains(aBlockOccurence)) { return false; }
+    Block existingBlock = aBlockOccurence.getBlock();
+    boolean isNewBlock = existingBlock != null && !this.equals(existingBlock);
+    if (isNewBlock)
+    {
+      aBlockOccurence.setBlock(this);
+    }
+    else
+    {
+      blockOccurences.add(aBlockOccurence);
+    }
+    wasAdded = true;
+    return wasAdded;
   }
 
-  public int numberOfBlockOccurences()
+  public boolean removeBlockOccurence(BlockOccurence aBlockOccurence)
   {
-    int number = blockOccurences.size();
-    return number;
+    boolean wasRemoved = false;
+    //Unable to remove aBlockOccurence, as it must always have a block
+    if (!this.equals(aBlockOccurence.getBlock()))
+    {
+      blockOccurences.remove(aBlockOccurence);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
+  {  
+    boolean wasAdded = false;
+    if(addBlockOccurence(aBlockOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
+      blockOccurences.remove(aBlockOccurence);
+      blockOccurences.add(index, aBlockOccurence);
+      wasAdded = true;
+    }
+    return wasAdded;
   }
 
-  public boolean hasBlockOccurences()
+  public boolean addOrMoveBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
   {
-    boolean has = blockOccurences.size() > 0;
-    return has;
-  }
-
-  public int indexOfBlockOccurence(BlockOccurence aBlockOccurence)
-  {
-    int index = blockOccurences.indexOf(aBlockOccurence);
-    return index;
+    boolean wasAdded = false;
+    if(blockOccurences.contains(aBlockOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
+      blockOccurences.remove(aBlockOccurence);
+      blockOccurences.add(index, aBlockOccurence);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addBlockOccurenceAt(aBlockOccurence, index);
+    }
+    return wasAdded;
   }
   /* Code from template association_SetOneToMany */
   public boolean setGame(Game aGame)
@@ -315,81 +387,14 @@ public class Block implements Serializable
     }
     return wasAdded;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfBlockOccurences()
-  {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  public BlockOccurence addBlockOccurence(int aGridHorizontalPosition, int aGridVerticalPosition, GameOccurence aGameOccurence)
-  {
-    return new BlockOccurence(aGridHorizontalPosition, aGridVerticalPosition, this, aGameOccurence);
-  }
-
-  public boolean addBlockOccurence(BlockOccurence aBlockOccurence)
-  {
-    boolean wasAdded = false;
-    if (blockOccurences.contains(aBlockOccurence)) { return false; }
-    Block existingBlock = aBlockOccurence.getBlock();
-    boolean isNewBlock = existingBlock != null && !this.equals(existingBlock);
-    if (isNewBlock)
-    {
-      aBlockOccurence.setBlock(this);
-    }
-    else
-    {
-      blockOccurences.add(aBlockOccurence);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeBlockOccurence(BlockOccurence aBlockOccurence)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aBlockOccurence, as it must always have a block
-    if (!this.equals(aBlockOccurence.getBlock()))
-    {
-      blockOccurences.remove(aBlockOccurence);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
-  {  
-    boolean wasAdded = false;
-    if(addBlockOccurence(aBlockOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
-      blockOccurences.remove(aBlockOccurence);
-      blockOccurences.add(index, aBlockOccurence);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveBlockOccurenceAt(BlockOccurence aBlockOccurence, int index)
-  {
-    boolean wasAdded = false;
-    if(blockOccurences.contains(aBlockOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBlockOccurences()) { index = numberOfBlockOccurences() - 1; }
-      blockOccurences.remove(aBlockOccurence);
-      blockOccurences.add(index, aBlockOccurence);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addBlockOccurenceAt(aBlockOccurence, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
+    for(int i=blockOccurences.size(); i > 0; i--)
+    {
+      BlockOccurence aBlockOccurence = blockOccurences.get(i - 1);
+      aBlockOccurence.delete();
+    }
     Game placeholderGame = game;
     this.game = null;
     if(placeholderGame != null)
@@ -400,11 +405,6 @@ public class Block implements Serializable
     {
       BlockAssignment aBlockAssignment = blockAssignments.get(i - 1);
       aBlockAssignment.delete();
-    }
-    for(int i=blockOccurences.size(); i > 0; i--)
-    {
-      BlockOccurence aBlockOccurence = blockOccurences.get(i - 1);
-      aBlockOccurence.delete();
     }
   }
 

@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 27 "../../../../../Block223Play.ump"
+// line 24 "../../../../../Block223Play.ump"
 public class PaddleOccurence
 {
 
@@ -39,7 +39,7 @@ public class PaddleOccurence
     gameOccurence = aGameOccurence;
   }
 
-  public PaddleOccurence(int aCurrentPaddleLength, Paddle aPaddle, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, BallOccurence aBallOccurenceForGameOccurence)
+  public PaddleOccurence(int aCurrentPaddleLength, Paddle aPaddle, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, BallOccurence aBallOccurenceForGameOccurence, Block223 aBlock223ForGameOccurence)
   {
     currentPaddleLength = aCurrentPaddleLength;
     paddlePositionX = Game.PLAY_AREA_SIDE/2 - (currentPaddleLength/2);
@@ -48,7 +48,7 @@ public class PaddleOccurence
     {
       throw new RuntimeException("Unable to create paddleOccurence due to paddle");
     }
-    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, aBallOccurenceForGameOccurence, this);
+    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, aBallOccurenceForGameOccurence, this, aBlock223ForGameOccurence);
   }
 
   //------------------------

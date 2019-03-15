@@ -5,7 +5,7 @@ package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
 // line 1 "../../../../../Block223StateMachine.ump"
-// line 3 "../../../../../Block223Play.ump"
+// line 1 "../../../../../Block223Play.ump"
 public class GameOccurence
 {
 
@@ -37,12 +37,13 @@ public class GameOccurence
   private BallOccurence ballOccurence;
   private PaddleOccurence paddleOccurence;
   private List<BlockOccurence> blockOccurences;
+  private Block223 block223;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public GameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence)
+  public GameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223)
   {
     currentLevel = aCurrentLevel;
     nbOfLives = MAX_NUM_OF_LIVES;
@@ -63,10 +64,15 @@ public class GameOccurence
     }
     paddleOccurence = aPaddleOccurence;
     blockOccurences = new ArrayList<BlockOccurence>();
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create gameOccurence due to block223");
+    }
     setGameState(GameState.Idle);
   }
 
-  public GameOccurence(int aCurrentLevel, Game aGame, Ball aBallForBallOccurence, int aCurrentPaddleLengthForPaddleOccurence, Paddle aPaddleForPaddleOccurence)
+  public GameOccurence(int aCurrentLevel, Game aGame, Ball aBallForBallOccurence, int aCurrentPaddleLengthForPaddleOccurence, Paddle aPaddleForPaddleOccurence, Block223 aBlock223)
   {
     currentLevel = aCurrentLevel;
     nbOfLives = MAX_NUM_OF_LIVES;
@@ -79,6 +85,11 @@ public class GameOccurence
     ballOccurence = new BallOccurence(aBallForBallOccurence, this);
     paddleOccurence = new PaddleOccurence(aCurrentPaddleLengthForPaddleOccurence, aPaddleForPaddleOccurence, this);
     blockOccurences = new ArrayList<BlockOccurence>();
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create gameOccurence due to block223");
+    }
   }
 
   //------------------------
@@ -138,18 +149,18 @@ public class GameOccurence
         if (hasEnoughBlockAssignments())
         {
         // line 6 "../../../../../Block223StateMachine.ump"
-          getCurrentLevelBlocks();
-      	save();
+          doCreateScore();
+      	doGetCurrentLevelBlocks();
           setGameState(GameState.Paused);
           wasEventProcessed = true;
           break;
         }
         if (!(hasEnoughBlockAssignments()))
         {
-        // line 10 "../../../../../Block223StateMachine.ump"
-          getCurrentLevelBlocks();
-      	placeRandomBlocks();
-      	save();
+        // line 11 "../../../../../Block223StateMachine.ump"
+          doCreateScore();
+      	doGetCurrentLevelBlocks();
+      	doPlaceRandomBlocks();
           setGameState(GameState.Paused);
           wasEventProcessed = true;
           break;
@@ -174,8 +185,6 @@ public class GameOccurence
         wasEventProcessed = true;
         break;
       case Play:
-        // line 22 "../../../../../Block223StateMachine.ump"
-        save();
         setGameState(GameState.Paused);
         wasEventProcessed = true;
         break;
@@ -197,60 +206,63 @@ public class GameOccurence
         if (isBlockHit()&&isLastBlockHit())
         {
         // line 26 "../../../../../Block223StateMachine.ump"
-          deleteBlock();
-        incrementLevel();
-        getCurrentLevelBlocks();
+          doDeleteBlock(); 
+        doIncrementLevel();
+        doGetCurrentLevelBlocks();
         if(!hasEnoughBlockAssignments()){
-        placeRandomBlocks();
+        doPlaceRandomBlocks();
         }
-        save();
           setGameState(GameState.Paused);
           wasEventProcessed = true;
           break;
         }
-        if (isWallHit()||isPaddleHit())
+        if (isWallHit())
         {
         // line 36 "../../../../../Block223StateMachine.ump"
-          changeBallDirection();
+          doWallHit();
+          setGameState(GameState.Play);
+          wasEventProcessed = true;
+          break;
+        }
+        if (isPaddleHit())
+        {
+        // line 40 "../../../../../Block223StateMachine.ump"
+          doPaddleHit();
           setGameState(GameState.Play);
           wasEventProcessed = true;
           break;
         }
         if (isOutOfBounds()&&hasRemainingLives())
         {
-        // line 40 "../../../../../Block223StateMachine.ump"
-          decrementLifeCount();
-      	resetBallPosition();
-      	save();
+        // line 44 "../../../../../Block223StateMachine.ump"
+          doDecrementLifeCount();
+      	doResetBallPosition();
           setGameState(GameState.Paused);
           wasEventProcessed = true;
           break;
         }
-        if (isLastBlockHit()&&isLastLevel())
+        if (isBlockHit()&&isLastBlockHit()&&isLastLevel())
         {
-        // line 46 "../../../../../Block223StateMachine.ump"
-          createScore();
-      	deleteCurrentGame();
-      	save();
+        // line 50 "../../../../../Block223StateMachine.ump"
+          doDeleteBlock();
+      	doDeleteCurrentGame();
           setGameState(GameState.Done);
           wasEventProcessed = true;
           break;
         }
         if (isOutOfBounds()&&!(hasRemainingLives()))
         {
-        // line 52 "../../../../../Block223StateMachine.ump"
-          createScore();
-      	deleteCurrentGame();
-      	save();
+        // line 56 "../../../../../Block223StateMachine.ump"
+          doDeleteCurrentGame();
           setGameState(GameState.Done);
           wasEventProcessed = true;
           break;
         }
         if (isBlockHit()&&!(isLastBlockHit()))
         {
-        // line 58 "../../../../../Block223StateMachine.ump"
-          deleteBlock();
-      	changeBallDirection();
+        // line 61 "../../../../../Block223StateMachine.ump"
+          doDeleteBlock();
+      	doBlockHit();
           setGameState(GameState.Play);
           wasEventProcessed = true;
           break;
@@ -317,6 +329,11 @@ public class GameOccurence
   {
     int index = blockOccurences.indexOf(aBlockOccurence);
     return index;
+  }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
   }
   /* Code from template association_SetOneToMany */
   public boolean setGame(Game aGame)
@@ -409,6 +426,25 @@ public class GameOccurence
     }
     return wasAdded;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeGameOccurence(this);
+    }
+    block223.addGameOccurence(this);
+    wasSet = true;
+    return wasSet;
+  }
 
   public void delete()
   {
@@ -437,95 +473,120 @@ public class GameOccurence
       blockOccurences.remove(aBlockOccurence);
     }
     
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeGameOccurence(this);
+    }
   }
 
-  // line 70 "../../../../../Block223StateMachine.ump"
+  // line 73 "../../../../../Block223StateMachine.ump"
    private boolean isBlockHit(){
     
   }
 
-  // line 71 "../../../../../Block223StateMachine.ump"
+  // line 74 "../../../../../Block223StateMachine.ump"
    private boolean isLastBlockHit(){
     
   }
 
-  // line 72 "../../../../../Block223StateMachine.ump"
+  // line 75 "../../../../../Block223StateMachine.ump"
    private boolean isLastLevel(){
     
   }
 
-  // line 73 "../../../../../Block223StateMachine.ump"
+  // line 76 "../../../../../Block223StateMachine.ump"
    private boolean isPaddleHit(){
     
   }
 
-  // line 74 "../../../../../Block223StateMachine.ump"
+  // line 77 "../../../../../Block223StateMachine.ump"
    private boolean isWallHit(){
     
   }
 
-  // line 75 "../../../../../Block223StateMachine.ump"
+  // line 78 "../../../../../Block223StateMachine.ump"
    private boolean isOutOfBounds(){
     
   }
 
-  // line 76 "../../../../../Block223StateMachine.ump"
+  // line 79 "../../../../../Block223StateMachine.ump"
    private boolean hasEnoughBlockAssignments(){
     
   }
 
-  // line 77 "../../../../../Block223StateMachine.ump"
+  // line 80 "../../../../../Block223StateMachine.ump"
    private boolean hasRemainingLives(){
     
   }
 
-  // line 78 "../../../../../Block223StateMachine.ump"
-   private void deleteBlock(){
-    
-  }
-
-  // line 79 "../../../../../Block223StateMachine.ump"
-   private void deleteCurrentGame(){
-    
-  }
-
-  // line 80 "../../../../../Block223StateMachine.ump"
-   private void createScore(){
-    
-  }
-
   // line 81 "../../../../../Block223StateMachine.ump"
-   private void save(){
+   private void doDeleteBlock(){
     
   }
 
+
+  /**
+   * don't forget to increment score when block is deleted //don't forget to update score
+   */
   // line 82 "../../../../../Block223StateMachine.ump"
-   private void getCurrentLevelBlocks(){
+   private void doDeleteCurrentGame(){
     
   }
 
   // line 83 "../../../../../Block223StateMachine.ump"
-   private void placeRandomBlocks(){
+   private void doCreateScore(){
     
   }
 
   // line 84 "../../../../../Block223StateMachine.ump"
-   private void incrementLevel(){
+   private void doGetCurrentLevelBlocks(){
     
   }
 
   // line 85 "../../../../../Block223StateMachine.ump"
-   private void decrementLifeCount(){
+   private void doPlaceRandomBlocks(){
     
   }
 
   // line 86 "../../../../../Block223StateMachine.ump"
-   private void resetBallPosition(){
+   private void doIncrementLevel(){
     
   }
 
   // line 87 "../../../../../Block223StateMachine.ump"
-   private void changeBallDirection(){
+   private void doDecrementLifeCount(){
+    
+  }
+
+  // line 88 "../../../../../Block223StateMachine.ump"
+   private void doResetBallPosition(){
+    
+  }
+
+  // line 89 "../../../../../Block223StateMachine.ump"
+   private void doWallHit(){
+    
+  }
+
+  // line 90 "../../../../../Block223StateMachine.ump"
+   private void doBlockHit(){
+    
+  }
+
+  // line 91 "../../../../../Block223StateMachine.ump"
+   private void doPaddleHit(){
+    
+  }
+
+  // line 92 "../../../../../Block223StateMachine.ump"
+   private Double getNextX(){
+    
+  }
+
+  // line 93 "../../../../../Block223StateMachine.ump"
+   private Double getNextY(){
     
   }
 
@@ -538,6 +599,7 @@ public class GameOccurence
             "nbOfLives" + ":" + getNbOfLives()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "ballOccurence = "+(getBallOccurence()!=null?Integer.toHexString(System.identityHashCode(getBallOccurence())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "paddleOccurence = "+(getPaddleOccurence()!=null?Integer.toHexString(System.identityHashCode(getPaddleOccurence())):"null");
+            "  " + "paddleOccurence = "+(getPaddleOccurence()!=null?Integer.toHexString(System.identityHashCode(getPaddleOccurence())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
   }
 }

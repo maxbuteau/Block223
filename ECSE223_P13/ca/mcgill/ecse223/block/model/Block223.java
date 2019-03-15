@@ -7,7 +7,7 @@ import ca.mcgill.ecse223.block.application.Block223Application;
 import java.util.*;
 
 // line 3 "../../../../../Block223Persistence.ump"
-// line 5 "../../../../../Block223.ump"
+// line 6 "../../../../../Block223.ump"
 public class Block223 implements Serializable
 {
 
@@ -19,6 +19,8 @@ public class Block223 implements Serializable
   private List<User> users;
   private List<UserRole> roles;
   private List<Game> games;
+  private List<GameOccurence> gameOccurences;
+  private List<Score> scores;
 
   //------------------------
   // CONSTRUCTOR
@@ -29,6 +31,8 @@ public class Block223 implements Serializable
     users = new ArrayList<User>();
     roles = new ArrayList<UserRole>();
     games = new ArrayList<Game>();
+    gameOccurences = new ArrayList<GameOccurence>();
+    scores = new ArrayList<Score>();
   }
 
   //------------------------
@@ -122,6 +126,66 @@ public class Block223 implements Serializable
   public int indexOfGame(Game aGame)
   {
     int index = games.indexOf(aGame);
+    return index;
+  }
+  /* Code from template association_GetMany */
+  public GameOccurence getGameOccurence(int index)
+  {
+    GameOccurence aGameOccurence = gameOccurences.get(index);
+    return aGameOccurence;
+  }
+
+  public List<GameOccurence> getGameOccurences()
+  {
+    List<GameOccurence> newGameOccurences = Collections.unmodifiableList(gameOccurences);
+    return newGameOccurences;
+  }
+
+  public int numberOfGameOccurences()
+  {
+    int number = gameOccurences.size();
+    return number;
+  }
+
+  public boolean hasGameOccurences()
+  {
+    boolean has = gameOccurences.size() > 0;
+    return has;
+  }
+
+  public int indexOfGameOccurence(GameOccurence aGameOccurence)
+  {
+    int index = gameOccurences.indexOf(aGameOccurence);
+    return index;
+  }
+  /* Code from template association_GetMany */
+  public Score getScore(int index)
+  {
+    Score aScore = scores.get(index);
+    return aScore;
+  }
+
+  public List<Score> getScores()
+  {
+    List<Score> newScores = Collections.unmodifiableList(scores);
+    return newScores;
+  }
+
+  public int numberOfScores()
+  {
+    int number = scores.size();
+    return number;
+  }
+
+  public boolean hasScores()
+  {
+    boolean has = scores.size() > 0;
+    return has;
+  }
+
+  public int indexOfScore(Score aScore)
+  {
+    int index = scores.indexOf(aScore);
     return index;
   }
   /* Code from template association_MinimumNumberOfMethod */
@@ -337,6 +401,150 @@ public class Block223 implements Serializable
     }
     return wasAdded;
   }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfGameOccurences()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public GameOccurence addGameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence)
+  {
+    return new GameOccurence(aCurrentLevel, aGame, aBallOccurence, aPaddleOccurence, this);
+  }
+
+  public boolean addGameOccurence(GameOccurence aGameOccurence)
+  {
+    boolean wasAdded = false;
+    if (gameOccurences.contains(aGameOccurence)) { return false; }
+    Block223 existingBlock223 = aGameOccurence.getBlock223();
+    boolean isNewBlock223 = existingBlock223 != null && !this.equals(existingBlock223);
+    if (isNewBlock223)
+    {
+      aGameOccurence.setBlock223(this);
+    }
+    else
+    {
+      gameOccurences.add(aGameOccurence);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeGameOccurence(GameOccurence aGameOccurence)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aGameOccurence, as it must always have a block223
+    if (!this.equals(aGameOccurence.getBlock223()))
+    {
+      gameOccurences.remove(aGameOccurence);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addGameOccurenceAt(GameOccurence aGameOccurence, int index)
+  {  
+    boolean wasAdded = false;
+    if(addGameOccurence(aGameOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameOccurences()) { index = numberOfGameOccurences() - 1; }
+      gameOccurences.remove(aGameOccurence);
+      gameOccurences.add(index, aGameOccurence);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveGameOccurenceAt(GameOccurence aGameOccurence, int index)
+  {
+    boolean wasAdded = false;
+    if(gameOccurences.contains(aGameOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameOccurences()) { index = numberOfGameOccurences() - 1; }
+      gameOccurences.remove(aGameOccurence);
+      gameOccurences.add(index, aGameOccurence);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addGameOccurenceAt(aGameOccurence, index);
+    }
+    return wasAdded;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfScores()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public Score addScore(int aNbOfPoints, Player aPlayer, Game aGame)
+  {
+    return new Score(aNbOfPoints, aPlayer, aGame, this);
+  }
+
+  public boolean addScore(Score aScore)
+  {
+    boolean wasAdded = false;
+    if (scores.contains(aScore)) { return false; }
+    Block223 existingBlock223 = aScore.getBlock223();
+    boolean isNewBlock223 = existingBlock223 != null && !this.equals(existingBlock223);
+    if (isNewBlock223)
+    {
+      aScore.setBlock223(this);
+    }
+    else
+    {
+      scores.add(aScore);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeScore(Score aScore)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aScore, as it must always have a block223
+    if (!this.equals(aScore.getBlock223()))
+    {
+      scores.remove(aScore);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addScoreAt(Score aScore, int index)
+  {  
+    boolean wasAdded = false;
+    if(addScore(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveScoreAt(Score aScore, int index)
+  {
+    boolean wasAdded = false;
+    if(scores.contains(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addScoreAt(aScore, index);
+    }
+    return wasAdded;
+  }
 
   public void delete()
   {
@@ -361,6 +569,20 @@ public class Block223 implements Serializable
       games.remove(aGame);
     }
     
+    while (gameOccurences.size() > 0)
+    {
+      GameOccurence aGameOccurence = gameOccurences.get(gameOccurences.size() - 1);
+      aGameOccurence.delete();
+      gameOccurences.remove(aGameOccurence);
+    }
+    
+    while (scores.size() > 0)
+    {
+      Score aScore = scores.get(scores.size() - 1);
+      aScore.delete();
+      scores.remove(aScore);
+    }
+    
   }
 
   // line 9 "../../../../../Block223Persistence.ump"
@@ -370,7 +592,7 @@ public class Block223 implements Serializable
 		Block.reinitializeAutouniqueBlockID(this.getGames());
   }
 
-  // line 12 "../../../../../Block223.ump"
+  // line 15 "../../../../../Block223.ump"
    public static  Game findGame(String gameName){
     Game foundGame = null;
 	  for(Game game: Block223Application.getBlock223().getGames()) {

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 87 "../../../../../Block223Persistence.ump"
-// line 215 "../../../../../Block223.ump"
+// line 218 "../../../../../Block223.ump"
 public class Paddle implements Serializable
 {
 
@@ -26,8 +26,8 @@ public class Paddle implements Serializable
   private int minPaddleLength;
 
   //Paddle Associations
-  private Game game;
   private List<PaddleOccurence> paddleOccurences;
+  private Game game;
 
   //------------------------
   // CONSTRUCTOR
@@ -37,20 +37,20 @@ public class Paddle implements Serializable
   {
     maxPaddleLength = aMaxPaddleLength;
     minPaddleLength = aMinPaddleLength;
+    paddleOccurences = new ArrayList<PaddleOccurence>();
     if (aGame == null || aGame.getPaddle() != null)
     {
       throw new RuntimeException("Unable to create Paddle due to aGame");
     }
     game = aGame;
-    paddleOccurences = new ArrayList<PaddleOccurence>();
   }
 
   public Paddle(int aMaxPaddleLength, int aMinPaddleLength, String aNameForGame, int aNrBlocksPerLevelForGame, Admin aAdminForGame, Ball aBallForGame, Block223 aBlock223ForGame)
   {
     maxPaddleLength = aMaxPaddleLength;
     minPaddleLength = aMinPaddleLength;
-    game = new Game(aNameForGame, aNrBlocksPerLevelForGame, aAdminForGame, aBallForGame, this, aBlock223ForGame);
     paddleOccurences = new ArrayList<PaddleOccurence>();
+    game = new Game(aNameForGame, aNrBlocksPerLevelForGame, aAdminForGame, aBallForGame, this, aBlock223ForGame);
   }
 
   //------------------------
@@ -60,7 +60,7 @@ public class Paddle implements Serializable
   public boolean setMaxPaddleLength(int aMaxPaddleLength)
   {
     boolean wasSet = false;
-    // line 227 "../../../../../Block223.ump"
+    // line 230 "../../../../../Block223.ump"
     if(aMaxPaddleLength<1 || aMaxPaddleLength>Game.PLAY_AREA_SIDE){
        	throw new RuntimeException("The maximum length of the paddle must be greater than zero and less than or equal to "+Game.PLAY_AREA_SIDE+".");
        }
@@ -73,7 +73,7 @@ public class Paddle implements Serializable
   public boolean setMinPaddleLength(int aMinPaddleLength)
   {
     boolean wasSet = false;
-    // line 222 "../../../../../Block223.ump"
+    // line 225 "../../../../../Block223.ump"
     if(aMinPaddleLength<1){
        	throw new RuntimeException("The minimum length of the paddle must be greater than zero.");
        }
@@ -91,11 +91,6 @@ public class Paddle implements Serializable
   public int getMinPaddleLength()
   {
     return minPaddleLength;
-  }
-  /* Code from template association_GetOne */
-  public Game getGame()
-  {
-    return game;
   }
   /* Code from template association_GetMany */
   public PaddleOccurence getPaddleOccurence(int index)
@@ -126,6 +121,11 @@ public class Paddle implements Serializable
   {
     int index = paddleOccurences.indexOf(aPaddleOccurence);
     return index;
+  }
+  /* Code from template association_GetOne */
+  public Game getGame()
+  {
+    return game;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfPaddleOccurences()
@@ -202,16 +202,16 @@ public class Paddle implements Serializable
 
   public void delete()
   {
+    for(int i=paddleOccurences.size(); i > 0; i--)
+    {
+      PaddleOccurence aPaddleOccurence = paddleOccurences.get(i - 1);
+      aPaddleOccurence.delete();
+    }
     Game existingGame = game;
     game = null;
     if (existingGame != null)
     {
       existingGame.delete();
-    }
-    for(int i=paddleOccurences.size(); i > 0; i--)
-    {
-      PaddleOccurence aPaddleOccurence = paddleOccurences.get(i - 1);
-      aPaddleOccurence.delete();
     }
   }
 

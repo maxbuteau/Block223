@@ -13,10 +13,10 @@ class GameOccurence {
 }
 
 class BallOccurence {
-	defaulted Integer ballPositionX = Game.PLAY_AREA_SIDE/2;
-	defaulted Integer ballPositionY = Game.PLAY_AREA_SIDE/2;
-	defaulted Integer ballDirectionX = 0;
-	defaulted Integer ballDirectionY = 1;
+	defaulted Double ballPositionX = Game.PLAY_AREA_SIDE/2;
+	defaulted Double ballPositionY = Game.PLAY_AREA_SIDE/2;
+	defaulted Double ballDirectionX = 0;
+	defaulted Double ballDirectionY = 1;
 	
 	* -- 1 Ball;
 }
@@ -37,7 +37,6 @@ class BlockOccurence {
 
 class Score {
 	Integer nbOfPoints;
-	String username;
 	
 	* -- 1 Player;
 	* -- 1 Game;

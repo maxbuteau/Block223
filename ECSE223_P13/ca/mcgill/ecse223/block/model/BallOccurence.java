@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 18 "../../../../../Block223Play.ump"
+// line 15 "../../../../../Block223Play.ump"
 public class BallOccurence
 {
 
@@ -12,10 +12,10 @@ public class BallOccurence
   //------------------------
 
   //BallOccurence Attributes
-  private int ballPositionX;
-  private int ballPositionY;
-  private int ballDirectionX;
-  private int ballDirectionY;
+  private double ballPositionX;
+  private double ballPositionY;
+  private double ballDirectionX;
+  private double ballDirectionY;
 
   //BallOccurence Associations
   private Ball ball;
@@ -43,7 +43,7 @@ public class BallOccurence
     gameOccurence = aGameOccurence;
   }
 
-  public BallOccurence(Ball aBall, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, PaddleOccurence aPaddleOccurenceForGameOccurence)
+  public BallOccurence(Ball aBall, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, PaddleOccurence aPaddleOccurenceForGameOccurence, Block223 aBlock223ForGameOccurence)
   {
     resetBallPositionX();
     resetBallPositionY();
@@ -54,14 +54,14 @@ public class BallOccurence
     {
       throw new RuntimeException("Unable to create ballOccurence due to ball");
     }
-    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, this, aPaddleOccurenceForGameOccurence);
+    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, this, aPaddleOccurenceForGameOccurence, aBlock223ForGameOccurence);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
   /* Code from template attribute_SetDefaulted */
-  public boolean setBallPositionX(int aBallPositionX)
+  public boolean setBallPositionX(double aBallPositionX)
   {
     boolean wasSet = false;
     ballPositionX = aBallPositionX;
@@ -77,7 +77,7 @@ public class BallOccurence
     return wasReset;
   }
   /* Code from template attribute_SetDefaulted */
-  public boolean setBallPositionY(int aBallPositionY)
+  public boolean setBallPositionY(double aBallPositionY)
   {
     boolean wasSet = false;
     ballPositionY = aBallPositionY;
@@ -93,7 +93,7 @@ public class BallOccurence
     return wasReset;
   }
   /* Code from template attribute_SetDefaulted */
-  public boolean setBallDirectionX(int aBallDirectionX)
+  public boolean setBallDirectionX(double aBallDirectionX)
   {
     boolean wasSet = false;
     ballDirectionX = aBallDirectionX;
@@ -109,7 +109,7 @@ public class BallOccurence
     return wasReset;
   }
   /* Code from template attribute_SetDefaulted */
-  public boolean setBallDirectionY(int aBallDirectionY)
+  public boolean setBallDirectionY(double aBallDirectionY)
   {
     boolean wasSet = false;
     ballDirectionY = aBallDirectionY;
@@ -125,42 +125,42 @@ public class BallOccurence
     return wasReset;
   }
 
-  public int getBallPositionX()
+  public double getBallPositionX()
   {
     return ballPositionX;
   }
   /* Code from template attribute_GetDefaulted */
-  public int getDefaultBallPositionX()
+  public double getDefaultBallPositionX()
   {
     return Game.PLAY_AREA_SIDE/2;
   }
 
-  public int getBallPositionY()
+  public double getBallPositionY()
   {
     return ballPositionY;
   }
   /* Code from template attribute_GetDefaulted */
-  public int getDefaultBallPositionY()
+  public double getDefaultBallPositionY()
   {
     return Game.PLAY_AREA_SIDE/2;
   }
 
-  public int getBallDirectionX()
+  public double getBallDirectionX()
   {
     return ballDirectionX;
   }
   /* Code from template attribute_GetDefaulted */
-  public int getDefaultBallDirectionX()
+  public double getDefaultBallDirectionX()
   {
     return 0;
   }
 
-  public int getBallDirectionY()
+  public double getBallDirectionY()
   {
     return ballDirectionY;
   }
   /* Code from template attribute_GetDefaulted */
-  public int getDefaultBallDirectionY()
+  public double getDefaultBallDirectionY()
   {
     return 1;
   }
