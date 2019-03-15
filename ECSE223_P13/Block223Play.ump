@@ -16,8 +16,8 @@ class GameOccurence {
 class BallOccurence {
 	defaulted Integer ballPositionX = Game.PLAY_AREA_SIDE/2;
 	defaulted Integer ballPositionY = Game.PLAY_AREA_SIDE/2;
-	Integer ballDirectionX;
-	Integer ballDirectionY;
+	defaulted Integer ballDirectionX = 0;
+	defaulted Integer ballDirectionY = 1;
 	
 	* <@>- 1 Ball;
 }

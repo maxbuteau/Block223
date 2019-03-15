@@ -143,9 +143,9 @@ public class Ball implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public BallOccurence addBallOccurence(int aBallDirectionX, int aBallDirectionY, GameOccurence aGameOccurence)
+  public BallOccurence addBallOccurence(GameOccurence aGameOccurence)
   {
-    return new BallOccurence(aBallDirectionX, aBallDirectionY, this, aGameOccurence);
+    return new BallOccurence(this, aGameOccurence);
   }
 
   public boolean addBallOccurence(BallOccurence aBallOccurence)

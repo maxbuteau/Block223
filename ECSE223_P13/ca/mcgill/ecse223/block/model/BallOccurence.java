@@ -25,12 +25,12 @@ public class BallOccurence
   // CONSTRUCTOR
   //------------------------
 
-  public BallOccurence(int aBallDirectionX, int aBallDirectionY, Ball aBall, GameOccurence aGameOccurence)
+  public BallOccurence(Ball aBall, GameOccurence aGameOccurence)
   {
     resetBallPositionX();
     resetBallPositionY();
-    ballDirectionX = aBallDirectionX;
-    ballDirectionY = aBallDirectionY;
+    resetBallDirectionX();
+    resetBallDirectionY();
     boolean didAddBall = setBall(aBall);
     if (!didAddBall)
     {
@@ -43,12 +43,12 @@ public class BallOccurence
     gameOccurence = aGameOccurence;
   }
 
-  public BallOccurence(int aBallDirectionX, int aBallDirectionY, Ball aBall, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, PaddleOccurence aPaddleOccurenceForGameOccurence)
+  public BallOccurence(Ball aBall, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, PaddleOccurence aPaddleOccurenceForGameOccurence)
   {
     resetBallPositionX();
     resetBallPositionY();
-    ballDirectionX = aBallDirectionX;
-    ballDirectionY = aBallDirectionY;
+    resetBallDirectionX();
+    resetBallDirectionY();
     boolean didAddBall = setBall(aBall);
     if (!didAddBall)
     {
@@ -92,7 +92,7 @@ public class BallOccurence
     wasReset = true;
     return wasReset;
   }
-
+  /* Code from template attribute_SetDefaulted */
   public boolean setBallDirectionX(int aBallDirectionX)
   {
     boolean wasSet = false;
@@ -101,12 +101,28 @@ public class BallOccurence
     return wasSet;
   }
 
+  public boolean resetBallDirectionX()
+  {
+    boolean wasReset = false;
+    ballDirectionX = getDefaultBallDirectionX();
+    wasReset = true;
+    return wasReset;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setBallDirectionY(int aBallDirectionY)
   {
     boolean wasSet = false;
     ballDirectionY = aBallDirectionY;
     wasSet = true;
     return wasSet;
+  }
+
+  public boolean resetBallDirectionY()
+  {
+    boolean wasReset = false;
+    ballDirectionY = getDefaultBallDirectionY();
+    wasReset = true;
+    return wasReset;
   }
 
   public int getBallPositionX()
@@ -133,10 +149,20 @@ public class BallOccurence
   {
     return ballDirectionX;
   }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultBallDirectionX()
+  {
+    return 0;
+  }
 
   public int getBallDirectionY()
   {
     return ballDirectionY;
+  }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultBallDirectionY()
+  {
+    return 1;
   }
   /* Code from template association_GetOne */
   public Ball getBall()

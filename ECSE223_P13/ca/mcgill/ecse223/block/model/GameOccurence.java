@@ -60,7 +60,7 @@ public class GameOccurence
     blockOccurences = new ArrayList<BlockOccurence>();
   }
 
-  public GameOccurence(int aCurrentLevel, Game aGame, int aBallDirectionXForBallOccurence, int aBallDirectionYForBallOccurence, Ball aBallForBallOccurence, int aCurrentPaddleLengthForPaddleOccurence, Paddle aPaddleForPaddleOccurence)
+  public GameOccurence(int aCurrentLevel, Game aGame, Ball aBallForBallOccurence, int aCurrentPaddleLengthForPaddleOccurence, Paddle aPaddleForPaddleOccurence)
   {
     currentLevel = aCurrentLevel;
     nbOfLives = MAX_NUM_OF_LIVES;
@@ -70,7 +70,7 @@ public class GameOccurence
     {
       throw new RuntimeException("Unable to create gameOccurence due to game");
     }
-    ballOccurence = new BallOccurence(aBallDirectionXForBallOccurence, aBallDirectionYForBallOccurence, aBallForBallOccurence, this);
+    ballOccurence = new BallOccurence(aBallForBallOccurence, this);
     paddleOccurence = new PaddleOccurence(aCurrentPaddleLengthForPaddleOccurence, aPaddleForPaddleOccurence, this);
     blockOccurences = new ArrayList<BlockOccurence>();
   }
