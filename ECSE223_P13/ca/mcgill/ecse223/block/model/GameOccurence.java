@@ -231,8 +231,7 @@ public class GameOccurence
         if (isOutOfBounds()&&!(hasRemainingLives()))
         {
         // line 48 "../../../../../Block223StateMachine.ump"
-           
-      	createScore();
+          createScore();
       	deleteCurrentGame();
       	save();
           setGameState(GameState.Done);

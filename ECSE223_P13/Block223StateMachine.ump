@@ -45,7 +45,7 @@ gameState {
       	save();
       } -> Done;
       
-      move() [isOutOfBounds() && !hasRemainingLives()] / {Â 
+      move() [isOutOfBounds() && !hasRemainingLives()] / { 
       	createScore();
       	deleteCurrentGame();
       	save();
