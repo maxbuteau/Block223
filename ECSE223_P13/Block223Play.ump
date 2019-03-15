@@ -1,5 +1,3 @@
-use Block223.ump;
-
 class GameOccurence {
 	const MAX_NUM_OF_LIVES = 3;
 	const MIN_NUM_OF_LIVES = 0;

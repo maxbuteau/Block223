@@ -7,7 +7,7 @@ import ca.mcgill.ecse223.block.application.Block223Application;
 import java.util.*;
 
 // line 3 "../../../../../Block223Persistence.ump"
-// line 6 "../../../../../Block223.ump"
+// line 8 "../../../../../Block223.ump"
 public class Block223 implements Serializable
 {
 
@@ -370,7 +370,7 @@ public class Block223 implements Serializable
 		Block.reinitializeAutouniqueBlockID(this.getGames());
   }
 
-  // line 13 "../../../../../Block223.ump"
+  // line 15 "../../../../../Block223.ump"
    public static  Game findGame(String gameName){
     Game foundGame = null;
 	  for(Game game: Block223Application.getBlock223().getGames()) {
