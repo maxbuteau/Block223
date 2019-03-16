@@ -50,6 +50,8 @@ class Admin {
 
 class Player {
    isA UserRole;
+   
+   1 -- * GameOccurence;
 }
 
 class Game {

@@ -407,9 +407,9 @@ public class Block223 implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public GameOccurence addGameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence)
+  public GameOccurence addGameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Player aPlayer)
   {
-    return new GameOccurence(aCurrentLevel, aGame, aBallOccurence, aPaddleOccurence, this);
+    return new GameOccurence(aCurrentLevel, aGame, aBallOccurence, aPaddleOccurence, this, aPlayer);
   }
 
   public boolean addGameOccurence(GameOccurence aGameOccurence)

@@ -39,7 +39,7 @@ public class PaddleOccurence
     gameOccurence = aGameOccurence;
   }
 
-  public PaddleOccurence(int aCurrentPaddleLength, Paddle aPaddle, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, BallOccurence aBallOccurenceForGameOccurence, Block223 aBlock223ForGameOccurence)
+  public PaddleOccurence(int aCurrentPaddleLength, Paddle aPaddle, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, BallOccurence aBallOccurenceForGameOccurence, Block223 aBlock223ForGameOccurence, Player aPlayerForGameOccurence)
   {
     currentPaddleLength = aCurrentPaddleLength;
     paddlePositionX = Game.PLAY_AREA_SIDE/2 - (currentPaddleLength/2);
@@ -48,7 +48,7 @@ public class PaddleOccurence
     {
       throw new RuntimeException("Unable to create paddleOccurence due to paddle");
     }
-    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, aBallOccurenceForGameOccurence, this, aBlock223ForGameOccurence);
+    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, aBallOccurenceForGameOccurence, this, aBlock223ForGameOccurence, aPlayerForGameOccurence);
   }
 
   //------------------------

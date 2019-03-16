@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 41 "../../../../../Block223Persistence.ump"
-// line 55 "../../../../../Block223.ump"
+// line 57 "../../../../../Block223.ump"
 public class Game implements Serializable
 {
 
@@ -56,7 +56,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 67 "../../../../../Block223.ump"
+    // line 69 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -96,7 +96,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 67 "../../../../../Block223.ump"
+    // line 69 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -130,7 +130,7 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 73 "../../../../../Block223.ump"
+    // line 75 "../../../../../Block223.ump"
     if(aName == null || aName.equals("")){
     	throw new RuntimeException("The name of a game must be specified.");
     	}
@@ -151,7 +151,7 @@ public class Game implements Serializable
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
-    // line 79 "../../../../../Block223.ump"
+    // line 81 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
     			throw new RuntimeException("The number of blocks per level must be greater than zero.");
     		}
@@ -654,9 +654,9 @@ public class Game implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public GameOccurence addGameOccurence(int aCurrentLevel, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223)
+  public GameOccurence addGameOccurence(int aCurrentLevel, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223, Player aPlayer)
   {
-    return new GameOccurence(aCurrentLevel, this, aBallOccurence, aPaddleOccurence, aBlock223);
+    return new GameOccurence(aCurrentLevel, this, aBallOccurence, aPaddleOccurence, aBlock223, aPlayer);
   }
 
   public boolean addGameOccurence(GameOccurence aGameOccurence)
@@ -880,7 +880,7 @@ public class Game implements Serializable
 		}
   }
 
-  // line 94 "../../../../../Block223.ump"
+  // line 96 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		

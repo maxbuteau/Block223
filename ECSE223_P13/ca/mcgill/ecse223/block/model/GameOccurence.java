@@ -38,12 +38,13 @@ public class GameOccurence
   private PaddleOccurence paddleOccurence;
   private List<BlockOccurence> blockOccurences;
   private Block223 block223;
+  private Player player;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public GameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223)
+  public GameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223, Player aPlayer)
   {
     currentLevel = aCurrentLevel;
     nbOfLives = MAX_NUM_OF_LIVES;
@@ -69,10 +70,15 @@ public class GameOccurence
     {
       throw new RuntimeException("Unable to create gameOccurence due to block223");
     }
+    boolean didAddPlayer = setPlayer(aPlayer);
+    if (!didAddPlayer)
+    {
+      throw new RuntimeException("Unable to create gameOccurence due to player");
+    }
     setGameState(GameState.Idle);
   }
 
-  public GameOccurence(int aCurrentLevel, Game aGame, Ball aBallForBallOccurence, int aCurrentPaddleLengthForPaddleOccurence, Paddle aPaddleForPaddleOccurence, Block223 aBlock223)
+  public GameOccurence(int aCurrentLevel, Game aGame, Ball aBallForBallOccurence, int aCurrentPaddleLengthForPaddleOccurence, Paddle aPaddleForPaddleOccurence, Block223 aBlock223, Player aPlayer)
   {
     currentLevel = aCurrentLevel;
     nbOfLives = MAX_NUM_OF_LIVES;
@@ -89,6 +95,11 @@ public class GameOccurence
     if (!didAddBlock223)
     {
       throw new RuntimeException("Unable to create gameOccurence due to block223");
+    }
+    boolean didAddPlayer = setPlayer(aPlayer);
+    if (!didAddPlayer)
+    {
+      throw new RuntimeException("Unable to create gameOccurence due to player");
     }
   }
 
@@ -254,7 +265,7 @@ public class GameOccurence
         if (isOutOfBounds()&&!(hasRemainingLives()))
         {
         // line 57 "../../../../../Block223StateMachine.ump"
-           
+          
           setGameState(GameState.Done);
           wasEventProcessed = true;
           break;
@@ -347,6 +358,11 @@ public class GameOccurence
   public Block223 getBlock223()
   {
     return block223;
+  }
+  /* Code from template association_GetOne */
+  public Player getPlayer()
+  {
+    return player;
   }
   /* Code from template association_SetOneToMany */
   public boolean setGame(Game aGame)
@@ -458,6 +474,25 @@ public class GameOccurence
     wasSet = true;
     return wasSet;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setPlayer(Player aPlayer)
+  {
+    boolean wasSet = false;
+    if (aPlayer == null)
+    {
+      return wasSet;
+    }
+
+    Player existingPlayer = player;
+    player = aPlayer;
+    if (existingPlayer != null && !existingPlayer.equals(aPlayer))
+    {
+      existingPlayer.removeGameOccurence(this);
+    }
+    player.addGameOccurence(this);
+    wasSet = true;
+    return wasSet;
+  }
 
   public void delete()
   {
@@ -491,6 +526,12 @@ public class GameOccurence
     if(placeholderBlock223 != null)
     {
       placeholderBlock223.removeGameOccurence(this);
+    }
+    Player placeholderPlayer = player;
+    this.player = null;
+    if(placeholderPlayer != null)
+    {
+      placeholderPlayer.removeGameOccurence(this);
     }
   }
 
@@ -618,6 +659,7 @@ public class GameOccurence
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "ballOccurence = "+(getBallOccurence()!=null?Integer.toHexString(System.identityHashCode(getBallOccurence())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "paddleOccurence = "+(getPaddleOccurence()!=null?Integer.toHexString(System.identityHashCode(getPaddleOccurence())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "player = "+(getPlayer()!=null?Integer.toHexString(System.identityHashCode(getPlayer())):"null");
   }
 }

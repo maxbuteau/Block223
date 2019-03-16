@@ -15,6 +15,7 @@ public class Player extends UserRole implements Serializable
   //------------------------
 
   //Player Associations
+  private List<GameOccurence> gameOccurences;
   private List<Score> scores;
 
   //------------------------
@@ -24,12 +25,43 @@ public class Player extends UserRole implements Serializable
   public Player(String aPassword, Block223 aBlock223)
   {
     super(aPassword, aBlock223);
+    gameOccurences = new ArrayList<GameOccurence>();
     scores = new ArrayList<Score>();
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+  /* Code from template association_GetMany */
+  public GameOccurence getGameOccurence(int index)
+  {
+    GameOccurence aGameOccurence = gameOccurences.get(index);
+    return aGameOccurence;
+  }
+
+  public List<GameOccurence> getGameOccurences()
+  {
+    List<GameOccurence> newGameOccurences = Collections.unmodifiableList(gameOccurences);
+    return newGameOccurences;
+  }
+
+  public int numberOfGameOccurences()
+  {
+    int number = gameOccurences.size();
+    return number;
+  }
+
+  public boolean hasGameOccurences()
+  {
+    boolean has = gameOccurences.size() > 0;
+    return has;
+  }
+
+  public int indexOfGameOccurence(GameOccurence aGameOccurence)
+  {
+    int index = gameOccurences.indexOf(aGameOccurence);
+    return index;
+  }
   /* Code from template association_GetMany */
   public Score getScore(int index)
   {
@@ -59,6 +91,78 @@ public class Player extends UserRole implements Serializable
   {
     int index = scores.indexOf(aScore);
     return index;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfGameOccurences()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public GameOccurence addGameOccurence(int aCurrentLevel, Game aGame, BallOccurence aBallOccurence, PaddleOccurence aPaddleOccurence, Block223 aBlock223)
+  {
+    return new GameOccurence(aCurrentLevel, aGame, aBallOccurence, aPaddleOccurence, aBlock223, this);
+  }
+
+  public boolean addGameOccurence(GameOccurence aGameOccurence)
+  {
+    boolean wasAdded = false;
+    if (gameOccurences.contains(aGameOccurence)) { return false; }
+    Player existingPlayer = aGameOccurence.getPlayer();
+    boolean isNewPlayer = existingPlayer != null && !this.equals(existingPlayer);
+    if (isNewPlayer)
+    {
+      aGameOccurence.setPlayer(this);
+    }
+    else
+    {
+      gameOccurences.add(aGameOccurence);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeGameOccurence(GameOccurence aGameOccurence)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aGameOccurence, as it must always have a player
+    if (!this.equals(aGameOccurence.getPlayer()))
+    {
+      gameOccurences.remove(aGameOccurence);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addGameOccurenceAt(GameOccurence aGameOccurence, int index)
+  {  
+    boolean wasAdded = false;
+    if(addGameOccurence(aGameOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameOccurences()) { index = numberOfGameOccurences() - 1; }
+      gameOccurences.remove(aGameOccurence);
+      gameOccurences.add(index, aGameOccurence);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveGameOccurenceAt(GameOccurence aGameOccurence, int index)
+  {
+    boolean wasAdded = false;
+    if(gameOccurences.contains(aGameOccurence))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameOccurences()) { index = numberOfGameOccurences() - 1; }
+      gameOccurences.remove(aGameOccurence);
+      gameOccurences.add(index, aGameOccurence);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addGameOccurenceAt(aGameOccurence, index);
+    }
+    return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfScores()
@@ -135,6 +239,11 @@ public class Player extends UserRole implements Serializable
 
   public void delete()
   {
+    for(int i=gameOccurences.size(); i > 0; i--)
+    {
+      GameOccurence aGameOccurence = gameOccurences.get(i - 1);
+      aGameOccurence.delete();
+    }
     for(int i=scores.size(); i > 0; i--)
     {
       Score aScore = scores.get(i - 1);

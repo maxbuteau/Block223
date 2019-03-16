@@ -43,7 +43,7 @@ public class BallOccurence
     gameOccurence = aGameOccurence;
   }
 
-  public BallOccurence(Ball aBall, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, PaddleOccurence aPaddleOccurenceForGameOccurence, Block223 aBlock223ForGameOccurence)
+  public BallOccurence(Ball aBall, int aCurrentLevelForGameOccurence, Game aGameForGameOccurence, PaddleOccurence aPaddleOccurenceForGameOccurence, Block223 aBlock223ForGameOccurence, Player aPlayerForGameOccurence)
   {
     resetBallPositionX();
     resetBallPositionY();
@@ -54,7 +54,7 @@ public class BallOccurence
     {
       throw new RuntimeException("Unable to create ballOccurence due to ball");
     }
-    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, this, aPaddleOccurenceForGameOccurence, aBlock223ForGameOccurence);
+    gameOccurence = new GameOccurence(aCurrentLevelForGameOccurence, aGameForGameOccurence, this, aPaddleOccurenceForGameOccurence, aBlock223ForGameOccurence, aPlayerForGameOccurence);
   }
 
   //------------------------
