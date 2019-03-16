@@ -35,10 +35,12 @@ gameState {
       
       move() [isWallHit()] / { 
       	doWallHit();
+      	doMoveBall();
       } -> Play;
       
       move() [isPaddleHit()] / { 
       	doPaddleHit();
+      	doMoveBall();
       } -> Play;
       
       move() [isOutOfBounds() && hasRemainingLives()] / { 
@@ -49,25 +51,27 @@ gameState {
       
       move() [isBlockHit() && isLastBlockHit() && isLastLevel() ] / {
       	doDeleteBlock();
-      	doDeleteCurrentGame();
 
       } -> Done;
       
       move() [isOutOfBounds() && !hasRemainingLives()] / { 
-      	doDeleteCurrentGame();
 
       } -> Done;
       
       move() [isBlockHit() && !isLastBlockHit()] / {
       	doDeleteBlock();
       	doBlockHit();
+      	doMoveBall();
       } -> Play;
      
-      move() [!(isBlockHit() && isWallHit() && isPaddleHit() && isOutOfBounds())] -> Play;
+      move() [!(isBlockHit() && isWallHit() && isPaddleHit() && isOutOfBounds())] / { 
+      	doMoveBall();
+      }-> Play;
     }
     
-    Done {}
-
+    Done {
+    	entry / { doDeleteCurrentGame(); }
+    }
 }
 
 private boolean isBlockHit() {}
@@ -91,5 +95,6 @@ private void doBlockHit(){}
 private void doPaddleHit(){}
 private Double getNextX(){}
 private Double getNextY(){}
+private void doMoveBall(){}
 }
 
