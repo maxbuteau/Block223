@@ -31,6 +31,23 @@ class User {
      throw new RuntimeException("The username must be specified.");
    }
    
+   public static String findUsername(Player player) {
+	   String username = "";
+	   List<User> list = new ArrayList<User>(usersByUsername.values());
+	   
+	   for(User user : list) {
+		   for(UserRole role : user.getRoles()) {
+			   if(role == (UserRole) player) {
+				   username = user.getUsername();
+				   break;
+			   }
+		   }
+		   if(!username.equals("")) break;
+	   }
+	   
+	   return username;
+	}
+   
    1 -> 1..2 UserRole roles;
 }
 
