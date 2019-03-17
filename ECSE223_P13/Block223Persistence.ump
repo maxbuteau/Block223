@@ -89,3 +89,20 @@ class Paddle {
 	isA Serializable;
 	private static final long serialVersionUID = 6895123766580505451L;
 }
+class PlayedGame {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 8597675110221231714L;
+}
+
+class PlayedBlockAssignment {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 939001747760934442L;
+}
+
+class HallOfFameEntry {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 6404159261985579849L;
+}
