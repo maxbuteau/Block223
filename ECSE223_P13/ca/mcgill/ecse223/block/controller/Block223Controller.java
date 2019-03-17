@@ -15,6 +15,7 @@ import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.Paddle;
+import ca.mcgill.ecse223.block.model.PlayedBlockAssignment;
 import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.Player;
 import ca.mcgill.ecse223.block.model.User;
@@ -793,6 +794,37 @@ public class Block223Controller {
 	}
 
 	public static List<TOCurrentlyPlayedGame> getCurrentPlayableGame() throws InvalidInputException {
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame();		
+		boolean paused = pgame.getPlayStatus() == PlayStatus.Ready || pgame.getPlayStatus() == PlayStatus.Paused;
+		
+		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(
+				pgame.getGame().getName(),
+				paused,
+				pgame.getScore(),
+				pgame.getLives(),
+				pgame.getCurrentLevel(),
+				pgame.getPlayername(),
+				pgame.getCurrentBallX(),
+				pgame.getCurrentBallY(),
+				pgame.getCurrentPaddleLength(),
+				pgame.getCurrentPaddleX()
+				);
+		
+		List<PlayedBlockAssignment> pblocks = pgame.getBlocks();
+		
+		for(PlayedBlockAssignment pblock : pblocks) {
+			TOCurrentBlock to = new TOCurrentBlock(
+					pblock.getBlock().getRed(),
+					pblock.getBlock().getGreen(),
+					pblock.getBlock().getBlue(),
+					pblock.getBlock().getPoints(),
+					pblock.getX(),
+					pblock.getY(),
+					result
+					);
+		}
+		
+		return result;
 	}
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
