@@ -3,6 +3,7 @@ package ca.mcgill.ecse223.block.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
@@ -18,7 +19,9 @@ import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.Player;
 import ca.mcgill.ecse223.block.model.User;
 import ca.mcgill.ecse223.block.model.UserRole;
+import ca.mcgill.ecse223.block.model.PlayedGame.PlayStatus;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
+import ca.mcgill.ecse223.block.view.Block223PlayModeInterface;
 
 public class Block223Controller {
 
@@ -712,10 +715,71 @@ public class Block223Controller {
 			}
 		}
 		
-		setCurrentPlayableGame(pgame);
+		Block223Application.setCurrentPlayableGame(pgame);
 	}
 
-	public static void startGame() throws InvalidInputException {
+	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
+		if(Block223Application.getCurrentUserRole() == null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		
+		PlayedGame game = Block223Application.getCurrentPlayableGame();
+		
+		if(game == null) {
+			throw new InvalidInputException("A game must be selected to play it.");
+		}
+		
+		if(Block223Application.getCurrentUserRole() instanceof Admin && game.getPlayer() == null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		
+		if(Block223Application.getCurrentUserRole() instanceof Admin && game.getGame().getAdmin() != Block223Application.getCurrentUserRole()) {
+			throw new InvalidInputException("Only the admin of a game can test the game");
+		}
+		
+		if(Block223Application.getCurrentUserRole() instanceof Player && game.getPlayer() == null) {
+			throw new InvalidInputException("Admin privileges are required to test a game.");
+		}
+		
+		game.play();
+		ui.takeInputs();
+		
+		while(game.getPlayStatus() == PlayStatus.Moving) {
+			String userInputs = ui.takeInputs();
+			
+			//Update Paddle Position
+			for(int i = 0; i < userInputs.length(); ++i) {
+				if(userInputs.charAt(i) == 'l') 
+					game.setCurrentPaddleX(game.getCurrentPaddleX() + PlayedGame.PADDLE_MOVE_LEFT);
+				
+				else if(userInputs.charAt(i) == 'r')
+					game.setCurrentPaddleX(game.getCurrentPaddleX() + PlayedGame.PADDLE_MOVE_RIGHT);
+				
+				else if(userInputs.charAt(i) == ' ')
+					break;
+			}
+			
+			game.move();
+			
+			if(userInputs.contains("")) {
+				game.pause();
+			}
+			
+			try {
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
+			} catch (InterruptedException e) {}
+			
+			ui.refresh();
+		}
+		
+		if(game.getPlayStatus() == PlayStatus.GameOver) {
+			Block223Application.setCurrentPlayableGame(null);
+		}
+		
+		else if(game.getPlayer() != null) {
+			Block223 block223 = Block223Application.getBlock223();
+			Block223Persistence.save(block223);
+		}
 	}
 
 	public static void testGame() throws InvalidInputException {
