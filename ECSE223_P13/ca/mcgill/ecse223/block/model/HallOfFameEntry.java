@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 
 // line 55 "../../../../../Block223PlayMode.ump"
-public class HallOfFameEntry
+// line 104 "../../../../../Block223Persistence.ump"
+public class HallOfFameEntry implements Serializable
 {
 
   //------------------------
@@ -181,5 +183,13 @@ public class HallOfFameEntry
             "  " + "player = "+(getPlayer()!=null?Integer.toHexString(System.identityHashCode(getPlayer())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 107 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 6404159261985579849L ;
+
+  
 }

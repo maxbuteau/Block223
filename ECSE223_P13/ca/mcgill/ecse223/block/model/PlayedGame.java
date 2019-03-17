@@ -2,11 +2,13 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 import java.util.*;
 
 // line 11 "../../../../../Block223PlayMode.ump"
+// line 92 "../../../../../Block223Persistence.ump"
 // line 1 "../../../../../Block223States.ump"
-public class PlayedGame
+public class PlayedGame implements Serializable
 {
 
   //------------------------
@@ -790,5 +792,13 @@ public class PlayedGame
             "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "bounce = "+(getBounce()!=null?Integer.toHexString(System.identityHashCode(getBounce())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 95 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 8597675110221231714L ;
+
+  
 }
