@@ -260,13 +260,13 @@ public class User implements Serializable
   }
 
   // line 35 "../../../../../Block223.ump"
-   public static  String findUsername(Player player){
+   public static  String findUsername(UserRole player){
     String username = "";
 	   List<User> list = new ArrayList<User>(usersByUsername.values());
 	   
 	   for(User user : list) {
 		   for(UserRole role : user.getRoles()) {
-			   if(role == (UserRole) player) {
+			   if(role == player) {
 				   username = user.getUsername();
 				   break;
 			   }
