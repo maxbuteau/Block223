@@ -705,8 +705,8 @@ public class Block223Controller {
 			String username = User.findUsername(player);
 			Block223 block223 = Block223Application.getBlock223();
 			
-			PlayedGame result = new PlayedGame(username, game, block223);
-			result.setPlayer((Player) player);
+			pgame = new PlayedGame(username, game, block223);
+			pgame.setPlayer((Player) player);
 		}
 		else {
 			pgame = PlayedGame.findPlayableGame(id);

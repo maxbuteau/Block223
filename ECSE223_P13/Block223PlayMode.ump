@@ -39,7 +39,7 @@ class PlayedGame {
    defaulted Double currentPaddleX = (Game.PLAY_AREA_SIDE - currentPaddleLength) / 2;
    immutable Double currentPaddleY = Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE - Paddle.PADDLE_WIDTH;
 
-	static findPlayableGame(int id){
+	public static PlayedGame findPlayableGame(int id){
 	//TODO
 	}
 
