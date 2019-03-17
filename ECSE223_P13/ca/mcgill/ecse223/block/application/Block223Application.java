@@ -2,6 +2,7 @@ package ca.mcgill.ecse223.block.application;
 
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.Game;
+import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.Block223Page;
@@ -12,6 +13,7 @@ public class Block223Application {
 	private static Block223 block223 = null;
 	private static UserRole currentUserRole = null;
 	private static Game currentGame = null;
+	private static PlayedGame currentPlayedGame = null;
 	
 	public static void main(String[] args) {
 		new Thread() {
@@ -55,5 +57,13 @@ public class Block223Application {
 
 	public static void setCurrentGame(Game aGame) {
 		currentGame = aGame;
+	}
+	
+	public static PlayedGame getCurrentPlayedGame() {
+		return currentPlayedGame;
+	}
+	
+	public static void setCurrentPlayedGame(PlayedGame aGame) {
+		currentPlayedGame = aGame;
 	}
 }
