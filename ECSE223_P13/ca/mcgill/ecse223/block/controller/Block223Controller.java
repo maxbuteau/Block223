@@ -14,6 +14,7 @@ import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.Paddle;
+import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.Player;
 import ca.mcgill.ecse223.block.model.User;
 import ca.mcgill.ecse223.block.model.UserRole;
@@ -683,6 +684,35 @@ public class Block223Controller {
 	// play mode
 
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		
+		Game game = Block223.findGame(name);
+		
+		if(game == null) {
+			throw new InvalidInputException("A game with name "+name+" does not exist.");
+		}
+		
+		PlayedGame pgame;
+		
+		if(game != null) {
+			UserRole player = Block223Application.getCurrentUserRole();
+			String username = findUsername(player);
+			Block223 block223 = Block223Application.getBlock223();
+			
+			PlayedGame result = new PlayedGame(username, game, block223);
+			result.setPlayer((Player) player);
+		}
+		else {
+			pgame = PlayedGame.findPlayableGame(id);
+			
+			if(pgame == null) {
+				throw new InvalidInputException("A game with id "+id+" does not exist.");
+			}
+		}
+		
+		setCurrentPlayableGame(pgame);
 	}
 
 	public static void startGame() throws InvalidInputException {
