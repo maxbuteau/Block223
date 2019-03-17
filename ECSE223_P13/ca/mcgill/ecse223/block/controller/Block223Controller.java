@@ -794,7 +794,28 @@ public class Block223Controller {
 	}
 
 	public static List<TOCurrentlyPlayedGame> getCurrentPlayableGame() throws InvalidInputException {
-		PlayedGame pgame = Block223Application.getCurrentPlayableGame();		
+		if(Block223Application.getCurrentUserRole() == null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
+		
+		if(pgame == null) {
+			throw new InvalidInputException("A game must be selected to play it.");
+		}
+		
+		if(Block223Application.getCurrentUserRole() instanceof Admin && pgame.getPlayer() != null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		
+		if(Block223Application.getCurrentUserRole() instanceof Admin && pgame.getGame().getAdmin() != Block223Application.getCurrentUserRole()) {
+			throw new InvalidInputException("Only the admin of a game can test the game");
+		}
+		
+		if(Block223Application.getCurrentUserRole() instanceof Player && pgame.getPlayer() == null) {
+			throw new InvalidInputException("Admin privileges are required to test a game.");
+		}
+			
 		boolean paused = pgame.getPlayStatus() == PlayStatus.Ready || pgame.getPlayStatus() == PlayStatus.Paused;
 		
 		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(
