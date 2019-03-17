@@ -920,6 +920,14 @@ public class Game implements Serializable
    		return null;
   }
 
+  // line 109 "../../../../../Block223.ump"
+  public Block getRandomBlock(){
+    Random rand = new Random();
+	  int index = rand.nextInt(this.getBlocks().size());
+	  
+	  return this.getBlock(index);
+  }
+
 
   public String toString()
   {
