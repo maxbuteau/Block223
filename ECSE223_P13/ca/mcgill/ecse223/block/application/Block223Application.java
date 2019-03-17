@@ -13,7 +13,7 @@ public class Block223Application {
 	private static Block223 block223 = null;
 	private static UserRole currentUserRole = null;
 	private static Game currentGame = null;
-	private static PlayedGame currentPlayedGame = null;
+	private static PlayedGame currentPlayableGame = null;
 	
 	public static void main(String[] args) {
 		new Thread() {
@@ -59,11 +59,11 @@ public class Block223Application {
 		currentGame = aGame;
 	}
 	
-	public static PlayedGame getCurrentPlayedGame() {
-		return currentPlayedGame;
+	public static PlayedGame getCurrentPlayableGame() {
+		return currentPlayableGame;
 	}
 	
-	public static void setCurrentPlayedGame(PlayedGame aGame) {
-		currentPlayedGame = aGame;
+	public static void setCurrentPlayableGame(PlayedGame aGame) {
+		currentPlayableGame = aGame;
 	}
 }
