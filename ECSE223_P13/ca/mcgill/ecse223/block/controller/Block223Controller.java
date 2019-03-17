@@ -32,7 +32,7 @@ public class Block223Controller {
 
 		Block223 block223 = Block223Application.getBlock223();
 
-		if(name == null || name == null) {
+		if (name == null || name == null) {
 			throw new InvalidInputException("The name of a game must be specified.");
 		}
 		if (Block223.findGame(name) != null) {
@@ -41,12 +41,10 @@ public class Block223Controller {
 		try {
 			Game newGame = new Game(name, 1, (Admin) admin, 1, 1, 1, 10, 10, block223);
 			newGame.addLevel();
-		}
-		catch (RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			throw new InvalidInputException(ex.getMessage());
 		}
 	}
-
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
@@ -55,7 +53,7 @@ public class Block223Controller {
 		if (!(Block223Application.getCurrentUserRole() instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to define game settings.");
 		}
-		if( minBallSpeedX <=0 && minBallSpeedY <=0) {
+		if (minBallSpeedX <= 0 && minBallSpeedY <= 0) {
 			throw new InvalidInputException("The minimum speed of the ball must be greater than zero.");
 		}
 		if (Block223Application.getCurrentGame() == null) {
@@ -103,15 +101,14 @@ public class Block223Controller {
 		}
 		Game game = Block223.findGame(name);
 		if (game != null) {
-		if (!(user.equals(Block223.findGame(name).getAdmin()))) {
-			throw new InvalidInputException("Only the admin who created the game can delete the game.");
-		}
+			if (!(user.equals(Block223.findGame(name).getAdmin()))) {
+				throw new InvalidInputException("Only the admin who created the game can delete the game.");
+			}
 
-		
 			game.delete();
 			try {
-				Block223Persistence.save(block223);}
-			catch(RuntimeException ex) {
+				Block223Persistence.save(block223);
+			} catch (RuntimeException ex) {
 				throw new InvalidInputException(ex.getMessage());
 			}
 		}
@@ -127,7 +124,8 @@ public class Block223Controller {
 			throw new InvalidInputException("A game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
 			throw new InvalidInputException("Only the admin who created the game can select the game.");
-		else Block223Application.setCurrentGame(game);
+		else
+			Block223Application.setCurrentGame(game);
 	}
 
 	public static void updateGame(String name, int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
@@ -146,17 +144,17 @@ public class Block223Controller {
 		}
 
 		String currentName = game.getName();
-		//if(!name.equals(currentName))
-		if(Block223.findGame(name) != null) {
+		// if(!name.equals(currentName))
+		if (Block223.findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
 //		if (name.equals("")|| name == null) {
 //			throw new InvalidInputException("The name of a game must be specified.");
 //		}
-		
-		try{
+
+		try {
 			game.setName(name);
-		}catch (RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			throw new InvalidInputException(ex.getMessage());
 		}
 
@@ -165,13 +163,14 @@ public class Block223Controller {
 		if (nrBlocksPerLevel < highestNrBlocks) {
 			nrBlocksPerLevel = highestNrBlocks;
 
-			throw new InvalidInputException("The maximum number of blocks per level cannot be less than the number of existing blocks in a level.");
+			throw new InvalidInputException(
+					"The maximum number of blocks per level cannot be less than the number of existing blocks in a level.");
 		}
-		if(currentName != name) {
+		if (currentName != name) {
 			try {
 				setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor,
 						maxPaddleLength, minPaddleLength);
-			}catch(RuntimeException e) {
+			} catch (RuntimeException e) {
 				throw new InvalidInputException(e.getMessage());
 			}
 		}
@@ -257,7 +256,7 @@ public class Block223Controller {
 		// iterates through the blockList, throws exception if block with identical RGB
 		// value is found
 		for (Block block : gameBlockList) {
-			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue && block.getId()!=id) {
+			if (block.getRed() == red && block.getGreen() == green && block.getBlue() == blue && block.getId() != id) {
 				throw new InvalidInputException("A block with the same color already exists for the game.");
 			}
 		}
@@ -298,7 +297,7 @@ public class Block223Controller {
 
 		Level aLevel = null;
 		try {
-			aLevel = game.getLevel(level-1);
+			aLevel = game.getLevel(level - 1);
 		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
@@ -358,7 +357,7 @@ public class Block223Controller {
 
 		Level aLevel = null;
 		try {
-			aLevel = game.getLevel(level-1);
+			aLevel = game.getLevel(level - 1);
 		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
@@ -374,9 +373,11 @@ public class Block223Controller {
 			throw new InvalidInputException("A block already exists at location " + newGridHorizontalPosition + "/"
 					+ newGridVerticalPosition + ".");
 		}
-		//		TOConstant constants = getConstants();
-		//		if(newGridVerticalPosition > constants.getMaxVerticalBlocks()-1 || newGridHorizontalPosition > constants.getMaxHorizontalBlocks()-1)
-		//			throw new InvalidInputException("The final position is not within the grid.");
+		// TOConstant constants = getConstants();
+		// if(newGridVerticalPosition > constants.getMaxVerticalBlocks()-1 ||
+		// newGridHorizontalPosition > constants.getMaxHorizontalBlocks()-1)
+		// throw new InvalidInputException("The final position is not within the
+		// grid.");
 
 		try {
 			oldAssignment.setGridHorizontalPosition(newGridHorizontalPosition);
@@ -402,7 +403,7 @@ public class Block223Controller {
 			throw new InvalidInputException("Only the admin who created the game can remove a block.");
 		}
 
-		Level aLevel = game.getLevel(level-1);
+		Level aLevel = game.getLevel(level - 1);
 
 		BlockAssignment aBlockAssignment = aLevel.findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
 
@@ -421,16 +422,15 @@ public class Block223Controller {
 		}
 
 		Game game = Block223Application.getCurrentGame();
-		
+
 		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
 			throw new InvalidInputException("Only the admin who created the game can save it.");
 		}
 		Block223 block223 = Block223Application.getBlock223();
 
-		try{
+		try {
 			Block223Persistence.save(block223);
-		}
-		catch (RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			throw new InvalidInputException(ex.getMessage());
 		}
 	}
@@ -449,13 +449,13 @@ public class Block223Controller {
 
 		User user;
 		Player player;
-		
+
 		try {
 			player = new Player(playerPassword, block223);
-		} catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new InvalidInputException(e.getMessage());
 		}
-		
+
 		try {
 			user = new User(username, block223, player);
 		} catch (RuntimeException e) {
@@ -621,7 +621,7 @@ public class Block223Controller {
 
 		Level aLevel;
 		try {
-			aLevel = game.getLevel(level-1);
+			aLevel = game.getLevel(level - 1);
 		} catch (IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 		}
@@ -666,7 +666,8 @@ public class Block223Controller {
 	}
 
 	// ****************************
-	//Helper method to get the highest number of blocks in a level in a particular game
+	// Helper method to get the highest number of blocks in a level in a particular
+	// game
 	// ****************************
 	public static int HighestNrOfBlocksInLevel(Game agame) {
 		List<Level> levels = agame.getLevels();
@@ -677,5 +678,32 @@ public class Block223Controller {
 		}
 		int highestNrBlocks = Collections.max(nrBlocksInLevel);
 		return highestNrBlocks;
+	}
+
+	// play mode
+
+	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
+	}
+
+	public static void startGame() throws InvalidInputException {
+	}
+
+	public static void testGame() throws InvalidInputException {
+	}
+
+	public static void publishGame() throws InvalidInputException {
+	}
+	// play mode queries
+
+	public static List<TOPlayableGame> getPlayableGames() throws InvalidInputException {
+	}
+
+	public static List<TOCurrentlyPlayedGame> getCurrentPlayableGame() throws InvalidInputException {
+	}
+
+	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
+	}
+
+	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
 	}
 }
