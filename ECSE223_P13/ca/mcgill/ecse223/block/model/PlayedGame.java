@@ -738,35 +738,87 @@ public class PlayedGame implements Serializable
    */
   // line 69 "../../../../../Block223States.ump"
    private void doSetup(){
-    // TODO implement
+    this.resetCurrentBallX();
+	   this.resetCurrentBallY();
+	   this.resetCurrentPaddleX();
+	   Game game = this.getGame();
+	   Level level = game.getLevel(this.getCurrentLevel() - 1);
+	   List<BlockAssignment> assignments = level.getBlockAssignments();
+	   
+	   for(BlockAssignment assignment : assignments) {
+		   PlayedBlockAssignment pblock = new PlayedBlockAssignment(
+				   Game.WALL_PADDING + (Block.SIZE + Game.COLUMNS_PADDING) * (assignment.getGridHorizontalPosition() - 1),
+				   Game.WALL_PADDING + (Block.SIZE + Game.ROW_PADDING) * (assignment.getGridVerticalPosition() - 1),
+				   assignment.getBlock(),
+				   this
+				   );
+	   }
+	   
+	   int numberOfBlocks = assignments.size();
+	   int maxHor = (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING));
+	   int maxVer = (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING));
+	   int x;
+	   int y;
+	   
+	   while(numberOfBlocks < game.getNrBlocksPerLevel()) {
+		   Random rand = new Random();
+		   x = rand.nextInt(maxHor);
+		   ++x;
+		   y = rand.nextInt(maxVer);
+		   ++y;
+		   
+		   BlockAssignment foundAssignment = level.findBlockAssignment(x, y);
+		   while(foundAssignment != null) {
+			   if(y < maxVer) {
+				   if(x < maxHor) x++;
+				   if(x >= maxHor) {
+					   x = 1;
+					   y++;
+				   }
+			   }
+			   
+			   else if(y >= maxVer) {
+				   x = 1;
+				   y = 1;
+			   }  
+			   foundAssignment = level.findBlockAssignment(x, y);
+		   }
+		   
+		   PlayedBlockAssignment pblock = new PlayedBlockAssignment(
+				   x,
+				   y,
+				   game.getRandomBlock(),
+				   this
+				   );
+	   }
   }
 
-  // line 73 "../../../../../Block223States.ump"
+  // line 125 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     // TODO implement
   }
 
-  // line 77 "../../../../../Block223States.ump"
+  // line 129 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     // TODO implement
   }
 
-  // line 81 "../../../../../Block223States.ump"
+  // line 133 "../../../../../Block223States.ump"
    private void doHitBlock(){
     // TODO implement
   }
 
-  // line 85 "../../../../../Block223States.ump"
+  // line 137 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     // TODO implement
   }
 
-  // line 89 "../../../../../Block223States.ump"
+  // line 141 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     // TODO implement
   }
 
-  // line 93 "../../../../../Block223States.ump"
+  // line 145 "../../../../../Block223States.ump"
    private void doGameOver(){
     // TODO implement
   }

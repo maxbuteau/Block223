@@ -66,7 +66,59 @@ class PlayedGame {
   // Actions
   
   private void doSetup() {
-    // TODO implement
+    this.resetCurrentBallX();
+	   this.resetCurrentBallY();
+	   this.resetCurrentPaddleX();
+	   Game game = this.getGame();
+	   Level level = game.getLevel(this.getCurrentLevel() - 1);
+	   List<BlockAssignment> assignments = level.getBlockAssignments();
+	   
+	   for(BlockAssignment assignment : assignments) {
+		   PlayedBlockAssignment pblock = new PlayedBlockAssignment(
+				   Game.WALL_PADDING + (Block.SIZE + Game.COLUMNS_PADDING) * (assignment.getGridHorizontalPosition() - 1),
+				   Game.WALL_PADDING + (Block.SIZE + Game.ROW_PADDING) * (assignment.getGridVerticalPosition() - 1),
+				   assignment.getBlock(),
+				   this
+				   );
+	   }
+	   
+	   int numberOfBlocks = assignments.size();
+	   int maxHor = (1+(Game.PLAY_AREA_SIDE-2*Game.WALL_PADDING-Block.SIZE)/(Block.SIZE+Game.COLUMNS_PADDING));
+	   int maxVer = (1+(Game.PLAY_AREA_SIDE-Paddle.VERTICAL_DISTANCE-Game.WALL_PADDING-Paddle.PADDLE_WIDTH-Ball.BALL_DIAMETER-Block.SIZE)/(Block.SIZE+Game.ROW_PADDING));
+	   int x;
+	   int y;
+	   
+	   while(numberOfBlocks < game.getNrBlocksPerLevel()) {
+		   Random rand = new Random();
+		   x = rand.nextInt(maxHor);
+		   ++x;
+		   y = rand.nextInt(maxVer);
+		   ++y;
+		   
+		   BlockAssignment foundAssignment = level.findBlockAssignment(x, y);
+		   while(foundAssignment != null) {
+			   if(y < maxVer) {
+				   if(x < maxHor) x++;
+				   if(x >= maxHor) {
+					   x = 1;
+					   y++;
+				   }
+			   }
+			   
+			   else if(y >= maxVer) {
+				   x = 1;
+				   y = 1;
+			   }  
+			   foundAssignment = level.findBlockAssignment(x, y);
+		   }
+		   
+		   PlayedBlockAssignment pblock = new PlayedBlockAssignment(
+				   x,
+				   y,
+				   game.getRandomBlock(),
+				   this
+				   );
+	   }
   }
   
   private void doHitPaddleOrWall() {
