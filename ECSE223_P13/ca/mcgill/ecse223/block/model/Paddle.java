@@ -26,7 +26,6 @@ public class Paddle implements Serializable
   private int minPaddleLength;
 
   //Paddle Associations
-  private List<PaddleOccurence> paddleOccurences;
   private Game game;
 
   //------------------------
@@ -37,7 +36,6 @@ public class Paddle implements Serializable
   {
     maxPaddleLength = aMaxPaddleLength;
     minPaddleLength = aMinPaddleLength;
-    paddleOccurences = new ArrayList<PaddleOccurence>();
     if (aGame == null || aGame.getPaddle() != null)
     {
       throw new RuntimeException("Unable to create Paddle due to aGame");
@@ -49,7 +47,6 @@ public class Paddle implements Serializable
   {
     maxPaddleLength = aMaxPaddleLength;
     minPaddleLength = aMinPaddleLength;
-    paddleOccurences = new ArrayList<PaddleOccurence>();
     game = new Game(aNameForGame, aNrBlocksPerLevelForGame, aAdminForGame, aBallForGame, this, aBlock223ForGame);
   }
 
@@ -92,121 +89,14 @@ public class Paddle implements Serializable
   {
     return minPaddleLength;
   }
-  /* Code from template association_GetMany */
-  public PaddleOccurence getPaddleOccurence(int index)
-  {
-    PaddleOccurence aPaddleOccurence = paddleOccurences.get(index);
-    return aPaddleOccurence;
-  }
-
-  public List<PaddleOccurence> getPaddleOccurences()
-  {
-    List<PaddleOccurence> newPaddleOccurences = Collections.unmodifiableList(paddleOccurences);
-    return newPaddleOccurences;
-  }
-
-  public int numberOfPaddleOccurences()
-  {
-    int number = paddleOccurences.size();
-    return number;
-  }
-
-  public boolean hasPaddleOccurences()
-  {
-    boolean has = paddleOccurences.size() > 0;
-    return has;
-  }
-
-  public int indexOfPaddleOccurence(PaddleOccurence aPaddleOccurence)
-  {
-    int index = paddleOccurences.indexOf(aPaddleOccurence);
-    return index;
-  }
   /* Code from template association_GetOne */
   public Game getGame()
   {
     return game;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfPaddleOccurences()
-  {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  public PaddleOccurence addPaddleOccurence(int aCurrentPaddleLength, GameOccurence aGameOccurence)
-  {
-    return new PaddleOccurence(aCurrentPaddleLength, this, aGameOccurence);
-  }
-
-  public boolean addPaddleOccurence(PaddleOccurence aPaddleOccurence)
-  {
-    boolean wasAdded = false;
-    if (paddleOccurences.contains(aPaddleOccurence)) { return false; }
-    Paddle existingPaddle = aPaddleOccurence.getPaddle();
-    boolean isNewPaddle = existingPaddle != null && !this.equals(existingPaddle);
-    if (isNewPaddle)
-    {
-      aPaddleOccurence.setPaddle(this);
-    }
-    else
-    {
-      paddleOccurences.add(aPaddleOccurence);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removePaddleOccurence(PaddleOccurence aPaddleOccurence)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aPaddleOccurence, as it must always have a paddle
-    if (!this.equals(aPaddleOccurence.getPaddle()))
-    {
-      paddleOccurences.remove(aPaddleOccurence);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addPaddleOccurenceAt(PaddleOccurence aPaddleOccurence, int index)
-  {  
-    boolean wasAdded = false;
-    if(addPaddleOccurence(aPaddleOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfPaddleOccurences()) { index = numberOfPaddleOccurences() - 1; }
-      paddleOccurences.remove(aPaddleOccurence);
-      paddleOccurences.add(index, aPaddleOccurence);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMovePaddleOccurenceAt(PaddleOccurence aPaddleOccurence, int index)
-  {
-    boolean wasAdded = false;
-    if(paddleOccurences.contains(aPaddleOccurence))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfPaddleOccurences()) { index = numberOfPaddleOccurences() - 1; }
-      paddleOccurences.remove(aPaddleOccurence);
-      paddleOccurences.add(index, aPaddleOccurence);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addPaddleOccurenceAt(aPaddleOccurence, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
-    for(int i=paddleOccurences.size(); i > 0; i--)
-    {
-      PaddleOccurence aPaddleOccurence = paddleOccurences.get(i - 1);
-      aPaddleOccurence.delete();
-    }
     Game existingGame = game;
     game = null;
     if (existingGame != null)

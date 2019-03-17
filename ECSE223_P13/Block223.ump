@@ -1,15 +1,15 @@
 namespace ca.mcgill.ecse223.block.model;
+use Block223PlayMode.ump;
 use Block223Persistence.ump;
-use Block223StateMachine.ump;
-use Block223Play.ump;
+use Block223States.ump;
 
 class Block223 {
 	depend ca.mcgill.ecse223.block.application.Block223Application;
    1 <@>- * User users;
    1 <@>- * UserRole roles;
    1 <@>- * Game games;
-   1 <@>- * GameOccurence;
-   1 <@>- * Score;
+  //1 <@>- * GameOccurence;
+  //1 <@>- * Score;
    
    public static Game findGame(String gameName) {
 	  Game foundGame = null;
@@ -51,7 +51,7 @@ class Admin {
 class Player {
    isA UserRole;
    
-   1 -- * GameOccurence;
+   //1 -- * GameOccurence;
 }
 
 class Game {
@@ -63,7 +63,7 @@ class Game {
    const Integer ROW_PADDING = 2;
    unique name;
    Integer nrBlocksPerLevel;
-   lazy Boolean isPublished;
+   //lazy Boolean isPublished;
    
     before constructor{
 	if(aName.equals("") || aName == null){
