@@ -130,7 +130,14 @@ class PlayedGame {
   }
 
   private void doHitBlock() {
-    // TODO implement
+    int score = this.getScore();
+    BouncePoint bounce = this.getBounce();
+    PlayedBlockAssignment pblock = bounce.getHitBlock();
+    Block block = pblock.getBlock();
+    int bscore = block.getPoints();
+    this.setScore(score + bscore);
+    pblock.delete();
+    this.bounceBall();
   }
 
   private void doHitBlockNextLevel() {

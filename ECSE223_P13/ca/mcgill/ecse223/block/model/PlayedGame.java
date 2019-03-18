@@ -810,20 +810,27 @@ public class PlayedGame implements Serializable
 
   // line 133 "../../../../../Block223States.ump"
    private void doHitBlock(){
-    // TODO implement
+    int score = this.getScore();
+    BouncePoint bounce = this.getBounce();
+    PlayedBlockAssignment pblock = bounce.getHitBlock();
+    Block block = pblock.getBlock();
+    int bscore = block.getPoints();
+    this.setScore(score + bscore);
+    pblock.delete();
+    this.bounceBall();
   }
 
-  // line 137 "../../../../../Block223States.ump"
+  // line 144 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     // TODO implement
   }
 
-  // line 141 "../../../../../Block223States.ump"
+  // line 148 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     // TODO implement
   }
 
-  // line 145 "../../../../../Block223States.ump"
+  // line 152 "../../../../../Block223States.ump"
    private void doGameOver(){
     // TODO implement
   }
