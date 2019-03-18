@@ -531,7 +531,7 @@ public class Block223Controller {
 		for (Game game : games) {
 			Admin gameAdmin = game.getAdmin();
 
-			if (gameAdmin.equals(admin)) {
+			if (gameAdmin.equals(admin) && !game.isPublished()) {
 				TOGame toGame = new TOGame(game.getName(), game.getLevels().size(), game.getNrBlocksPerLevel(),
 						game.getBall().getMinBallSpeedX(), game.getBall().getMinBallSpeedY(),
 						game.getBall().getBallSpeedIncreaseFactor(), game.getPaddle().getMaxPaddleLength(),
