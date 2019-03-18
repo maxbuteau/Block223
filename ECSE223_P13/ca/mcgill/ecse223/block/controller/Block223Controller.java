@@ -132,10 +132,13 @@ public class Block223Controller {
 			throw new InvalidInputException("Admin privileges are required to select a game.");
 
 		Game game = Block223.findGame(name);
+		
 		if (game == null)
 			throw new InvalidInputException("A game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
 			throw new InvalidInputException("Only the admin who created the game can select the game.");
+		if (game.isPublished())
+			throw new InvalidInputException("A published game cannot be changed.");
 		else
 			Block223Application.setCurrentGame(game);
 	}
