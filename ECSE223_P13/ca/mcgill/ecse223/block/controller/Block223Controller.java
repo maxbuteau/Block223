@@ -41,7 +41,7 @@ public class Block223Controller {
 		if (name == null || name == null) {
 			throw new InvalidInputException("The name of a game must be specified.");
 		}
-		if (Block223.findGame(name) != null) {
+		if (block223.findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
 		try {
@@ -107,14 +107,14 @@ public class Block223Controller {
 		}
 		
 		
-		Game game = Block223.findGame(name);
+		Game game = block223.findGame(name);
 		
 		if(game.isPublished()) {
 			throw new InvalidInputException("A published game cannot be deleted.");
 		}
 		
 		if (game != null) {
-			if (!(user.equals(Block223.findGame(name).getAdmin()))) {
+			if (!(user.equals(block223.findGame(name).getAdmin()))) {
 				throw new InvalidInputException("Only the admin who created the game can delete the game.");
 			}
 
@@ -132,7 +132,7 @@ public class Block223Controller {
 		if (!(user instanceof Admin))
 			throw new InvalidInputException("Admin privileges are required to select a game.");
 
-		Game game = Block223.findGame(name);
+		Game game = Block223Application.getBlock223().findGame(name);
 		
 		if (game == null)
 			throw new InvalidInputException("A game with name " + name + " does not exist.");
@@ -161,7 +161,7 @@ public class Block223Controller {
 
 		String currentName = game.getName();
 		// if(!name.equals(currentName))
-		if (Block223.findGame(name) != null) {
+		if (Block223Application.getBlock223().findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
 //		if (name.equals("")|| name == null) {
@@ -702,15 +702,16 @@ public class Block223Controller {
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
+	
+		Block223 block223 = Block223Application.getBlock223();
 		
-		Game game = Block223.findGame(name);
+		Game game = block223.findGame(name);
 		
 		if(game == null) {
 			throw new InvalidInputException("A game with name "+name+" does not exist.");
 		}
 		
 		PlayedGame pgame;
-		Block223 block223 = Block223Application.getBlock223();
 		
 		if(game != null) {
 			UserRole player = Block223Application.getCurrentUserRole();

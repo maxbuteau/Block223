@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 87 "../../../../../Block223Persistence.ump"
-// line 257 "../../../../../Block223.ump"
+// line 258 "../../../../../Block223.ump"
 public class Paddle implements Serializable
 {
 
@@ -57,7 +57,7 @@ public class Paddle implements Serializable
   public boolean setMaxPaddleLength(int aMaxPaddleLength)
   {
     boolean wasSet = false;
-    // line 269 "../../../../../Block223.ump"
+    // line 270 "../../../../../Block223.ump"
     if(aMaxPaddleLength<1 || aMaxPaddleLength>Game.PLAY_AREA_SIDE){
        	throw new RuntimeException("The maximum length of the paddle must be greater than zero and less than or equal to "+Game.PLAY_AREA_SIDE+".");
        }
@@ -70,7 +70,7 @@ public class Paddle implements Serializable
   public boolean setMinPaddleLength(int aMinPaddleLength)
   {
     boolean wasSet = false;
-    // line 264 "../../../../../Block223.ump"
+    // line 265 "../../../../../Block223.ump"
     if(aMinPaddleLength<1){
        	throw new RuntimeException("The minimum length of the paddle must be greater than zero.");
        }
