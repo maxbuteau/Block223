@@ -30,7 +30,7 @@ public class DesignGridPane extends Pane {
 		DesignGridPane.level = level+1;
 		designGridPane = new GridPane();
 		designPane = this;
-		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide());
+		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide()-toConstants.getVerticalDistance()-toConstants.getBallDiameter()-toConstants.getPaddleWidth());
 		designGridPane.setHgap(toConstants.getColumnsPadding());
 		designGridPane.setVgap(toConstants.getRowPadding());
 		designGridPane.setPadding(new Insets(toConstants.getWallPadding()));
@@ -40,11 +40,14 @@ public class DesignGridPane extends Pane {
 		temp2.setPrefSize(toConstants.getSize(), toConstants.getSize());
 		if (!lastPageLayoutPane.getChildren().contains(temp))
 			lastPageLayoutPane.getChildren().add(temp);
+//		if (this.getChildren().contains(temp))
+//			this.getChildren().add(temp);
 //		if (!lastPageLayoutPane.getChildren().contains(temp2))
 //			lastPageLayoutPane.getChildren().add(temp2);
 		displayGrid();
 		refresh();
 		this.setOnMouseDragReleased(e->{refresh();});
+		this.setOnMouseDragExited(e->{refresh();});
 	}
 
 	public static void refresh() {
@@ -144,12 +147,7 @@ public class DesignGridPane extends Pane {
 					temp.setLayoutY(e.getSceneY() - toConstants.getSize() / 2);
 					blockBox.setTranslateX(e.getX());
 					blockBox.setTranslateY(e.getY());
-					if(e.getSceneX()<lastPageLayoutPane.getOffX() || e.getSceneX()>designGridPane.getWidth()+lastPageLayoutPane.getOffX()) {
-						refresh();
 					}
-					if(e.getSceneY()<lastPageLayoutPane.getOffY() || e.getSceneY()>designGridPane.getHeight()+lastPageLayoutPane.getOffY()) {
-						refresh();
-					}}
 				});
 
 				
