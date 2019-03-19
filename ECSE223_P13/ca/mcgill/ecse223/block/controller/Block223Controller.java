@@ -876,7 +876,7 @@ public class Block223Controller {
 		end = end -1;
 		
 		for(int i = start; i <= end; i++) {
-			String username = game.getBlock223().getUser(i).findUsername(game.getHallOfFameEntry(i).getPlayer());
+			String username = Block223Application.getBlock223().findUsername(game.getHallOfFameEntry(i).getPlayer());
 			TOHallOfFameEntry to = new TOHallOfFameEntry( i+1, username, game.getHallOfFameEntry(i).getScore(), result);
 		}
 		return result;
