@@ -109,13 +109,13 @@ public class Block223Controller {
 		
 		Game game = block223.findGame(name);
 		
-		if(game.isPublished()) {
-			throw new InvalidInputException("A published game cannot be deleted.");
-		}
-		
 		if (game != null) {
 			if (!(user.equals(block223.findGame(name).getAdmin()))) {
 				throw new InvalidInputException("Only the admin who created the game can delete the game.");
+			}
+			
+			if(game.isPublished()) {
+				throw new InvalidInputException("A published game cannot be deleted.");
 			}
 
 			game.delete();
