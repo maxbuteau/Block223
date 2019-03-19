@@ -804,7 +804,7 @@ public class Block223Controller {
 	public static List<TOPlayableGame> getPlayableGames() throws InvalidInputException {
 	}
 
-	public static List<TOCurrentlyPlayedGame> getCurrentPlayableGame() throws InvalidInputException {
+	public static TOCurrentlyPlayedGame getCurrentPlayableGame() throws InvalidInputException {
 		if(Block223Application.getCurrentUserRole() == null) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}

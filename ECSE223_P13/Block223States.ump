@@ -68,6 +68,8 @@ class PlayedGame {
   private void doSetup() {
     this.resetCurrentBallX();
 	   this.resetCurrentBallY();
+	   this.resetBallDirectionX();
+	   this.resetBallDirectionY();	   
 	   this.resetCurrentPaddleX();
 	   Game game = this.getGame();
 	   Level level = game.getLevel(this.getCurrentLevel() - 1);
