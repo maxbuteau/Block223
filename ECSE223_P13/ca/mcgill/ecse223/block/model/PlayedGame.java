@@ -686,11 +686,6 @@ public class PlayedGame implements Serializable
     }
   }
 
-  // line 43 "../../../../../Block223PlayMode.ump"
-   public static  PlayedGame findPlayableGame(int id){
-    //TODO
-  }
-
 
   /**
    * Guards
