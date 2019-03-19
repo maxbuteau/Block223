@@ -746,8 +746,8 @@ public class PlayedGame implements Serializable
 
   // line 53 "../../../../../Block223States.ump"
    private boolean isOutOfBounds(){
-    // TODO implement
-    return false;
+    boolean outOfBounds = this.isBallOutOfBounds();
+    return outOfBounds;
   }
 
   // line 58 "../../../../../Block223States.ump"
