@@ -901,7 +901,7 @@ public class PlayedGame implements Serializable
     this.delete();
   }
    
-   private boolean isBallOutOfBounds() {
+private boolean isBallOutOfBounds() {
 	   
 	   double minumumBallYPosition = 200;
 	   
