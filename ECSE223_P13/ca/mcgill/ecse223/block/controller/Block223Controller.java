@@ -710,17 +710,17 @@ public class Block223Controller {
 		}
 		
 		PlayedGame pgame;
+		Block223 block223 = Block223Application.getBlock223();
 		
 		if(game != null) {
 			UserRole player = Block223Application.getCurrentUserRole();
-			Block223 block223 = Block223Application.getBlock223();
 			String username = block223.findUsername(player);
 			
 			pgame = new PlayedGame(username, game, block223);
 			pgame.setPlayer((Player) player);
 		}
 		else {
-			pgame = PlayedGame.findPlayableGame(id);
+			pgame = block223.findPlayableGame(id);
 			
 			if(pgame == null) {
 				throw new InvalidInputException("A game with id "+id+" does not exist.");

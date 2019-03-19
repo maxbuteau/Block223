@@ -38,6 +38,19 @@ class Block223 {
 	   
 	   return username;
    }
+   
+   public PlayedGame findPlayableGame(int id) {
+	   PlayedGame playableGame = null;
+	   
+	   for(PlayedGame pgame : playedGames) {
+		   if(pgame.getId() == id) {
+			   playableGame = pgame;
+			   break;
+		   }
+	   }
+	   
+	   return playableGame;
+   }
 }
 
 class User {
