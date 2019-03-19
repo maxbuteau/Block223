@@ -20,7 +20,24 @@ class Block223 {
 		  }
 	  }
 	return foundGame;
-  }   
+  }
+  
+   public String findUsername(UserRole player) {
+	   String username = "";
+	   boolean found = false;
+	   
+	   for(User user : users) {
+		   for(UserRole role : user.getRoles()) {
+			   if(role == player) break;
+			   username = user.getUsername();
+			   found = true;
+			   break;
+		   }
+		   if(found) break;
+	   }
+	   
+	   return username;
+   }
 }
 
 class User {
