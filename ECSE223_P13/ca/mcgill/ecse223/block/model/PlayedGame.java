@@ -4,6 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
 import java.util.*;
+import ca.mcgill.ecse223.block.application.Block223Application;
 
 // line 11 "../../../../../Block223PlayMode.ump"
 // line 92 "../../../../../Block223Persistence.ump"
