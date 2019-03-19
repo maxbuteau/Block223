@@ -812,7 +812,7 @@ public class PlayedGame implements Serializable
 			   foundAssignment = level.findBlockAssignment(x, y);
 		   }
 		   
-		   PlayedBlockAssignment pblock = new PlayedBlockAssignment(
+		   new PlayedBlockAssignment(
 				   x,
 				   y,
 				   game.getRandomBlock(),
