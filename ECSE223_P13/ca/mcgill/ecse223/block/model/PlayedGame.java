@@ -900,6 +900,21 @@ public class PlayedGame implements Serializable
     
     this.delete();
   }
+   
+   private boolean isBallOutOfBounds() {
+	   
+	   double minumumBallYPosition = 200;
+	   
+	   	/* Simple check */
+	   
+	if (this.getCurrentBallY() > minumumBallYPosition) {
+		   return true;
+	   } else {
+		   return false;
+	   }
+	
+	  	/* Simple check */
+   }
 
 
   public String toString()
