@@ -13,6 +13,7 @@ import ca.mcgill.ecse223.block.model.Block;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
+import ca.mcgill.ecse223.block.model.HallOfFameEntry;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.Paddle;
 import ca.mcgill.ecse223.block.model.PlayedBlockAssignment;
@@ -859,8 +860,22 @@ public class Block223Controller {
 	}
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
+		Game game = pgame.getGame();
+		TOHallOfFame result = new TOHallOfFame(game.getName());
+		if(start < 1) start = 1;
+		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
+		start = start - 1;
+		end = end -1;
+		
+		for(int i = start; i <= end; i++) {
+			String username = game.getBlock223().getUser(i).findUsername(game.getHallOfFameEntry(i).getPlayer());
+			TOHallOfFameEntry to = new TOHallOfFameEntry( i+1, username, game.getHallOfFameEntry(i).getScore(), result);
+		}
+		return result;
 	}
 
 	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
+		
 	}
 }
