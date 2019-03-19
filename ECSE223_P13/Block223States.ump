@@ -28,10 +28,21 @@ class PlayedGame {
   
   // Guards
   
-  private boolean hitPaddle() {
-    // TODO implement
-    return false;
+   private boolean hitPaddle() {
+    BouncePoint bp = calculateBouncePointPaddle();
+    this.setBounce(bp);
+    return bp != null;
   }
+  
+    private BouncePoint calculateBouncePointPaddle() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+  private void bounceBall() {
+	// TODO Auto-generated method stub
+	
+}
 
   private boolean isOutOfBoundsAndLastLife() {
     // TODO implement
@@ -59,9 +70,15 @@ class PlayedGame {
   }
   
   private boolean hitWall() {
-    // TODO implement
-    return false;
+    BouncePoint bp = calculateBouncePointWall();
+    this.setBounce(bp);
+    return bp != null;
   }
+  
+    private BouncePoint calculateBouncePointWall() {
+	// TODO Auto-generated method stub
+	return null;
+}
   
   // Actions
   
@@ -123,8 +140,9 @@ class PlayedGame {
 	   }
   }
   
+ 
   private void doHitPaddleOrWall() {
-    // TODO implement
+    this.bounceBall();
   }
 
   private void doOutOfBounds() {
@@ -153,5 +171,4 @@ class PlayedGame {
   private void doGameOver() {
     // TODO implement
   }
-
 }
