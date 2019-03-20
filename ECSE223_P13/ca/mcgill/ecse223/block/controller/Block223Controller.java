@@ -160,7 +160,7 @@ public class Block223Controller {
 		}
 
 		String currentName = game.getName();
-		// if(!name.equals(currentName))
+		 if(!name.equals(currentName))
 		if (Block223Application.getBlock223().findGame(name) != null) {
 			throw new InvalidInputException("The name of a game must be unique.");
 		}
@@ -685,19 +685,6 @@ public class Block223Controller {
 	// Helper method to get the highest number of blocks in a level in a particular
 	// game
 	// ****************************
-	public static int HighestNrOfBlocksInLevel(Game agame) {
-		List<Level> levels = agame.getLevels();
-		ArrayList<Integer> nrBlocksInLevel = new ArrayList<Integer>();
-
-		for (Level level : levels) {
-			nrBlocksInLevel.add(level.getBlockAssignments().size());
-		}
-		int highestNrBlocks = Collections.max(nrBlocksInLevel);
-		return highestNrBlocks;
-	}
-
-	// play mode
-
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
@@ -707,12 +694,8 @@ public class Block223Controller {
 		
 		Game game = block223.findGame(name);
 		
-		if(game == null) {
-			throw new InvalidInputException("A game with name "+name+" does not exist.");
-		}
-		
 		PlayedGame pgame;
-		
+
 		if(game != null) {
 			UserRole player = Block223Application.getCurrentUserRole();
 			String username = block223.findUsername(player);
@@ -724,7 +707,11 @@ public class Block223Controller {
 			pgame = block223.findPlayableGame(id);
 			
 			if(pgame == null) {
-				throw new InvalidInputException("A game with id "+id+" does not exist.");
+				throw new InvalidInputException("The game does not exist.");
+			}
+			
+			if(pgame.getPlayer() != Block223Application.getCurrentUserRole()) {
+				throw new InvalidInputException("Only the player that started a game can continue the game.");
 			}
 		}
 		
@@ -862,7 +849,7 @@ public class Block223Controller {
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player privileges are required to access a gameâ€™s hall of fame.");
+			throw new InvalidInputException("Player privileges are required to access a game’s hall of fame.");
 		}
 		if(Block223Application.getCurrentPlayableGame() == null) {
 			throw new InvalidInputException("A game must be selected to view its hall of fame.");
