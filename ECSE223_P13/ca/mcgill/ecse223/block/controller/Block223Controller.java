@@ -685,6 +685,19 @@ public class Block223Controller {
 	// Helper method to get the highest number of blocks in a level in a particular
 	// game
 	// ****************************
+	public static int HighestNrOfBlocksInLevel(Game agame) {
+		List<Level> levels = agame.getLevels();
+		ArrayList<Integer> nrBlocksInLevel = new ArrayList<Integer>();
+
+		for (Level level : levels) {
+			nrBlocksInLevel.add(level.getBlockAssignments().size());
+		}
+		int highestNrBlocks = Collections.max(nrBlocksInLevel);
+		return highestNrBlocks;
+	}
+
+	// play mode
+
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
