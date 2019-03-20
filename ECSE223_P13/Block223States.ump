@@ -39,6 +39,11 @@ class PlayedGame {
 	return null;
 }
 
+	private BouncePoint calculateBouncePointBlock() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
   private void bounceBall() {
 	// TODO Auto-generated method stub
 	
@@ -59,17 +64,63 @@ class PlayedGame {
   }
   
   private boolean hitLastBlockAndLastLevel() {
-    // TODO implement
+    Game game = this.getGame();
+    	int nrLevels = game.numberOfLevels();
+    	this.setBounce(null);
+    	if(nrLevels==currentLevel){
+    		int nrBlocks = this.numberOfBlocks();
+    		if(nrBlocks ==1){
+    			PlayedBlockAssignment block = this.getBlock(0);
+    			BouncePoint bp = this.calculateBouncePointBlock(block);
+    			if(bp == null){
+    				return false;
+    			}
+    			else{
+    				this.setBounce(bp);
+    				return true;
+    			}	
+    	}
     return false;
   }
   
   private boolean hitLastBlock(){
-    // TODO implement
+    int nrBlocks = this.numberOfBlocks();
+    	this.setBounce(null);
+    	if(nrBlocks == 1){
+    		PlayedBlockAssignment block = this.getBlock(0);
+    		BouncePoint bp = this.calculateBouncePointBlock(block);
+    			if(bp == null){
+    				return false;
+    			}
+    			else{
+    				this.setBounce(bp);
+    				return true;
+    			}	
+    	}
     return false;
   }
   
   private boolean hitBlock() {
-    // TODO implement
+    	int nrBlocks = this.numberOfBlocks();
+    	this.setBounce(null);
+    	for(int i=0; i<nrBlocks; i++){
+    		PlayedBlockAssignment block = getBlock(i);
+    		if(block == null){
+    				return false;
+    			}
+    			else{
+    				BouncePoint bp = this.calculateBouncePointBlock(block);
+    				BouncePoint bounce = this.getBounce();
+    				boolean closer = this.isCloser(bp, bounce);
+    				if(closer){
+    					this.setBounce(bp);
+    					return true;
+    				}
+    				
+    			}
+    		
+    	}
+    	this.getBounce != null;
     return false;
   }
   
@@ -169,8 +220,15 @@ class PlayedGame {
     this.bounceBall();
   }
 
+	//For some reason code for this method does not generate?
   private void doHitBlockNextLevel() {
-    // TODO implement
+    this.doHitBlock();
+    Level level = this.getCurrentLevel();
+    this.setCurrentLevel(level+1);
+    this.setCurrentPaddleLength(this.getGame().getPaddle().getMaxPaddleLength()-(this.getGame().getPaddle().getMaxPaddleLength()
+    							-this.getGame().getPaddle().getMaxPaddleLength())/(this.getGame().numberOfLevels()-1)*(this.getCurrentLevel()-1));
+    this.setWaitTime(INITIAL_WAIT_TIME*this.getGame().getBall().getBallSpeedIncreaseFactor()^(this.getCurrentLevel()-1));
+    
   }
 
   private void doHitNothingAndNotOutOfBounds() {
