@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.Admin;
@@ -799,6 +801,23 @@ public class Block223Controller {
 	}
 
 	public static void publishGame() throws InvalidInputException {
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)){
+			throw new InvalidInputException("Admin privileges are required to publish a game");
+		}
+		if (Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to publish it");
+		}
+		Game game = Block223Application.getCurrentGame();
+
+		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can publish it.");
+		}
+		if (game.hasBlocks() == false) {
+			throw new InvalidInputException("At least one block must be defined for a game to be published");
+		}
+		game.setPublished(true);
+		
 	}
 	// play mode queries
 
