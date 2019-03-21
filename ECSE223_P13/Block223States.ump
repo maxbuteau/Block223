@@ -1,5 +1,6 @@
 class PlayedGame {
-
+	depend java.awt.geom.Line2D;
+	depend ca.mcgill.ecse223.block.application.Block223Application;
   // State Machine
   
   playStatus {
@@ -71,7 +72,7 @@ class PlayedGame {
     		int nrBlocks = this.numberOfBlocks();
     		if(nrBlocks ==1){
     			PlayedBlockAssignment block = this.getBlock(0);
-    			BouncePoint bp = this.calculateBouncePointBlock(block);
+    			BouncePoint bp = this.calculateBouncePointBlock();
     			if(bp == null){
     				return false;
     			}
@@ -79,6 +80,7 @@ class PlayedGame {
     				this.setBounce(bp);
     				return true;
     			}	
+    		}
     	}
     return false;
   }
@@ -88,7 +90,7 @@ class PlayedGame {
     	this.setBounce(null);
     	if(nrBlocks == 1){
     		PlayedBlockAssignment block = this.getBlock(0);
-    		BouncePoint bp = this.calculateBouncePointBlock(block);
+    		BouncePoint bp = this.calculateBouncePointBlock();
     			if(bp == null){
     				return false;
     			}
@@ -109,7 +111,7 @@ class PlayedGame {
     				return false;
     			}
     			else{
-    				BouncePoint bp = this.calculateBouncePointBlock(block);
+    				BouncePoint bp = this.calculateBouncePointBlock();
     				BouncePoint bounce = this.getBounce();
     				boolean closer = this.isCloser(bp, bounce);
     				if(closer){
@@ -120,8 +122,7 @@ class PlayedGame {
     			}
     		
     	}
-    	this.getBounce != null;
-    return false;
+    	return this.getBounce() != null;
   }
   
   private boolean hitWall() {
@@ -223,7 +224,7 @@ class PlayedGame {
 	//For some reason code for this method does not generate?
   private void doHitBlockNextLevel() {
     this.doHitBlock();
-    Level level = this.getCurrentLevel();
+    int level = this.getCurrentLevel();
     this.setCurrentLevel(level+1);
     this.setCurrentPaddleLength(this.getGame().getPaddle().getMaxPaddleLength()-(this.getGame().getPaddle().getMaxPaddleLength()
     							-this.getGame().getPaddle().getMaxPaddleLength())/(this.getGame().numberOfLevels()-1)*(this.getCurrentLevel()-1));
