@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.Admin;
@@ -795,10 +796,50 @@ public class Block223Controller {
 		}
 	}
 
-	public static void testGame() throws InvalidInputException {
+	public static void testGame(Block223PlayModeInterface ui) throws InvalidInputException {
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)){
+			throw new InvalidInputException("Admin privileges are required to publish a game.");
+		}
+		if (Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to test it.");
+		}
+		Game game = Block223Application.getCurrentGame();
+		UserRole admin = Block223Application.getCurrentUserRole();
+
+		if (admin != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can test it.");
+		}
+		
+		Block223 block223 = Block223Application.getBlock223();
+		String username = block223.findUsername(admin);
+		
+		PlayedGame pgame = new PlayedGame(username, game, block223);
+		pgame.setPlayer(null);
+		Block223Application.setCurrentPlayableGame(pgame);
+		
+		startGame(ui);
+		
 	}
 
 	public static void publishGame() throws InvalidInputException {
+		
+		if (!(Block223Application.getCurrentUserRole() instanceof Admin)){
+			throw new InvalidInputException("Admin privileges are required to publish a game.");
+		}
+		if (Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to publish it");
+		}
+		Game game = Block223Application.getCurrentGame();
+
+		if (Block223Application.getCurrentUserRole() != game.getAdmin()) {
+			throw new InvalidInputException("Only the admin who created the game can publish it.");
+		}
+		if (game.hasBlocks() == false) {
+			throw new InvalidInputException("At least one block must be defined for a game to be published");
+		}
+		game.setPublished(true);
+		
 	}
 	// play mode queries
 
@@ -862,7 +903,7 @@ public class Block223Controller {
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player privileges are required to access a game’s hall of fame.");
+			throw new InvalidInputException("Player privileges are required to access a gameï¿½s hall of fame.");
 		}
 		if(Block223Application.getCurrentPlayableGame() == null) {
 			throw new InvalidInputException("A game must be selected to view its hall of fame.");
@@ -883,7 +924,30 @@ public class Block223Controller {
 		return result;
 	}
 
-//	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
-//		
-//	}
+	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to access a gameï¿½s hall of fame.");
+		}
+		if(Block223Application.getCurrentPlayableGame() == null) {
+			throw new InvalidInputException("A game must be selected to view its hall of fame.");
+		}
+		
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
+		Game game = pgame.getGame();
+		TOHallOfFame result = new TOHallOfFame(game.getName());
+		HallOfFameEntry mostRecent = game.getMostRecentEntry();
+		int index = game.indexOfHallOfFameEntry(mostRecent);
+		
+		//question????
+		int start = index - numberOfEntries/2;
+		if(start < 1) start = 1;
+		int end = start + numberOfEntries - 1;
+		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
+		
+		for (int i = start; i < end; i++) {
+			String username = pgame.getPlayername();
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(index).getScore(), result);
+		}
+		return result;
+	}
 }
