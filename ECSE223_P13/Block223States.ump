@@ -241,9 +241,9 @@ class PlayedGame {
     Player p = this.getPlayer();
     
     if (p != null) {
-    	HallOfFameEntry hof = new HallOfFameEntry(score, playername, p, this.getGame(), block223);
     	
     	game = this.getGame();
+    	HallOfFameEntry hof = new HallOfFameEntry(score, playername, p, game, block223);
     	game.setMostRecentEntry(hof);
     	
     }
