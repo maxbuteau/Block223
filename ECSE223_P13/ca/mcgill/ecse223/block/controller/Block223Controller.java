@@ -802,8 +802,8 @@ public class Block223Controller {
 	}
 	// play mode queries
 
-	public static List<TOPlayableGame> getPlayableGames() throws InvalidInputException {
-	}
+//	public static List<TOPlayableGame> getPlayableGames() throws InvalidInputException {
+//	}
 
 	public static TOCurrentlyPlayedGame getCurrentPlayableGame() throws InvalidInputException {
 		if(Block223Application.getCurrentUserRole() == null) {
@@ -883,7 +883,7 @@ public class Block223Controller {
 		return result;
 	}
 
-	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
-		
-	}
+//	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
+//		
+//	}
 }
