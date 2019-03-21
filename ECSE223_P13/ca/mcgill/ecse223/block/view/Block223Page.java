@@ -60,7 +60,7 @@ public class Block223Page extends Application implements Block223PlayModeInterfa
 	private static Scene gameDesignScene;
 
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 100;
+	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
