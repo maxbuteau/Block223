@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
@@ -29,7 +31,7 @@ import java.util.List;
 
 import ca.mcgill.ecse223.block.controller.*;
 
-public class Block223Page extends Application{
+public class Block223Page extends Application implements Block223PlayModeInterface{
 
 	private static ChosenBlock chosenBlock;	
 
@@ -80,7 +82,7 @@ public class Block223Page extends Application{
 	
 		RegisterPane registerPane = new RegisterPane(primaryStage);
 		registerPane.setSpacing(20);
-	registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//LOGIN SCENE
@@ -88,7 +90,7 @@ public class Block223Page extends Application{
 		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
 		loginPane.setSpacing(20);
 	
-		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
@@ -112,15 +114,16 @@ public class Block223Page extends Application{
 
 		//SELECTION GAME
 		gameSelectionPane = new VBox(80);
-		gameSelectionPane.setPadding(new Insets(60,60,60,60));
+		gameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
 		gameSelectionName = new Label("Game names");
-		gameSelectionName.setTranslateX(SCREEN_WIDTH/3.7);
+		gameSelectionName.setMaxWidth(Double.MAX_VALUE);
+		gameSelectionName.setAlignment(Pos.CENTER);
 		gameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
 
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
-		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 		//Buttons
 		gameSelectionButtonRow = new HBox(30);
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
@@ -187,11 +190,15 @@ public class Block223Page extends Application{
 		});
 
 		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton,gameSelectionDeleteButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
-		gameSelectionButtonRow.setTranslateX(SCREEN_WIDTH/5.3);
+		gameSelectionButtonRow.setAlignment(Pos.CENTER);
 		//List
 		gameSelectionList = new ListView<String>();
-		gameSelectionList.setStyle("-fx-background-color: transparent;");
-		gameSelectionPane.setPadding(new Insets(20,20,20,20));
+		gameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
+		gameSelectionList.setOnMouseClicked(e -> {
+			if(e.getClickCount() == 2 && e.getButton() == MouseButton.PRIMARY) {
+				gameSelectionUpdateGameButton.fire();
+			}
+		});
 		gameSelectionListData = FXCollections.observableArrayList();
 
 		gameSelectionDeleteButton.setOnAction(f->{
@@ -223,7 +230,7 @@ public class Block223Page extends Application{
 	private static void setGameUpdateScene(Stage primaryStage, double spacing) {
 		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
-		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(0, 0, false, false, true, false))));
+		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 
 		gameDesignScene = new Scene(l, SCREEN_WIDTH, SCREEN_HEIGHT); 
 		primaryStage.setScene(gameDesignScene);
@@ -269,6 +276,17 @@ public class Block223Page extends Application{
 
 	public static double getScreenHeight() {
 		return SCREEN_HEIGHT;
+	}
+	
+	public String takeInputs() {
+		
+		
+		return null;
+	}
+	
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
