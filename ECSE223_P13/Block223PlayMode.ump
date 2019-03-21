@@ -42,6 +42,20 @@ class PlayedGame {
    * -- 1 Game game;
    1 <@>- * PlayedBlockAssignment blocks;
    0..1 -> 0..1 BouncePoint bounce;
+   
+   public boolean isBallOutOfBounds() {
+  	double x1 = this.currentBallX;
+	   double y1 = this.currentBallY;
+	   double x2 = this.currentBallX + (this.ballDirectionX) * getWaitTime();
+	   double y2 = this.currentBallY + (this.ballDirectionY) * getWaitTime();
+	   double x3 = 0;
+	   double y3 = Game.WALL_PADDING + Game.PLAY_AREA_SIDE;
+	   double x4 = Game.PLAY_AREA_SIDE;
+	   double y4 = Game.WALL_PADDING + Game.PLAY_AREA_SIDE;
+	   
+	  return Line2D.linesIntersect(x1, y1, x2, y2, x3, y3, x4, y4);
+  
+  }
 }
 
 class PlayedBlockAssignment {

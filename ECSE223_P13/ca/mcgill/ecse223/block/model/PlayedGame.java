@@ -3,6 +3,9 @@
 
 package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
+import Line2D
+import ca.mcgill.ecse223.block.application.Block223Application;
+
 import java.util.*;
 
 // line 11 "../../../../../Block223PlayMode.ump"
@@ -917,6 +920,7 @@ public class PlayedGame implements Serializable
    private void doHitNothingAndNotOutOfBounds(){
     // TODO implement
   }
+   
 
   // line 217 "../../../../../Block223States.ump"
    private void doGameOver(){
