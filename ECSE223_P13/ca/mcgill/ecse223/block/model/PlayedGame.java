@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
-import Line2D
 import ca.mcgill.ecse223.block.application.Block223Application;
 
 import java.util.*;
