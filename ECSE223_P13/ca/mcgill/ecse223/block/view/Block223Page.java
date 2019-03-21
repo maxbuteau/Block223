@@ -31,7 +31,7 @@ import java.util.List;
 
 import ca.mcgill.ecse223.block.controller.*;
 
-public class Block223Page extends Application implements Block223PlayModeInterface{
+public class Block223Page extends Application {
 
 	private static ChosenBlock chosenBlock;	
 
@@ -277,18 +277,6 @@ public class Block223Page extends Application implements Block223PlayModeInterfa
 	public static double getScreenHeight() {
 		return SCREEN_HEIGHT;
 	}
-	
-	public String takeInputs() {
-		
-		
-		return null;
-	}
-	
-	public void refresh() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
 
 class ChosenBlock {
