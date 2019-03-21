@@ -862,7 +862,7 @@ public class Block223Controller {
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player privileges are required to access a game’s hall of fame.");
+			throw new InvalidInputException("Player privileges are required to access a gameï¿½s hall of fame.");
 		}
 		if(Block223Application.getCurrentPlayableGame() == null) {
 			throw new InvalidInputException("A game must be selected to view its hall of fame.");
@@ -884,6 +884,29 @@ public class Block223Controller {
 	}
 
 	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to access a gameï¿½s hall of fame.");
+		}
+		if(Block223Application.getCurrentPlayableGame() == null) {
+			throw new InvalidInputException("A game must be selected to view its hall of fame.");
+		}
 		
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
+		Game game = pgame.getGame();
+		TOHallOfFame result = new TOHallOfFame(game.getName());
+		HallOfFameEntry mostRecent = game.getMostRecentEntry();
+		int index = game.indexOfHallOfFameEntry(mostRecent);
+		
+		//question????
+		int start = index - numberOfEntries/2;
+		if(start < 1) start = 1;
+		int end = start + numberOfEntries - 1;
+		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
+		
+		for (int i = start; i < end; i++) {
+			String username = pgame.getPlayername();
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(index).getScore(), result);
+		}
+		return result;
 	}
 }
