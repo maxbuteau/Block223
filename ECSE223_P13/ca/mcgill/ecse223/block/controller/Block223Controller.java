@@ -707,11 +707,6 @@ public class Block223Controller {
 
 		Game game = block223.findGame(name);
 
-		if (game == null) {
-			throw new InvalidInputException("A game with name " + name + " does not exist.");
-		}
-
-
 		PlayedGame pgame;
 		if(game != null) {
 			UserRole player = Block223Application.getCurrentUserRole();
@@ -719,14 +714,11 @@ public class Block223Controller {
 
 			pgame = new PlayedGame(username, game, block223);
 			pgame.setPlayer((Player) player);
-		} else {
+		} 
+		else {
 			pgame = block223.findPlayableGame(id);
 
 			if (pgame == null) {
-				throw new InvalidInputException("A game with id " + id + " does not exist.");
-			}
-			
-			if(pgame == null) {
 				throw new InvalidInputException("The game does not exist.");
 			}
 			
