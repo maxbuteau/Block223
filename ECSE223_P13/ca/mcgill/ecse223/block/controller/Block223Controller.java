@@ -105,16 +105,15 @@ public class Block223Controller {
 		if (!(user instanceof Admin)) {
 			throw new InvalidInputException("Admin privileges are required to delete a game.");
 		}
-		
-		
+
 		Game game = block223.findGame(name);
-		
+
 		if (game != null) {
 			if (!(user.equals(block223.findGame(name).getAdmin()))) {
 				throw new InvalidInputException("Only the admin who created the game can delete the game.");
 			}
-			
-			if(game.isPublished()) {
+
+			if (game.isPublished()) {
 				throw new InvalidInputException("A published game cannot be deleted.");
 			}
 
@@ -133,7 +132,7 @@ public class Block223Controller {
 			throw new InvalidInputException("Admin privileges are required to select a game.");
 
 		Game game = Block223Application.getBlock223().findGame(name);
-		
+
 		if (game == null)
 			throw new InvalidInputException("A game with name " + name + " does not exist.");
 		if (user != game.getAdmin())
@@ -160,13 +159,14 @@ public class Block223Controller {
 		}
 
 		String currentName = game.getName();
-		 if(!name.equals(currentName))
-		if (Block223Application.getBlock223().findGame(name) != null) {
-			throw new InvalidInputException("The name of a game must be unique.");
+		if ( name == null) {
+			throw new InvalidInputException("The name of a game must be specified.");
 		}
-//		if (name.equals("")|| name == null) {
-//			throw new InvalidInputException("The name of a game must be specified.");
-//		}
+
+		if (!name.equals(currentName))
+			if (Block223Application.getBlock223().findGame(name) != null) {
+				throw new InvalidInputException("The name of a game must be unique.");
+			}
 
 		try {
 			game.setName(name);
@@ -699,97 +699,98 @@ public class Block223Controller {
 	// play mode
 
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
-		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
-	
+
 		Block223 block223 = Block223Application.getBlock223();
-		
+
 		Game game = block223.findGame(name);
-		
-		if(game == null) {
-			throw new InvalidInputException("A game with name "+name+" does not exist.");
+
+		if (game == null) {
+			throw new InvalidInputException("A game with name " + name + " does not exist.");
 		}
-		
+
 		PlayedGame pgame;
-		
-		if(game != null) {
+
+		if (game != null) {
 			UserRole player = Block223Application.getCurrentUserRole();
 			String username = block223.findUsername(player);
-			
+
 			pgame = new PlayedGame(username, game, block223);
 			pgame.setPlayer((Player) player);
-		}
-		else {
+		} else {
 			pgame = block223.findPlayableGame(id);
-			
-			if(pgame == null) {
-				throw new InvalidInputException("A game with id "+id+" does not exist.");
+
+			if (pgame == null) {
+				throw new InvalidInputException("A game with id " + id + " does not exist.");
 			}
 		}
-		
+
 		Block223Application.setCurrentPlayableGame(pgame);
 	}
 
 	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
-		if(Block223Application.getCurrentUserRole() == null) {
+		if (Block223Application.getCurrentUserRole() == null) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
-		
+
 		PlayedGame game = Block223Application.getCurrentPlayableGame();
-		
-		if(game == null) {
+
+		if (game == null) {
 			throw new InvalidInputException("A game must be selected to play it.");
 		}
-		
-		if(Block223Application.getCurrentUserRole() instanceof Admin && game.getPlayer() == null) {
+
+		if (Block223Application.getCurrentUserRole() instanceof Admin && game.getPlayer() == null) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
-		
-		if(Block223Application.getCurrentUserRole() instanceof Admin && game.getGame().getAdmin() != Block223Application.getCurrentUserRole()) {
+
+		if (Block223Application.getCurrentUserRole() instanceof Admin
+				&& game.getGame().getAdmin() != Block223Application.getCurrentUserRole()) {
 			throw new InvalidInputException("Only the admin of a game can test the game");
 		}
-		
-		if(Block223Application.getCurrentUserRole() instanceof Player && game.getPlayer() == null) {
+
+		if (Block223Application.getCurrentUserRole() instanceof Player && game.getPlayer() == null) {
 			throw new InvalidInputException("Admin privileges are required to test a game.");
 		}
-		
+
 		game.play();
 		ui.takeInputs();
-		
-		while(game.getPlayStatus() == PlayStatus.Moving) {
+
+		while (game.getPlayStatus() == PlayStatus.Moving) {
 			String userInputs = ui.takeInputs();
-			
-			//Update Paddle Position
-			for(int i = 0; i < userInputs.length(); ++i) {
-				if(userInputs.charAt(i) == 'l') 
+
+			// Update Paddle Position
+			for (int i = 0; i < userInputs.length(); ++i) {
+				if (userInputs.charAt(i) == 'l')
 					game.setCurrentPaddleX(game.getCurrentPaddleX() + PlayedGame.PADDLE_MOVE_LEFT);
-				
-				else if(userInputs.charAt(i) == 'r')
+
+				else if (userInputs.charAt(i) == 'r')
 					game.setCurrentPaddleX(game.getCurrentPaddleX() + PlayedGame.PADDLE_MOVE_RIGHT);
-				
-				else if(userInputs.charAt(i) == ' ')
+
+				else if (userInputs.charAt(i) == ' ')
 					break;
 			}
-			
+
 			game.move();
-			
-			if(userInputs.contains("")) {
+
+			if (userInputs.contains("")) {
 				game.pause();
 			}
-			
+
 			try {
 				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
-			} catch (InterruptedException e) {}
-			
+			} catch (InterruptedException e) {
+			}
+
 			ui.refresh();
 		}
-		
-		if(game.getPlayStatus() == PlayStatus.GameOver) {
+
+		if (game.getPlayStatus() == PlayStatus.GameOver) {
 			Block223Application.setCurrentPlayableGame(null);
 		}
-		
-		else if(game.getPlayer() != null) {
+
+		else if (game.getPlayer() != null) {
 			Block223 block223 = Block223Application.getBlock223();
 			Block223Persistence.save(block223);
 		}
@@ -806,84 +807,72 @@ public class Block223Controller {
 	}
 
 	public static TOCurrentlyPlayedGame getCurrentPlayableGame() throws InvalidInputException {
-		if(Block223Application.getCurrentUserRole() == null) {
+		if (Block223Application.getCurrentUserRole() == null) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
-		
+
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
-		
-		if(pgame == null) {
+
+		if (pgame == null) {
 			throw new InvalidInputException("A game must be selected to play it.");
 		}
-		
-		if(Block223Application.getCurrentUserRole() instanceof Admin && pgame.getPlayer() != null) {
+
+		if (Block223Application.getCurrentUserRole() instanceof Admin && pgame.getPlayer() != null) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
-		
-		if(Block223Application.getCurrentUserRole() instanceof Admin && pgame.getGame().getAdmin() != Block223Application.getCurrentUserRole()) {
+
+		if (Block223Application.getCurrentUserRole() instanceof Admin
+				&& pgame.getGame().getAdmin() != Block223Application.getCurrentUserRole()) {
 			throw new InvalidInputException("Only the admin of a game can test the game");
 		}
-		
-		if(Block223Application.getCurrentUserRole() instanceof Player && pgame.getPlayer() == null) {
+
+		if (Block223Application.getCurrentUserRole() instanceof Player && pgame.getPlayer() == null) {
 			throw new InvalidInputException("Admin privileges are required to test a game.");
 		}
-			
+
 		boolean paused = pgame.getPlayStatus() == PlayStatus.Ready || pgame.getPlayStatus() == PlayStatus.Paused;
-		
-		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(
-				pgame.getGame().getName(),
-				paused,
-				pgame.getScore(),
-				pgame.getLives(),
-				pgame.getCurrentLevel(),
-				pgame.getPlayername(),
-				pgame.getCurrentBallX(),
-				pgame.getCurrentBallY(),
-				pgame.getCurrentPaddleLength(),
-				pgame.getCurrentPaddleX()
-				);
-		
+
+		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(pgame.getGame().getName(), paused, pgame.getScore(),
+				pgame.getLives(), pgame.getCurrentLevel(), pgame.getPlayername(), pgame.getCurrentBallX(),
+				pgame.getCurrentBallY(), pgame.getCurrentPaddleLength(), pgame.getCurrentPaddleX());
+
 		List<PlayedBlockAssignment> pblocks = pgame.getBlocks();
-		
-		for(PlayedBlockAssignment pblock : pblocks) {
-			TOCurrentBlock to = new TOCurrentBlock(
-					pblock.getBlock().getRed(),
-					pblock.getBlock().getGreen(),
-					pblock.getBlock().getBlue(),
-					pblock.getBlock().getPoints(),
-					pblock.getX(),
-					pblock.getY(),
-					result
-					);
+
+		for (PlayedBlockAssignment pblock : pblocks) {
+			TOCurrentBlock to = new TOCurrentBlock(pblock.getBlock().getRed(), pblock.getBlock().getGreen(),
+					pblock.getBlock().getBlue(), pblock.getBlock().getPoints(), pblock.getX(), pblock.getY(), result);
 		}
-		
+
 		return result;
 	}
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
-		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
 			throw new InvalidInputException("Player privileges are required to access a game’s hall of fame.");
 		}
-		if(Block223Application.getCurrentPlayableGame() == null) {
+		if (Block223Application.getCurrentPlayableGame() == null) {
 			throw new InvalidInputException("A game must be selected to view its hall of fame.");
 		}
-		
+
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
 		Game game = pgame.getGame();
 		TOHallOfFame result = new TOHallOfFame(game.getName());
-		if(start < 1) start = 1;
-		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
+		if (start < 1)
+			start = 1;
+		if (end > game.numberOfHallOfFameEntries())
+			end = game.numberOfHallOfFameEntries();
 		start = start - 1;
-		end = end -1;
-		
-		for(int i = start; i <= end; i++) {
+		end = end - 1;
+
+		for (int i = start; i <= end; i++) {
 			String username = Block223Application.getBlock223().findUsername(game.getHallOfFameEntry(i).getPlayer());
-			TOHallOfFameEntry to = new TOHallOfFameEntry( i+1, username, game.getHallOfFameEntry(i).getScore(), result);
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(),
+					result);
 		}
 		return result;
 	}
 
 	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
-		
+
 	}
 }
