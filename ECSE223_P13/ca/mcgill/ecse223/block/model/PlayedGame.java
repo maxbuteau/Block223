@@ -974,12 +974,18 @@ public class PlayedGame implements Serializable
     this.setWaitTime(INITIAL_WAIT_TIME*pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
-  // line 251 "../../../../../Block223States.ump"
+  // line 252 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
-    // TODO implement
+    double x = getCurrentBallX();
+	double y = getCurrentBallY();
+	double dx = getBallDirectionX();
+	double dy = getBallDirectionY();
+	
+	setCurrentBallX(x + dx);
+	setCurrentBallY(y + dy);
   }
 
-  // line 255 "../../../../../Block223States.ump"
+  // line 262 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = Block223Application.getBlock223();
     
