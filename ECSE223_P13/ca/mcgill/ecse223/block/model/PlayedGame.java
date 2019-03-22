@@ -955,8 +955,8 @@ public class PlayedGame implements Serializable
   	if (first == null){
   		return false;
   	}
-  	if (sqrt(pow((this.getCurrentBallX()-first.getX()),2.0)+pow((this.getCurrentBallY()-first.getY()),2.0)) <
-  		sqrt(pow((this.getCurrentBallX()-second.getX()),2.0)+pow((this.getCurrentBallY()-second.getY()),2.0))){
+  	if (Math.sqrt(Math.pow((this.getCurrentBallX()-first.getX()),2.0)+Math.pow((this.getCurrentBallY()-first.getY()),2.0)) <
+  		Math.sqrt(Math.pow((this.getCurrentBallX()-second.getX()),2.0)+Math.pow((this.getCurrentBallY()-second.getY()),2.0))){
   			return true;
   	}
   	else{
@@ -971,7 +971,7 @@ public class PlayedGame implements Serializable
     this.setCurrentLevel(level+1);
     this.setCurrentPaddleLength(this.getGame().getPaddle().getMaxPaddleLength()-(this.getGame().getPaddle().getMaxPaddleLength()
     							-this.getGame().getPaddle().getMaxPaddleLength())/(this.getGame().numberOfLevels()-1)*(this.getCurrentLevel()-1));
-    this.setWaitTime(INITIAL_WAIT_TIME*pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
+    this.setWaitTime(INITIAL_WAIT_TIME*Math.pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
   // line 252 "../../../../../Block223States.ump"
