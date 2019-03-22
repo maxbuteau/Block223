@@ -51,7 +51,7 @@ public class BlockCreatorPane extends VBox {
 			Color color = blockCreatorColorPicker.getValue();
 			try {
 			String hexFormat = "#"+Integer.toHexString(color.hashCode()).substring(0, 6).toUpperCase();
-			createBlock.setStyle("-fx-background-color: "+hexFormat);
+			createBlock.setStyle("-fx-background-color: "+hexFormat+";  -fx-background-radius: 0; -fx-border-color: transparent;");
 			}
 			catch(StringIndexOutOfBoundsException ex) {
 				createBlock.setStyle("-fx-background-color: black;");
@@ -72,11 +72,10 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorWorth.setPrefWidth(spacing*12);
 		
 		createBlock = new Button(""+(int)blockCreatorWorthSlider.getValue());
-		createBlock.setBorder(new Border(new BorderStroke(Color.BLACK, 
-	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(4))));
+//		createBlock.setBorder(new Border(new BorderStroke(Color.BLACK, 
+//	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(4))));
 		createBlock.setMinWidth(4*constants.getSize());
 		createBlock.setMinHeight(4*constants.getSize());
-		createBlock.setStyle("");
 		
 		addToToolBox = new Button("Add Block");
 		addToToolBox.setOnAction(e -> {
@@ -99,19 +98,18 @@ public class BlockCreatorPane extends VBox {
 		this.getChildren().addAll(blockCreatorLabel, blockCreatorColor, blockCreatorWorth, createBlock, addToToolBox, errorMessage);
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(spacing);
-		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
-	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
-		this.setPadding(new Insets(spacing, spacing, spacing, spacing));
+//		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
+//	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
+		this.setPadding(new Insets(0, spacing, 0, spacing));
 		setStyles();
 	}
 
 	private void setStyles() {
-		blockCreatorColorLabel.setStyle("-fx-font:15 Garamond;");
-		blockCreatorWorthLabel.setStyle("-fx-font:15 Garamond;");
-		blockCreatorLabel.setStyle("-fx-font:23 Garamond;");
-		createBlock.setStyle("-fx-font:23 Garamond;");
-		addToToolBox.setStyle("-fx-font:15 Garamond");
-		this.setOpacity(0.75);
+		this.setStyle("-fx-background-color: transparent;");
+		blockCreatorLabel.setStyle("-fx-font:30 Garamond;");
+		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+		createBlock.setStyle("-fx-background-color: white; -fx-background-radius: 0; -fx-border-color: transparent;");
+
 	}
 	
 

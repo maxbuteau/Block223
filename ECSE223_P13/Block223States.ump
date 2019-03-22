@@ -1,5 +1,7 @@
 class PlayedGame {
-
+	depend java.awt.geom.Line2D;
+	depend ca.mcgill.ecse223.block.application.Block223Application;
+	depend java.lang.Math.*;
   // State Machine
   
   playStatus {
@@ -71,7 +73,7 @@ class PlayedGame {
     		int nrBlocks = this.numberOfBlocks();
     		if(nrBlocks ==1){
     			PlayedBlockAssignment block = this.getBlock(0);
-    			BouncePoint bp = this.calculateBouncePointBlock(block);
+    			BouncePoint bp = this.calculateBouncePointBlock();
     			if(bp == null){
     				return false;
     			}
@@ -79,6 +81,7 @@ class PlayedGame {
     				this.setBounce(bp);
     				return true;
     			}	
+    		}
     	}
     return false;
   }
@@ -88,7 +91,7 @@ class PlayedGame {
     	this.setBounce(null);
     	if(nrBlocks == 1){
     		PlayedBlockAssignment block = this.getBlock(0);
-    		BouncePoint bp = this.calculateBouncePointBlock(block);
+    		BouncePoint bp = this.calculateBouncePointBlock();
     			if(bp == null){
     				return false;
     			}
@@ -109,7 +112,7 @@ class PlayedGame {
     				return false;
     			}
     			else{
-    				BouncePoint bp = this.calculateBouncePointBlock(block);
+    				BouncePoint bp = this.calculateBouncePointBlock();
     				BouncePoint bounce = this.getBounce();
     				boolean closer = this.isCloser(bp, bounce);
     				if(closer){
@@ -120,8 +123,7 @@ class PlayedGame {
     			}
     		
     	}
-    	this.getBounce != null;
-    return false;
+    	return this.getBounce() != null;
   }
   
   private boolean hitWall() {
@@ -219,16 +221,30 @@ class PlayedGame {
     pblock.delete();
     this.bounceBall();
   }
+  
+  private boolean isCloser(BouncePoint first, BouncePoint second){
+  	if (second == null){
+  		return true;
+  	}
+  	if (first == null){
+  		return false;
+  	}
+  	if (sqrt(pow((this.getCurrentBallX()-first.getX()),2.0)+pow((this.getCurrentBallY()-first.getY()),2.0)) <
+  		sqrt(pow((this.getCurrentBallX()-second.getX()),2.0)+pow((this.getCurrentBallY()-second.getY()),2.0))){
+  			return true;
+  	}
+  	else{
+  	 return false;
+  	}
+  }
 
-	//For some reason code for this method does not generate?
-  private void doHitBlockNextLevel() {
+ private void doHitBlockNextLevel(){
     this.doHitBlock();
-    Level level = this.getCurrentLevel();
+    int level = this.getCurrentLevel();
     this.setCurrentLevel(level+1);
     this.setCurrentPaddleLength(this.getGame().getPaddle().getMaxPaddleLength()-(this.getGame().getPaddle().getMaxPaddleLength()
     							-this.getGame().getPaddle().getMaxPaddleLength())/(this.getGame().numberOfLevels()-1)*(this.getCurrentLevel()-1));
-    this.setWaitTime(INITIAL_WAIT_TIME*this.getGame().getBall().getBallSpeedIncreaseFactor()^(this.getCurrentLevel()-1));
-    
+    this.setWaitTime(INITIAL_WAIT_TIME*pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
   private void doHitNothingAndNotOutOfBounds() {
@@ -241,9 +257,9 @@ class PlayedGame {
     Player p = this.getPlayer();
     
     if (p != null) {
-    	HallOfFameEntry hof = new HallOfFameEntry(score, playername, p, this.getGame(), block223);
     	
     	game = this.getGame();
+    	HallOfFameEntry hof = new HallOfFameEntry(score, playername, p, game, block223);
     	game.setMostRecentEntry(hof);
     	
     }

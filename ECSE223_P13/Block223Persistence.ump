@@ -1,61 +1,68 @@
+
 external interface Serializable {}
 
+// the reinitialize methods need to be added
+
 class Block223 {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = -1908572468415628573L;
-	
-	public void reinitialize() {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 6181302407834705923L;
+  public void reinitialize() {
 		User.reinitializeUniqueUserName(this.getUsers());
 		Game.reinitializeUniqueName(this.getGames());
 		Block.reinitializeAutouniqueBlockID(this.getGames());
 	}
 }
+
 class User {
-	depend java.io.Serializable;
-  	isA Serializable;
-  	private static final long serialVersionUID = 4267485601061759914L;
-  	
-  	public static void reinitializeUniqueUserName(List<User> users){
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 4267485601061759914L;
+  
+  public static void reinitializeUniqueUserName(List<User> users){
   		usersByUsername = new HashMap<String, User>();
   		for (User user : users) {
   			usersByUsername.put(user.getUsername(), user);
   		}
   	}
 }
+
 class UserRole {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 3389752283403781197L; 
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 3389752283403781197L;
 }
+
 class Admin {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 2221721272607853970L; 
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 1959250384912895829L;
 }
+
 class Player {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = -8062584216235283243L; 
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 4495546738870249064L;
 }
+
 class Game {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = -4718217458307281181L;
-	
-	public static void reinitializeUniqueName(List<Game> games) {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -210105651472293481L;
+  public static void reinitializeUniqueName(List<Game> games) {
 		gamesByName = new HashMap<String, Game>();
 		for (Game game : games) {
 			gamesByName.put(game.getName(), game);
 		}
 	}
-}	
+}
+
 class Block {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 5332292624658907512L;
-	
-	public static  void reinitializeAutouniqueBlockID(List<Game> gamesList){
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 5332292624658907512L;
+  
+  public static  void reinitializeAutouniqueBlockID(List<Game> gamesList){
     nextId = 0;
 		for (Game game : gamesList) {
 			List<Block> blocks = game.getBlocks();
@@ -69,26 +76,31 @@ class Block {
 		}
   }
 }
+
 class Level {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 8431267354769315043L;
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -7956760334392179806L;
 }
+
 class BlockAssignment {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 8120926036616538272L;
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -6011556325373584641L;
 }
+
 class Ball {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 145021574790956578L;
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 7342002601644000501L;
 }
+
 class Paddle {
-	depend java.io.Serializable;
-	isA Serializable;
-	private static final long serialVersionUID = 6895123766580505451L;
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 8062668971918939261L;
 }
+
 class PlayedGame {
   depend java.io.Serializable;
   isA Serializable;

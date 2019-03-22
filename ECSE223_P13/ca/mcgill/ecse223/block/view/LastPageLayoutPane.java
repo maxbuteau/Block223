@@ -66,20 +66,13 @@ public class LastPageLayoutPane extends BorderPane {
 		blockPane = new BlockCreatorPane(spacing);
 		settingsPane = new SettingsPane(game, spacing, this);
 		quitButton = new Button("Log out");
-		quitButton.setStyle("-fx-font:18 Garamond;");
 		saveGame = new Button("Save game");
-		saveGame.setStyle("-fx-font:18 Garamond;");
 		blockToolbox = new Button("Block Toolbox");
-		blockToolbox.setStyle("-fx-font:18 Garamond;");
 		changeLevel = new HBox();
 		error = new Label("");
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
-		quitButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
-		blockToolbox.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
-		saveGame.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		helpButton = new Button("Help");
-		helpButton.setStyle("-fx-font:18 Garamond;");
-		helpButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		// Everything is now initialized. Call a method to paint the pane.
 		paint(primaryStage);
@@ -107,24 +100,24 @@ public class LastPageLayoutPane extends BorderPane {
 		buttons.setAlignment(Pos.CENTER);
 		buttons_error.setAlignment(Pos.CENTER);
 		error.setAlignment(Pos.CENTER);
-		buttons_error.setPadding(new Insets(0, 0, 50, 0));
+		buttons_error.setPadding(new Insets(0, 0, Block223Page.getScreenHeight()/15, 0));
 		buttons_error.getChildren().addAll(buttons, error);
 
 		gridBox = new VBox(20);
-		gridBox.getChildren().addAll(designPane, changeLevel);
+		gridBox.getChildren().addAll(designPane, changeLevel, blockToolbox);
 		gridBox.setAlignment(Pos.CENTER);
 		changeLevel.setTranslateX(spacing*4);
-		gridBox.setPadding(new Insets(0, 0, 0, 50));
+		gridBox.setPadding(new Insets(0, 0, 0, Block223Page.getScreenWidth()/30));
 		
-		blockCreatorBox = new VBox(20);
-		blockCreatorBox.getChildren().addAll(blockPane, blockToolbox);
+		blockCreatorBox = new VBox(0);
+		blockCreatorBox.getChildren().addAll(blockPane);
 		blockCreatorBox.setAlignment(Pos.CENTER);
-		blockCreatorBox.setPadding(new Insets(0, 200, 0, 200));
+		blockCreatorBox.setPadding(new Insets(0, Block223Page.getScreenWidth()/75, 0, Block223Page.getScreenWidth()/75));
 
 		settingsBox = new VBox(20);
 		settingsBox.getChildren().addAll(settingsPane);
 		settingsBox.setAlignment(Pos.CENTER);
-		settingsBox.setPadding(new Insets(0, 50, 0, 0));
+		settingsBox.setPadding(new Insets(0, Block223Page.getScreenWidth()/30, 0, 0));
 		
 		// Fill the containers with their subcontainers/nodes
 		this.setCenter(blockCreatorBox);
