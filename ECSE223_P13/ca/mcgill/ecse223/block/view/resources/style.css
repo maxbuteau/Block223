@@ -4,20 +4,27 @@
 -fx-font:23 Garamond;
 -fx-font-weight: bold;
 }
-.button{    -fx-background-color: 
-        #a6b5c9,
-        linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),
-        linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%);
-    -fx-background-insets: 0 0 -1 0,0,1;
-    -fx-background-radius: 5,5,4;
-    -fx-padding: 7 30 7 30;
--fx-font-weight: bold;
-    -fx-text-fill: #242d35;
-    -fx-font-family: "Helvetica";
-    -fx-font-size: 18px;
-    -fx-text-fill: white;
+.button{
+    -fx-background-color: 
+        linear-gradient(#624291, #624291),
+        linear-gradient(#624291, #624291),
+        linear-gradient(#624291, #624291),
+        linear-gradient(#624291 0%, #624291 50%, #624291 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-border-radius: 30;
+    -fx-border-color: black;
+    -fx-border-width: 0.5px;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
 }
 .button: Text {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , -1 );
 }
-.list-cell:empty {-fx-opacity: 0;}
+.list-cell:empty {
+    -fx-opacity: 1;
+    -fx-alignment: center;
+}

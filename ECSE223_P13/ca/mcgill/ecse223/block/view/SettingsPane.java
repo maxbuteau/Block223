@@ -153,20 +153,22 @@ public class SettingsPane extends Pane{
 	}
 
 	private void setStyles() {
-		ballParams.setStyle("-fx-font:23 Garamond;");
-		levelParam.setStyle("-fx-font:23 Garamond;");
-		paddleParams.setStyle("-fx-font:23 Garamond;");
-		gameName.setStyle("-fx-font:23 Garamond;");
+		ballParams.setStyle("-fx-font:30 Garamond;");
+		levelParam.setStyle("-fx-font:30 Garamond;");
+		paddleParams.setStyle("-fx-font:30 Garamond;");
+		gameName.setStyle("-fx-font:30 Garamond;");
 		errorMsg.setStyle("-fx-font:20 Garamond;-fx-text-fill: #FF0000");
 		errorMsg.setWrapText(true);
 		errorMsg.setPrefWidth(this.getBoundsInParent().getWidth()*2.7);
-		save.setStyle("-fx-font:16 Garamond;");
-		//this.setStyle("-fx-border-color: black");
-		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
-	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
-		this.setOpacity(0.75);
-		save.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
-		
+		nrBlocksValue.setPrefWidth(70);
+		nrLevelsValue.setMinWidth(70);
+		increasingFactorValue.setPrefWidth(100);
+		minPaddleValue.setMinWidth(70);
+		maxPaddleValue.setMinWidth(70);
+		minXSpeedValue.setMinWidth(70);
+		minYSpeedValue.setMinWidth(70);
+		this.setStyle("-fx-background-color: transparent;");
+		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 	}
 
 	private void actionListeners() {

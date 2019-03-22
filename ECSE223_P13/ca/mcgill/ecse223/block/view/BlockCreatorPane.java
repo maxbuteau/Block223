@@ -72,8 +72,6 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorWorth.setPrefWidth(spacing*12);
 		
 		createBlock = new Button(""+(int)blockCreatorWorthSlider.getValue());
-//		createBlock.setBorder(new Border(new BorderStroke(Color.BLACK, 
-//	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(4))));
 		createBlock.setMinWidth(4*constants.getSize());
 		createBlock.setMinHeight(4*constants.getSize());
 		
@@ -98,8 +96,6 @@ public class BlockCreatorPane extends VBox {
 		this.getChildren().addAll(blockCreatorLabel, blockCreatorColor, blockCreatorWorth, createBlock, addToToolBox, errorMessage);
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(spacing);
-//		this.setBorder(new Border(new BorderStroke(Color.VIOLET, 
-//	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(8))));
 		this.setPadding(new Insets(0, spacing, 0, spacing));
 		setStyles();
 	}
