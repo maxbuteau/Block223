@@ -914,7 +914,7 @@ public class Block223Controller {
 		if(start < 1) start = 1;
 		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
 		start = start - 1;
-		end = end -1;
+		end = end - 1;
 		
 		for(int i = start; i <= end; i++) {
 			String username = Block223Application.getBlock223().findUsername(game.getHallOfFameEntry(i).getPlayer());
@@ -937,11 +937,12 @@ public class Block223Controller {
 		HallOfFameEntry mostRecent = game.getMostRecentEntry();
 		int index = game.indexOfHallOfFameEntry(mostRecent);
 		
-		//question????
 		int start = index - numberOfEntries/2;
 		if(start < 1) start = 1;
 		int end = start + numberOfEntries - 1;
 		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
+		start = start - 1;
+		end = end - 1;
 		
 		for (int i = start; i < end; i++) {
 			String username = pgame.getPlayername();
