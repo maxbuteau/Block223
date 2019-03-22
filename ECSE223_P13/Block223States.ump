@@ -1,6 +1,7 @@
 class PlayedGame {
 	depend java.awt.geom.Line2D;
 	depend ca.mcgill.ecse223.block.application.Block223Application;
+	depend java.lang.Math.*;
   // State Machine
   
   playStatus {
@@ -220,16 +221,30 @@ class PlayedGame {
     pblock.delete();
     this.bounceBall();
   }
+  
+  private boolean isCloser(BouncePoint first, BouncePoint second){
+  	if (second == null){
+  		return true;
+  	}
+  	if (first == null){
+  		return false;
+  	}
+  	if (sqrt(pow((this.getCurrentBallX()-first.getX()),2.0)+pow((this.getCurrentBallY()-first.getY()),2.0)) <
+  		sqrt(pow((this.getCurrentBallX()-second.getX()),2.0)+pow((this.getCurrentBallY()-second.getY()),2.0))){
+  			return true;
+  	}
+  	else{
+  	 return false;
+  	}
+  }
 
-	//For some reason code for this method does not generate?
-  private void doHitBlockNextLevel() {
+ private void doHitBlockNextLevel(){
     this.doHitBlock();
     int level = this.getCurrentLevel();
     this.setCurrentLevel(level+1);
     this.setCurrentPaddleLength(this.getGame().getPaddle().getMaxPaddleLength()-(this.getGame().getPaddle().getMaxPaddleLength()
     							-this.getGame().getPaddle().getMaxPaddleLength())/(this.getGame().numberOfLevels()-1)*(this.getCurrentLevel()-1));
-    this.setWaitTime(INITIAL_WAIT_TIME*this.getGame().getBall().getBallSpeedIncreaseFactor()^(this.getCurrentLevel()-1));
-    
+    this.setWaitTime(INITIAL_WAIT_TIME*pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
   private void doHitNothingAndNotOutOfBounds() {
