@@ -4,6 +4,7 @@ class PlayedGame {
 	depend java.awt.Point;
 	depend ca.mcgill.ecse223.block.model.BouncePoint;
 	depend ca.mcgill.ecse223.block.model.BouncePoint.BounceDirection;
+	depend math.geom2d.conic.*;
   // State Machine
   
   playStatus {
@@ -45,6 +46,8 @@ class PlayedGame {
 		int counter = 0;
 		l.setLine(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
 				getCurrentBallY() + ballDirectionY);
+		math.geom2d.line.Line2D l1= new math.geom2d.line.Line2D(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
+				getCurrentBallY() + ballDirectionY);
 		paddleRect.setFrame(getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2,
 				getCurrentPaddleY() - Ball.BALL_DIAMETER / 2, getCurrentPaddleLength() + Ball.BALL_DIAMETER,
 				Ball.BALL_DIAMETER / 2 + Paddle.PADDLE_WIDTH);
@@ -59,6 +62,12 @@ class PlayedGame {
 			Line2D C = new Line2D.Double();
 			C.setLine(getCurrentPaddleX() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
 					getCurrentPaddleX() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
+			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX()-getCurrentPaddleLength(),getCurrentPaddleY()),
+					Ball.BALL_DIAMETER/2.,Math.PI,Math.PI/2,false);
+			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX(),getCurrentPaddleY()),
+					Ball.BALL_DIAMETER/2.,Math.PI,0,false);
+			ArrayList<math.geom2d.Point2D> EIntersections = (ArrayList<math.geom2d.Point2D>)E.intersections(l1);
+			ArrayList<math.geom2d.Point2D> FIntersections = (ArrayList<math.geom2d.Point2D>)F.intersections(l1);
 			if (C.intersectsLine(l)) {
 				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
 						BounceDirection.FLIP_X));
@@ -73,6 +82,24 @@ class PlayedGame {
 				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
 						BounceDirection.FLIP_X));
 				counter++;
+			}
+			
+			if(EIntersections.size()>0) {
+				for(int a = 0; a<EIntersections.size();a++) {
+					if(currentBallX>getCurrentPaddleX()-getCurrentPaddleLength())
+					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+					else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
+					counter++;
+				}
+			}
+			
+			if(FIntersections.size()>0) {
+				for(int a = 0; a<FIntersections.size();a++) {
+					if(currentBallX>getCurrentPaddleX())
+					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
+					else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+					counter++;
+				}
 			}
 
 			BouncePoint closest = null;
