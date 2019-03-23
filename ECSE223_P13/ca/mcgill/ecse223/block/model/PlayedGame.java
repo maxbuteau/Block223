@@ -340,7 +340,7 @@ public class PlayedGame implements Serializable
   /* Code from template attribute_GetDefaulted */
   public double getDefaultCurrentPaddleX()
   {
-    return (Game.PLAY_AREA_SIDE - currentPaddleLength) / 2;
+    return (Game.PLAY_AREA_SIDE + currentPaddleLength) / 2;
   }
 
   public double getCurrentPaddleY()
