@@ -7,7 +7,7 @@ import java.util.*;
 
 // line 6 "../../../../../Block223PlayMode.ump"
 // line 48 "../../../../../Block223Persistence.ump"
-// line 88 "../../../../../Block223.ump"
+// line 87 "../../../../../Block223.ump"
 public class Game implements Serializable
 {
 
@@ -59,7 +59,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 100 "../../../../../Block223.ump"
+    // line 99 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -108,7 +108,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 100 "../../../../../Block223.ump"
+    // line 99 "../../../../../Block223.ump"
     if(aName.equals("") || aName == null){
     		throw new RuntimeException("The name of a game must be specified.");
     		}
@@ -159,7 +159,7 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 106 "../../../../../Block223.ump"
+    // line 105 "../../../../../Block223.ump"
     if(aName == null || aName.equals("")){
     	throw new RuntimeException("The name of a game must be specified.");
     	}
@@ -180,7 +180,7 @@ public class Game implements Serializable
   public boolean setNrBlocksPerLevel(int aNrBlocksPerLevel)
   {
     boolean wasSet = false;
-    // line 112 "../../../../../Block223.ump"
+    // line 111 "../../../../../Block223.ump"
     if(aNrBlocksPerLevel<1){
     			throw new RuntimeException("The number of blocks per level must be greater than zero.");
     		}
@@ -906,7 +906,7 @@ public class Game implements Serializable
 		}
   }
 
-  // line 127 "../../../../../Block223.ump"
+  // line 126 "../../../../../Block223.ump"
   public Block findBlock(int id){
     List<Block> blocks = this.getBlocks();
    		
@@ -920,7 +920,7 @@ public class Game implements Serializable
    		return null;
   }
 
-  // line 140 "../../../../../Block223.ump"
+  // line 139 "../../../../../Block223.ump"
   public Block getRandomBlock(){
     Random rand = new Random();
 	  int index = rand.nextInt(this.getBlocks().size());

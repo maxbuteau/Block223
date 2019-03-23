@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
-import ca.mcgill.ecse223.block.application.Block223Application;
 import java.util.*;
 
 /**
@@ -601,7 +600,7 @@ public class Block223 implements Serializable
    * 1 <@>- * GameOccurence;
    * 1 <@>- * Score;
    */
-  // line 15 "../../../../../Block223.ump"
+  // line 14 "../../../../../Block223.ump"
    public Game findGame(String gameName){
     Game foundGame = null;
 	  for(Game game: games) {
@@ -614,7 +613,7 @@ public class Block223 implements Serializable
 	return foundGame;
   }
 
-  // line 27 "../../../../../Block223.ump"
+  // line 26 "../../../../../Block223.ump"
    public String findUsername(UserRole player){
     String username = "";
 	   boolean found = false;
@@ -632,7 +631,7 @@ public class Block223 implements Serializable
 	   return username;
   }
 
-  // line 44 "../../../../../Block223.ump"
+  // line 43 "../../../../../Block223.ump"
    public PlayedGame findPlayableGame(int id){
     PlayedGame playableGame = null;
 	   

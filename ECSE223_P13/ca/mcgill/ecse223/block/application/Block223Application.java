@@ -6,7 +6,6 @@ import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.Block223Page;
-import javafx.application.Application;
 
 public class Block223Application {
 	

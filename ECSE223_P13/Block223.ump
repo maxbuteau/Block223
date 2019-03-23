@@ -4,7 +4,6 @@ use Block223Persistence.ump;
 use Block223States.ump;
 
 class Block223 {
-	depend ca.mcgill.ecse223.block.application.Block223Application;
    1 <@>- * User users;
    1 <@>- * UserRole roles;
    1 <@>- * Game games;

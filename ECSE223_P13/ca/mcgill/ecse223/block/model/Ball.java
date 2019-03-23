@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 92 "../../../../../Block223Persistence.ump"
-// line 244 "../../../../../Block223.ump"
+// line 243 "../../../../../Block223.ump"
 public class Ball implements Serializable
 {
 
@@ -75,7 +75,7 @@ public class Ball implements Serializable
   public boolean setBallSpeedIncreaseFactor(double aBallSpeedIncreaseFactor)
   {
     boolean wasSet = false;
-    // line 252 "../../../../../Block223.ump"
+    // line 251 "../../../../../Block223.ump"
     if(!(aBallSpeedIncreaseFactor>0)){
        	throw new RuntimeException("The speed increase factor of the ball must be greater than zero.");
        }
