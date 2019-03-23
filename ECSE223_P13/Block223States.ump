@@ -136,6 +136,14 @@ class PlayedGame {
 		double bouncePointY = getBounce().getY();
 		double distanceLeftX = distanceX - Math.abs(bouncePointX - positionX);
 		double distanceLeftY = distanceY - Math.abs(bouncePointY - positionY);
+		int signX = 1;
+		int signY = 1;
+		
+		if(Math.signum(ballDirectionX)<0)
+			signX = -1;
+		if(Math.signum(ballDirectionY)<0)
+			signY = -1;
+		
 
 		BounceDirection BD = getBounce().getDirection();
 		// flip the direction
@@ -145,22 +153,40 @@ class PlayedGame {
 				
 				ballDirectionX*=-1;
 				ballDirectionY*=-1;
-				currentBallX = bouncePointX + distanceLeftX * Math.signum(ballDirectionX);
-				currentBallY = bouncePointY + distanceLeftY * Math.signum(ballDirectionY);
+				if(Math.signum(ballDirectionX)<0)
+					signX = -1;
+				if(Math.signum(ballDirectionY)<0)
+					signY = -1;
+				currentBallX = bouncePointX + distanceLeftX * signX;
+				currentBallY = bouncePointY + distanceLeftY * signY;
 			}
 			if (BD.equals(BounceDirection.FLIP_Y)) {
-
-				ballDirectionX+= 0.1 * Math.abs(ballDirectionY) * Math.signum(ballDirectionX);
+				if(Math.signum(ballDirectionX)<0)
+					signX = -1;
+				ballDirectionX+= 0.1 * Math.abs(ballDirectionY) * signX;
+				signX = 1;
 				ballDirectionY*=-1;
-				currentBallY = bouncePointY + distanceLeftY * Math.signum(ballDirectionY);
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* Math.signum(ballDirectionX);
+				if(Math.signum(ballDirectionY)<0)
+					signY = -1;
+				if(Math.signum(ballDirectionX)<0)
+					signX = -1;
+				
+				currentBallY = bouncePointY + distanceLeftY * signY;
+				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
 			}
 			if (BD.equals(BounceDirection.FLIP_X)) {
-
-				ballDirectionY += 0.1 * Math.abs(ballDirectionX) * Math.signum(ballDirectionY);
+				if(Math.signum(ballDirectionY)<0)
+					signY = -1;
+				ballDirectionY += 0.1 * Math.abs(ballDirectionX) * signY;
+				signY = 1;
 				ballDirectionX*=-1;
-				currentBallX = bouncePointX + distanceLeftX * Math.signum(ballDirectionX);
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX)* Math.signum(ballDirectionY);
+				if(Math.signum(ballDirectionY)<0)
+					signY = -1;
+				if(Math.signum(ballDirectionX)<0)
+					signX = -1;
+				
+				currentBallX = bouncePointX + distanceLeftX * signX;
+				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX)* signY;
 				
 			}
 		}

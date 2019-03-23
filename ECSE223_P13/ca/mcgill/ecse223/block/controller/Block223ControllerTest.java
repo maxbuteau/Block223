@@ -1,15 +1,7 @@
 package ca.mcgill.ecse223.block.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import ca.mcgill.ecse223.block.application.Block223Application;
-import ca.mcgill.ecse223.block.model.Block223;
-import ca.mcgill.ecse223.block.model.Game;
-import ca.mcgill.ecse223.block.model.User;
-import ca.mcgill.ecse223.block.model.UserRole;
 
 class Block223ControllerTest {
 
