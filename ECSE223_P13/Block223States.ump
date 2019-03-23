@@ -2,6 +2,10 @@ class PlayedGame {
 	depend java.awt.geom.Line2D;
 	depend ca.mcgill.ecse223.block.application.Block223Application;
 	depend java.lang.Math.*;
+	depend java.awt.geom.*;
+	depend java.awt.Point;
+	depend ca.mcgill.ecse223.block.model.BouncePoint;
+	depend ca.mcgill.ecse223.block.model.BouncePoint.BounceDirection;
   // State Machine
   
   playStatus {
@@ -37,8 +41,59 @@ class PlayedGame {
   }
   
     private BouncePoint calculateBouncePointPaddle() {
-	// TODO Auto-generated method stub
-	return null;
+			Rectangle2D paddleRect = new Rectangle2D.Double();
+		Line2D l = new Line2D.Double();
+		ArrayList<BouncePoint> intersect = new ArrayList<>();
+		int counter = 0;
+		l.setLine(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
+				getCurrentBallY() + ballDirectionY);
+		paddleRect.setFrame(getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2,
+				getCurrentPaddleY() - Ball.BALL_DIAMETER / 2, getCurrentPaddleLength() + Ball.BALL_DIAMETER,
+				Ball.BALL_DIAMETER / 2 + Paddle.PADDLE_WIDTH);
+		if (paddleRect.intersectsLine(l)) {
+			Line2D A = new Line2D.Double();
+			A.setLine(getCurrentPaddleX() - getCurrentPaddleLength(), getCurrentPaddleY() - Ball.BALL_DIAMETER / 2,
+					getCurrentPaddleLength(), getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
+			Line2D B = new Line2D.Double();
+			B.setLine(getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
+					getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2,
+					getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
+			Line2D C = new Line2D.Double();
+			C.setLine(getCurrentPaddleX() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
+					getCurrentPaddleX() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
+			if (C.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+						BounceDirection.FLIP_X));
+				counter++;
+			}
+			if (A.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+						BounceDirection.FLIP_Y));
+				counter++;
+			}
+			if (B.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
+						BounceDirection.FLIP_X));
+				counter++;
+			}
+
+			BouncePoint closest = null;
+			if (counter == 1) {
+				closest = intersect.get(0);
+			} else {
+				for (int a = 0; a < counter - 1; a++) {
+					if (isCloser(intersect.get(a), intersect.get(a + 1))) {
+						closest = intersect.get(a);
+					} else {
+						closest = intersect.get(a + 1);
+					}
+				}
+			}
+			return closest;
+
+		} else {
+			return null;
+		}
 }
 
 	private BouncePoint calculateBouncePointBlock() {
@@ -47,8 +102,45 @@ class PlayedGame {
 }
 
   private void bounceBall() {
-	// TODO Auto-generated method stub
-	
+	// get params
+		double distanceX = getBallDirectionX();
+		double distanceY = getBallDirectionY();
+		double positionX = getCurrentBallX();
+		double positionY = getCurrentBallY();
+		double bouncePointX = getBounce().getX();
+		double bouncePointY = getBounce().getY();
+		double distanceLeftX = distanceX - Math.abs(bouncePointX - positionX);
+		double distanceLeftY = distanceY - Math.abs(bouncePointY - positionY);
+
+		BounceDirection BD = getBounce().getDirection();
+		// flip the direction
+		if (distanceLeftX != 0 || distanceLeftY != 0) {
+			if (BD.equals(BounceDirection.FLIP_BOTH)) {
+
+				
+				ballDirectionX*=-1;
+				ballDirectionY*=-1;
+				currentBallX = bouncePointX + distanceLeftX * Math.signum(ballDirectionX);
+				currentBallY = bouncePointY + distanceLeftY * Math.signum(ballDirectionY);
+			}
+			if (BD.equals(BounceDirection.FLIP_Y)) {
+
+				ballDirectionX+= 0.1 * Math.abs(ballDirectionY) * Math.signum(ballDirectionX);
+				ballDirectionY*=-1;
+				currentBallY = bouncePointY + distanceLeftY * Math.signum(ballDirectionY);
+				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* Math.signum(ballDirectionX);
+			}
+			if (BD.equals(BounceDirection.FLIP_X)) {
+
+				ballDirectionY += 0.1 * Math.abs(ballDirectionX) * Math.signum(ballDirectionY);
+				ballDirectionX*=-1;
+				currentBallX = bouncePointX + distanceLeftX * Math.signum(ballDirectionX);
+				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX)* Math.signum(ballDirectionY);
+				
+			}
+		}
+
+
 }
 
   private boolean isOutOfBoundsAndLastLife() {
@@ -64,6 +156,30 @@ class PlayedGame {
     boolean outOfBounds = this.isBallOutOfBounds();
     return outOfBounds;
   }
+  	private Point calculateIntersectionPoint(Line2D s, Line2D d) {
+		double sNumerator = s.getY1() * d.getX1() + s.getX2() * d.getY1() - s.getX1() * d.getY1()
+				- s.getY2() * d.getX1();
+		double sDenominator = d.getY2() * d.getX1() - d.getX2() * d.getY1();
+
+		// parallel ... 0 or infinite points, or one of the vectors is 0|0
+		if (sDenominator == 0) {
+			return null;
+		}
+
+		double sz = sNumerator / sDenominator;
+
+		double t;
+		if (d.getX1() != 0) {
+			t = (s.getX2() + sz * d.getX2() - s.getX1()) / d.getX1();
+		} else {
+			t = (s.getY2() + sz * d.getY2() - s.getY1()) / d.getY1();
+		}
+
+		Point i1 = new Point();
+		i1.setLocation(s.getX1() + t * d.getX1(), s.getY1() + t * d.getY1());
+
+		return i1;
+	}
   
   private boolean hitLastBlockAndLastLevel() {
     Game game = this.getGame();
@@ -133,8 +249,55 @@ class PlayedGame {
   }
   
     private BouncePoint calculateBouncePointWall() {
-	// TODO Auto-generated method stub
-	return null;
+BouncePoint bp = null;
+		Line2D l = new Line2D.Double();
+		l.setLine(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
+				getCurrentBallY() + ballDirectionY);
+		Line2D A = new Line2D.Double();
+		Line2D B = new Line2D.Double();
+		Line2D C = new Line2D.Double();
+		A.setLine(Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2, Game.PLAY_AREA_SIDE);
+		B.setLine(Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2, Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2,
+				Ball.BALL_DIAMETER / 2);
+		C.setLine(Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2,
+				Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Game.PLAY_AREA_SIDE);
+
+		if (A.intersectsLine(l) && B.intersectsLine(l)) {
+
+			if (calculateIntersectionPoint(A, l).equals(calculateIntersectionPoint(B, l))) {
+				bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+						BounceDirection.FLIP_BOTH);
+			} else {
+				bp = new BouncePoint(Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2, BounceDirection.FLIP_BOTH);
+			}
+
+		} else if (B.intersectsLine(l) && C.intersectsLine(l)) {
+			if (calculateIntersectionPoint(C, l).equals(calculateIntersectionPoint(B, l))) {
+				bp = new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+						BounceDirection.FLIP_BOTH);
+			} else {
+				bp = new BouncePoint(Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2,
+						BounceDirection.FLIP_BOTH);
+			}
+
+		} else if (A.intersectsLine(l)) {
+
+			bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+					BounceDirection.FLIP_X);
+
+		} else if (C.intersectsLine(l)) {
+
+			bp = new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+					BounceDirection.FLIP_X);
+
+		} else if (B.intersectsLine(l)) {
+
+			bp = new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
+					BounceDirection.FLIP_Y);
+		}
+
+		return bp;
+
 }
   
   // Actions
