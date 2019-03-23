@@ -1,7 +1,5 @@
 class PlayedGame {
 	depend java.awt.geom.Line2D;
-	depend ca.mcgill.ecse223.block.application.Block223Application;
-	depend java.lang.Math.*;
 	depend java.awt.geom.*;
 	depend java.awt.Point;
 	depend ca.mcgill.ecse223.block.model.BouncePoint;
@@ -414,7 +412,7 @@ BouncePoint bp = null;
   }
 
   private void doGameOver() {
-    Block223 block223 = Block223Application.getBlock223();
+    Block223 block223 = this.getBlock223();
     
     Player p = this.getPlayer();
     
