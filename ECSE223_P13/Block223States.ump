@@ -157,28 +157,20 @@ class PlayedGame {
     return outOfBounds;
   }
   	private Point calculateIntersectionPoint(Line2D s, Line2D d) {
-		double sNumerator = s.getY1() * d.getX1() + s.getX2() * d.getY1() - s.getX1() * d.getY1()
-				- s.getY2() * d.getX1();
-		double sDenominator = d.getY2() * d.getX1() - d.getX2() * d.getY1();
-
-		// parallel ... 0 or infinite points, or one of the vectors is 0|0
-		if (sDenominator == 0) {
-			return null;
-		}
-
-		double sz = sNumerator / sDenominator;
-
-		double t;
-		if (d.getX1() != 0) {
-			t = (s.getX2() + sz * d.getX2() - s.getX1()) / d.getX1();
-		} else {
-			t = (s.getY2() + sz * d.getY2() - s.getY1()) / d.getY1();
-		}
-
-		Point i1 = new Point();
-		i1.setLocation(s.getX1() + t * d.getX1(), s.getY1() + t * d.getY1());
-
-		return i1;
+		double a1 = s.getY2() - s.getY1();
+		double b1 = s.getX1() - s.getX2();
+		double c1 = a1 * s.getX1() + b1 * s.getY1();
+		
+		double a2 = d.getY2() - d.getY1();
+		double b2 = d.getX1() - d.getX2();
+		double c2 = a2 * d.getX1() + b2 * d.getY1();
+		
+		double delta = a1*b2-a2*b1;
+		
+		Point pt = new Point();
+		pt.setLocation((b2*c1-b1*c2)/delta,(a1*c2-a2*c1)/delta);
+		System.out.println((b2*c1-b1*c2)/delta+ " " + (a1*c2-a2*c1)/delta);
+		return pt;
 	}
   
   private boolean hitLastBlockAndLastLevel() {
