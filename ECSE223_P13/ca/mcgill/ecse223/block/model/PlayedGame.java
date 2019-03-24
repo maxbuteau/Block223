@@ -331,7 +331,7 @@ public class PlayedGame implements Serializable
   }
 
   /**
-   * the position of the paddle is at its top right corner
+   * the position of the paddle is at its top left corner
    */
   public double getCurrentPaddleX()
   {
@@ -340,7 +340,7 @@ public class PlayedGame implements Serializable
   /* Code from template attribute_GetDefaulted */
   public double getDefaultCurrentPaddleX()
   {
-    return (Game.PLAY_AREA_SIDE + currentPaddleLength) / 2;
+    return (Game.PLAY_AREA_SIDE - currentPaddleLength) / 2;
   }
 
   public double getCurrentPaddleY()
@@ -760,24 +760,24 @@ public class PlayedGame implements Serializable
 				getCurrentBallY() + ballDirectionY);
 		math.geom2d.line.Line2D l1= new math.geom2d.line.Line2D(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
 				getCurrentBallY() + ballDirectionY);
-		paddleRect.setFrame(getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2,
-				getCurrentPaddleY() - Ball.BALL_DIAMETER / 2, getCurrentPaddleLength() + Ball.BALL_DIAMETER,
-				Ball.BALL_DIAMETER / 2 + Paddle.PADDLE_WIDTH);
+		paddleRect.setFrame(getCurrentPaddleX()- Ball.BALL_DIAMETER / 2,
+				getCurrentPaddleY() - Ball.BALL_DIAMETER / 2, getCurrentPaddleX()+getCurrentPaddleLength() + Ball.BALL_DIAMETER/2,
+				getCurrentPaddleY() + Paddle.PADDLE_WIDTH);
 		if (paddleRect.intersectsLine(l)) {
 			Line2D A = new Line2D.Double();
-			A.setLine(getCurrentPaddleX() - getCurrentPaddleLength(), getCurrentPaddleY() - Ball.BALL_DIAMETER / 2,
-					getCurrentPaddleLength(), getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
+			A.setLine(getCurrentPaddleX() + getCurrentPaddleLength(), getCurrentPaddleY() - Ball.BALL_DIAMETER / 2,
+					getCurrentPaddleX(), getCurrentPaddleY());
 			Line2D B = new Line2D.Double();
-			B.setLine(getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
-					getCurrentPaddleX() - getCurrentPaddleLength() - Ball.BALL_DIAMETER / 2,
-					getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
+			B.setLine(getCurrentPaddleX()- Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
+					getCurrentPaddleX(),
+					getCurrentPaddleY() + Paddle.PADDLE_WIDTH);
 			Line2D C = new Line2D.Double();
-			C.setLine(getCurrentPaddleX() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
-					getCurrentPaddleX() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY() - Ball.BALL_DIAMETER / 2);
-			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX()-getCurrentPaddleLength(),getCurrentPaddleY()),
-					Ball.BALL_DIAMETER/2.,Math.PI,Math.PI/2,false);
-			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX(),getCurrentPaddleY()),
-					Ball.BALL_DIAMETER/2.,Math.PI,0,false);
+			C.setLine(getCurrentPaddleX()+getCurrentPaddleLength() + Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
+					getCurrentPaddleX() + getCurrentPaddleLength(), getCurrentPaddleY() + Paddle.PADDLE_WIDTH);
+			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX()+getCurrentPaddleLength(),getCurrentPaddleY()),
+					Ball.BALL_DIAMETER/2.,0,Math.PI/2,false);
+			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX(),getCurrentPaddleY()),
+					Ball.BALL_DIAMETER/2.,Math.PI/2,Math.PI,false);
 			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
 			ArrayList<math.geom2d.Point2D> FIntersections = F.intersections(l1);
 			if (C.intersectsLine(l)) {

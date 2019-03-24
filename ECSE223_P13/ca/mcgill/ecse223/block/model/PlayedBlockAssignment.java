@@ -62,7 +62,7 @@ public class PlayedBlockAssignment implements Serializable
   }
 
   /**
-   * the position of a block is at its top right corner
+   * the position of a block is at its top left corner
    */
   public int getX()
   {

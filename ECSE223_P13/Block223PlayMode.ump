@@ -35,8 +35,8 @@ class PlayedGame {
    const Integer PADDLE_MOVE_RIGHT = 1; // pixels moved when right arrow key is pressed
    const Integer PADDLE_MOVE_LEFT = -1; // pixels moved when left arrow key is pressed
    Double currentPaddleLength = getGame().getPaddle().getMaxPaddleLength();
-   // the position of the paddle is at its top right corner
-   defaulted Double currentPaddleX = (Game.PLAY_AREA_SIDE + currentPaddleLength) / 2;
+   // the position of the paddle is at its top left corner
+   defaulted Double currentPaddleX = (Game.PLAY_AREA_SIDE - currentPaddleLength) / 2;
    immutable Double currentPaddleY = Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE - Paddle.PADDLE_WIDTH;
 
    * -- 1 Game game;
@@ -68,7 +68,7 @@ class PlayedGame {
 class PlayedBlockAssignment {
    // the associated block is either (a) the same as the one of the corresponding BlockAssignent or (b) randomly chosen
    * -- 1 Block block;
-   // the position of a block is at its top right corner
+   // the position of a block is at its top left corner
    Integer x;
    Integer y;
 }
