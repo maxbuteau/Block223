@@ -393,6 +393,8 @@ BouncePoint bp = null;
 			   }  
 			   foundAssignment = level.findBlockAssignment(x, y);
 		   }
+		    x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
+		   y = Game.WALL_PADDING + (y-1)*(Game.ROW_PADDING+Block.SIZE);
 		   
 		   new PlayedBlockAssignment(
 				   x,
