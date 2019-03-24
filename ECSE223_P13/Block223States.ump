@@ -259,7 +259,7 @@ class PlayedGame {
     		PlayedBlockAssignment block = getBlock(i);
     		BouncePoint bp = this.calculateBouncePointBlock(block);
     		BouncePoint bounce = this.getBounce();
-    		boolean closer = isCloser(bp, bounce);
+    		boolean closer = this.isCloser(bp, bounce);
     		
     		if(closer){
     			this.setBounce(bp);
@@ -413,22 +413,7 @@ BouncePoint bp = null;
     this.bounceBall();
   }
   
-  private boolean isCloser(BouncePoint first, BouncePoint second){
-  	if (second == null){
-  		return true;
-  	}
-  	if (first == null){
-  		return false;
-  	}
-  	if (Math.sqrt(Math.pow((this.getCurrentBallX()-first.getX()),2.0)+Math.pow((this.getCurrentBallY()-first.getY()),2.0)) <
-  		Math.sqrt(Math.pow((this.getCurrentBallX()-second.getX()),2.0)+Math.pow((this.getCurrentBallY()-second.getY()),2.0))){
-  			return true;
-  	}
-  	else{
-  	 return false;
-  	}
-  }
-
+  
  private void doHitBlockNextLevel(){
     this.doHitBlock();
     int level = this.getCurrentLevel();

@@ -85,7 +85,7 @@ public class PlayedGame implements Serializable
 
   public PlayedGame(String aPlayername, Game aGame, Block223 aBlock223)
   {
-    // line 60 "../../../../../Block223PlayMode.ump"
+    // line 78 "../../../../../Block223PlayMode.ump"
     boolean didAddGameResult = setGame(aGame);
           if (!didAddGameResult)
           {
@@ -739,6 +739,23 @@ public class PlayedGame implements Serializable
 	  return Line2D.linesIntersect(x1, y1, x2, y2, x3, y3, x4, y4);
   }
 
+  // line 61 "../../../../../Block223PlayMode.ump"
+   private boolean isCloser(BouncePoint first, BouncePoint second){
+    if (second == null){
+  		return true;
+  	}
+  	if (first == null){
+  		return false;
+  	}
+  	if (Math.sqrt(Math.pow((this.getCurrentBallX()-first.getX()),2.0)+Math.pow((this.getCurrentBallY()-first.getY()),2.0)) <
+  		Math.sqrt(Math.pow((this.getCurrentBallX()-second.getX()),2.0)+Math.pow((this.getCurrentBallY()-second.getY()),2.0))){
+  			return true;
+  	}
+  	else{
+  	 return false;
+  	}
+  }
+
 
   /**
    * Guards
@@ -978,7 +995,7 @@ public class PlayedGame implements Serializable
     		PlayedBlockAssignment block = getBlock(i);
     		BouncePoint bp = this.calculateBouncePointBlock(block);
     		BouncePoint bounce = this.getBounce();
-    		boolean closer = isCloser(bp, bounce);
+    		boolean closer = this.isCloser(bp, bounce);
     		
     		if(closer){
     			this.setBounce(bp);
@@ -1138,24 +1155,7 @@ public class PlayedGame implements Serializable
     this.bounceBall();
   }
 
-  // line 417 "../../../../../Block223States.ump"
-   private boolean isCloser(BouncePoint first, BouncePoint second){
-    if (second == null){
-  		return true;
-  	}
-  	if (first == null){
-  		return false;
-  	}
-  	if (Math.sqrt(Math.pow((this.getCurrentBallX()-first.getX()),2.0)+Math.pow((this.getCurrentBallY()-first.getY()),2.0)) <
-  		Math.sqrt(Math.pow((this.getCurrentBallX()-second.getX()),2.0)+Math.pow((this.getCurrentBallY()-second.getY()),2.0))){
-  			return true;
-  	}
-  	else{
-  	 return false;
-  	}
-  }
-
-  // line 433 "../../../../../Block223States.ump"
+  // line 418 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     this.doHitBlock();
     int level = this.getCurrentLevel();
@@ -1165,7 +1165,7 @@ public class PlayedGame implements Serializable
     this.setWaitTime(INITIAL_WAIT_TIME*Math.pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
-  // line 443 "../../../../../Block223States.ump"
+  // line 428 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
 	double y = getCurrentBallY();
@@ -1176,7 +1176,7 @@ public class PlayedGame implements Serializable
 	setCurrentBallY(y + dy);
   }
 
-  // line 453 "../../../../../Block223States.ump"
+  // line 438 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = this.getBlock223();
     
