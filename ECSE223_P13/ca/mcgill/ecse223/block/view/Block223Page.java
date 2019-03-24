@@ -108,6 +108,10 @@ public class Block223Page extends Application{
 		return registerScene;
 	}
 	
+	public static Scene getGameSelectionScene() {
+		return gameSelectionScene;
+	}
+
 	public static void changeToGameSelectionScene(Stage primaryStage) {
 
 		//SELECTION GAME

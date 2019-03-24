@@ -42,6 +42,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Button quitButton;
 	private Button saveGame;
 	private Button helpButton;
+	private Button backToGameButton;
 
 	private int currentLvl = 1;
 	private static double Spacing;
@@ -71,6 +72,7 @@ public class LastPageLayoutPane extends BorderPane {
 		error = new Label("");
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
 		helpButton = new Button("Help");
+		backToGameButton = new Button("Back to game selection page");
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		// Everything is now initialized. Call a method to paint the pane.
@@ -95,7 +97,7 @@ public class LastPageLayoutPane extends BorderPane {
 
 		buttons_error = new VBox(20);
 		buttons = new HBox(20);
-		buttons.getChildren().addAll(saveGame, quitButton, helpButton);
+		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton);
 		buttons.setAlignment(Pos.CENTER);
 		buttons_error.setAlignment(Pos.CENTER);
 		error.setAlignment(Pos.CENTER);
@@ -200,6 +202,10 @@ public class LastPageLayoutPane extends BorderPane {
 				errorSFX.play();
 				error.setText(e1.getMessage());
 			}
+		});
+		
+		backToGameButton.setOnAction(e -> {
+			primaryStage.setScene(Block223Page.getGameSelectionScene());
 		});
 
 		error.setWrapText(true);
