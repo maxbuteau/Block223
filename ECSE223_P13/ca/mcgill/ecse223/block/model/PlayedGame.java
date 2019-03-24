@@ -861,24 +861,24 @@ public class PlayedGame implements Serializable
 		math.geom2d.line.Line2D l1= new math.geom2d.line.Line2D(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
 				getCurrentBallY() + ballDirectionY);
 
-		blockRect.setFrame(pblock.getX()- Ball.BALL_DIAMETER / 2, pblock.getY() - Ball.BALL_DIAMETER / 2,  pblock.getX() + Ball.BALL_DIAMETER,
-				pblock.getY() + Ball.BALL_DIAMETER);
+		blockRect.setFrame(pblock.getX()- Ball.BALL_DIAMETER / 2, pblock.getY() - Ball.BALL_DIAMETER / 2,  Block.SIZE+pblock.getX() + Ball.BALL_DIAMETER/2,
+				pblock.getY() + Ball.BALL_DIAMETER/2+Block.SIZE);
 
 		if (blockRect.intersectsLine(l)) {
-			Line2D A = new Line2D.Double();
-			A.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
 			Line2D B = new Line2D.Double();
-			B.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+			B.setLine(pblock.getX()-Ball.BALL_DIAMETER/2, pblock.getY(), pblock.getX()-Ball.BALL_DIAMETER/2, pblock.getY()+Block.SIZE);
+			Line2D A = new Line2D.Double();
+			A.setLine(pblock.getX(), pblock.getY()-Ball.BALL_DIAMETER/2, pblock.getX()+Block.SIZE, pblock.getY()-Ball.BALL_DIAMETER/2);
 			Line2D C = new Line2D.Double();
-			C.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+			C.setLine(pblock.getX()+Block.SIZE+Ball.BALL_DIAMETER/2, pblock.getY(), pblock.getX()+Block.SIZE+Ball.BALL_DIAMETER/2, pblock.getY()+Block.SIZE);
 			Line2D D = new Line2D.Double();
-			D.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+			D.setLine(pblock.getX(), pblock.getY()+Block.SIZE+Ball.BALL_DIAMETER/2, pblock.getX()+Block.SIZE, pblock.getY()+Block.SIZE+Ball.BALL_DIAMETER/2);
 
 
 			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
 					Ball.BALL_DIAMETER/2.,Math.PI/2,Math.PI,false);
 			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
-					Ball.BALL_DIAMETER/2.,Math.PI/2,0,false);
+					Ball.BALL_DIAMETER/2.,0,Math.PI/2,false);
 			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
 					Ball.BALL_DIAMETER/2.,Math.PI,((3/2)*Math.PI),false);
 			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
@@ -918,20 +918,20 @@ public class PlayedGame implements Serializable
 			}	
 			for(int a = 0; a<FIntersections.size();a++) {
 				if(currentBallX>pblock.getX())
-					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
-				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
+				else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
 			}
 			for(int a = 0; a<GIntersections.size();a++) {
 				if(currentBallX>pblock.getX())
-					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
-				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
+					intersect.add(new BouncePoint(GIntersections.get(a).getX(), GIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+				else intersect.add(new BouncePoint(GIntersections.get(a).getX(), GIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				counter++;
 			}
 			for(int a = 0; a<HIntersections.size();a++) {
 				if(currentBallX>pblock.getX())
-					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
-				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+					intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_X));
+				else intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
 			}
 
@@ -950,6 +950,7 @@ public class PlayedGame implements Serializable
 			}
 			return closest;	
 		}
+		
 		return null;
   }
 
