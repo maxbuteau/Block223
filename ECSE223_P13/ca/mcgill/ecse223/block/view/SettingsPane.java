@@ -135,7 +135,7 @@ public class SettingsPane extends Pane{
 		
 		VBox v4 = new VBox(spacing*3/4);
 		v4.setPadding(new Insets(spacing,spacing,spacing,spacing));
-		v4.getChildren().addAll(gameBox, v1,v2,v3, errorMsg, save);
+		v4.getChildren().addAll(gameBox, v1,v2,v3, save, errorMsg);
 		
 		this.getChildren().add(v4);
 		//we'll use a separate method to do the action listeners
@@ -192,7 +192,6 @@ public class SettingsPane extends Pane{
 		
 		//Button action listener
 		save.setOnAction(e->{
-			System.out.println("Click");
 			try {
 				errorMsg.setText("");
 				String gameName = gameTF.getText();
