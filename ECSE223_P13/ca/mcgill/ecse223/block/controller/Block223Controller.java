@@ -774,7 +774,7 @@ public class Block223Controller {
 
 			game.move();
 
-			if (userInputs.contains("")) {
+			if (userInputs.contains(" ")) {
 				game.pause();
 			}
 
