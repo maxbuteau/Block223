@@ -121,10 +121,108 @@ class PlayedGame {
 		}
 }
 
-	private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock) {
-	// TODO Auto-generated method stub
-	return null;
-}
+ private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock){
+    Rectangle2D blockRect = new Rectangle2D.Double();
+		Line2D l = new Line2D.Double();
+		ArrayList<BouncePoint> intersect = new ArrayList<>();
+		int counter = 0;
+		l.setLine(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
+				getCurrentBallY() + ballDirectionY);
+		math.geom2d.line.Line2D l1= new math.geom2d.line.Line2D(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
+				getCurrentBallY() + ballDirectionY);
+
+		blockRect.setFrame(pblock.getX()- Ball.BALL_DIAMETER / 2, pblock.getY() - Ball.BALL_DIAMETER / 2,  pblock.getX() + Ball.BALL_DIAMETER,
+				pblock.getY() + Ball.BALL_DIAMETER);
+
+		if (blockRect.intersectsLine(l)) {
+			Line2D A = new Line2D.Double();
+			A.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+			Line2D B = new Line2D.Double();
+			B.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+			Line2D C = new Line2D.Double();
+			C.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+			Line2D D = new Line2D.Double();
+			D.setLine(pblock.getX(), pblock.getY(), pblock.getX(), pblock.getY());
+
+
+			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+					Ball.BALL_DIAMETER/2.,Math.PI/2,Math.PI,false);
+			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+					Ball.BALL_DIAMETER/2.,Math.PI/2,0,false);
+			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+					Ball.BALL_DIAMETER/2.,Math.PI,((3/2)*Math.PI),false);
+			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+					Ball.BALL_DIAMETER/2.,((3/2)*Math.PI),0,false);
+
+			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
+			ArrayList<math.geom2d.Point2D> FIntersections = F.intersections(l1);
+			ArrayList<math.geom2d.Point2D> GIntersections = G.intersections(l1);
+			ArrayList<math.geom2d.Point2D> HIntersections = H.intersections(l1);
+
+			if (A.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+						BounceDirection.FLIP_Y));
+				counter++;
+			}
+			if (B.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
+						BounceDirection.FLIP_X));
+				counter++;
+			}
+			if (C.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+						BounceDirection.FLIP_X));
+				counter++;
+			}
+			if (D.intersectsLine(l)) {
+				intersect.add(new BouncePoint(calculateIntersectionPoint(D, l).x, calculateIntersectionPoint(D, l).y,
+						BounceDirection.FLIP_Y));
+				counter++;
+			}
+
+			for(int a = 0; a<EIntersections.size();a++) {
+				if(currentBallX>pblock.getX())
+					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
+				counter++;
+			}	
+			for(int a = 0; a<FIntersections.size();a++) {
+				if(currentBallX>pblock.getX())
+					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
+				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+				counter++;
+			}
+			for(int a = 0; a<GIntersections.size();a++) {
+				if(currentBallX>pblock.getX())
+					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
+				counter++;
+			}
+			for(int a = 0; a<HIntersections.size();a++) {
+				if(currentBallX>pblock.getX())
+					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
+				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
+				counter++;
+			}
+
+
+			BouncePoint closest = null;
+			if (counter == 1) {
+				closest = intersect.get(0);
+			} else {
+				for (int a = 0; a < counter - 1; a++) {
+					if (isCloser(intersect.get(a), intersect.get(a + 1))) {
+						closest = intersect.get(a);
+					} else {
+						closest = intersect.get(a + 1);
+					}
+				}
+			}
+			return closest;	
+		}
+		return null;
+  }
+
 
   private void bounceBall() {
 	// get params
