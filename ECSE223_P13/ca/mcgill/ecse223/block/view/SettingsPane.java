@@ -192,6 +192,7 @@ public class SettingsPane extends Pane{
 		
 		//Button action listener
 		save.setOnAction(e->{
+			System.out.println("Click");
 			try {
 				errorMsg.setText("");
 				String gameName = gameTF.getText();

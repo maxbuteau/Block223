@@ -27,7 +27,7 @@ public class DesignGridPane extends Pane {
 	public DesignGridPane(int level, LastPageLayoutPane lastPageLayoutPane) {
 		toConstants = Block223Controller.getConstants();
 		DesignGridPane.lastPageLayoutPane = lastPageLayoutPane;
-		DesignGridPane.level = level+1;
+		DesignGridPane.level = level;
 		designGridPane = new GridPane();
 		designPane = this;
 		this.setPrefSize(toConstants.getPlayAreaSide(), toConstants.getPlayAreaSide()-toConstants.getVerticalDistance()-toConstants.getBallDiameter()-toConstants.getPaddleWidth());
