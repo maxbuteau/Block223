@@ -43,6 +43,7 @@ class PlayedGame {
    1 <@>- * PlayedBlockAssignment blocks;
    0..1 -> 0..1 BouncePoint bounce;
    
+   
    public boolean isBallOutOfBounds() {
    
   	   double x1 = this.currentBallX;
