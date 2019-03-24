@@ -1058,7 +1058,7 @@ public class PlayedGame implements Serializable
 	   this.resetBallDirectionY();	   
 	   this.resetCurrentPaddleX();
 	   Game game = this.getGame();
-	   Level level = game.getLevel(this.getCurrentLevel() - 1);
+	   Level level = game.getLevel(currentLevel - 1);
 	   List<BlockAssignment> assignments = level.getBlockAssignments();
 	   
 	   for(BlockAssignment assignment : assignments) {
