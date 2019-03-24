@@ -29,6 +29,7 @@ package math.geom2d.conic;
 import static java.lang.Math.*;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 
@@ -528,7 +529,7 @@ implements EllipseArcShape2D, CircularShape2D, CirculinearElement2D, Cloneable {
      * line. If there are 2 intersections points, the first one in the array is
      * the first one on the line.
      */
-    public Collection<Point2D> intersections(LinearShape2D line) {
+    public ArrayList<Point2D> intersections(LinearShape2D line) {
     	return Circle2D.lineCircleIntersections(line, this);
     }
 

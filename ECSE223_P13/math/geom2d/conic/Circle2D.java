@@ -289,7 +289,7 @@ Cloneable {
      * @return a collection of intersection points
 	 * @since 0.11.1
      */
-    public static Collection<Point2D> lineCircleIntersections(
+    public static ArrayList<Point2D> lineCircleIntersections(
     		LinearShape2D line, CircularShape2D circle) {
     	// initialize array of points (maximum 2 intersections)
     	ArrayList<Point2D> intersections = new ArrayList<Point2D>(2);

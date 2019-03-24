@@ -66,8 +66,8 @@ class PlayedGame {
 					Ball.BALL_DIAMETER/2.,Math.PI,Math.PI/2,false);
 			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(getCurrentPaddleX(),getCurrentPaddleY()),
 					Ball.BALL_DIAMETER/2.,Math.PI,0,false);
-			ArrayList<math.geom2d.Point2D> EIntersections = (ArrayList<math.geom2d.Point2D>)E.intersections(l1);
-			ArrayList<math.geom2d.Point2D> FIntersections = (ArrayList<math.geom2d.Point2D>)F.intersections(l1);
+			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
+			ArrayList<math.geom2d.Point2D> FIntersections = F.intersections(l1);
 			if (C.intersectsLine(l)) {
 				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
 						BounceDirection.FLIP_X));
