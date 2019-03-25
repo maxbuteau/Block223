@@ -122,7 +122,7 @@ class PlayedGame {
 }
 
  private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock){
-        Rectangle2D blockRect = new Rectangle2D.Double();
+Rectangle2D blockRect = new Rectangle2D.Double();
 		Line2D l = new Line2D.Double();
 		ArrayList<BouncePoint> intersect = new ArrayList<>();
 		int counter = 0;
@@ -187,7 +187,7 @@ class PlayedGame {
 				counter++;
 			}	
 			for(int a = 0; a<FIntersections.size();a++) {
-				if(currentBallX>pblock.getX())
+				if(currentBallX>pblock.getX()+Block.SIZE)
 					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
@@ -199,7 +199,7 @@ class PlayedGame {
 				counter++;
 			}
 			for(int a = 0; a<HIntersections.size();a++) {
-				if(currentBallX>pblock.getX())
+				if(currentBallX>pblock.getX()+Block.SIZE)
 					intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				else intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
