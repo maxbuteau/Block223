@@ -86,7 +86,7 @@ class PlayedGame {
 			
 			if(EIntersections.size()>0) {
 				for(int a = 0; a<EIntersections.size();a++) {
-					if(currentBallX>getCurrentPaddleX()-getCurrentPaddleLength())
+					if(currentBallX>getCurrentPaddleX())
 					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 					else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
 					counter++;
@@ -95,7 +95,7 @@ class PlayedGame {
 			
 			if(FIntersections.size()>0) {
 				for(int a = 0; a<FIntersections.size();a++) {
-					if(currentBallX>getCurrentPaddleX())
+					if(currentBallX>getCurrentPaddleX()+getCurrentPaddleLength())
 					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
 					else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 					counter++;

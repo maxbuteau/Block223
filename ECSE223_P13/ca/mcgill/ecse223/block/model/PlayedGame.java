@@ -85,7 +85,7 @@ public class PlayedGame implements Serializable
 
   public PlayedGame(String aPlayername, Game aGame, Block223 aBlock223)
   {
-    // line 78 "../../../../../Block223PlayMode.ump"
+    // line 80 "../../../../../Block223PlayMode.ump"
     boolean didAddGameResult = setGame(aGame);
           if (!didAddGameResult)
           {
@@ -725,21 +725,21 @@ public class PlayedGame implements Serializable
     }
   }
 
-  // line 47 "../../../../../Block223PlayMode.ump"
+  // line 49 "../../../../../Block223PlayMode.ump"
    public boolean isBallOutOfBounds(){
     double x1 = this.currentBallX;
 	   double y1 = this.currentBallY;
 	   double x2 = this.currentBallX + (this.ballDirectionX) * getWaitTime();
 	   double y2 = this.currentBallY + (this.ballDirectionY) * getWaitTime();
 	   double x3 = 0;
-	   double y3 = Game.WALL_PADDING + Game.PLAY_AREA_SIDE;
+	   double y3 = Game.PLAY_AREA_SIDE;
 	   double x4 = Game.PLAY_AREA_SIDE;
-	   double y4 = Game.WALL_PADDING + Game.PLAY_AREA_SIDE;
+	   double y4 = Game.PLAY_AREA_SIDE;
 	   
 	  return Line2D.linesIntersect(x1, y1, x2, y2, x3, y3, x4, y4);
   }
 
-  // line 61 "../../../../../Block223PlayMode.ump"
+  // line 63 "../../../../../Block223PlayMode.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     if (second == null){
   		return true;
@@ -815,7 +815,7 @@ public class PlayedGame implements Serializable
 			
 			if(EIntersections.size()>0) {
 				for(int a = 0; a<EIntersections.size();a++) {
-					if(currentBallX>getCurrentPaddleX()-getCurrentPaddleLength())
+					if(currentBallX>getCurrentPaddleX())
 					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 					else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
 					counter++;
@@ -824,7 +824,7 @@ public class PlayedGame implements Serializable
 			
 			if(FIntersections.size()>0) {
 				for(int a = 0; a<FIntersections.size();a++) {
-					if(currentBallX>getCurrentPaddleX())
+					if(currentBallX>getCurrentPaddleX()+getCurrentPaddleLength())
 					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
 					else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 					counter++;
