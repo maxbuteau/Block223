@@ -1,7 +1,13 @@
 package ca.mcgill.ecse223.block.view;
 
-public class PlayPane implements Block223PlayModeInterface {
+import javafx.scene.layout.BorderPane;
 
+public class PlayPage extends BorderPane implements Block223PlayModeInterface {
+
+	public PlayPage() {
+		
+	}
+	
 	@Override
 	public String takeInputs() {
 		// TODO Auto-generated method stub
