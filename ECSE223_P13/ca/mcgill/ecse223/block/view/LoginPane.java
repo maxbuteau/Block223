@@ -64,6 +64,10 @@ public class LoginPane extends VBox{
 			if(toUserMode.getMode().equals(Mode.Design)) {
 				Block223Page.changeToGameSelectionScene(primaryStage);
 			}
+			
+			if(toUserMode.getMode().equals(Mode.Play)) {
+				Block223Page.changeToPlayableGameSelectionScene(primaryStage);
+			}
 		});
 
 		loginCreateAccountLabel = new Label("Don't have an account?");

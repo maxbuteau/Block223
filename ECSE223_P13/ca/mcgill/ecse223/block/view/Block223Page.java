@@ -9,7 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -28,6 +31,7 @@ import java.awt.Toolkit;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.controller.*;
+import ca.mcgill.ecse223.block.model.Game;
 
 public class Block223Page extends Application{
 
@@ -48,11 +52,26 @@ public class Block223Page extends Application{
 	private static ObservableList<String> gameSelectionListData;
 	private static Button gameSelectionCreateGameButton;
 	private static Button gameSelectionUpdateGameButton;
+	private static Button gameSelectionPublishGameButton;
 	private static Scene createGameScene;
 	private static VBox createGameBox;
 	private static Button gameSelectionLogoutButton;
 	private static Button gameSelectionDeleteButton;
 	private static Label gameSelectionName;
+	
+	//PLAYABLE GAME SELECTION
+	private static Scene playableGameSelectionScene;
+	private static VBox playableGameSelectionPane;
+	private static HBox playableGameSelectionButtonRow;
+	private static TableView<TOPlayableGame> playableGameSelectionList;
+	private static TableColumn<TOPlayableGame, String> columnName;
+	private static TableColumn<TOPlayableGame, Integer> columnId;	
+	private static TableColumn<TOPlayableGame, Integer> columnLevel;
+	private static ObservableList<TOPlayableGame> playableGameSelectionListData;
+	private static Label playableGameSelectionName;
+	private static Button playableGameSelectionLogoutButton;
+	private static Button playableGameSelectionSelectButton;
+	private static Label playableGameSelectionError;
 
 	//DESIGN PAGE
 	private static Scene gameDesignScene;
@@ -240,6 +259,67 @@ public class Block223Page extends Application{
 		primaryStage.setResizable(false);
 
 	}
+	
+	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
+
+		playableGameSelectionPane = new VBox(80);
+		playableGameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
+		playableGameSelectionName = new Label("Game names");
+		playableGameSelectionName.setMaxWidth(Double.MAX_VALUE);
+		playableGameSelectionName.setAlignment(Pos.CENTER);
+		playableGameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
+
+		playableGameSelectionScene = new Scene(playableGameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
+		playableGameSelectionButtonRow = new HBox(30);
+		playableGameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
+
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		playableGameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+		
+		//Buttons
+		playableGameSelectionLogoutButton = new Button("Logout");
+		playableGameSelectionLogoutButton.setOnAction(e -> {
+			Block223Controller.logout();
+			primaryStage.setScene(loginScene);	
+		});
+		
+		playableGameSelectionSelectButton =  new Button("Select Game");
+		playableGameSelectionSelectButton.setOnAction(e -> {
+			//TODO
+		});
+
+		playableGameSelectionButtonRow.getChildren().addAll(playableGameSelectionLogoutButton);
+		playableGameSelectionButtonRow.setAlignment(Pos.CENTER);
+		
+		//List
+		playableGameSelectionListData = FXCollections.observableArrayList();
+		
+		playableGameSelectionList = new TableView<>();
+		playableGameSelectionList.setItems(playableGameSelectionListData);
+		columnName = new TableColumn<>("Game Name");
+		columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		columnId = new TableColumn<>("ID");
+		columnId.setCellValueFactory(new PropertyValueFactory<>("number"));
+		columnLevel = new TableColumn<>("Current Level");
+		columnLevel.setCellValueFactory(new PropertyValueFactory<>("currentLevel"));
+		playableGameSelectionList.getColumns().addAll(columnName, columnId, columnLevel);
+		columnName.setMinWidth((SCREEN_WIDTH - playableGameSelectionPane.getPadding().getLeft() - playableGameSelectionPane.getPadding().getRight()) / playableGameSelectionList.getColumns().size());
+		columnId.setMinWidth((SCREEN_WIDTH - playableGameSelectionPane.getPadding().getLeft() - playableGameSelectionPane.getPadding().getRight()) / playableGameSelectionList.getColumns().size());
+		columnLevel.setMinWidth((SCREEN_WIDTH - playableGameSelectionPane.getPadding().getLeft() - playableGameSelectionPane.getPadding().getRight()) / playableGameSelectionList.getColumns().size()-1);
+
+		playableGameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
+
+		//error
+		playableGameSelectionError = new Label();
+		playableGameSelectionError.setStyle("-fx-text-fill: #DC143C");
+
+		refreshPlayableGameSelection();
+		playableGameSelectionPane.getChildren().addAll(playableGameSelectionName,playableGameSelectionList, playableGameSelectionButtonRow, playableGameSelectionError);
+		primaryStage.setScene(playableGameSelectionScene);
+		playableGameSelectionScene.getStylesheets().add(getResource("ca/mcgill/ecse223/block/view/resources/style.css"));
+		primaryStage.setResizable(false);
+	}
 
 	private static void refreshGameSelection() {
 		gameSelectionList.getItems().clear();
@@ -251,6 +331,18 @@ public class Block223Page extends Application{
 			}
 		} catch (InvalidInputException e2) {
 			e2.printStackTrace();
+		}
+	}
+	
+	private static void refreshPlayableGameSelection() {
+		playableGameSelectionList.getItems().clear();
+		try {
+			List<TOPlayableGame> toPGames = Block223Controller.getPlayableGames();
+			for(TOPlayableGame toPGame : toPGames) {
+				playableGameSelectionListData.add(toPGame);
+			}
+		} catch(InvalidInputException e) {
+			e.printStackTrace();
 		}
 	}
 

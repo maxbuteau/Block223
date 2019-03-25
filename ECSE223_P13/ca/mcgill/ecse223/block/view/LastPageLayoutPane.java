@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -43,6 +44,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Button saveGame;
 	private Button helpButton;
 	private Button backToGameButton;
+	private Button publishButton;
 
 	private int currentLvl = 1;
 	private static double Spacing;
@@ -73,6 +75,7 @@ public class LastPageLayoutPane extends BorderPane {
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
 		helpButton = new Button("Help");
 		backToGameButton = new Button("Back to game selection page");
+		publishButton =  new Button("Publish Game");
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		// Everything is now initialized. Call a method to paint the pane.
@@ -97,11 +100,11 @@ public class LastPageLayoutPane extends BorderPane {
 
 		buttons_error = new VBox(20);
 		buttons = new HBox(20);
-		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton);
+		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton, publishButton);
 		buttons.setAlignment(Pos.CENTER);
 		buttons_error.setAlignment(Pos.CENTER);
 		error.setAlignment(Pos.CENTER);
-		buttons_error.setPadding(new Insets(0, 0, Block223Page.getScreenHeight()/15, 0));
+		buttons_error.setPadding(new Insets(0, 0, 0, 0));
 		buttons_error.getChildren().addAll(buttons, error);
 
 		gridBox = new VBox(20);
@@ -125,7 +128,7 @@ public class LastPageLayoutPane extends BorderPane {
 		this.setRight(settingsBox);
 		this.setLeft(gridBox);
 		this.setBottom(buttons_error);
-
+		
 		//initialize the sfx
 		errorSFXmedia = new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/ErrorSFX.mp3"));
 		MediaPlayer errorSFX = new MediaPlayer(errorSFXmedia);
@@ -206,6 +209,15 @@ public class LastPageLayoutPane extends BorderPane {
 		
 		backToGameButton.setOnAction(e -> {
 			primaryStage.setScene(Block223Page.getGameSelectionScene());
+		});
+		
+		publishButton.setOnAction(e -> {
+			try {
+				Block223Controller.publishGame();
+			} catch (InvalidInputException e1) {
+				error.setText(e1.getMessage());
+			}
+			publishButton.setDisable(true);
 		});
 
 		error.setWrapText(true);

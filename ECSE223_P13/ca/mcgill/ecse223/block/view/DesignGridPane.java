@@ -40,10 +40,6 @@ public class DesignGridPane extends Pane {
 		temp2.setPrefSize(toConstants.getSize(), toConstants.getSize());
 		if (!lastPageLayoutPane.getChildren().contains(temp))
 			lastPageLayoutPane.getChildren().add(temp);
-//		if (this.getChildren().contains(temp))
-//			this.getChildren().add(temp);
-//		if (!lastPageLayoutPane.getChildren().contains(temp2))
-//			lastPageLayoutPane.getChildren().add(temp2);
 		displayGrid();
 		refresh();
 		this.setOnMouseDragReleased(e->{refresh();});
