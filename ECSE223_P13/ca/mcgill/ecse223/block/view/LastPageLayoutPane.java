@@ -235,9 +235,6 @@ public class LastPageLayoutPane extends BorderPane {
 			publishStage.setOnCloseRequest(ex->{
 				publishButton.setDisable(false);
 			});
-			if (Block223Application.getCurrentGame().getPublished() == true) {
-				publishButton.setDisable(true);
-			}
 		});
 
 		error.setWrapText(true);

@@ -9,8 +9,10 @@ import javafx.scene.layout.VBox;
 
 public class PlayHeader extends HBox{
 
-	private VBox levelBox;
-	private VBox livesBox;
+	private HBox levelBox;
+	private HBox livesBox;
+	private HBox scoreBox;
+	private VBox level_lives_score_container;
 	private Label headerText;
 	private TOCurrentlyPlayedGame pGame;
 	private int pLevel;
@@ -35,23 +37,31 @@ public class PlayHeader extends HBox{
 		//Block 223
 		headerText = new Label("Block 223");
 
-		//VBox level + score label
-		levelBox = new VBox(20);
+		//VBox level
+		levelBox = new HBox(20);
 		levelLabel = new Label("Level : ");
-		scoreLabel = new Label("Score : ");
 		levelNumber = new Label(""+pLevel);
 
-		levelBox.getChildren().addAll(levelLabel, levelNumber, scoreLabel);
+		levelBox.getChildren().addAll(levelLabel, levelNumber);
 
-		//VBox Lives + score value
-		livesBox = new VBox(20);
+		//VBox Lives
+		livesBox = new HBox(20);
 		livesLabel = new Label("Lives : ");
 		livesNumber = new Label(""+pLives);
+
+		livesBox.getChildren().addAll(livesLabel, livesNumber);
+		
+		//VBox Score
+		scoreBox = new HBox(20);
+		scoreLabel = new Label("Score : ");
 		scoreNumber = new Label(""+pScore);
+		
+		scoreBox.getChildren().addAll(scoreLabel, scoreNumber);
+		
+		level_lives_score_container = new VBox(20);
+		level_lives_score_container.getChildren().addAll(levelBox, livesBox, scoreBox);
 
-		livesBox.getChildren().addAll(livesLabel, livesNumber, scoreNumber);
-
-		this.getChildren().addAll(headerText, levelBox, livesBox);
+		this.getChildren().addAll(headerText, level_lives_score_container);
 	}
 
 	public void refreshHeader(){
@@ -62,7 +72,6 @@ public class PlayHeader extends HBox{
 		levelNumber.setText(""+pLevel);
 		livesNumber.setText(""+pLives);
 		scoreNumber.setText(""+pScore);
-
 	}
 
 }
