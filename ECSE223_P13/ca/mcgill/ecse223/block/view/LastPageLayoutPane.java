@@ -1,5 +1,6 @@
 package ca.mcgill.ecse223.block.view;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOGame;
@@ -25,7 +26,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
 	private Stage helpStage;
-	private Stage publishStage;
+	private static Stage publishStage;
 	
 	private VBox settingsBox;
 	private SettingsPane settingsPane;
@@ -42,13 +43,14 @@ public class LastPageLayoutPane extends BorderPane {
 	private VBox buttons_error;
 	private HBox buttons;
 	private Button quitButton;
-	private Button saveGame;
+	private static Button saveGame;
 	private Button helpButton;
 	private Button backToGameButton;
-	private Button publishButton;
+	private static Button publishButton;
 	private Button testButton;
 
 	private int currentLvl = 1;
+	private static double Spacing;
 	private double spacing;
 
 	// Default constructor that initializes said nodes and containers
@@ -62,6 +64,7 @@ public class LastPageLayoutPane extends BorderPane {
 		}
 
 		this.spacing = spacing;
+		Spacing = spacing;
 		// Instantiate all fields
 
 		designPane = new DesignGridPane(currentLvl, this);
@@ -211,7 +214,7 @@ public class LastPageLayoutPane extends BorderPane {
 		backToGameButton.setOnAction(e -> {
 			Block223Page.changeToGameSelectionScene(primaryStage);
 		});
-
+		
 		testButton.setOnAction(e->{
 			try {
 				Block223Controller.testGame(null);
@@ -224,7 +227,7 @@ public class LastPageLayoutPane extends BorderPane {
 			publishStage = new Stage();
 			publishStage.setAlwaysOnTop(true);
 			publishStage.initOwner(primaryStage);
-			publishStage.setScene(new Scene(new PublishView()));
+			publishStage.setScene(new Scene(new PublishView(primaryStage)));
 			publishStage.setResizable(false);
 			publishStage.show();
 			publishStage.setTitle("Publish Game");
@@ -232,6 +235,9 @@ public class LastPageLayoutPane extends BorderPane {
 			publishStage.setOnCloseRequest(ex->{
 				publishButton.setDisable(false);
 			});
+			if (Block223Application.getCurrentGame().getPublished() == true) {
+				publishButton.setDisable(true);
+			}
 		});
 
 		error.setWrapText(true);
@@ -258,5 +264,18 @@ public class LastPageLayoutPane extends BorderPane {
 			((VBox) this.getLeft()).getChildren().add(0,designPane);
 
 		}
+	}
+	public static double getOffX() {
+		return Spacing;
+	}
+	public static double getOffY() {
+		return Spacing*2;
+	}
+	public static void closePublishStage() {
+		publishStage.close();
+		publishButton.setDisable(false);
+	}
+	public static void pressSave() {
+		saveGame.fire();
 	}
 }
