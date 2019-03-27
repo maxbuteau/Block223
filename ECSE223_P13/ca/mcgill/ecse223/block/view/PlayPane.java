@@ -6,6 +6,7 @@ import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOPlayableGame;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Border;
@@ -24,9 +25,12 @@ import javafx.stage.Stage;
 public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static Pane playArea;
 	private static PlayHeader playHeader;
+	private static Button startGame;
 	
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
+	
+	private static Block223PlayModeInterface bp;
 	
 	public PlayPane(Stage primaryStage) {
 		try {
@@ -45,11 +49,16 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		playHeader = new PlayHeader();
 		playHeader.setBorder(new Border(new BorderStroke(Color.WHITE, 
 	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		
+		startGame = new Button("Start Game");
+		startGame.setAlignment(Pos.CENTER);
 				
 		this.setCenter(playArea);
 		this.setTop(playHeader);
-		
+		this.setBottom(startGame);
 		displayPlayArea();
+		
+		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 	}
 	
 	public static void displayPlayArea() {
@@ -84,14 +93,15 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	
 	@Override
 	public String takeInputs() {
-		// TODO Auto-generated method stub
-		return null;
+		if (bp == null) {
+			return "";
+		}
+		return bp.takeInputs();
 	}
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("UI is refreshing now...");
 	}
 
 }
