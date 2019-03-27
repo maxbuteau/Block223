@@ -1,10 +1,19 @@
 package ca.mcgill.ecse223.block.view;
 
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class PlayPane extends BorderPane implements Block223PlayModeInterface {
-
-	public PlayPane() {
+	private static Pane playArea;
+	
+	public PlayPane(Stage primaryStage) {
+		playArea = new Pane();
+		
+		displayPlayArea();
+	}
+	
+	public static void displayPlayArea() {
 		
 	}
 	

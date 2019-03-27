@@ -52,7 +52,6 @@ public class Block223Page extends Application{
 	private static ObservableList<String> gameSelectionListData;
 	private static Button gameSelectionCreateGameButton;
 	private static Button gameSelectionUpdateGameButton;
-	private static Button gameSelectionPublishGameButton;
 	private static Scene createGameScene;
 	private static VBox createGameBox;
 	private static Button gameSelectionLogoutButton;
@@ -75,6 +74,9 @@ public class Block223Page extends Application{
 
 	//DESIGN PAGE
 	private static Scene gameDesignScene;
+	
+	//PLAY PAGE
+	private static Scene playScene;
 
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 100;
@@ -256,6 +258,16 @@ public class Block223Page extends Application{
 
 	}
 	
+	private static void setPlayScene(Stage primaryStage) {
+		PlayPane pp = new PlayPane(primaryStage);
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		pp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+
+		playScene = new Scene(pp, SCREEN_WIDTH, SCREEN_HEIGHT);
+		primaryStage.setScene(playScene);
+		primaryStage.setResizable(false);
+	}
+	
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
 
 		playableGameSelectionPane = new VBox(80);
@@ -282,10 +294,20 @@ public class Block223Page extends Application{
 		
 		playableGameSelectionSelectButton =  new Button("Select Game");
 		playableGameSelectionSelectButton.setOnAction(e -> {
-			//TODO
+			TOPlayableGame pgame = playableGameSelectionList.getSelectionModel().getSelectedItem();
+			String name = pgame.getName();
+			int id = pgame.getNumber();
+			
+			try {
+				Block223Controller.selectPlayableGame(name, id);
+				Block223Page.setPlayScene(primaryStage);
+			}
+			catch(InvalidInputException iie) {
+				playableGameSelectionError.setText(iie.getMessage());
+			}
 		});
 
-		playableGameSelectionButtonRow.getChildren().addAll(playableGameSelectionLogoutButton);
+		playableGameSelectionButtonRow.getChildren().addAll(playableGameSelectionLogoutButton, playableGameSelectionSelectButton);
 		playableGameSelectionButtonRow.setAlignment(Pos.CENTER);
 		
 		//List

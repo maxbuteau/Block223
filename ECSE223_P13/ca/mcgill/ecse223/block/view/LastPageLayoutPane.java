@@ -211,7 +211,7 @@ public class LastPageLayoutPane extends BorderPane {
 		backToGameButton.setOnAction(e -> {
 			Block223Page.changeToGameSelectionScene(primaryStage);
 		});
-		
+
 		testButton.setOnAction(e->{
 			try {
 				Block223Controller.testGame(null);
