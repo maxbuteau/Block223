@@ -25,6 +25,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
 	private Stage helpStage;
+	private Stage publishStage;
 	
 	private VBox settingsBox;
 	private SettingsPane settingsPane;
@@ -215,19 +216,24 @@ public class LastPageLayoutPane extends BorderPane {
 		
 		testButton.setOnAction(e->{
 			try {
-				Block223Controller.testGame(ui);
+				Block223Controller.testGame(null);
 			} catch (InvalidInputException e1) {
 				error.setText(e1.getMessage());
 			}
 		});
 		
 		publishButton.setOnAction(e -> {
-			try {
-				Block223Controller.publishGame();
-			} catch (InvalidInputException e1) {
-				error.setText(e1.getMessage());
-			}
+			publishStage = new Stage();
+			publishStage.setAlwaysOnTop(true);
+			publishStage.initOwner(primaryStage);
+			publishStage.setScene(new Scene(new PublishView()));
+			publishStage.setResizable(false);
+			publishStage.show();
+			publishStage.setTitle("Publish Game");
 			publishButton.setDisable(true);
+			publishStage.setOnCloseRequest(ex->{
+				publishButton.setDisable(false);
+			});
 		});
 
 		error.setWrapText(true);
