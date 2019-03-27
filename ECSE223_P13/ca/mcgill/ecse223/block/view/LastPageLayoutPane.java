@@ -45,6 +45,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Button helpButton;
 	private Button backToGameButton;
 	private Button publishButton;
+	private Button testButton;
 
 	private int currentLvl = 1;
 	private static double Spacing;
@@ -75,6 +76,7 @@ public class LastPageLayoutPane extends BorderPane {
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
 		helpButton = new Button("Help");
 		backToGameButton = new Button("Back to game selection page");
+		testButton = new Button("Test Game");
 		publishButton =  new Button("Publish Game");
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
@@ -100,7 +102,7 @@ public class LastPageLayoutPane extends BorderPane {
 
 		buttons_error = new VBox(20);
 		buttons = new HBox(20);
-		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton, publishButton);
+		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton, testButton, publishButton);
 		buttons.setAlignment(Pos.CENTER);
 		buttons_error.setAlignment(Pos.CENTER);
 		error.setAlignment(Pos.CENTER);
@@ -209,6 +211,14 @@ public class LastPageLayoutPane extends BorderPane {
 		
 		backToGameButton.setOnAction(e -> {
 			primaryStage.setScene(Block223Page.getGameSelectionScene());
+		});
+		
+		testButton.setOnAction(e->{
+			try {
+				Block223Controller.testGame(ui);
+			} catch (InvalidInputException e1) {
+				error.setText(e1.getMessage());
+			}
 		});
 		
 		publishButton.setOnAction(e -> {
