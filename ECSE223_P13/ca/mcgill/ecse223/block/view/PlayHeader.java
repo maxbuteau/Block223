@@ -51,6 +51,7 @@ public class PlayHeader extends HBox{
 
 		livesBox.getChildren().addAll(livesLabel, livesNumber, scoreNumber);
 
+		this.getChildren().addAll(headerText, levelBox, livesBox);
 	}
 
 	public void refreshHeader(){
