@@ -484,6 +484,7 @@ BouncePoint bp = null;
 				   game.getRandomBlock(),
 				   this
 				   );
+			numberOfBlocks++;
 	   }
   }
   
