@@ -25,6 +25,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
 	private Stage helpStage;
+	private Stage publishStage;
 	
 	private VBox settingsBox;
 	private SettingsPane settingsPane;
@@ -45,6 +46,7 @@ public class LastPageLayoutPane extends BorderPane {
 	private Button helpButton;
 	private Button backToGameButton;
 	private Button publishButton;
+	private Button testButton;
 
 	private int currentLvl = 1;
 	private double spacing;
@@ -73,6 +75,7 @@ public class LastPageLayoutPane extends BorderPane {
 		error.setStyle("-fx-text-fill: #DC143C;-fx-font:21 Garamond;");
 		helpButton = new Button("Help");
 		backToGameButton = new Button("Back to game selection page");
+		testButton = new Button("Test Game");
 		publishButton =  new Button("Publish Game");
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
@@ -98,7 +101,7 @@ public class LastPageLayoutPane extends BorderPane {
 
 		buttons_error = new VBox(20);
 		buttons = new HBox(20);
-		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton, publishButton);
+		buttons.getChildren().addAll(saveGame, quitButton, helpButton, backToGameButton, testButton, publishButton);
 		buttons.setAlignment(Pos.CENTER);
 		buttons_error.setAlignment(Pos.CENTER);
 		error.setAlignment(Pos.CENTER);
@@ -209,13 +212,26 @@ public class LastPageLayoutPane extends BorderPane {
 			Block223Page.changeToGameSelectionScene(primaryStage);
 		});
 		
-		publishButton.setOnAction(e -> {
+		testButton.setOnAction(e->{
 			try {
-				Block223Controller.publishGame();
+				Block223Controller.testGame(null);
 			} catch (InvalidInputException e1) {
 				error.setText(e1.getMessage());
 			}
+		});
+		
+		publishButton.setOnAction(e -> {
+			publishStage = new Stage();
+			publishStage.setAlwaysOnTop(true);
+			publishStage.initOwner(primaryStage);
+			publishStage.setScene(new Scene(new PublishView()));
+			publishStage.setResizable(false);
+			publishStage.show();
+			publishStage.setTitle("Publish Game");
 			publishButton.setDisable(true);
+			publishStage.setOnCloseRequest(ex->{
+				publishButton.setDisable(false);
+			});
 		});
 
 		error.setWrapText(true);
