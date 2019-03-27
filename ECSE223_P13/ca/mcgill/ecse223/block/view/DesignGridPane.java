@@ -21,8 +21,6 @@ public class DesignGridPane extends Pane {
 	private static int level;
 	private static GridPane designGridPane;
 	private static DesignGridPane designPane;
-	private static Pane temp = new Pane();
-	private static Pane temp2 = new Pane();
 
 	public DesignGridPane(int level, LastPageLayoutPane lastPageLayoutPane) {
 		toConstants = Block223Controller.getConstants();
@@ -35,20 +33,14 @@ public class DesignGridPane extends Pane {
 		designGridPane.setVgap(toConstants.getRowPadding());
 		designGridPane.setPadding(new Insets(toConstants.getWallPadding()));
 		designPane.getChildren().add(designGridPane);
-		temp2.setStyle("-fx-background-color: #FFFFFF;");
-		temp2.setOpacity(0.5);
-		temp2.setPrefSize(toConstants.getSize(), toConstants.getSize());
-		if (!lastPageLayoutPane.getChildren().contains(temp))
-			lastPageLayoutPane.getChildren().add(temp);
 		displayGrid();
+		this.setOnDragExited(e -> {System.out.println("1");});
 		refresh();
-		this.setOnMouseDragReleased(e->{refresh();});
-		this.setOnMouseDragExited(e->{refresh();});
+		
 	}
 
 	public static void refresh() {
 		designGridPane.getChildren().clear();
-		temp.setPrefSize(toConstants.getSize(), toConstants.getSize());
 		displayGrid();
 		List<TOGridCell> gridCells = new ArrayList<TOGridCell>();
 		try {
@@ -81,8 +73,6 @@ public class DesignGridPane extends Pane {
 				blockBox.setPrefSize(toConstants.getSize(), toConstants.getSize());
 				designGridPane.add(blockBox, i, j);
 
-				temp.setVisible(false);
-				temp2.setVisible(false);
 				blockBox.setOnMouseClicked(e -> {
 					if (e.getButton() == MouseButton.PRIMARY) {
 						ChosenBlock chosenBlock = Block223Page.getChosenBlock();
@@ -114,56 +104,34 @@ public class DesignGridPane extends Pane {
 					}
 				});
 
-				final int c = i;
-				final int v = j;
 				blockBox.setOnDragDetected(e -> {
-					blockBox.setVisible(false);
-					System.out.println("");
-					temp2=new Pane();
-					temp2.setStyle("-fx-background-color: #FFFFFF;");
-					temp2.setOpacity(0.5);
-					temp2.setPrefSize(toConstants.getSize(), toConstants.getSize());
-					temp.setStyle(blockBox.getStyle());
-					if (blockBox.getOpacity() <0.6)
-
-						temp.setStyle("");
-				
-					temp2.setVisible(true);
 					initialX = GridPane.getRowIndex(blockBox) + 1;
 					initialY = GridPane.getColumnIndex(blockBox) + 1;
-					designGridPane.add(temp2, c, v);
 					blockBox.startFullDrag();
-					
 				});
 
 				blockBox.setOnMouseDragged(e -> {
-					if (blockBox.getOpacity() >0.6) {
-					temp.setVisible(true);
-					temp.setLayoutX(e.getSceneX() - toConstants.getSize() / 2);
-					temp.setLayoutY(e.getSceneY() - toConstants.getSize() / 2);
-					blockBox.setTranslateX(e.getX());
-					blockBox.setTranslateY(e.getY());
+					if (blockBox.getOpacity() > 0.6) {
+						blockBox.toBack();
+						blockBox.setTranslateX(e.getX() + blockBox.getTranslateX() - toConstants.getSize()/2);
+						blockBox.setTranslateY(e.getY() + blockBox.getTranslateY() - toConstants.getSize()/2);
 					}
 				});
 
-				
 				blockBox.setOnMouseDragReleased(e -> {
-					try {
-						
-						temp.setVisible(false);
-						blockBox.setVisible(true);
-						designGridPane.getChildren().remove(temp2);
-						if(GridPane.getRowIndex(blockBox) ==null || GridPane.getColumnIndex(blockBox)==null)
-							refresh();
-						Block223Controller.moveBlock(DesignGridPane.level, initialX, initialY,
-								GridPane.getRowIndex(blockBox) + 1, GridPane.getColumnIndex(blockBox) + 1);
-						lastPageLayoutPane.setErrorMessage("");
-						
-						
-					} catch (InvalidInputException e1) {
-						lastPageLayoutPane.setErrorMessage(e1.getMessage());
-					} finally {
+					if(initialX == GridPane.getRowIndex(blockBox) + 1 && initialY == GridPane.getColumnIndex(blockBox) + 1) {
 						refresh();
+					}
+					else {
+						try {
+							Block223Controller.moveBlock(level, initialX, initialY,
+									GridPane.getRowIndex(blockBox) + 1, GridPane.getColumnIndex(blockBox) + 1);
+							lastPageLayoutPane.setErrorMessage("");
+						} catch (InvalidInputException e1) {
+							lastPageLayoutPane.setErrorMessage(e1.getMessage());
+						} finally {
+							refresh();
+						}
 					}
 				});
 

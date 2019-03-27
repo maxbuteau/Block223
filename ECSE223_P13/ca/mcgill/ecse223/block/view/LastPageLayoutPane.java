@@ -47,7 +47,6 @@ public class LastPageLayoutPane extends BorderPane {
 	private Button publishButton;
 
 	private int currentLvl = 1;
-	private static double Spacing;
 	private double spacing;
 
 	// Default constructor that initializes said nodes and containers
@@ -61,7 +60,6 @@ public class LastPageLayoutPane extends BorderPane {
 		}
 
 		this.spacing = spacing;
-		Spacing = spacing;
 		// Instantiate all fields
 
 		designPane = new DesignGridPane(currentLvl, this);
@@ -208,7 +206,7 @@ public class LastPageLayoutPane extends BorderPane {
 		});
 		
 		backToGameButton.setOnAction(e -> {
-			primaryStage.setScene(Block223Page.getGameSelectionScene());
+			Block223Page.changeToGameSelectionScene(primaryStage);
 		});
 		
 		publishButton.setOnAction(e -> {
@@ -245,11 +243,4 @@ public class LastPageLayoutPane extends BorderPane {
 
 		}
 	}
-	public static double getOffX() {
-		return Spacing;
-	}
-	public static double getOffY() {
-		return Spacing*2;
-	}
-
 }
