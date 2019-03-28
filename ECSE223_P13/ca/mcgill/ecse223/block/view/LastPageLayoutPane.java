@@ -217,7 +217,7 @@ public class LastPageLayoutPane extends BorderPane {
 		
 		testButton.setOnAction(e->{
 			try {
-				Block223Controller.testGame(null);
+				Block223Controller.testGame((Block223PlayModeInterface) this);
 			} catch (InvalidInputException e1) {
 				error.setText(e1.getMessage());
 			}
