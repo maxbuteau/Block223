@@ -258,12 +258,19 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 					signY = -1;
 				currentBallX = bouncePointX + distanceLeftX * signX;
 				currentBallY = bouncePointY + distanceLeftY * signY;
+				signX = 1;
+				signY=1;
+				if(Math.signum(ballDirectionY)<0)
+					signY = -1;
+				if(Math.signum(ballDirectionX)<0)
+					signX = -1;
 			}
 			if (BD.equals(BounceDirection.FLIP_Y)) {
 				if(Math.signum(ballDirectionX)<0)
 					signX = -1;
 				ballDirectionX+= 0.1 * Math.abs(ballDirectionY) * signX;
 				signX = 1;
+				signY=1;
 				ballDirectionY*=-1;
 				if(Math.signum(ballDirectionY)<0)
 					signY = -1;
@@ -277,7 +284,8 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 				if(Math.signum(ballDirectionY)<0)
 					signY = -1;
 				ballDirectionY += 0.1 * Math.abs(ballDirectionX) * signY;
-				signY = 1;
+				signX = 1;
+				signY=1;
 				ballDirectionX*=-1;
 				if(Math.signum(ballDirectionY)<0)
 					signY = -1;
