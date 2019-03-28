@@ -1,11 +1,29 @@
 package ca.mcgill.ecse223.block.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class PlayHeader extends HBox{
 
@@ -34,9 +52,16 @@ public class PlayHeader extends HBox{
 		} catch (InvalidInputException e) {
 			e.getMessage();
 		}
-		//Block 223
-		headerText = new Label("Block 223");
-
+		//Block 223 header
+		ImageView imv = new ImageView();
+        Image headerImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HEADER.png"));
+        imv.setImage(headerImage);
+        HBox headerRegion = new HBox(20);
+        imv.setFitHeight(Block223Page.getScreenHeight() / 5);
+        imv.setFitWidth(Block223Page.getScreenWidth() / 2);
+        imv.setPreserveRatio(true);
+        headerRegion.getChildren().add(imv);
+		
 		//VBox level
 		levelBox = new HBox(20);
 		levelLabel = new Label("Level : ");
@@ -53,7 +78,7 @@ public class PlayHeader extends HBox{
 		
 		//VBox Score
 		scoreBox = new HBox(20);
-		scoreLabel = new Label("Score : ");
+		scoreLabel = new Label("Score :");
 		scoreNumber = new Label(""+pScore);
 		
 		scoreBox.getChildren().addAll(scoreLabel, scoreNumber);
@@ -61,7 +86,14 @@ public class PlayHeader extends HBox{
 		level_lives_score_container = new VBox(20);
 		level_lives_score_container.getChildren().addAll(levelBox, livesBox, scoreBox);
 
-		this.getChildren().addAll(headerText, level_lives_score_container);
+		this.getChildren().addAll(headerRegion, level_lives_score_container);
+		this.setStyle("-fx-padding: 10;" + 
+                      "-fx-border-style: solid inside;" + 
+                      "-fx-border-width: 0;" +
+                      "-fx-border-insets: 5;" + 
+                      "-fx-border-radius: 5;");
+		this.setAlignment(Pos.CENTER);
+
 	}
 
 	public void refreshHeader(){
