@@ -783,7 +783,7 @@ public class PlayedGame implements Serializable
 		if (paddleRect.intersectsLine(l)) {
 			Line2D A = new Line2D.Double();
 			A.setLine(getCurrentPaddleX() + getCurrentPaddleLength(), getCurrentPaddleY() - Ball.BALL_DIAMETER / 2,
-					getCurrentPaddleX(), getCurrentPaddleY());
+					getCurrentPaddleX(), getCurrentPaddleY()-Ball.BALL_DIAMETER/2);
 			Line2D B = new Line2D.Double();
 			B.setLine(getCurrentPaddleX()- Ball.BALL_DIAMETER / 2, getCurrentPaddleY(),
 					getCurrentPaddleX(),
