@@ -35,7 +35,7 @@ public class HallOfFamePane extends VBox{
 	private static void refreshHallOfFamePane() {
 		hallOfFameList.getItems().clear();
 		try {
-			List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(0, 1).getEntries();
+			List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, 10).getEntries();
 			for (TOHallOfFameEntry to : toHF) {
 				hallOfFameListData.add(to);
 			}

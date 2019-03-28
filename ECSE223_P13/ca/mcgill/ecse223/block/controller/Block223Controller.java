@@ -933,14 +933,10 @@ public class Block223Controller {
 		start = start - 1;
 		end = end - 1;
 
-
-
-		
 		for(int i = start; i <= end; i++) {
 
-			String username = Block223Application.getBlock223().findUsername(game.getHallOfFameEntry(i).getPlayer());
-			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(),
-					result);
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, 
+					game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(), result);	
 		}
 		return result;
 	}
@@ -950,7 +946,7 @@ public class Block223Controller {
 
 
 		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player privileges are required to access a game�s hall of fame.");
+			throw new InvalidInputException("Player privileges are required to access a games hall of fame.");
 		}
 		if(Block223Application.getCurrentPlayableGame() == null) {
 			throw new InvalidInputException("A game must be selected to view its hall of fame.");
