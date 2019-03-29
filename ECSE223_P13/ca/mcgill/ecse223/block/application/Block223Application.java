@@ -37,6 +37,7 @@ public class Block223Application {
 			block223.delete();
 		}
 		setCurrentGame(null);
+		setCurrentPlayableGame(null);
 		
 		block223 = Block223Persistence.load();
 		return block223;

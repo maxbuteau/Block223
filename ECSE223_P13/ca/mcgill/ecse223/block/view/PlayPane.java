@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static Pane playArea;
 	private static PlayHeader playHeader;
+	private static HallOfFamePane hofPane;
 	private static HBox buttonsBox;
 	private static Button startGame;
 	private static Button logOut;
@@ -67,6 +68,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		playHeader = new PlayHeader();
 		playHeader.setBorder(new Border(new BorderStroke(Color.WHITE, 
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		
+		hofPane = new HallOfFamePane();
 
 		buttonsBox = new HBox(20);
 		buttonsBox.setAlignment(Pos.CENTER);
@@ -114,6 +117,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		this.setCenter(mediaView);
 		this.setTop(playHeader);
 		this.setBottom(buttonsBox);
+		this.setRight(hofPane);
 		this.setPadding(new Insets(0,0,40,0));
 
 		displayPlayArea();
@@ -184,7 +188,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		ball.setTranslateX(pgame.getCurrentBallX());
 		ball.setTranslateY(pgame.getCurrentBallY());
 		paddle.setTranslateX(pgame.getCurrentPaddleX());
-		//PlayHeader.refreshHeader();
+		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
 	}
 
 }

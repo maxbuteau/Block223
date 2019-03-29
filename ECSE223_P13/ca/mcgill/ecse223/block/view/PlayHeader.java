@@ -3,6 +3,7 @@ package ca.mcgill.ecse223.block.view;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -24,13 +25,13 @@ public class PlayHeader extends HBox{
 	private int pScore;
 	private Label scoreLabel;
 	private Label levelLabel;
-	private Label levelNumber;
+	private static Label levelNumber;
 	private Label livesLabel;
-	private Label livesNumber;
-	private Label scoreNumber;
+	private static Label livesNumber;
+	private static Label scoreNumber;
 
 	public PlayHeader() {
-		
+
 		try {
 			pGame = Block223Controller.getCurrentPlayableGame();
 			pLevel = pGame.getCurrentLevel();
@@ -41,14 +42,14 @@ public class PlayHeader extends HBox{
 		}
 		//Block 223 header
 		ImageView imv = new ImageView();
-        Image headerImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HEADER.png"));
-        imv.setImage(headerImage);
-        HBox headerRegion = new HBox(20);
-        imv.setFitHeight(Block223Page.getScreenHeight() / 4);
-        imv.setFitWidth(Block223Page.getScreenWidth() / 2);
-        imv.setPreserveRatio(true);
-        headerRegion.getChildren().add(imv);
-		
+		Image headerImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HEADER.png"));
+		imv.setImage(headerImage);
+		HBox headerRegion = new HBox(20);
+		imv.setFitHeight(Block223Page.getScreenHeight() / 4);
+		imv.setFitWidth(Block223Page.getScreenWidth() / 2);
+		imv.setPreserveRatio(true);
+		headerRegion.getChildren().add(imv);
+
 		//VBox level
 		levelBox = new HBox(20);
 		levelLabel = new Label("Level : ");
@@ -62,37 +63,38 @@ public class PlayHeader extends HBox{
 		livesNumber = new Label(""+pLives);
 
 		livesBox.getChildren().addAll(livesLabel, livesNumber);
-		
+
 		//VBox Score
 		scoreBox = new HBox(20);
 		scoreLabel = new Label("Score :");
 		scoreNumber = new Label(""+pScore);
-		
+
 		scoreBox.getChildren().addAll(scoreLabel, scoreNumber);
-		
+
 		level_lives_score_container = new VBox(20);
 		level_lives_score_container.getChildren().addAll(levelBox, livesBox, scoreBox);
 		level_lives_score_container.setTranslateX(Block223Page.getScreenWidth() / 5);
 		level_lives_score_container.setPadding(new Insets(20));
-		
+
 		this.getChildren().addAll(headerRegion, level_lives_score_container);
 		this.setStyle("-fx-padding: 10;" + 
-                      "-fx-border-style: solid inside;" + 
-                      "-fx-border-width: 0;" +
-                      "-fx-border-insets: 5;" + 
-                      "-fx-border-radius: 5;");
+				"-fx-border-style: solid inside;" + 
+				"-fx-border-width: 0;" +
+				"-fx-border-insets: 5;" + 
+				"-fx-border-radius: 5;");
 		this.setAlignment(Pos.CENTER);
 
 	}
 
-	public void refreshHeader(){
-		pLevel = pGame.getCurrentLevel();
-		pLives = pGame.getLives();
-		pScore = pGame.getScore();
-		
-		levelNumber.setText(""+pLevel);
-		livesNumber.setText(""+pLives);
-		scoreNumber.setText(""+pScore);
+	public static void refreshHeader(int level, int lives, int score){
+		Platform.runLater(new Runnable() {
+
+			public void run() {
+				levelNumber.setText(""+level);
+				livesNumber.setText(""+lives);
+				scoreNumber.setText(""+score);				
+			}
+		});
 	}
 
 }
