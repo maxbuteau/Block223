@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.sun.javafx.css.Style;
+
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
@@ -44,6 +46,7 @@ public class PlayHeader extends HBox{
 	private Label scoreNumber;
 
 	public PlayHeader() {
+		
 		try {
 			pGame = Block223Controller.getCurrentPlayableGame();
 			pLevel = pGame.getCurrentLevel();
@@ -57,7 +60,7 @@ public class PlayHeader extends HBox{
         Image headerImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HEADER.png"));
         imv.setImage(headerImage);
         HBox headerRegion = new HBox(20);
-        imv.setFitHeight(Block223Page.getScreenHeight() / 5);
+        imv.setFitHeight(Block223Page.getScreenHeight() / 4);
         imv.setFitWidth(Block223Page.getScreenWidth() / 2);
         imv.setPreserveRatio(true);
         headerRegion.getChildren().add(imv);
@@ -85,7 +88,9 @@ public class PlayHeader extends HBox{
 		
 		level_lives_score_container = new VBox(20);
 		level_lives_score_container.getChildren().addAll(levelBox, livesBox, scoreBox);
-
+		level_lives_score_container.setTranslateX(Block223Page.getScreenWidth() / 5);
+		level_lives_score_container.setPadding(new Insets(20));
+		
 		this.getChildren().addAll(headerRegion, level_lives_score_container);
 		this.setStyle("-fx-padding: 10;" + 
                       "-fx-border-style: solid inside;" + 

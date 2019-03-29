@@ -6,6 +6,7 @@ import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOPlayableGame;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -26,6 +27,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static Pane playArea;
 	private static PlayHeader playHeader;
 	private static Button startGame;
+	private static HallOfFamePane hallOfFamePane;
 	
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
@@ -50,12 +52,18 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		playHeader.setBorder(new Border(new BorderStroke(Color.WHITE, 
 	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		
+		hallOfFamePane = new HallOfFamePane();
+		hallOfFamePane.setBorder(new Border(new BorderStroke(Color.WHITE, 
+	            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		hallOfFamePane.setPrefWidth(Block223Page.getScreenWidth()/4);
+		
 		startGame = new Button("Start Game");
 		startGame.setAlignment(Pos.CENTER);
 				
 		this.setCenter(playArea);
 		this.setTop(playHeader);
 		this.setBottom(startGame);
+		this.setRight(hallOfFamePane);
 		displayPlayArea();
 		
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
