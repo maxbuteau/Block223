@@ -791,6 +791,7 @@ public class Block223Controller {
 		}
 
 		else if (game.getPlayer() != null) {
+			game.setBounce(null);
 			Block223 block223 = Block223Application.getBlock223();
 			Block223Persistence.save(block223);
 		}
