@@ -50,8 +50,8 @@ public class DesignGridPane extends Pane {
 		}
 
 		for (TOGridCell gridCell : gridCells) {
-			int x = gridCell.getGridHorizontalPosition() - 1;
-			int y = gridCell.getGridVerticalPosition() - 1;
+			int y = gridCell.getGridHorizontalPosition() - 1;
+			int x = gridCell.getGridVerticalPosition() - 1;
 			Color blockColor = new Color((double) gridCell.getRed() / toConstants.getMaxColor(),
 					(double) gridCell.getGreen() / toConstants.getMaxColor(),
 					(double) gridCell.getBlue() / toConstants.getMaxColor(), 1);
@@ -77,8 +77,8 @@ public class DesignGridPane extends Pane {
 					if (e.getButton() == MouseButton.PRIMARY) {
 						ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 						if (chosenBlock != null) {
-							int x = GridPane.getRowIndex(blockBox);
-							int y = GridPane.getColumnIndex(blockBox);
+							int y = GridPane.getRowIndex(blockBox);
+							int x = GridPane.getColumnIndex(blockBox);
 
 							try {
 								Block223Controller.positionBlock(chosenBlock.getId(), DesignGridPane.level, x + 1,
@@ -92,8 +92,8 @@ public class DesignGridPane extends Pane {
 					}
 
 					if (e.getButton() == MouseButton.SECONDARY) {
-						int x = GridPane.getRowIndex(blockBox);
-						int y = GridPane.getColumnIndex(blockBox);
+						int y = GridPane.getRowIndex(blockBox);
+						int x = GridPane.getColumnIndex(blockBox);
 						try {
 							Block223Controller.removeBlock(DesignGridPane.level, x + 1, y + 1);
 							lastPageLayoutPane.setErrorMessage("");
@@ -105,8 +105,8 @@ public class DesignGridPane extends Pane {
 				});
 
 				blockBox.setOnDragDetected(e -> {
-					initialX = GridPane.getRowIndex(blockBox) + 1;
-					initialY = GridPane.getColumnIndex(blockBox) + 1;
+					initialY = GridPane.getRowIndex(blockBox) + 1;
+					initialX = GridPane.getColumnIndex(blockBox) + 1;
 					blockBox.startFullDrag();
 				});
 
@@ -119,13 +119,13 @@ public class DesignGridPane extends Pane {
 				});
 
 				blockBox.setOnMouseDragReleased(e -> {
-					if(initialX == GridPane.getRowIndex(blockBox) + 1 && initialY == GridPane.getColumnIndex(blockBox) + 1) {
+					if(initialY == GridPane.getRowIndex(blockBox) + 1 && initialX == GridPane.getColumnIndex(blockBox) + 1) {
 						refresh();
 					}
 					else {
 						try {
 							Block223Controller.moveBlock(level, initialX, initialY,
-									GridPane.getRowIndex(blockBox) + 1, GridPane.getColumnIndex(blockBox) + 1);
+									GridPane.getColumnIndex(blockBox) + 1, GridPane.getRowIndex(blockBox) + 1);
 							lastPageLayoutPane.setErrorMessage("");
 						} catch (InvalidInputException e1) {
 							lastPageLayoutPane.setErrorMessage(e1.getMessage());
