@@ -85,7 +85,7 @@ public class PlayedGame implements Serializable
 
   public PlayedGame(String aPlayername, Game aGame, Block223 aBlock223)
   {
-    // line 80 "../../../../../Block223PlayMode.ump"
+    // line 71 "../../../../../Block223PlayMode.ump"
     boolean didAddGameResult = setGame(aGame);
           if (!didAddGameResult)
           {
@@ -727,20 +727,10 @@ public class PlayedGame implements Serializable
 
   // line 49 "../../../../../Block223PlayMode.ump"
    public boolean isBallOutOfBounds(){
-//    double x1 = this.currentBallX;
-//	   double y1 = this.currentBallY;
-//	   double x2 = this.currentBallX + (this.ballDirectionX) * getWaitTime();
-//	   double y2 = this.currentBallY + (this.ballDirectionY) * getWaitTime();
-//	   double x3 = 0;
-//	   double y3 = Game.PLAY_AREA_SIDE;
-//	   double x4 = Game.PLAY_AREA_SIDE;
-//	   double y4 = Game.PLAY_AREA_SIDE;
-//	   
-//	  return Line2D.linesIntersect(x1, y1, x2, y2, x3, y3, x4, y4);
-	   return this.currentBallY > Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE;
+    return this.currentBallY > Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE;
   }
 
-  // line 63 "../../../../../Block223PlayMode.ump"
+  // line 54 "../../../../../Block223PlayMode.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     if (second == null){
   		return true;
