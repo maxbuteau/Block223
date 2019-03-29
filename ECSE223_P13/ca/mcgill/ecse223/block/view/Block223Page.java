@@ -83,6 +83,9 @@ public class Block223Page extends Application{
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
+	
+	//GAME OVER PAGE
+	private static Scene gameOverScene;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -275,6 +278,23 @@ public class Block223Page extends Application{
 			}
 		});
 		primaryStage.setScene(playScene);
+		primaryStage.setResizable(false);
+	}
+	
+	public static void setGameOverScene(Stage primaryStage) {
+		GameFinishedPane fp = new GameFinishedPane(primaryStage);
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		fp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+		
+		gameOverScene = new Scene(fp, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
+		primaryStage.setScene(gameOverScene);
+		primaryStage.setResizable(false);
+	}
+	
+	public static void logOutAfterGameOver(Stage primaryStage) {
+		Block223Controller.logout();
+		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
 	}
 	
