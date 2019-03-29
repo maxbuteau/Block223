@@ -327,7 +327,6 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 		
 		Point pt = new Point();
 		pt.setLocation((b2*c1-b1*c2)/delta,(a1*c2-a2*c1)/delta);
-		System.out.println((b2*c1-b1*c2)/delta+ " " + (a1*c2-a2*c1)/delta);
 		return pt;
 	}
   
