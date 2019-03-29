@@ -779,7 +779,7 @@ public class Block223Controller {
 			}
 
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/20);
 			} catch (InterruptedException e) {
 			}
 

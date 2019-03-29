@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -18,6 +21,9 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -38,6 +44,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
 
+	private static MediaPlayer mediaPlayer;
+	private static MediaView mediaView;
 	private static String inputs = "";
 
 	public PlayPane(Stage primaryStage) {
@@ -53,6 +61,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		playArea.setMaxSize(constants.getPlayAreaSide(), constants.getPlayAreaSide());
 		playArea.setBorder(new Border(new BorderStroke(Color.WHITE, 
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		Image background = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/alien.jpg"));
+		playArea.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(constants.getPlayAreaSide(), constants.getPlayAreaSide(), false, false, false, false))));
 
 		playHeader = new PlayHeader();
 		playHeader.setBorder(new Border(new BorderStroke(Color.WHITE, 
@@ -63,15 +73,17 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		startGame = new Button("Start Game");
 		startGame.setOnAction(e -> {
-			startGame.setVisible(false);
+			startGame.setDisable(true);
 			started = true;
+			mediaPlayer.stop();
+			this.setCenter(playArea);
 			// initiating a thread to start the game loop
 			Runnable task = new Runnable() {
 				@Override
 				public void run() {
 					try {
 						Block223Controller.startGame(PlayPane.this);
-						startGame.setVisible(true);
+						startGame.setDisable(false);
 						started = false;
 					} catch (InvalidInputException e) {}
 				}
@@ -94,10 +106,14 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		
 		buttonsBox.getChildren().addAll(startGame);
 
-		this.setCenter(playArea);
+		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
+		mediaView = new MediaView(mediaPlayer);
+		mediaView.setFitWidth(Block223Page.getScreenWidth()/2);
+		mediaPlayer.play();
+		
+		this.setCenter(mediaView);
 		this.setTop(playHeader);
 		this.setBottom(buttonsBox);
-
 		this.setPadding(new Insets(0,0,40,0));
 
 		displayPlayArea();
@@ -129,7 +145,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		paddle = new Rectangle();
 		paddle.setWidth(pgame.getCurrentPaddleLength());
 		paddle.setHeight(constants.getPaddleWidth());
-		paddle.setFill(Color.WHITE);
+		Image beam = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/beam.png"));
+		paddle.setFill(new ImagePattern(beam));
 		paddle.setTranslateX(pgame.getCurrentPaddleX());
 		paddle.setTranslateY(constants.getPlayAreaSide()-constants.getVerticalDistance()-constants.getPaddleWidth());
 
@@ -147,7 +164,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		imv.setImage(earth);
 		imv.setTranslateX(constants.getPlayAreaSide()/2 - imv.getFitWidth()/2);
 		imv.setTranslateY(constants.getPlayAreaSide() - imv.getFitHeight()/3.5);
-
+		
 		playArea.getChildren().addAll(paddle, ball, imv);
 	}
 
