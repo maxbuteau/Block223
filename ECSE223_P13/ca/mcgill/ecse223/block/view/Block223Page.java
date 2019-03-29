@@ -264,6 +264,16 @@ public class Block223Page extends Application{
 		pp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 
 		playScene = new Scene(pp, SCREEN_WIDTH, SCREEN_HEIGHT);
+		playScene.setOnKeyPressed(e -> {
+			if(PlayPane.isStarted()) {
+				if(e.getCode() == KeyCode.RIGHT) PlayPane.setInputs("r");
+				else if(e.getCode() == KeyCode.LEFT) PlayPane.setInputs("l");
+				else if(e.getCode() == KeyCode.SPACE) PlayPane.setInputs(" ");
+				else {
+					//We do nothing
+				}
+			}
+		});
 		primaryStage.setScene(playScene);
 		primaryStage.setResizable(false);
 	}
