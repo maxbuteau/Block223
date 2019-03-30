@@ -247,7 +247,7 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 		BounceDirection BD = getBounce().getDirection();
 		// flip the direction
 		if (distanceLeftX != 0 || distanceLeftY != 0) {
-			if (BD.equals(BounceDirection.FLIP_BOTH)) {
+			if (BD==BounceDirection.FLIP_BOTH) {
 
 				
 				ballDirectionX*=-1;
@@ -265,10 +265,11 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 				if(Math.signum(ballDirectionX)<0)
 					signX = -1;
 			}
-			if (BD.equals(BounceDirection.FLIP_Y)) {
+			if (BD==BounceDirection.FLIP_Y) {
 				if(Math.signum(ballDirectionX)<0)
 					signX = -1;
-				ballDirectionX+= 0.1 * Math.abs(ballDirectionY) * signX;
+				ballDirectionX+= 0.1 * Math.abs(distanceLeftY) * signX;
+				System.out.println(ballDirectionX+" "+ballDirectionY);
 				signX = 1;
 				signY=1;
 				ballDirectionY*=-1;
@@ -279,11 +280,12 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 				
 				currentBallY = bouncePointY + distanceLeftY * signY;
 				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
+				System.out.println(ballDirectionX+" "+ballDirectionY);
 			}
-			if (BD.equals(BounceDirection.FLIP_X)) {
+			if (BD==BounceDirection.FLIP_X) {
 				if(Math.signum(ballDirectionY)<0)
 					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(ballDirectionX) * signY;
+				ballDirectionY += 0.1 * Math.abs(distanceLeftX) * signY;
 				signX = 1;
 				signY=1;
 				ballDirectionX*=-1;
