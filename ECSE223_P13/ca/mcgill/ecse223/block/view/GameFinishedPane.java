@@ -1,10 +1,10 @@
 package ca.mcgill.ecse223.block.view;
 
-import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
+import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,7 +24,6 @@ public class GameFinishedPane extends VBox {
 	
 	//Text fields
 	private Text gameOver;
-	private Text ggWp;
 	private Text scoreTitle;
 	private Text score;
 	private Text levelReachedTitle;
@@ -44,17 +43,39 @@ public class GameFinishedPane extends VBox {
 	private HBox livesBox;
 	private HBox buttonBox;
 	
+	//Stuff that updates
+	private static HallOfFamePane hofPane;
+	private TOCurrentlyPlayedGame pGame;
+	private int pLevel;
+	private int pLives;
+	private int pScore;
+	
 	public GameFinishedPane(Stage primaryStage) {
 		this.setAlignment(Pos.CENTER);
 		
+		try {
+			pGame = Block223Controller.getCurrentPlayableGame();
+			pLevel = pGame.getCurrentLevel();
+			pLives = pGame.getLives();
+			pScore = pGame.getScore();
+		} catch (InvalidInputException e) {
+			e.getMessage();
+		}
+		
 		//Game Over message
-		gameOver = new Text("Game Over!");
-		settingFont(gameOver, Color.RED, 64);
+		if (pGame.getLives() == 0) {
+			gameOver = new Text("Game Over!");
+			settingFont(gameOver, Color.RED, 64);
+		}
+		else {
+			gameOver = new Text("GGWP!!!");
+			settingFont(gameOver, Color.GOLD, 64);
+		}
 		
 		//Score
 		scoreTitle = new Text("Score:");
-		settingFont(scoreTitle, Color.BLACK, 32);
-		score = new Text("1000");
+		settingFont(scoreTitle, Color.LIGHTGOLDENRODYELLOW, 32);
+		score = new Text(""+pScore);
 		settingFont(score, Color.WHITE, 32);
 		
 		scoreBox = new HBox(SCORE_GAP);
@@ -63,8 +84,8 @@ public class GameFinishedPane extends VBox {
 		
 		//Level Reached
 		levelReachedTitle = new Text("Level Reached:");
-		settingFont(levelReachedTitle, Color.BLACK, 32);
-		levelReached = new Text("45");
+		settingFont(levelReachedTitle, Color.LIGHTGOLDENRODYELLOW, 32);
+		levelReached = new Text(""+pLevel);
 		settingFont(levelReached, Color.WHITE, 32);
 		
 		levelBox = new HBox(LEVEL_GAP);
@@ -73,13 +94,17 @@ public class GameFinishedPane extends VBox {
 		
 		//Lives Remaining
 		livesRemainingTitle = new Text("Lives Remaining:");
-		settingFont(livesRemainingTitle, Color.BLACK, 32);
-		livesRemaining = new Text("2");
+		settingFont(livesRemainingTitle, Color.LIGHTGOLDENRODYELLOW, 32);
+		livesRemaining = new Text(""+pLives);
 		settingFont(livesRemaining, Color.WHITE, 32);
 		
 		livesBox = new HBox(LIVES_GAP);
 		livesBox.getChildren().addAll(livesRemainingTitle, livesRemaining);
 		livesBox.setAlignment(Pos.CENTER);
+		
+		//Hall Of Fame
+		hofPane = new HallOfFamePane();
+		
 		
 		//Buttons
 		playAgain = new Button("Play Again");
@@ -98,7 +123,7 @@ public class GameFinishedPane extends VBox {
 		
 		//Master VBox
 		outerBox = new VBox(V_GAP);
-		outerBox.getChildren().addAll(gameOver, scoreBox, levelBox, livesBox, buttonBox);
+		outerBox.getChildren().addAll(gameOver, scoreBox, levelBox, livesBox, hofPane, buttonBox);
 		outerBox.setAlignment(Pos.CENTER);
 		this.getChildren().add(outerBox);
 	}
@@ -115,6 +140,4 @@ public class GameFinishedPane extends VBox {
 		text.setFill(color);
 		text.setFont(Font.font(null, FontWeight.BOLD, size));
 	}
-	
-
 }

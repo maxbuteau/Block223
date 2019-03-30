@@ -42,7 +42,6 @@ public class PublishView extends VBox {
 		
 		no.setOnAction(e->{
 			LastPageLayoutPane.closePublishStage();
-			Block223Page.setGameOverScene(primaryStage);
 		});
 		
 		yesNoHBox = new HBox(H_GAP);

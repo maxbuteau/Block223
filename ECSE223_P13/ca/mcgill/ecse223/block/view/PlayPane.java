@@ -36,6 +36,11 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static HallOfFamePane hofPane;
 	private static HBox buttonsBox;
 	private static Button startGame;
+	
+	//--------------
+	private static Button gameOver;
+	//--------------
+	
 	private static Button logOut;
 	private static Button backGameSelection;
 	private static Rectangle paddle;
@@ -95,6 +100,13 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			t2.setDaemon(true);
 			t2.start();
 		});
+		
+		//--------------
+		gameOver = new Button("Game Over!");
+		gameOver.setOnAction(e->{
+			Block223Page.setGameOverScene(primaryStage);
+		});
+		//--------------
 
 		logOut = new Button("Log Out");
 		logOut.setOnAction(e -> {
@@ -107,7 +119,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
 		
-		buttonsBox.getChildren().addAll(startGame);
+		buttonsBox.getChildren().addAll(startGame, gameOver);
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);
