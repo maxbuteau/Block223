@@ -505,7 +505,7 @@ BouncePoint bp = null;
 		   y = rand.nextInt(maxVer);
 		   ++y;
 		   
-		   BlockAssignment foundAssignment = level.findBlockAssignment(x, y);
+		   PlayedBlockAssignment foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   while(foundAssignment != null) {
 			   if(y < maxVer) {
 				   if(x < maxHor) x++;
@@ -519,9 +519,9 @@ BouncePoint bp = null;
 				   x = 1;
 				   y = 1;
 			   }  
-			   foundAssignment = level.findBlockAssignment(x, y);
+			   foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   }
-		    x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
+		   x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
 		   y = Game.WALL_PADDING + (y-1)*(Game.ROW_PADDING+Block.SIZE);
 		   
 		   new PlayedBlockAssignment(

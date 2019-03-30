@@ -49,6 +49,17 @@ class PlayedGame {
   	   return this.currentBallY > Game.PLAY_AREA_SIDE - Paddle.VERTICAL_DISTANCE;
   
   }
+
+	public PlayedBlockAssignment findPlayedBlockAssignment(int x, int y) {
+		x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
+		y = Game.WALL_PADDING + (y-1)*(Game.ROW_PADDING+Block.SIZE);
+		
+		for(PlayedBlockAssignment pblock : this.getBlocks()) {
+			if(x == pblock.getX() && y == pblock.getY()) return pblock;
+		}
+		
+		return null;
+	}
   
   private boolean isCloser(BouncePoint first, BouncePoint second){
   	if (second == null){

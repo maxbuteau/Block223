@@ -51,6 +51,8 @@ public class HallOfFamePane extends VBox{
 		
 		hallOfFameBox.getChildren().addAll(hallOfFameLabel, hallOfFameList, navigationButtonBox);	
 		hallOfFameBox.setPrefWidth(Block223Page.getScreenWidth()/3);
+		
+		this.getChildren().addAll();
 			
 	}
 	private static void refreshHallOfFamePane() {

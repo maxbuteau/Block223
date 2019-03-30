@@ -5,6 +5,7 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -37,7 +38,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static HBox buttonsBox;
 	private static Button startGame;
 
-	private static Button logOut;
+	private static Button quit;
 	private static Button backGameSelection;
 	private static Rectangle paddle;
 	private static Circle ball;
@@ -48,6 +49,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
+	private static ImageView imageView;
 	private static String inputs = "";
 
 	public PlayPane(Stage primaryStage) {
@@ -98,8 +100,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		});
 		
 
-		logOut = new Button("Log Out");
-		logOut.setOnAction(e -> {
+		quit = new Button("Quit");
+		quit.setOnAction(e -> {
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
 		});
@@ -109,7 +111,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
 		
-		buttonsBox.getChildren().addAll(startGame);
+		buttonsBox.getChildren().addAll(startGame, quit);
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);
@@ -136,18 +138,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	}
 
 	public static void displayPlayArea() {
-
-		for(TOCurrentBlock toBlock : pgame.getBlocks()) {
-			Rectangle block = new Rectangle();
-			block.setWidth(constants.getSize());
-			block.setHeight(constants.getSize());
-			Color blockColor = new Color((double)toBlock.getRed()/255, (double)toBlock.getGreen()/255, (double)toBlock.getBlue()/255, 1);
-			block.setFill(blockColor);
-			block.setTranslateX(toBlock.getX());
-			block.setTranslateY(toBlock.getY());
-			playArea.getChildren().add(block);
-		}
-
+		
 		paddle = new Rectangle();
 		paddle.setWidth(pgame.getCurrentPaddleLength());
 		paddle.setHeight(constants.getPaddleWidth());
@@ -163,15 +154,26 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		ball.setTranslateX(pgame.getCurrentBallX());
 		ball.setTranslateY(pgame.getCurrentBallY());
 		
-		ImageView imv = new ImageView();
+		imageView = new ImageView();
 		Image earth = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/earth.png"));
-		imv.setFitWidth(constants.getPlayAreaSide()/0.9);
-		imv.setFitHeight(constants.getPlayAreaSide()/2.9);
-		imv.setImage(earth);
-		imv.setTranslateX(constants.getPlayAreaSide()/2 - imv.getFitWidth()/2);
-		imv.setTranslateY(constants.getPlayAreaSide() - imv.getFitHeight()/3.5);
+		imageView.setFitWidth(constants.getPlayAreaSide()/0.9);
+		imageView.setFitHeight(constants.getPlayAreaSide()/2.9);
+		imageView.setImage(earth);
+		imageView.setTranslateX(constants.getPlayAreaSide()/2 - imageView.getFitWidth()/2);
+		imageView.setTranslateY(constants.getPlayAreaSide() - imageView.getFitHeight()/3.5);
 		
-		playArea.getChildren().addAll(paddle, ball, imv);
+		playArea.getChildren().addAll(paddle, ball, imageView);
+
+		for(TOCurrentBlock toBlock : pgame.getBlocks()) {
+			Rectangle block = new Rectangle();
+			block.setWidth(constants.getSize());
+			block.setHeight(constants.getSize());
+			Color blockColor = new Color((double)toBlock.getRed()/255, (double)toBlock.getGreen()/255, (double)toBlock.getBlue()/255, 1);
+			block.setFill(blockColor);
+			block.setTranslateX(toBlock.getX());
+			block.setTranslateY(toBlock.getY());
+			playArea.getChildren().add(block);
+		}
 	}
 
 	@Override
@@ -186,7 +188,27 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
 		} catch(InvalidInputException iie ) {}
-
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				playArea.getChildren().clear();
+				playArea.getChildren().addAll(paddle, ball, imageView);
+				
+				for(TOCurrentBlock toBlock : pgame.getBlocks()) {
+					Rectangle block = new Rectangle();
+					block.setWidth(constants.getSize());
+					block.setHeight(constants.getSize());
+					Color blockColor = new Color((double)toBlock.getRed()/255, (double)toBlock.getGreen()/255, (double)toBlock.getBlue()/255, 1);
+					block.setFill(blockColor);
+					block.setTranslateX(toBlock.getX());
+					block.setTranslateY(toBlock.getY());
+					playArea.getChildren().add(block);
+				}				
+			}
+		});
+		
 		ball.setTranslateX(pgame.getCurrentBallX());
 		ball.setTranslateY(pgame.getCurrentBallY());
 		paddle.setTranslateX(pgame.getCurrentPaddleX());

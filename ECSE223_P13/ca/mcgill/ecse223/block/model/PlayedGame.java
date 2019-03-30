@@ -85,7 +85,7 @@ public class PlayedGame implements Serializable
 
   public PlayedGame(String aPlayername, Game aGame, Block223 aBlock223)
   {
-    // line 71 "../../../../../Block223PlayMode.ump"
+    // line 82 "../../../../../Block223PlayMode.ump"
     boolean didAddGameResult = setGame(aGame);
           if (!didAddGameResult)
           {
@@ -731,6 +731,18 @@ public class PlayedGame implements Serializable
   }
 
   // line 54 "../../../../../Block223PlayMode.ump"
+   public PlayedBlockAssignment findPlayedBlockAssignment(int x, int y){
+    x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
+		y = Game.WALL_PADDING + (y-1)*(Game.ROW_PADDING+Block.SIZE);
+		
+		for(PlayedBlockAssignment pblock : this.getBlocks()) {
+			if(x == pblock.getX() && y == pblock.getY()) return pblock;
+		}
+		
+		return null;
+  }
+
+  // line 65 "../../../../../Block223PlayMode.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     if (second == null){
   		return true;
@@ -1238,7 +1250,7 @@ public class PlayedGame implements Serializable
 		   y = rand.nextInt(maxVer);
 		   ++y;
 		   
-		   BlockAssignment foundAssignment = level.findBlockAssignment(x, y);
+		   PlayedBlockAssignment foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   while(foundAssignment != null) {
 			   if(y < maxVer) {
 				   if(x < maxHor) x++;
@@ -1252,9 +1264,9 @@ public class PlayedGame implements Serializable
 				   x = 1;
 				   y = 1;
 			   }  
-			   foundAssignment = level.findBlockAssignment(x, y);
+			   foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   }
-		    x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
+		   x = Game.WALL_PADDING + (x-1)*(Game.COLUMNS_PADDING+Block.SIZE);
 		   y = Game.WALL_PADDING + (y-1)*(Game.ROW_PADDING+Block.SIZE);
 		   
 		   new PlayedBlockAssignment(
