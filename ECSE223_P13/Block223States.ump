@@ -233,8 +233,8 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 		double positionY = getCurrentBallY();
 		double bouncePointX = getBounce().getX();
 		double bouncePointY = getBounce().getY();
-		double distanceLeftX = distanceX - Math.abs(bouncePointX - positionX);
-		double distanceLeftY = distanceY - Math.abs(bouncePointY - positionY);
+		double distanceLeftX = Math.abs(distanceX - Math.abs(bouncePointX - positionX));
+		double distanceLeftY = Math.abs(distanceY - Math.abs(bouncePointY - positionY));
 		int signX = 1;
 		int signY = 1;
 		
@@ -246,7 +246,7 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 
 		BounceDirection BD = getBounce().getDirection();
 		// flip the direction
-		if (distanceLeftX != 0 || distanceLeftY != 0) {
+		 if(distanceLeftX != 0 || distanceLeftY != 0) {
 			if (BD==BounceDirection.FLIP_BOTH) {
 
 				
@@ -258,20 +258,11 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 					signY = -1;
 				currentBallX = bouncePointX + distanceLeftX * signX;
 				currentBallY = bouncePointY + distanceLeftY * signY;
-				setCurrentBallX(currentBallX);
-				setCurrentBallY(currentBallY);
-				signX = 1;
-				signY=1;
-				if(Math.signum(ballDirectionY)<0)
-					signY = -1;
-				if(Math.signum(ballDirectionX)<0)
-					signX = -1;
 			}
 			if (BD==BounceDirection.FLIP_Y) {
 				if(Math.signum(ballDirectionX)<0)
 					signX = -1;
-				ballDirectionX+= 0.1 * Math.abs(distanceLeftY) * signX;
-				System.out.println(ballDirectionX+" "+ballDirectionY);
+				ballDirectionX+= 0.1 * Math.abs(distanceY) * signX;
 				signX = 1;
 				signY=1;
 				ballDirectionY*=-1;
@@ -281,10 +272,9 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 					signX = -1;
 				
 				currentBallY = bouncePointY + distanceLeftY * signY;
+				currentBallY = bouncePointY;
 				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
-				setCurrentBallX(currentBallX);
-				setCurrentBallY(currentBallY);
-				System.out.println(ballDirectionX+" "+ballDirectionY);
+				System.out.println(ballDirectionX+" "+ballDirectionY+" "+distanceLeftY);
 			}
 			if (BD==BounceDirection.FLIP_X) {
 				if(Math.signum(ballDirectionY)<0)
@@ -300,11 +290,54 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 				
 				currentBallX = bouncePointX + distanceLeftX * signX;
 				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX)* signY;
-				setCurrentBallX(currentBallX);
-				setCurrentBallY(currentBallY);
 				
 			}
 		}
+		 else {
+			 if (BD==BounceDirection.FLIP_BOTH) {
+					ballDirectionX*=-1;
+					ballDirectionY*=-1;
+					if(Math.signum(ballDirectionX)<0)
+						signX = -1;
+					if(Math.signum(ballDirectionY)<0)
+						signY = -1;
+					currentBallX = bouncePointX + distanceLeftX * signX;
+					currentBallY = bouncePointY + distanceLeftY * signY;
+				}
+				if (BD==BounceDirection.FLIP_Y) {
+					if(Math.signum(ballDirectionX)<0)
+						signX = -1;
+					ballDirectionX+= 0.1 * Math.abs(distanceY) * signX;
+					signX = 1;
+					signY=1;
+					ballDirectionY*=-1;
+					if(Math.signum(ballDirectionY)<0)
+						signY = -1;
+					if(Math.signum(ballDirectionX)<0)
+						signX = -1;
+					
+					currentBallY = bouncePointY + distanceLeftY*signY;
+					
+					currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
+					System.out.println(ballDirectionX+" "+ballDirectionY+ " "+distanceLeftY);
+				}
+				if (BD==BounceDirection.FLIP_X) {
+					if(Math.signum(ballDirectionY)<0)
+						signY = -1;
+					ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
+					signX = 1;
+					signY=1;
+					ballDirectionX*=-1;
+					if(Math.signum(ballDirectionY)<0)
+						signY = -1;
+					if(Math.signum(ballDirectionX)<0)
+						signX = -1;
+					
+					currentBallX = bouncePointX + distanceLeftX * signX;
+					currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX)* signY;
+					
+				}
+		 }
 }
 
   private boolean isOutOfBoundsAndLastLife() {
