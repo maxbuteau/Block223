@@ -979,6 +979,8 @@ public class PlayedGame implements Serializable
 					signY = -1;
 				currentBallX = bouncePointX + distanceLeftX * signX;
 				currentBallY = bouncePointY + distanceLeftY * signY;
+				setCurrentBallX(currentBallX);
+				setCurrentBallY(currentBallY);
 				signX = 1;
 				signY=1;
 				if(Math.signum(ballDirectionY)<0)
@@ -1001,6 +1003,8 @@ public class PlayedGame implements Serializable
 				
 				currentBallY = bouncePointY + distanceLeftY * signY;
 				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
+				setCurrentBallX(currentBallX);
+				setCurrentBallY(currentBallY);
 				System.out.println(ballDirectionX+" "+ballDirectionY);
 			}
 			if (BD==BounceDirection.FLIP_X) {
@@ -1017,6 +1021,8 @@ public class PlayedGame implements Serializable
 				
 				currentBallX = bouncePointX + distanceLeftX * signX;
 				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX)* signY;
+				setCurrentBallX(currentBallX);
+				setCurrentBallY(currentBallY);
 				
 			}
 		}
@@ -1124,7 +1130,8 @@ public class PlayedGame implements Serializable
 		C.setLine(Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2,
 				Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Game.PLAY_AREA_SIDE);
 
-		if (A.intersectsLine(l) && B.intersectsLine(l)) {
+		System.out.println("here");
+		if (A.intersectsLine(l) && B.intersectsLine(l) && getBallDirectionX()<=0 && getBallDirectionY()<=0) {
 
 			if (calculateIntersectionPoint(A, l).equals(calculateIntersectionPoint(B, l))) {
 				bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
@@ -1133,7 +1140,7 @@ public class PlayedGame implements Serializable
 				bp = new BouncePoint(Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2, BounceDirection.FLIP_BOTH);
 			}
 
-		} else if (B.intersectsLine(l) && C.intersectsLine(l)) {
+		} else if (B.intersectsLine(l) && C.intersectsLine(l)&& getBallDirectionX()>=0 && getBallDirectionY()<=0) {
 			if (calculateIntersectionPoint(C, l).equals(calculateIntersectionPoint(B, l))) {
 				bp = new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
 						BounceDirection.FLIP_BOTH);
@@ -1142,17 +1149,17 @@ public class PlayedGame implements Serializable
 						BounceDirection.FLIP_BOTH);
 			}
 
-		} else if (A.intersectsLine(l)) {
-
+		} else if (A.intersectsLine(l)&& getBallDirectionX()<=0) {
+			System.out.println("heres");
 			bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
 					BounceDirection.FLIP_X);
 
-		} else if (C.intersectsLine(l)) {
+		} else if (C.intersectsLine(l)&& getBallDirectionX()>=0) {
 
 			bp = new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
 					BounceDirection.FLIP_X);
 
-		} else if (B.intersectsLine(l)) {
+		} else if (B.intersectsLine(l)&& getBallDirectionY()<=0) {
 
 			bp = new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
 					BounceDirection.FLIP_Y);
