@@ -116,7 +116,15 @@ public class GameFinishedPane extends VBox {
 		buttonBox.getChildren().addAll(playAgain, backToMenu, logOut);
 		buttonBox.setAlignment(Pos.CENTER);
 		
-		//Log Out button functionality
+		//button functionality
+		playAgain.setOnAction(e->{
+			Block223Page.setPlayScene(primaryStage);
+		});
+		
+		backToMenu.setOnAction(e->{
+			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
+		});
+		
 		logOut.setOnAction(e->{
 			Block223Page.logOutAfterGameOver(primaryStage);
 		});

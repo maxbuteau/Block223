@@ -261,7 +261,7 @@ public class Block223Page extends Application{
 
 	}
 	
-	private static void setPlayScene(Stage primaryStage) {
+	public static void setPlayScene(Stage primaryStage) {
 		PlayPane pp = new PlayPane(primaryStage);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		pp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
