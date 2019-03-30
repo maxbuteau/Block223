@@ -793,7 +793,7 @@ public class PlayedGame implements Serializable
 						BounceDirection.FLIP_X));
 				counter++;
 			}
-			if (A.intersectsLine(l)&& getBallDirectionY()<=0) {
+			if (A.intersectsLine(l)&& getBallDirectionY()>=0) {
 				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
 						BounceDirection.FLIP_Y));
 				counter++;
