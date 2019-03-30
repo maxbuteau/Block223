@@ -209,12 +209,16 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 			BouncePoint closest = null;
 			if (counter == 1) {
 				closest = intersect.get(0);
+	    		closest.setHitBlock(pblock);
+
 			} else {
-				for (int a = 0; a < counter - 1; a++) {
+				for (int a = 0; a < counter-1; a++) {
 					if (isCloser(intersect.get(a), intersect.get(a + 1))) {
 						closest = intersect.get(a);
+						closest.setHitBlock(pblock);
 					} else {
 						closest = intersect.get(a + 1);
+						closest.setHitBlock(pblock);
 					}
 				}
 			}
