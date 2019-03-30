@@ -52,24 +52,39 @@ public class PlayHeader extends HBox{
 
 		//VBox level
 		levelBox = new HBox(20);
-		levelLabel = new Label("Level : ");
+		ImageView imvLevel = new ImageView();
+		Image levelImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/level3.png"));
+		imvLevel.setImage(levelImage);
+		imvLevel.setFitHeight(Block223Page.getScreenHeight() / 20);
+		imvLevel.setFitWidth(Block223Page.getScreenWidth() / 10);
+		imvLevel.setPreserveRatio(true);
 		levelNumber = new Label(""+pLevel);
 
-		levelBox.getChildren().addAll(levelLabel, levelNumber);
+		levelBox.getChildren().addAll(imvLevel, levelNumber);
 
 		//VBox Lives
 		livesBox = new HBox(20);
-		livesLabel = new Label("Lives : ");
+		ImageView imvLives = new ImageView();
+		Image LivesImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/lives3.png"));
+		imvLives.setImage(LivesImage);
+		imvLives.setFitHeight(Block223Page.getScreenHeight() / 20);
+		imvLives.setFitWidth(Block223Page.getScreenWidth() / 10);
+		imvLives.setPreserveRatio(true);
 		livesNumber = new Label(""+pLives);
 
-		livesBox.getChildren().addAll(livesLabel, livesNumber);
+		livesBox.getChildren().addAll(imvLives, livesNumber);
 
 		//VBox Score
 		scoreBox = new HBox(20);
-		scoreLabel = new Label("Score :");
+		ImageView imvScore = new ImageView();
+		Image ScoreImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/score3.png"));
+		imvScore.setImage(ScoreImage);
+		imvScore.setFitHeight(Block223Page.getScreenHeight() / 20);
+		imvScore.setFitWidth(Block223Page.getScreenWidth() / 10);
+		imvScore.setPreserveRatio(true);
 		scoreNumber = new Label(""+pScore);
 
-		scoreBox.getChildren().addAll(scoreLabel, scoreNumber);
+		scoreBox.getChildren().addAll(imvScore, scoreNumber);
 
 		level_lives_score_container = new VBox(20);
 		level_lives_score_container.getChildren().addAll(levelBox, livesBox, scoreBox);
