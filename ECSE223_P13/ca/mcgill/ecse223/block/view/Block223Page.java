@@ -357,6 +357,13 @@ public class Block223Page extends Application{
 		columnLevel.setMinWidth((SCREEN_WIDTH - playableGameSelectionPane.getPadding().getLeft() - playableGameSelectionPane.getPadding().getRight()) / playableGameSelectionList.getColumns().size()-1);
 
 		playableGameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
+		
+		playableGameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
+		playableGameSelectionList.setOnMouseClicked(e -> {
+			if(e.getClickCount() == 2 && e.getButton() == MouseButton.PRIMARY) {
+				playableGameSelectionSelectButton.fire();
+			}
+		});
 
 		//error
 		playableGameSelectionError = new Label();

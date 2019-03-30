@@ -36,11 +36,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static HallOfFamePane hofPane;
 	private static HBox buttonsBox;
 	private static Button startGame;
-	
-	//--------------
-	private static Button gameOver;
-	//--------------
-	
+
 	private static Button logOut;
 	private static Button backGameSelection;
 	private static Rectangle paddle;
@@ -62,7 +58,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		catch(InvalidInputException iie ) {
 			//TODO
 		}
-
+		
 		playArea = new Pane();
 		playArea.setMaxSize(constants.getPlayAreaSide(), constants.getPlayAreaSide());
 		playArea.setBorder(new Border(new BorderStroke(Color.WHITE, 
@@ -87,12 +83,12 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			this.setCenter(playArea);
 			// initiating a thread to start the game loop
 			Runnable task = new Runnable() {
-				@Override
 				public void run() {
 					try {
 						Block223Controller.startGame(PlayPane.this);
 						startGame.setDisable(false);
 						started = false;
+	
 					} catch (InvalidInputException e) {}
 				}
 			};
@@ -101,12 +97,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			t2.start();
 		});
 		
-		//--------------
-		gameOver = new Button("Game Over!");
-		gameOver.setOnAction(e->{
-			Block223Page.setGameOverScene(primaryStage);
-		});
-		//--------------
 
 		logOut = new Button("Log Out");
 		logOut.setOnAction(e -> {
@@ -119,7 +109,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
 		
-		buttonsBox.getChildren().addAll(startGame, gameOver);
+		buttonsBox.getChildren().addAll(startGame);
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);

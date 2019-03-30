@@ -274,7 +274,6 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 				currentBallY = bouncePointY + distanceLeftY * signY;
 				currentBallY = bouncePointY;
 				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
-				System.out.println(ballDirectionX+" "+ballDirectionY+" "+distanceLeftY);
 			}
 			if (BD==BounceDirection.FLIP_X) {
 				if(Math.signum(ballDirectionY)<0)
@@ -319,7 +318,6 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 					currentBallY = bouncePointY + distanceLeftY*signY;
 					
 					currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY)* signX;
-					System.out.println(ballDirectionX+" "+ballDirectionY+ " "+distanceLeftY);
 				}
 				if (BD==BounceDirection.FLIP_X) {
 					if(Math.signum(ballDirectionY)<0)
@@ -433,7 +431,6 @@ BouncePoint bp = null;
 		C.setLine(Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2,
 				Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Game.PLAY_AREA_SIDE);
 
-		System.out.println("here");
 		if (A.intersectsLine(l) && B.intersectsLine(l) && getBallDirectionX()<=0 && getBallDirectionY()<=0) {
 
 			if (calculateIntersectionPoint(A, l).equals(calculateIntersectionPoint(B, l))) {
@@ -453,7 +450,6 @@ BouncePoint bp = null;
 			}
 
 		} else if (A.intersectsLine(l)&& getBallDirectionX()<=0) {
-			System.out.println("heres");
 			bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
 					BounceDirection.FLIP_X);
 
