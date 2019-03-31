@@ -39,7 +39,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static Button startGame;
 
 	private static Button quit;
-	private static Button backGameSelection;
+	private static Button logout;
 	private static Rectangle paddle;
 	private static Circle ball;
 	private static boolean started;
@@ -80,6 +80,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		startGame = new Button("Start Game");
 		startGame.setOnAction(e -> {
 			startGame.setDisable(true);
+			quit.setDisable(true);
+			logout.setDisable(true);
 			started = true;
 			mediaPlayer.stop();
 			this.setCenter(playArea);
@@ -89,6 +91,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 					try {
 						Block223Controller.startGame(PlayPane.this);
 						startGame.setDisable(false);
+						quit.setDisable(false);
+						logout.setDisable(false);
 						started = false;
 	
 					} catch (InvalidInputException e) {}
@@ -102,16 +106,18 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		quit = new Button("Quit");
 		quit.setOnAction(e -> {
-			Block223Controller.logout();
-			primaryStage.setScene(Block223Page.getLoginScene());
-		});
-		
-		backGameSelection = new Button("Go back to game selection");
-		backGameSelection.setOnAction(e -> {
+			mediaPlayer.stop();
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
 		
-		buttonsBox.getChildren().addAll(startGame, quit);
+		logout = new Button("Log out");
+		logout.setOnAction(e -> {
+			mediaPlayer.stop();
+			Block223Controller.logout();
+			primaryStage.setScene(Block223Page.getLoginScene());	
+		});
+		
+		buttonsBox.getChildren().addAll(startGame,quit, logout);
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);
