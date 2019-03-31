@@ -819,6 +819,7 @@ public class Block223Controller {
 		pgame.setPlayer(null);
 		Block223Application.setCurrentPlayableGame(pgame);
 		
+		ui.refresh();
 		startGame(ui);
 		
 	}
