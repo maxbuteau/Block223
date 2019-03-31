@@ -102,6 +102,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		quit = new Button("Quit");
 		quit.setOnAction(e -> {
+			mediaPlayer.stop();
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
 		});
