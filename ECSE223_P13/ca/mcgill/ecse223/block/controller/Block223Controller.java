@@ -930,11 +930,11 @@ public class Block223Controller {
 			start = 1;
 		if (end > game.numberOfHallOfFameEntries())
 			end = game.numberOfHallOfFameEntries();
-		start = start - 1;
-		end = end - 1;
+		start = game.numberOfHallOfFameEntries() - start;
+		end = game.numberOfHallOfFameEntries() - end;
 
-		for(int i = start; i <= end; i++) {
-			TOHallOfFameEntry to = new TOHallOfFameEntry(game.numberOfHallOfFameEntries() - end - i, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(), result);	
+		for(int i = start; i <= end; i--) {
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(), result);	
 		}
 		return result;
 	}
@@ -956,14 +956,12 @@ public class Block223Controller {
 		HallOfFameEntry mostRecent = game.getMostRecentEntry();
 		int index = game.indexOfHallOfFameEntry(mostRecent);
 		
-		int start = index - numberOfEntries/2;
-		if(start < 1) start = 1;
-		int end = start + numberOfEntries - 1;
-		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries();
-		start = start - 1;
-		end = end - 1;
+		int start = index + numberOfEntries/2;
+		if(start < game.numberOfHallOfFameEntries() - 1) start = game.numberOfHallOfFameEntries() - 1;
+		int end = start - numberOfEntries + 1;
+		if(end < 0) end = 0;
 		
-		for (int i = start; i < end; i++) {
+		for (int i = start; i < end; i--) {
 			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(index).getPlayername(), game.getHallOfFameEntry(index).getScore(), result);
 		}
 		return result;
