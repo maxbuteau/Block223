@@ -1253,7 +1253,6 @@ public class PlayedGame implements Serializable
 		   
 		   PlayedBlockAssignment foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   while(foundAssignment != null) {
-			  System.out.println(x+" "+y);
 			   if(y < maxVer) {
 				   if(x <= maxHor) x++;
 				   if(x > maxHor) {
@@ -1284,12 +1283,12 @@ public class PlayedGame implements Serializable
 	   }
   }
 
-  // line 544 "../../../../../Block223States.ump"
+  // line 543 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     this.bounceBall();
   }
 
-  // line 548 "../../../../../Block223States.ump"
+  // line 547 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     this.setLives(lives - 1);
     this.resetCurrentBallX();
@@ -1299,7 +1298,7 @@ public class PlayedGame implements Serializable
     this.resetCurrentPaddleX();
   }
 
-  // line 557 "../../../../../Block223States.ump"
+  // line 556 "../../../../../Block223States.ump"
    private void doHitBlock(){
     int score = this.getScore();
     BouncePoint bounce = this.getBounce();
@@ -1311,7 +1310,7 @@ public class PlayedGame implements Serializable
     this.bounceBall();
   }
 
-  // line 569 "../../../../../Block223States.ump"
+  // line 568 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     this.doHitBlock();
     int level = this.getCurrentLevel();
@@ -1321,7 +1320,7 @@ public class PlayedGame implements Serializable
     this.setWaitTime(INITIAL_WAIT_TIME*Math.pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
-  // line 579 "../../../../../Block223States.ump"
+  // line 578 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
 	double y = getCurrentBallY();
@@ -1332,7 +1331,7 @@ public class PlayedGame implements Serializable
 	setCurrentBallY(y + dy);
   }
 
-  // line 589 "../../../../../Block223States.ump"
+  // line 588 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = this.getBlock223();
     

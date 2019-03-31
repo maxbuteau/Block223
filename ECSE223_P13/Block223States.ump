@@ -508,7 +508,6 @@ BouncePoint bp = null;
 		   
 		   PlayedBlockAssignment foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   while(foundAssignment != null) {
-			  System.out.println(x+" "+y);
 			   if(y < maxVer) {
 				   if(x <= maxHor) x++;
 				   if(x > maxHor) {
