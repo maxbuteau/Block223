@@ -499,6 +499,7 @@ BouncePoint bp = null;
 	   int y;
 	   
 	   while(numberOfBlocks < game.getNrBlocksPerLevel()) {
+
 		   Random rand = new Random();
 		   x = rand.nextInt(maxHor);
 		   ++x;
@@ -507,17 +508,21 @@ BouncePoint bp = null;
 		   
 		   PlayedBlockAssignment foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   while(foundAssignment != null) {
+			  System.out.println(x+" "+y);
 			   if(y < maxVer) {
-				   if(x < maxHor) x++;
-				   if(x >= maxHor) {
+				   if(x <= maxHor) x++;
+				   if(x > maxHor) {
 					   x = 1;
 					   y++;
 				   }
 			   }
 			   
 			   else if(y >= maxVer) {
-				   x = 1;
-				   y = 1;
+				   if(x <= maxHor) x++;
+				   if(x > maxHor) {
+					   x = 1;
+					   y = 1;
+				   }
 			   }  
 			   foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   }

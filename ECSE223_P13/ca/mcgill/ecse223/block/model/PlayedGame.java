@@ -1244,6 +1244,7 @@ public class PlayedGame implements Serializable
 	   int y;
 	   
 	   while(numberOfBlocks < game.getNrBlocksPerLevel()) {
+
 		   Random rand = new Random();
 		   x = rand.nextInt(maxHor);
 		   ++x;
@@ -1252,17 +1253,21 @@ public class PlayedGame implements Serializable
 		   
 		   PlayedBlockAssignment foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   while(foundAssignment != null) {
+			  System.out.println(x+" "+y);
 			   if(y < maxVer) {
-				   if(x < maxHor) x++;
-				   if(x >= maxHor) {
+				   if(x <= maxHor) x++;
+				   if(x > maxHor) {
 					   x = 1;
 					   y++;
 				   }
 			   }
 			   
 			   else if(y >= maxVer) {
-				   x = 1;
-				   y = 1;
+				   if(x <= maxHor) x++;
+				   if(x > maxHor) {
+					   x = 1;
+					   y = 1;
+				   }
 			   }  
 			   foundAssignment = this.findPlayedBlockAssignment(x , y);
 		   }
@@ -1279,12 +1284,12 @@ public class PlayedGame implements Serializable
 	   }
   }
 
-  // line 539 "../../../../../Block223States.ump"
+  // line 544 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     this.bounceBall();
   }
 
-  // line 543 "../../../../../Block223States.ump"
+  // line 548 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     this.setLives(lives - 1);
     this.resetCurrentBallX();
@@ -1294,7 +1299,7 @@ public class PlayedGame implements Serializable
     this.resetCurrentPaddleX();
   }
 
-  // line 552 "../../../../../Block223States.ump"
+  // line 557 "../../../../../Block223States.ump"
    private void doHitBlock(){
     int score = this.getScore();
     BouncePoint bounce = this.getBounce();
@@ -1306,7 +1311,7 @@ public class PlayedGame implements Serializable
     this.bounceBall();
   }
 
-  // line 564 "../../../../../Block223States.ump"
+  // line 569 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     this.doHitBlock();
     int level = this.getCurrentLevel();
@@ -1316,7 +1321,7 @@ public class PlayedGame implements Serializable
     this.setWaitTime(INITIAL_WAIT_TIME*Math.pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
-  // line 574 "../../../../../Block223States.ump"
+  // line 579 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
 	double y = getCurrentBallY();
@@ -1327,7 +1332,7 @@ public class PlayedGame implements Serializable
 	setCurrentBallY(y + dy);
   }
 
-  // line 584 "../../../../../Block223States.ump"
+  // line 589 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = this.getBlock223();
     
