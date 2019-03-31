@@ -337,6 +337,7 @@ public class Block223Page extends Application{
 			TOPlayableGame pgame = playableGameSelectionList.getSelectionModel().getSelectedItem();
 			String name = pgame.getName();
 			int id = pgame.getNumber();
+			if(id != -1) name = null;
 			
 			try {
 				Block223Controller.selectPlayableGame(name, id);
