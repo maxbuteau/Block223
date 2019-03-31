@@ -2,24 +2,40 @@ package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOConstant;
+import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
+import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOGame;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class LastPageLayoutPane extends BorderPane {
+public class LastPageLayoutPane extends BorderPane implements Block223PlayModeInterface {
 
 	// Define the class nodes and containers:
 	private Label error = new Label();
+	private static TOConstant constants;
 	private static TOGame game;
 	private Media errorSFXmedia;
 	private Stage blockToolboxStage;
@@ -50,9 +66,19 @@ public class LastPageLayoutPane extends BorderPane {
 	private int currentLvl = 1;
 	private static double Spacing;
 	private double spacing;
+	
+	private static boolean testStarted = false;
+	private static Pane testArea;
+	private static Rectangle paddle;
+	private static Circle ball;
+	private static String inputs;
+	private static TOCurrentlyPlayedGame pgame;
+	private static Button finishTest;
 
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing) {
+		constants = Block223Controller.getConstants();
+		
 		// get the current game
 		error.setText("");
 		try {
@@ -214,11 +240,7 @@ public class LastPageLayoutPane extends BorderPane {
 		});
 		
 		testButton.setOnAction(e->{
-			try {
-				Block223Controller.testGame((Block223PlayModeInterface) this);
-			} catch (InvalidInputException e1) {
-				error.setText(e1.getMessage());
-			}
+			testGame(primaryStage);
 		});
 		
 		publishButton.setOnAction(e -> {
@@ -239,12 +261,127 @@ public class LastPageLayoutPane extends BorderPane {
 		error.setMaxWidth(Block223Page.getScreenWidth());
 
 	}
+	
+	private void testGame(Stage primaryStage) {
+		this.setLeft(null);
+		this.setRight(null);
+		this.setCenter(null);
+		this.setBottom(null);
+		
+		testArea = new Pane();
+		testArea.setMaxSize(constants.getPlayAreaSide(), constants.getPlayAreaSide());
+		testArea.setBorder(new Border(new BorderStroke(Color.WHITE, 
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		this.setCenter(testArea);
+		
+		finishTest = new Button("Finished Testing");
+		finishTest.setDisable(true);
+		finishTest.setOnAction(e -> {
+			this.setLeft(gridBox);
+			this.setCenter(blockCreatorBox);
+			this.setRight(settingsBox);
+			this.setBottom(buttons_error);
+		});
+		this.setBottom(finishTest);
+		
+		BorderPane.setAlignment(finishTest, Pos.CENTER);
+		BorderPane.setMargin(finishTest, new Insets(0,0,Block223Page.getScreenHeight()/5,0));
+
+		paddle = new Rectangle();
+		paddle.setWidth(settingsPane.getMaxPaddleSliderValue());
+		paddle.setHeight(constants.getPaddleWidth());
+		paddle.setFill(Color.WHITE);
+		paddle.setTranslateX(constants.getPlayAreaSide()/2);
+		paddle.setTranslateY(constants.getPlayAreaSide()-constants.getVerticalDistance()-constants.getPaddleWidth());
+
+		ball = new Circle();
+		ball.setRadius(constants.getBallDiameter());
+		ball.setFill(Color.WHITE);
+		ball.setTranslateX(constants.getPlayAreaSide()/2);
+		ball.setTranslateY(constants.getPlayAreaSide()/2);
+		
+		testArea.getChildren().addAll(paddle, ball);
+		
+		testStarted = true;
+		
+		Runnable task = new Runnable() {
+			public void run() {
+				try {
+					Block223Controller.testGame(LastPageLayoutPane.this);
+					testStarted = false;
+					finishTest.setDisable(false);
+
+				} catch (InvalidInputException e) {
+					setErrorMessage(e.getMessage());
+				}
+			}
+		};
+		Thread t2 = new Thread(task);
+		t2.setDaemon(true);
+		t2.start();
+	}
 
 	public void setErrorMessage(String errorMsg) {
 		error.setText(errorMsg);
 	}
+	
+	public static boolean isTestStarted() {
+		return testStarted;
+	}
 
-	public void refresh() {
+	public static void closePublishStage() {
+		publishStage.close();
+		publishButton.setDisable(false);
+	}
+	
+	public static void pressSave() {
+		saveGame.fire();
+	}
+
+	@Override
+	public String takeInputs() {
+		String temp = ""+inputs;
+		inputs = "";
+		return temp;
+	}
+	
+	public static void setInputs(String str) {
+		inputs = inputs+str;
+	}
+
+	@Override
+	public void refresh() {	
+		try {
+			pgame = Block223Controller.getCurrentPlayableGame();
+		} catch(InvalidInputException iie ) {}
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				testArea.getChildren().clear();
+				testArea.getChildren().addAll(paddle, ball);
+				
+				for(TOCurrentBlock toBlock : pgame.getBlocks()) {
+					Rectangle block = new Rectangle();
+					block.setWidth(constants.getSize());
+					block.setHeight(constants.getSize());
+					Color blockColor = new Color((double)toBlock.getRed()/255, 						
+							(double)toBlock.getGreen()/255, (double)toBlock.getBlue()/255, 1);
+					block.setFill(blockColor);
+					block.setTranslateX(toBlock.getX());
+					block.setTranslateY(toBlock.getY());
+					testArea.getChildren().add(block);
+				}				
+			}
+		});
+		
+		ball.setTranslateX(pgame.getCurrentBallX());
+		ball.setTranslateY(pgame.getCurrentBallY());
+		paddle.setTranslateX(pgame.getCurrentPaddleX());
+	}
+	
+	public void refreshDetails() {
 		error.setText("");
 		try {
 			game = Block223Controller.getCurrentDesignableGame();
@@ -259,18 +396,5 @@ public class LastPageLayoutPane extends BorderPane {
 			((VBox) this.getLeft()).getChildren().add(0,designPane);
 
 		}
-	}
-	public static double getOffX() {
-		return Spacing;
-	}
-	public static double getOffY() {
-		return Spacing*2;
-	}
-	public static void closePublishStage() {
-		publishStage.close();
-		publishButton.setDisable(false);
-	}
-	public static void pressSave() {
-		saveGame.fire();
 	}
 }

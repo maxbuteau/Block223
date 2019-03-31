@@ -202,7 +202,7 @@ public class SettingsPane extends Pane{
 				else Block223Controller.updateGame(gameTF.getText(),(int) nrLevelsSlider.getValue(), (int)nrBlocksSlider.getValue(),
 						(int)minXSpeedSlider.getValue(), (int)minYSpeedSlider.getValue(),increasingFactorSlider.getValue(),
 						(int)maxPaddleSlider.getValue(), (int)minPaddleSlider.getValue());
-				x.refresh();
+				x.refreshDetails();
 			} catch (InvalidInputException e1) {
 				errorMsg.setText(e1.getMessage());
 			}
@@ -213,5 +213,9 @@ public class SettingsPane extends Pane{
 		});
 		
 		//TODO update paddle, level block
+	}
+	
+	public double getMaxPaddleSliderValue() {
+		return maxPaddleSlider.getValue();
 	}
 } 
