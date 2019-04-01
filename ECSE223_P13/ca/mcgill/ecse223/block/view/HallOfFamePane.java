@@ -30,14 +30,16 @@ public class HallOfFamePane extends VBox{
 
 	private static ObservableList<TOHallOfFameEntry> hallOfFameListData;
 	private static TableView hallOfFameList;
-	private VBox hallOfFameBox;
-	private Label hallOfFameLabel;
+	private static Label HoFError;
 	private static Button nextHFButton;
 	private static Button prevHFButton;
 	private HBox navigationButtonBox;
 	private final static int rowsPerPage = 10;
 
 	public HallOfFamePane() {
+		//error
+		HoFError = new Label();
+		
 		//HoF box
 		ImageView imv = new ImageView();
 		Image hofImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HoF.png"));
@@ -85,6 +87,7 @@ public class HallOfFamePane extends VBox{
 		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox);	
 		this.setPrefWidth(Block223Page.getScreenWidth()/4);
 		this.setPadding(new Insets(20));
+		
 
 	}
 
@@ -101,8 +104,9 @@ public class HallOfFamePane extends VBox{
 					to.getScore();
 					hallOfFameListData.add(to);
 				}
+				HoFError.setText("");
 			} catch(InvalidInputException e) {
-				e.printStackTrace();
+				HoFError.setText((e.getMessage()));
 		}
 	}
 }
