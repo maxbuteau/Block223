@@ -5,12 +5,9 @@ import java.util.List;
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
-import ca.mcgill.ecse223.block.controller.TOGame;
+import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
-import ca.mcgill.ecse223.block.controller.TOPlayableGame;
-import ca.mcgill.ecse223.block.model.Game;
-import ca.mcgill.ecse223.block.model.PlayedGame;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -36,8 +33,6 @@ public class HallOfFamePane extends VBox{
 	private static Button prevHFButton;
 	private HBox navigationButtonBox;
 	private final static int rowsPerPage = 10;
-	private static Game aGame = Block223Application.getCurrentGame();
-	private final static int dataSize = aGame.numberOfHallOfFameEntries();
 
 	public HallOfFamePane() {
 		//HoF box
@@ -78,7 +73,7 @@ public class HallOfFamePane extends VBox{
 		if(nextHFButton.isPressed()) i++;
 		if(prevHFButton.isPressed()) i--;
 		if(i <= 0) i = 1;
-		if(i * 10 <= dataSize) {
+		if(i * rowsPerPage <= dataSize) {
 			try {
 				List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, i * 10).getEntries();
 				for (TOHallOfFameEntry to : toHF) {
