@@ -47,6 +47,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
+	
+	private static Button gameOver;
 
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
@@ -77,6 +79,11 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		buttonsBox = new HBox(20);
 		buttonsBox.setAlignment(Pos.CENTER);
+		
+		gameOver = new Button("Game Over!");
+		gameOver.setOnAction(e->{
+			Block223Page.setGameOverScene(primaryStage);
+		});
 
 		startGame = new Button("Start Game");
 		startGame.setOnAction(e -> {
@@ -118,7 +125,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			primaryStage.setScene(Block223Page.getLoginScene());	
 		});
 		
-		buttonsBox.getChildren().addAll(startGame,quit, logout);		
+		buttonsBox.getChildren().addAll(startGame,quit, logout, gameOver);		
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);

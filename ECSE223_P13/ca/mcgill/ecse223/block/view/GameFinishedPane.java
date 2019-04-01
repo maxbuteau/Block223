@@ -1,5 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 
+import com.sun.glass.ui.Screen;
+
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
@@ -21,6 +23,7 @@ public class GameFinishedPane extends VBox {
 	private static final int LEVEL_GAP = 40;
 	private static final int LIVES_GAP = 40;
 	private static final int BUTTON_GAP = 20;
+	private static final int H_GAP = 150;
 	
 	//Text fields
 	private Text gameOver;
@@ -38,10 +41,12 @@ public class GameFinishedPane extends VBox {
 	
 	//Boxes
 	private VBox outerBox;
+	private VBox innerBox;
 	private HBox scoreBox;
 	private HBox levelBox;
 	private HBox livesBox;
 	private HBox buttonBox;
+	private HBox statsAndHofBox;
 	
 	//Stuff that updates
 	private static HallOfFamePane hofPane;
@@ -66,6 +71,7 @@ public class GameFinishedPane extends VBox {
 		if (pGame.getLives() == 0) {
 			gameOver = new Text("Game Over!");
 			settingFont(gameOver, Color.RED, 64);
+			Block223Page.setGameOverScene(primaryStage);
 		}
 		else {
 			gameOver = new Text("GGWP!!!");
@@ -102,6 +108,9 @@ public class GameFinishedPane extends VBox {
 		livesBox.getChildren().addAll(livesRemainingTitle, livesRemaining);
 		livesBox.setAlignment(Pos.CENTER);
 		
+		innerBox = new VBox(V_GAP);
+		innerBox.getChildren().addAll(scoreBox, levelBox, livesBox);
+		innerBox.setAlignment(Pos.CENTER);
 		//Hall Of Fame
 		hofPane = new HallOfFamePane();
 		
@@ -129,9 +138,13 @@ public class GameFinishedPane extends VBox {
 			Block223Page.logOutAfterGameOver(primaryStage);
 		});
 		
+		statsAndHofBox = new HBox(H_GAP);
+		statsAndHofBox.getChildren().addAll(innerBox, hofPane);
+		statsAndHofBox.setAlignment(Pos.CENTER);
+		
 		//Master VBox
 		outerBox = new VBox(V_GAP);
-		outerBox.getChildren().addAll(gameOver, scoreBox, levelBox, livesBox, hofPane, buttonBox);
+		outerBox.getChildren().addAll(gameOver, statsAndHofBox, buttonBox);
 		outerBox.setAlignment(Pos.CENTER);
 		this.getChildren().add(outerBox);
 	}
