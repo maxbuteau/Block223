@@ -935,7 +935,8 @@ public class Block223Controller {
 		end = game.numberOfHallOfFameEntries() - end;
 
 		for(int i = start; i >= end; i--) {
-			new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(), result);	
+			new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), 
+					game.getHallOfFameEntry(i).getScore(), result);	
 		}
 		return result;
 	}
@@ -963,7 +964,8 @@ public class Block223Controller {
 		if(end < 0) end = 0;
 		
 		for (int i = start; i >= end; i--) {
-			new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(index).getPlayername(), game.getHallOfFameEntry(index).getScore(), result);
+			new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), 
+					game.getHallOfFameEntry(i).getScore(), result);
 		}
 		return result;
 	}
