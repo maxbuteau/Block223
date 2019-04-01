@@ -72,7 +72,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		playHeader.setBorder(new Border(new BorderStroke(Color.WHITE, 
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		
-		System.out.println("allo");
 		hofPane = new HallOfFamePane();
 		hofPane.setBorder(new Border(new BorderStroke(Color.WHITE, 
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));

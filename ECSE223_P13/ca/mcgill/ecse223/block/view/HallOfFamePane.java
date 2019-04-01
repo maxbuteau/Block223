@@ -19,6 +19,8 @@ import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -38,6 +40,12 @@ public class HallOfFamePane extends VBox{
 		//HoF box
 		hallOfFameBox = new VBox(20);
 		hallOfFameLabel = new Label("Hall Of Fame");
+		ImageView imv = new ImageView();
+		Image hofImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HoF.png"));
+		imv.setImage(hofImage);
+		imv.setFitHeight(Block223Page.getScreenHeight() / 4);
+		imv.setFitWidth(Block223Page.getScreenWidth() / 8);
+		imv.setPreserveRatio(true);
 
 		//Next, prev buttons
 		navigationButtonBox = new HBox(20);
@@ -54,6 +62,8 @@ public class HallOfFamePane extends VBox{
 		scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
 		hallOfFameList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
 		hallOfFameList.getColumns().addAll(usernameCol, scoreCol);
+		usernameCol.setMinWidth(Block223Page.getScreenWidth()/8);
+		scoreCol.setMinWidth(Block223Page.getScreenWidth()/8);
 		refreshHallOfFamePane();
 
 		//		nextHFButton.setOnAction(e -> {		
@@ -63,7 +73,7 @@ public class HallOfFamePane extends VBox{
 		//		});
 
 		hallOfFameBox.getChildren().addAll(hallOfFameLabel, hallOfFameList, navigationButtonBox);	
-		hallOfFameBox.setPrefWidth(Block223Page.getScreenWidth()/3);
+		hallOfFameBox.setPrefWidth(Block223Page.getScreenWidth()/4);
 
 	}
 
@@ -73,9 +83,8 @@ public class HallOfFamePane extends VBox{
 		if(nextHFButton.isPressed()) i++;
 		if(prevHFButton.isPressed()) i--;
 		if(i <= 0) i = 1;
-		if(i * rowsPerPage <= dataSize) {
-			try {
-				List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, i * 10).getEntries();
+		try {
+				List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, i * rowsPerPage).getEntries();
 				for (TOHallOfFameEntry to : toHF) {
 					to.getPlayername();
 					to.getScore();
@@ -83,7 +92,6 @@ public class HallOfFamePane extends VBox{
 				}
 			} catch(InvalidInputException e) {
 				e.printStackTrace();
-			}
 		}
 	}
 }
