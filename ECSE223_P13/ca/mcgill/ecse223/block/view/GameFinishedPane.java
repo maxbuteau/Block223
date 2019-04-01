@@ -1,7 +1,5 @@
 package ca.mcgill.ecse223.block.view;
 
-import com.sun.glass.ui.Screen;
-
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
