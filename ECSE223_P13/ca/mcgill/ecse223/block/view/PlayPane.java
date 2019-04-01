@@ -86,6 +86,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		});
 
 		startGame = new Button("Start Game");
+		startGame.setFocusTraversable(false);
 		startGame.setOnAction(e -> {
 			startGame.setDisable(true);
 			quit.setDisable(true);
@@ -113,12 +114,14 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		
 
 		quit = new Button("Quit");
+		quit.setFocusTraversable(false);
 		quit.setOnAction(e -> {
 			mediaPlayer.stop();
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
 		
 		logout = new Button("Log out");
+		logout.setFocusTraversable(false);
 		logout.setOnAction(e -> {
 			mediaPlayer.stop();
 			Block223Controller.logout();
