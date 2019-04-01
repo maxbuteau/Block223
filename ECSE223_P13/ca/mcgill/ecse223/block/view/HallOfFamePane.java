@@ -11,6 +11,7 @@ import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -38,20 +39,26 @@ public class HallOfFamePane extends VBox{
 
 	public HallOfFamePane() {
 		//HoF box
-		hallOfFameBox = new VBox(20);
-		hallOfFameLabel = new Label("Hall Of Fame");
 		ImageView imv = new ImageView();
 		Image hofImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HoF.png"));
 		imv.setImage(hofImage);
 		imv.setFitHeight(Block223Page.getScreenHeight() / 4);
-		imv.setFitWidth(Block223Page.getScreenWidth() / 8);
+		imv.setFitWidth(Block223Page.getScreenWidth() / 4);
 		imv.setPreserveRatio(true);
+		HBox headerRegion = new HBox(20);
+		headerRegion.getChildren().add(imv);
+		headerRegion.setAlignment(Pos.CENTER);
 
 		//Next, prev buttons
 		navigationButtonBox = new HBox(20);
 		nextHFButton = new Button("Next");
+		nextHFButton.setPadding(new Insets(10));
 		prevHFButton = new Button("Previous");
+		prevHFButton.setPadding(new Insets(10));
 		navigationButtonBox.getChildren().addAll(prevHFButton, nextHFButton);
+		navigationButtonBox.setPadding(new Insets(10));
+		navigationButtonBox.setAlignment(Pos.CENTER);
+		
 
 		//Creating tableView for HoF
 		hallOfFameListData = FXCollections.observableArrayList();
@@ -72,8 +79,9 @@ public class HallOfFamePane extends VBox{
 		//		prevHFButton.setOnAction(e -> {		
 		//		});
 
-		hallOfFameBox.getChildren().addAll(hallOfFameLabel, hallOfFameList, navigationButtonBox);	
-		hallOfFameBox.setPrefWidth(Block223Page.getScreenWidth()/4);
+		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox);	
+		this.setPrefWidth(Block223Page.getScreenWidth()/4);
+		this.setPadding(new Insets(20));
 
 	}
 
