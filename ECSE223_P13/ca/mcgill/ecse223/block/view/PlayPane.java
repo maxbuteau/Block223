@@ -80,6 +80,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		buttonsBox = new HBox(20);
 		buttonsBox.setAlignment(Pos.CENTER);
 		
+		//Sorry
 		gameOver = new Button("Game Over!");
 		gameOver.setOnAction(e->{
 			Block223Page.setGameOverScene(primaryStage);
