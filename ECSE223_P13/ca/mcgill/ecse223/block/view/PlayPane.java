@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
@@ -94,7 +95,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 						quit.setDisable(false);
 						logout.setDisable(false);
 						started = false;
-	
+
 					} catch (InvalidInputException e) {}
 				}
 			};
@@ -117,7 +118,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			primaryStage.setScene(Block223Page.getLoginScene());	
 		});
 		
-		buttonsBox.getChildren().addAll(startGame,quit, logout);
+		buttonsBox.getChildren().addAll(startGame,quit, logout);		
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);
@@ -219,6 +220,10 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		ball.setTranslateY(pgame.getCurrentBallY());
 		paddle.setTranslateX(pgame.getCurrentPaddleX());
 		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
+	}
+
+	public static HBox getButtonsBox() {
+		return buttonsBox;
 	}
 
 }
