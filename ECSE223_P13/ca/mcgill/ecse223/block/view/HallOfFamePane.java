@@ -2,19 +2,27 @@ package ca.mcgill.ecse223.block.view;
 
 import java.util.List;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOGame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import ca.mcgill.ecse223.block.controller.TOPlayableGame;
+import ca.mcgill.ecse223.block.model.Game;
+import ca.mcgill.ecse223.block.model.PlayedGame;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -24,47 +32,63 @@ public class HallOfFamePane extends VBox{
 	private static TableView hallOfFameList;
 	private VBox hallOfFameBox;
 	private Label hallOfFameLabel;
-	private Button nextHFButton;
-	private Button prevHFButton;
+	private static Button nextHFButton;
+	private static Button prevHFButton;
 	private HBox navigationButtonBox;
-	
+	private final static int rowsPerPage = 10;
+	private static Game aGame = Block223Application.getCurrentGame();
+	private final static int dataSize = aGame.numberOfHallOfFameEntries();
+
 	public HallOfFamePane() {
-		hallOfFameListData = FXCollections.observableArrayList();
-		hallOfFameList = new TableView<>();
-		hallOfFameList.setItems(hallOfFameListData);
-		
+		//HoF box
 		hallOfFameBox = new VBox(20);
 		hallOfFameLabel = new Label("Hall Of Fame");
-		
+
+		//Next, prev buttons
 		navigationButtonBox = new HBox(20);
 		nextHFButton = new Button("Next");
 		prevHFButton = new Button("Previous");
 		navigationButtonBox.getChildren().addAll(prevHFButton, nextHFButton);
-		
-		nextHFButton.setOnAction(e -> {	
-			
-		});
-		
-		prevHFButton.setOnAction(e -> {	
-			
-		});
-		
+
+		//Creating tableView for HoF
+		hallOfFameListData = FXCollections.observableArrayList();
+		hallOfFameList = new TableView<>();
+		TableColumn<TableView<TOHallOfFameEntry>, String> usernameCol = new TableColumn<>("Username");
+		usernameCol.setCellValueFactory(new PropertyValueFactory<>("playername"));
+		TableColumn<TableView<TOHallOfFameEntry>, Integer> scoreCol = new TableColumn<>("score");
+		scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
+		hallOfFameList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
+		hallOfFameList.getColumns().addAll(usernameCol, scoreCol);
+		refreshHallOfFamePane();
+
+		//		nextHFButton.setOnAction(e -> {		
+		//		});
+		//		
+		//		prevHFButton.setOnAction(e -> {		
+		//		});
+
 		hallOfFameBox.getChildren().addAll(hallOfFameLabel, hallOfFameList, navigationButtonBox);	
 		hallOfFameBox.setPrefWidth(Block223Page.getScreenWidth()/3);
-		
-		this.getChildren().addAll();
-			
+
 	}
+
 	private static void refreshHallOfFamePane() {
 		hallOfFameList.getItems().clear();
-		try {
-			//TODO refresh all not just 10 entries
-			List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, 10).getEntries();
-			for (TOHallOfFameEntry to : toHF) {
-				hallOfFameListData.add(to);
+		int i = 1;
+		if(nextHFButton.isPressed()) i++;
+		if(prevHFButton.isPressed()) i--;
+		if(i <= 0) i = 1;
+		if(i * 10 <= dataSize) {
+			try {
+				List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, i * 10).getEntries();
+				for (TOHallOfFameEntry to : toHF) {
+					to.getPlayername();
+					to.getScore();
+					hallOfFameListData.add(to);
+				}
+			} catch(InvalidInputException e) {
+				e.printStackTrace();
 			}
-		} catch(InvalidInputException e) {
-			e.printStackTrace();
 		}
 	}
 }
