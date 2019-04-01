@@ -52,8 +52,10 @@ public class HallOfFamePane extends VBox{
 		//Next, prev buttons
 		navigationButtonBox = new HBox(20);
 		nextHFButton = new Button("Next");
+		nextHFButton.setFocusTraversable(false);
 		nextHFButton.setPadding(new Insets(10));
 		prevHFButton = new Button("Previous");
+		prevHFButton.setFocusTraversable(false);
 		prevHFButton.setPadding(new Insets(10));
 		navigationButtonBox.getChildren().addAll(prevHFButton, nextHFButton);
 		navigationButtonBox.setPadding(new Insets(10));
@@ -63,6 +65,7 @@ public class HallOfFamePane extends VBox{
 		//Creating tableView for HoF
 		hallOfFameListData = FXCollections.observableArrayList();
 		hallOfFameList = new TableView<>();
+		hallOfFameList.setFocusTraversable(false);
 		TableColumn<TableView<TOHallOfFameEntry>, String> usernameCol = new TableColumn<>("Username");
 		usernameCol.setCellValueFactory(new PropertyValueFactory<>("playername"));
 		TableColumn<TableView<TOHallOfFameEntry>, Integer> scoreCol = new TableColumn<>("score");
