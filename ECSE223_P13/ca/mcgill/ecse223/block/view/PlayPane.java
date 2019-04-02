@@ -82,6 +82,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		
 		//Sorry
 		gameOver = new Button("Game Over!");
+		gameOver.setFocusTraversable(false);
 		gameOver.setOnAction(e->{
 			Block223Page.setGameOverScene(primaryStage);
 		});
@@ -166,7 +167,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		paddle.setTranslateY(constants.getPlayAreaSide()-constants.getVerticalDistance()-constants.getPaddleWidth());
 
 		ball = new Circle();
-		ball.setRadius(constants.getBallDiameter());
+		ball.setRadius(constants.getBallDiameter()/2);
 		Image meteor = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/meteor.png"));
 		ball.setFill(new ImagePattern(meteor));
 		ball.setTranslateX(pgame.getCurrentBallX());
