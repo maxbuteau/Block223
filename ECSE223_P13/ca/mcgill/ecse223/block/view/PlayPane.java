@@ -54,8 +54,11 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static MediaView mediaView;
 	private static ImageView imageView;
 	private static String inputs = "";
+	
+	private Stage primaryStage;
 
 	public PlayPane(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
 			constants = Block223Controller.getConstants();
@@ -236,6 +239,11 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 	public static HBox getButtonsBox() {
 		return buttonsBox;
+	}
+
+	@Override
+	public void gameOver() {
+		Block223Page.setGameOverScene(primaryStage);
 	}
 
 }

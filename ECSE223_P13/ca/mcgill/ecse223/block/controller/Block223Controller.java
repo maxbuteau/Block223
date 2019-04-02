@@ -779,7 +779,7 @@ public class Block223Controller {
 			}
 
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/10);
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/40);
 			} catch (InterruptedException e) {
 			}
 
@@ -787,6 +787,7 @@ public class Block223Controller {
 		}
 
 		if (game.getPlayStatus() == PlayStatus.GameOver) {
+			ui.gameOver();
 			Block223Application.setCurrentPlayableGame(null);
 		}
 

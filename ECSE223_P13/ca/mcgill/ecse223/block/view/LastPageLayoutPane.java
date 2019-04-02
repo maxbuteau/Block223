@@ -397,4 +397,9 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 
 		}
 	}
+
+	@Override
+	public void gameOver() {
+		//nothing happens
+	}
 }

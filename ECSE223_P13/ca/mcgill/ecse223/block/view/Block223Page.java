@@ -350,6 +350,9 @@ public class Block223Page extends Application{
 			catch(InvalidInputException iie) {
 				playableGameSelectionError.setText(iie.getMessage());
 			}
+			catch (NullPointerException e2) {
+				playableGameSelectionError.setText("A game must be selected to play it.");
+			}
 		});
 
 		playableGameSelectionButtonRow.getChildren().addAll(playableGameSelectionLogoutButton, playableGameSelectionSelectButton);
