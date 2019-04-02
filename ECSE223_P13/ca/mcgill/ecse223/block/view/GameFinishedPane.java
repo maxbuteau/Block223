@@ -49,28 +49,26 @@ public class GameFinishedPane extends VBox {
 	
 	//Stuff that updates
 	private static HallOfFamePane hofPane;
-	private TOCurrentlyPlayedGame pGame;
 	private int pLevel;
 	private int pLives;
 	private int pScore;
 	
-	public GameFinishedPane(Stage primaryStage) {
+	public GameFinishedPane(Stage primaryStage, TOCurrentlyPlayedGame pgame) {
 		this.setAlignment(Pos.CENTER);
 		
 		try {
-			pGame = Block223Controller.getCurrentPlayableGame();
-			pLevel = pGame.getCurrentLevel();
-			pLives = pGame.getLives();
-			pScore = pGame.getScore();
+			pgame = Block223Controller.getCurrentPlayableGame();
+			pLevel = pgame.getCurrentLevel();
+			pLives = pgame.getLives();
+			pScore = pgame.getScore();
 		} catch (InvalidInputException e) {
 			e.getMessage();
 		}
 		
 		//Game Over message
-		if (pGame.getLives() == 0) {
+		if (PlayPane.isGameLost()) {
 			gameOver = new Text("Game Over!");
 			settingFont(gameOver, Color.RED, 64);
-			Block223Page.setGameOverScene(primaryStage);
 		}
 		else {
 			gameOver = new Text("GGWP!!!");
@@ -111,7 +109,7 @@ public class GameFinishedPane extends VBox {
 		innerBox.getChildren().addAll(scoreBox, levelBox, livesBox);
 		innerBox.setAlignment(Pos.CENTER);
 		//Hall Of Fame
-		hofPane = new HallOfFamePane();
+		//hofPane = new HallOfFamePane();
 		
 		
 		//Buttons
@@ -138,7 +136,7 @@ public class GameFinishedPane extends VBox {
 		});
 		
 		statsAndHofBox = new HBox(H_GAP);
-		statsAndHofBox.getChildren().addAll(innerBox, hofPane);
+		statsAndHofBox.getChildren().addAll(innerBox);
 		statsAndHofBox.setAlignment(Pos.CENTER);
 		
 		//Master VBox

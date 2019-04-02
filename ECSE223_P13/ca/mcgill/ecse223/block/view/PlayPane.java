@@ -49,13 +49,17 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static TOConstant constants;
 	
 	private static Button gameOver;
+	private static boolean gameLost;
 
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
 	private static ImageView imageView;
 	private static String inputs = "";
+	
+	private static Stage primaryStage;
 
 	public PlayPane(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
 			constants = Block223Controller.getConstants();
@@ -84,7 +88,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		gameOver = new Button("Game Over!");
 		gameOver.setFocusTraversable(false);
 		gameOver.setOnAction(e->{
-			Block223Page.setGameOverScene(primaryStage);
+			Block223Page.setGameOverScene(primaryStage, pgame);
 		});
 
 		startGame = new Button("Start Game");
@@ -206,7 +210,9 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	public void refresh() {	
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
-		} catch(InvalidInputException iie ) {}
+		} catch(InvalidInputException iie ) {
+			gameOver();
+		}
 		
 		Platform.runLater(new Runnable() {
 			
@@ -236,6 +242,21 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 	public static HBox getButtonsBox() {
 		return buttonsBox;
+	}
+	
+	private static void gameOver() {
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				gameLost = true;
+				Block223Page.setGameOverScene(primaryStage, pgame);		
+			}
+		});	
+	}
+	
+	public static boolean isGameLost() {
+		return gameLost;
 	}
 
 }

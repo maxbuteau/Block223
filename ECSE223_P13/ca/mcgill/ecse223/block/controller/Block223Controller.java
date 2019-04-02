@@ -783,7 +783,9 @@ public class Block223Controller {
 			} catch (InterruptedException e) {
 			}
 
-			ui.refresh();
+			//if(game.getPlayStatus() != PlayStatus.GameOver) {
+				ui.refresh();
+			//}
 		}
 
 		if (game.getPlayStatus() == PlayStatus.GameOver) {
