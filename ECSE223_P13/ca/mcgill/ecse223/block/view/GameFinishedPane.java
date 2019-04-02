@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 public class GameFinishedPane extends VBox {
 	
+	//Gaps
 	private static final int V_GAP = 20;
 	private static final int SCORE_GAP = 40;
 	private static final int LEVEL_GAP = 40;
