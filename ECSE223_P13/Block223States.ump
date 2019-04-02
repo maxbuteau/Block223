@@ -88,7 +88,6 @@ class PlayedGame {
 
 			if (EIntersections.size() > 0 ) {
 				for (int a = 0; a < EIntersections.size(); a++) {
-					System.out.println("ere");
 					if (ballDirectionX > 0) {
 						BouncePoint x = new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(),
 								BounceDirection.FLIP_X);
@@ -105,7 +104,6 @@ class PlayedGame {
 			}
 
 			if (FIntersections.size() > 0) {
-				System.out.println(FIntersections.get(0).getX() +" "+ FIntersections.size());
 				for (int a = 0; a < FIntersections.size(); a++) {
 					if (ballDirectionX > 0) {
 						BouncePoint x = new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(),
