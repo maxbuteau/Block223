@@ -474,6 +474,7 @@ public class Block223Controller {
 
 		try {
 			user = new User(username, block223, player);
+			Block223Persistence.save(block223);
 		} catch (RuntimeException e) {
 			error = e.getMessage();
 			if (error.equals("Cannot create due to duplicate username")) {
