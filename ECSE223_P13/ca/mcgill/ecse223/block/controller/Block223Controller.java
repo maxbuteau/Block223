@@ -474,7 +474,6 @@ public class Block223Controller {
 
 		try {
 			user = new User(username, block223, player);
-			Block223Persistence.save(block223);
 		} catch (RuntimeException e) {
 			error = e.getMessage();
 			if (error.equals("Cannot create due to duplicate username")) {
@@ -488,11 +487,11 @@ public class Block223Controller {
 			try {
 				Admin admin = new Admin(adminPassword, block223);
 				user.addRole(admin);
-				Block223Persistence.save(block223);
 			} catch (RuntimeException e) {
 				throw new InvalidInputException(e.getMessage());
 			}
 		}
+		Block223Persistence.save(block223);
 	}
 
 	public static void login(String username, String password) throws InvalidInputException {
