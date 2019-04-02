@@ -783,12 +783,18 @@ public class Block223Controller {
 			} catch (InterruptedException e) {
 			}
 
-			//if(game.getPlayStatus() != PlayStatus.GameOver) {
+			if(game.getPlayStatus() != PlayStatus.GameOver) {
 				ui.refresh();
-			//}
+			}
 		}
 
 		if (game.getPlayStatus() == PlayStatus.GameOver) {
+			if(game.getLives() == 0) {
+				ui.gameOver(true);
+			}
+			else {
+				ui.gameOver(false);
+			}
 			Block223Application.setCurrentPlayableGame(null);
 		}
 

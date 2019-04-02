@@ -5,5 +5,7 @@ public interface Block223PlayModeInterface {
 	public String takeInputs();
 	
 	public void refresh();
+	
+	public void gameOver(boolean hasLost);
 
 }

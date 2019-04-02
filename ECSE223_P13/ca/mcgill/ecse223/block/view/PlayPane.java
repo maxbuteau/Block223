@@ -49,7 +49,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static TOConstant constants;
 	
 	private static Button gameOver;
-	private static boolean gameLost;
+	private static boolean gameLost = false;
 
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
@@ -211,7 +211,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
 		} catch(InvalidInputException iie ) {
-			gameOver();
 		}
 		
 		Platform.runLater(new Runnable() {
@@ -244,12 +243,12 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		return buttonsBox;
 	}
 	
-	private static void gameOver() {
+	public void gameOver(boolean hasLost) {
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				gameLost = true;
+				gameLost = hasLost;
 				Block223Page.setGameOverScene(primaryStage, pgame);		
 			}
 		});	
