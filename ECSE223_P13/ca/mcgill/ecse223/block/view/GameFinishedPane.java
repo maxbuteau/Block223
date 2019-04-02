@@ -55,16 +55,11 @@ public class GameFinishedPane extends VBox {
 	
 	public GameFinishedPane(Stage primaryStage, TOCurrentlyPlayedGame pgame) {
 		this.setAlignment(Pos.CENTER);
-		
-		try {
-			pgame = Block223Controller.getCurrentPlayableGame();
+
 			pLevel = pgame.getCurrentLevel();
 			pLives = pgame.getLives();
 			pScore = pgame.getScore();
-		} catch (InvalidInputException e) {
-			e.getMessage();
-		}
-		
+
 		//Game Over message
 		if (PlayPane.isGameLost()) {
 			gameOver = new Text("Game Over!");
