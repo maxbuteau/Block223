@@ -159,6 +159,10 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 		this.setLeft(gridBox);
 		this.setBottom(buttons_error);
 		
+		this.setOnMouseDragReleased(e -> {
+			designPane.refresh();
+		});
+		
 		//initialize the sfx
 		errorSFXmedia = new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/ErrorSFX.mp3"));
 		MediaPlayer errorSFX = new MediaPlayer(errorSFXmedia);
