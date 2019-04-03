@@ -789,12 +789,10 @@ public class Block223Controller {
 		}
 
 		if (game.getPlayStatus() == PlayStatus.GameOver) {
-			if(game.getLives() == 0) {
-				ui.gameOver(true);
-			}
-			else {
-				ui.gameOver(false);
-			}
+			ui.endGame(new TOCurrentlyPlayedGame("",
+					false, game.getScore(), game.getLives(), game.getCurrentLevel(),
+					game.getPlayername(), game.getCurrentBallX(), game.getCurrentBallY(),
+					game.getCurrentPaddleLength(), game.getCurrentPaddleX()));
 			Block223Application.setCurrentPlayableGame(null);
 		}
 

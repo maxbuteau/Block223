@@ -397,8 +397,10 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 
 		}
 	}
-	
-	public void gameOver(boolean hastLost) {
+
+	@Override
+	public void endGame(TOCurrentlyPlayedGame toPgame) {
+		// TODO Auto-generated method stub
 		
 	}
 }

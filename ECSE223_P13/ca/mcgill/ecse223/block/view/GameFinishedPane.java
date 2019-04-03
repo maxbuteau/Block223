@@ -60,7 +60,7 @@ public class GameFinishedPane extends VBox {
 			pScore = pgame.getScore();
 
 		//Game Over message
-		if (PlayPane.isGameLost()) {
+		if (pgame.getLives() == 0) {
 			gameOver = new Text("Game Over!");
 			settingFont(gameOver, Color.RED, 64);
 		}
