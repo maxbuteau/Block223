@@ -70,17 +70,17 @@ class PlayedGame {
 			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
 			ArrayList<math.geom2d.Point2D> FIntersections = F.intersections(l1);
 			if (C.intersectsLine(l) && getBallDirectionX() <= 0) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).getX(), calculateIntersectionPoint(C, l).getY(),
 						BounceDirection.FLIP_X));
 				counter++;
 			}
 			if (A.intersectsLine(l) && getBallDirectionY() >= 0) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).getX(), calculateIntersectionPoint(A, l).getY(),
 						BounceDirection.FLIP_Y));
 				counter++;
 			}
 			if (B.intersectsLine(l) && getBallDirectionX() >= 0) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).getX(), calculateIntersectionPoint(B, l).getY(),
 						BounceDirection.FLIP_X));
 				
 				counter++;
@@ -142,7 +142,6 @@ class PlayedGame {
 		} else {
 			return null;
 		}
-
   }
 
  private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock){
@@ -184,22 +183,22 @@ class PlayedGame {
 			ArrayList<math.geom2d.Point2D> HIntersections = H.intersections(l1);
 
 			if (A.intersectsLine(l)) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(A, l).getX(), calculateIntersectionPoint(A, l).getY(),
 						BounceDirection.FLIP_Y));
 				counter++;
 			}
 			if (B.intersectsLine(l)) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(B, l).getX(), calculateIntersectionPoint(B, l).getY(),
 						BounceDirection.FLIP_X));
 				counter++;
 			}
 			if (C.intersectsLine(l)) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(C, l).getX(), calculateIntersectionPoint(C, l).getY(),
 						BounceDirection.FLIP_X));
 				counter++;
 			}
 			if (D.intersectsLine(l)) {
-				intersect.add(new BouncePoint(calculateIntersectionPoint(D, l).x, calculateIntersectionPoint(D, l).y,
+				intersect.add(new BouncePoint(calculateIntersectionPoint(D, l).getX(), calculateIntersectionPoint(D, l).getY(),
 						BounceDirection.FLIP_Y));
 				counter++;
 			}
@@ -310,8 +309,8 @@ class PlayedGame {
     boolean outOfBounds = this.isBallOutOfBounds();
     return outOfBounds;
   }
-  	private Point calculateIntersectionPoint(Line2D s, Line2D d) {
-		double a1 = s.getY2() - s.getY1();
+  	private math.geom2d.Point2D calculateIntersectionPoint(Line2D s, Line2D d){
+    double a1 = s.getY2() - s.getY1();
 		double b1 = s.getX1() - s.getX2();
 		double c1 = a1 * s.getX1() + b1 * s.getY1();
 		
@@ -321,10 +320,9 @@ class PlayedGame {
 		
 		double delta = a1*b2-a2*b1;
 		
-		Point pt = new Point();
-		pt.setLocation((b2*c1-b1*c2)/delta,(a1*c2-a2*c1)/delta);
+		math.geom2d.Point2D pt = new math.geom2d.Point2D((b2*c1-b1*c2)/delta, (a1*c2-a2*c1)/delta);
 		return pt;
-	}
+  }
   
   private boolean hitLastBlockAndLastLevel() {
     Game game = this.getGame();
@@ -377,7 +375,7 @@ class PlayedGame {
   }
   
     private BouncePoint calculateBouncePointWall() {
- BouncePoint bp = null;
+     BouncePoint bp = null;
 		Line2D l = new Line2D.Double();
 		l.setLine(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
 				getCurrentBallY() + ballDirectionY);
@@ -409,17 +407,17 @@ class PlayedGame {
 			}
 
 		} else if (A.intersectsLine(l)&& getBallDirectionX()<=0) {
-			bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+			bp = new BouncePoint(calculateIntersectionPoint(A, l).getX(), calculateIntersectionPoint(A, l).getY(),
 					BounceDirection.FLIP_X);
 
 		} else if (C.intersectsLine(l)&& getBallDirectionX()>=0) {
 
-			bp = new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+			bp = new BouncePoint(calculateIntersectionPoint(C, l).getX(), calculateIntersectionPoint(C, l).getY(),
 					BounceDirection.FLIP_X);
 
 		} else if (B.intersectsLine(l)&& getBallDirectionY()<=0) {
 
-			bp = new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
+			bp = new BouncePoint(calculateIntersectionPoint(B, l).getX(), calculateIntersectionPoint(B, l).getY(),
 					BounceDirection.FLIP_Y);
 		}
 		if (bp != null && getCurrentBallX() + ballDirectionX == bp.getX() && getCurrentBallY() + ballDirectionY == bp.getY()){
