@@ -7,5 +7,4 @@ public interface Block223PlayModeInterface {
 	public void refresh();
 	
 	public void gameOver(boolean hasLost);
-
 }
