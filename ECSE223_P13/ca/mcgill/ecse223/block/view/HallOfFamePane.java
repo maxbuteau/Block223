@@ -35,11 +35,13 @@ public class HallOfFamePane extends VBox{
 	private static Button prevHFButton;
 	private HBox navigationButtonBox;
 	private final static int rowsPerPage = 10;
+	private static int index = 0;
+	private static TOHallOfFame toHF;
 
 	public HallOfFamePane() {
 		//error
 		HoFError = new Label();
-		
+
 		//HoF box
 		ImageView imv = new ImageView();
 		Image hofImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/HoF.png"));
@@ -62,51 +64,65 @@ public class HallOfFamePane extends VBox{
 		navigationButtonBox.getChildren().addAll(prevHFButton, nextHFButton);
 		navigationButtonBox.setPadding(new Insets(10));
 		navigationButtonBox.setAlignment(Pos.CENTER);
-		
+
+		System.out.println("1: "+ index);
+		nextHFButton.setOnMousePressed(e -> {	
+			index++;
+			System.out.println("2: "+ index);
+			if(index > toHF.getEntries().size() / 10.0) {
+				index = (int) Math.floor(toHF.getEntries().size() / 10.0);
+			}	
+		});
+
+		prevHFButton.setOnMousePressed(e -> {	
+			index--;
+			System.out.println("3: "+ index);
+			if(index < 0) {
+				index = 0;
+			}System.out.println("4: "+ index);
+		});
+
 
 		//Creating tableView for HoF
 		hallOfFameListData = FXCollections.observableArrayList();
+
 		hallOfFameList = new TableView<>();
+		hallOfFameList.setItems(hallOfFameListData);
 		hallOfFameList.setFocusTraversable(false);
+
 		TableColumn<TableView<TOHallOfFameEntry>, String> usernameCol = new TableColumn<>("Username");
 		usernameCol.setCellValueFactory(new PropertyValueFactory<>("playername"));
+
 		TableColumn<TableView<TOHallOfFameEntry>, Integer> scoreCol = new TableColumn<>("score");
 		scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
-		hallOfFameList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
+
 		hallOfFameList.getColumns().addAll(usernameCol, scoreCol);
 		usernameCol.setMinWidth(Block223Page.getScreenWidth()/8);
 		scoreCol.setMinWidth(Block223Page.getScreenWidth()/8);
+
+		hallOfFameList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
 		refreshHallOfFamePane();
 
-		//		nextHFButton.setOnAction(e -> {		
-		//		});
-		//		
-		//		prevHFButton.setOnAction(e -> {		
-		//		});
 
-		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox, HoFError);	
+		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox);	
 		this.setPrefWidth(Block223Page.getScreenWidth()/4);
 		this.setPadding(new Insets(20));
-		
+
 
 	}
 
 	private static void refreshHallOfFamePane() {
 		hallOfFameList.getItems().clear();
-		int i = 1;
-		if(nextHFButton.isPressed()) i++;
-		if(prevHFButton.isPressed()) i--;
-		if(i <= 0) i = 1;
 		try {
-				List<TOHallOfFameEntry> toHF = Block223Controller.getHallOfFame(1, i * rowsPerPage).getEntries();
-				for (TOHallOfFameEntry to : toHF) {
-					to.getPlayername();
-					to.getScore();
-					hallOfFameListData.add(to);
-				}
-				HoFError.setText("");
-			} catch(InvalidInputException e) {
-				HoFError.setText((e.getMessage()));
+			HoFError.setText("");
+			toHF = Block223Controller.getHallOfFame(index * rowsPerPage + 1, (index + 1) * rowsPerPage);
+			for (TOHallOfFameEntry to : toHF.getEntries()) {
+				System.out.println("yeah");
+				//ca rentre pas dans ce loop !!!!!!!!
+				hallOfFameListData.add(to);
+			}
+		} catch(InvalidInputException e) {
+			HoFError.setText((e.getMessage()));
 		}
 	}
 }
