@@ -34,10 +34,7 @@ public class DesignGridPane extends Pane {
 		designGridPane.setPadding(new Insets(toConstants.getWallPadding()));
 		designPane.getChildren().add(designGridPane);
 		displayGrid();
-		refresh();
-		
-		this.setBorder(new Border(new BorderStroke(Color.WHITE, 
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));		
+		refresh();		
 	}
 
 	public static void refresh() {
