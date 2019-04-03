@@ -983,118 +983,41 @@ public class PlayedGame implements Serializable
 
   // line 254 "../../../../../Block223States.ump"
    private void bounceBall(){
-    // get params
-		double distanceX = ballDirectionX;
-		double distanceY = getBallDirectionY();
-		double positionX = getCurrentBallX();
-		double positionY = getCurrentBallY();
-		double bouncePointX = getBounce().getX();
-		double bouncePointY = getBounce().getY();
-		double distanceLeftX = Math.abs(distanceX - Math.abs(bouncePointX - positionX));
-		double distanceLeftY = Math.abs(distanceY - Math.abs(bouncePointY - positionY));
-		int signX = 1;
-		int signY = 1;
+		    double distanceX = getBallDirectionX();
+			   double distanceY = getBallDirectionY();
+			   double positionX = getCurrentBallX();
+			   double positionY = getCurrentBallY();
+			   double bouncePointX = getBounce().getX();
+			   double bouncePointY = getBounce().getY();
+			   double distanceOutgoingX = distanceX - Math.abs(bouncePointX - positionX);
+			   double distanceOutgoingY = (distanceY - Math.abs(bouncePointY - positionY));
 
-		BounceDirection BD = getBounce().getDirection();
-		// flip the direction
-		if (distanceLeftX != 0 || distanceLeftY != 0) {
-			if (BD == BounceDirection.FLIP_BOTH) {
+			   BounceDirection bounceDirection = getBounce().getDirection();
 
-				ballDirectionX *= -1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-			}
-			if (BD == BounceDirection.FLIP_Y) {
-				if (ballDirectionX < 0)
-					signX = -1;
-				ballDirectionX = ballDirectionX +0.1 * Math.abs(distanceY) * signX;
-				signX = 1;
-				signY = 1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY) * signX;
-				currentBallX = bouncePointX;
-			}
-			if (BD == BounceDirection.FLIP_X) {
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
-				signX = 1;
-				signY = 1;
-				ballDirectionX *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX) * signY;
-				currentBallY = bouncePointY;
-
-			}
-		} else {
-			if (BD == BounceDirection.FLIP_BOTH) {
-				ballDirectionX *= -1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-			}
-			if (BD == BounceDirection.FLIP_Y) {
-				if (ballDirectionX < 0)
-					signX = -1;
-				ballDirectionX += 0.1 * Math.abs(distanceY) * signX;
-				signX = 1;
-				signY = 1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				 currentBallY = bouncePointY;
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY) * signX;
-				 currentBallX =bouncePointX;
-			}
-			if (BD == BounceDirection.FLIP_X) {
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
-				signX = 1;
-				signY = 1;
-				ballDirectionX *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX) * signY;
-				currentBallY = bouncePointY;
-			}
-		}
-  }
+			   if(distanceOutgoingX != 0 || distanceOutgoingY != 0) {
+				   if(bounceDirection.equals(BounceDirection.FLIP_BOTH)) {
+					   ballDirectionX *= -1;
+					   ballDirectionY *= -1;
+					   currentBallX = bouncePointX + distanceOutgoingX / distanceX * ballDirectionX;
+					   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
+				   }
+				   if(bounceDirection.equals(BounceDirection.FLIP_X)) {
+					   ballDirectionX *= -1;
+					   ballDirectionY += Math.signum(ballDirectionY) * 0.1 * Math.abs(ballDirectionX);
+					   currentBallX = bouncePointX + distanceOutgoingX / distanceX * ballDirectionX;
+					   currentBallY = bouncePointY + distanceOutgoingX / distanceX * ballDirectionY;
+				   }
+				   if(bounceDirection.equals(BounceDirection.FLIP_Y)) {
+					   ballDirectionX += Math.signum(ballDirectionX) * 0.1 * Math.abs(ballDirectionY);
+					   ballDirectionY *= -1;
+					   currentBallX = bouncePointX + distanceOutgoingY / distanceY * ballDirectionX;
+					   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
+				   }
+			   }
+			   setBounce(null);
+		  }
+		
+  
 
   // line 369 "../../../../../Block223States.ump"
    private boolean isOutOfBoundsAndLastLife(){
