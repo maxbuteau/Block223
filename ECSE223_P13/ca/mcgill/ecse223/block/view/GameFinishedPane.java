@@ -65,7 +65,7 @@ public class GameFinishedPane extends VBox {
 			settingFont(gameOver, Color.RED, 64);
 		}
 		else {
-			gameOver = new Text("GGWP!!!");
+			gameOver = new Text("Congratulations!");
 			settingFont(gameOver, Color.GOLD, 64);
 		}
 		
