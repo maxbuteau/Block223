@@ -310,6 +310,7 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 		buttonBox = new HBox(20);
 		buttonBox.setAlignment(Pos.CENTER);
 		buttonBox.getChildren().addAll(resumeTest, finishTest);
+		buttonBox.setPadding(new Insets(0, 0, Block223Page.getScreenHeight()/4, 0));
 		
 		this.setBottom(buttonBox);
 
