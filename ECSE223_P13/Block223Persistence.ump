@@ -11,7 +11,7 @@ class Block223 {
 		User.reinitializeUniqueUserName(this.getUsers());
 		Game.reinitializeUniqueName(this.getGames());
 		Block.reinitializeAutouniqueBlockID(this.getGames());
-		//PlayedGame.reinitializeAutouniquePlayedGameID(this.getPlayedGames());
+		PlayedGame.reinitializeAutouniquePlayedGameID(this.getPlayedGames());
 	}
 }
 
@@ -115,16 +115,15 @@ class PlayedGame {
   isA Serializable;
   private static final long serialVersionUID = 8597675110221231714L;
   
-  //public static  void reinitializeAutouniquePlayedGameID(List<PlayedGame> gamesList){
-    //nextId = 0;
-		//for (PlayedGame game : gamesList) {		
-			//if (game.getId() > nextId) {
-				//nextId = game.getId();
-			//}
-		//}
-		//nextId++;
-		//}
-  //}
+  public static  void reinitializeAutouniquePlayedGameID(List<PlayedGame> gamesList){
+    nextId = 0;
+		for (PlayedGame game : gamesList) {		
+			if (game.getId() > nextId) {
+				nextId = game.getId();
+			}
+		}
+		nextId++;
+	}
 }
 
 class PlayedBlockAssignment {

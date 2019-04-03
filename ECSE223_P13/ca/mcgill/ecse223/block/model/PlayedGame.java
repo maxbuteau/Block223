@@ -759,6 +759,17 @@ public class PlayedGame implements Serializable
   	}
   }
 
+  // line 119 "../../../../../Block223Persistence.ump"
+   public static  void reinitializeAutouniquePlayedGameID(List<PlayedGame> gamesList){
+    nextId = 0;
+		for (PlayedGame game : gamesList) {		
+			if (game.getId() > nextId) {
+				nextId = game.getId();
+			}
+		}
+		nextId++;
+  }
+
 
   /**
    * Guards
