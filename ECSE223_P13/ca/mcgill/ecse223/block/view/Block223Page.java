@@ -283,7 +283,7 @@ public class Block223Page extends Application{
 				else if(e.getCode() == KeyCode.LEFT) PlayPane.setInputs("l");
 				else if(e.getCode() == KeyCode.SPACE) {
 					PlayPane.setInputs(" ");
-					//PlayPane.getButtonsBox().toFront();
+					PlayPane.getButtonsBox().toFront();
 				}
 				else {
 					//We do nothing
