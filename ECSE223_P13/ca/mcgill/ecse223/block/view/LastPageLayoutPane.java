@@ -74,6 +74,8 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 	private static String inputs;
 	private static TOCurrentlyPlayedGame pgame;
 	private static Button finishTest;
+	private static Button resumeTest;
+	private static HBox buttonBox;
 
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing) {
@@ -282,10 +284,34 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 			this.setRight(settingsBox);
 			this.setBottom(buttons_error);
 		});
-		this.setBottom(finishTest);
 		
-		BorderPane.setAlignment(finishTest, Pos.CENTER);
-		BorderPane.setMargin(finishTest, new Insets(0,0,Block223Page.getScreenHeight()/5,0));
+		resumeTest = new Button("Resume Test");
+		resumeTest.setDisable(true);
+		resumeTest.setOnAction(e -> {
+			resumeTest.setDisable(true);
+			Runnable task = new Runnable() {
+				public void run() {
+					try {
+						Block223Controller.startGame(LastPageLayoutPane.this);
+						testStarted = false;
+						finishTest.setDisable(false);
+						resumeTest.setDisable(false);
+
+					} catch (InvalidInputException e) {
+						setErrorMessage(e.getMessage());
+					}
+				}
+			};
+			Thread t2 = new Thread(task);
+			t2.setDaemon(true);
+			t2.start();
+		});
+		
+		buttonBox = new HBox(20);
+		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.getChildren().addAll(resumeTest, finishTest);
+		
+		this.setBottom(buttonBox);
 
 		paddle = new Rectangle();
 		paddle.setWidth(settingsPane.getMaxPaddleSliderValue());
@@ -295,7 +321,7 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 		paddle.setTranslateY(constants.getPlayAreaSide()-constants.getVerticalDistance()-constants.getPaddleWidth());
 
 		ball = new Circle();
-		ball.setRadius(constants.getBallDiameter());
+		ball.setRadius(constants.getBallDiameter()/2);
 		ball.setFill(Color.WHITE);
 		ball.setTranslateX(constants.getPlayAreaSide()/2);
 		ball.setTranslateY(constants.getPlayAreaSide()/2);
@@ -310,6 +336,7 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 					Block223Controller.testGame(LastPageLayoutPane.this);
 					testStarted = false;
 					finishTest.setDisable(false);
+					resumeTest.setDisable(false);
 
 				} catch (InvalidInputException e) {
 					setErrorMessage(e.getMessage());
