@@ -762,10 +762,10 @@ public class Block223Controller {
 
 			// Update Paddle Position
 			for (int i = 0; i < userInputs.length(); ++i) {
-				if (userInputs.charAt(i) == 'l' && game.getCurrentPaddleX() > 0)
+				if (userInputs.charAt(i) == 'l' && game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT > 0)
 					game.setCurrentPaddleX(game.getCurrentPaddleX() + PlayedGame.PADDLE_MOVE_LEFT);
 
-				else if (userInputs.charAt(i) == 'r' && game.getCurrentPaddleX() < Game.PLAY_AREA_SIDE - game.getCurrentPaddleLength())
+				else if (userInputs.charAt(i) == 'r' && game.getCurrentPaddleX() < Game.PLAY_AREA_SIDE - game.getCurrentPaddleLength()-PlayedGame.PADDLE_MOVE_RIGHT)
 					game.setCurrentPaddleX(game.getCurrentPaddleX() + PlayedGame.PADDLE_MOVE_RIGHT);
 
 				else if (userInputs.charAt(i) == ' ')
