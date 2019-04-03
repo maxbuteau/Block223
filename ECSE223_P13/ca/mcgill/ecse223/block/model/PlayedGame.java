@@ -12,7 +12,7 @@ import math.geom2d.conic.*;
 import java.util.*;
 
 // line 11 "../../../../../Block223PlayMode.ump"
-// line 104 "../../../../../Block223Persistence.ump"
+// line 113 "../../../../../Block223Persistence.ump"
 // line 1 "../../../../../Block223States.ump"
 public class PlayedGame implements Serializable
 {
@@ -1331,7 +1331,7 @@ public class PlayedGame implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 107 "../../../../../Block223Persistence.ump"
+  // line 116 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 8597675110221231714L ;
 
   

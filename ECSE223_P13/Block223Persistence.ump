@@ -11,6 +11,7 @@ class Block223 {
 		User.reinitializeUniqueUserName(this.getUsers());
 		Game.reinitializeUniqueName(this.getGames());
 		Block.reinitializeAutouniqueBlockID(this.getGames());
+		//PlayedGame.reinitializeAutouniquePlayedGameID(this.getPlayedGames());
 	}
 }
 
@@ -53,6 +54,14 @@ class Game {
 		gamesByName = new HashMap<String, Game>();
 		for (Game game : games) {
 			gamesByName.put(game.getName(), game);
+			game.setHallOfFameEntriesPriority(new Comparator<HallOfFameEntry>(){
+     @Override
+     public int compare(HallOfFameEntry arg0, HallOfFameEntry arg1)
+     {
+          return ((Integer)arg0.getScore()).compareTo(
+          ((Integer)arg1.getScore()));
+     }
+});
 		}
 	}
 }
@@ -105,6 +114,17 @@ class PlayedGame {
   depend java.io.Serializable;
   isA Serializable;
   private static final long serialVersionUID = 8597675110221231714L;
+  
+  //public static  void reinitializeAutouniquePlayedGameID(List<PlayedGame> gamesList){
+    //nextId = 0;
+		//for (PlayedGame game : gamesList) {		
+			//if (game.getId() > nextId) {
+				//nextId = game.getId();
+			//}
+		//}
+		//nextId++;
+		//}
+  //}
 }
 
 class PlayedBlockAssignment {
