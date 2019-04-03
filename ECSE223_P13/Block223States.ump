@@ -146,7 +146,7 @@ class PlayedGame {
   }
 
  private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock){
-Rectangle2D blockRect = new Rectangle2D.Double();
+    Rectangle2D blockRect = new Rectangle2D.Double();
 		Line2D l = new Line2D.Double();
 		ArrayList<BouncePoint> intersect = new ArrayList<>();
 		int counter = 0;
@@ -171,11 +171,11 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 
 			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
 					Ball.BALL_DIAMETER/2.,Math.PI/2,Math.PI,false);
-			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX()+Block.SIZE,pblock.getY()),
 					Ball.BALL_DIAMETER/2.,0,Math.PI/2,false);
-			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()+Block.SIZE),
 					Ball.BALL_DIAMETER/2.,Math.PI,((3/2)*Math.PI),false);
-			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX()+Block.SIZE,pblock.getY()+Block.SIZE),
 					Ball.BALL_DIAMETER/2.,((3/2)*Math.PI),0,false);
 
 			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
@@ -245,6 +245,9 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 						closest.setHitBlock(pblock);
 					}
 				}
+			}
+			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
+				return null;
 			}
 			return closest;	
 		}
