@@ -391,7 +391,7 @@ class PlayedGame {
 		if (A.intersectsLine(l) && B.intersectsLine(l) && getBallDirectionX()<=0 && getBallDirectionY()<=0) {
 
 			if (calculateIntersectionPoint(A, l).equals(calculateIntersectionPoint(B, l))) {
-				bp = new BouncePoint(calculateIntersectionPoint(A, l).x, calculateIntersectionPoint(A, l).y,
+				bp = new BouncePoint(calculateIntersectionPoint(A, l).getX(), calculateIntersectionPoint(A, l).getY(),
 						BounceDirection.FLIP_BOTH);
 			} else {
 				bp = new BouncePoint(Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2, BounceDirection.FLIP_BOTH);
@@ -399,7 +399,7 @@ class PlayedGame {
 
 		} else if (B.intersectsLine(l) && C.intersectsLine(l)&& getBallDirectionX()>=0 && getBallDirectionY()<=0) {
 			if (calculateIntersectionPoint(C, l).equals(calculateIntersectionPoint(B, l))) {
-				bp = new BouncePoint(calculateIntersectionPoint(C, l).x, calculateIntersectionPoint(C, l).y,
+				bp = new BouncePoint(calculateIntersectionPoint(C, l).getX(), calculateIntersectionPoint(C, l).getY(),
 						BounceDirection.FLIP_BOTH);
 			} else {
 				bp = new BouncePoint(Game.PLAY_AREA_SIDE - Ball.BALL_DIAMETER / 2, Ball.BALL_DIAMETER / 2,
