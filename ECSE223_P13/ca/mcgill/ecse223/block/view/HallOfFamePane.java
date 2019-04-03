@@ -82,7 +82,6 @@ public class HallOfFamePane extends VBox{
 			}System.out.println("4: "+ index);
 		});
 
-
 		//Creating tableView for HoF
 		hallOfFameListData = FXCollections.observableArrayList();
 
