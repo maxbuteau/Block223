@@ -237,6 +237,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		ball.setTranslateX(pgame.getCurrentBallX());
 		ball.setTranslateY(pgame.getCurrentBallY());
 		paddle.setTranslateX(pgame.getCurrentPaddleX());
+		paddle.setWidth(pgame.getCurrentPaddleLength());
 		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
 	}
 

@@ -84,7 +84,7 @@ public class HallOfFamePane extends VBox{
 		//		prevHFButton.setOnAction(e -> {		
 		//		});
 
-		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox);	
+		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox, HoFError);	
 		this.setPrefWidth(Block223Page.getScreenWidth()/4);
 		this.setPadding(new Insets(20));
 		

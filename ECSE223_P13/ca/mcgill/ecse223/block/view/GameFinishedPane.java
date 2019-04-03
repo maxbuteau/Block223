@@ -34,7 +34,6 @@ public class GameFinishedPane extends VBox {
 	private Text livesRemaining;
 	
 	//Buttons
-	private Button playAgain;
 	private Button backToMenu;
 	private Button logOut;
 	
@@ -104,23 +103,19 @@ public class GameFinishedPane extends VBox {
 		innerBox.getChildren().addAll(scoreBox, levelBox, livesBox);
 		innerBox.setAlignment(Pos.CENTER);
 		//Hall Of Fame
-		//hofPane = new HallOfFamePane();
+		hofPane = new HallOfFamePane();
 		
 		
 		//Buttons
-		playAgain = new Button("Play Again");
 		backToMenu = new Button("Games Menu");
 		logOut = new Button("Log Out");
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		
 		buttonBox = new HBox(BUTTON_GAP);
-		buttonBox.getChildren().addAll(playAgain, backToMenu, logOut);
+		buttonBox.getChildren().addAll(backToMenu, logOut);
 		buttonBox.setAlignment(Pos.CENTER);
 		
 		//button functionality
-		playAgain.setOnAction(e->{
-			Block223Page.setPlayScene(primaryStage);
-		});
 		
 		backToMenu.setOnAction(e->{
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
@@ -131,7 +126,7 @@ public class GameFinishedPane extends VBox {
 		});
 		
 		statsAndHofBox = new HBox(H_GAP);
-		statsAndHofBox.getChildren().addAll(innerBox);
+		statsAndHofBox.getChildren().addAll(innerBox, hofPane);
 		statsAndHofBox.setAlignment(Pos.CENTER);
 		
 		//Master VBox

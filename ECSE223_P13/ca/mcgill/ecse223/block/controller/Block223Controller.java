@@ -789,6 +789,12 @@ public class Block223Controller {
 		}
 
 		if (game.getPlayStatus() == PlayStatus.GameOver) {
+			if(game.getLives() == 0) {
+				ui.gameOver(true);
+			}
+			else {
+				ui.gameOver(false);
+			}
 			Block223Application.setCurrentPlayableGame(null);
 		}
 
@@ -970,16 +976,5 @@ public class Block223Controller {
 					game.getHallOfFameEntry(i).getScore(), result);
 		}
 		return result;
-	}
-	
-	//This method returns -1 if the game is not over, 0 if the game is over and the player lost, 1 is the game is over and the player won
-	public static int isGameOver() {
-		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
-		
-		if(pgame.getPlayStatus() != PlayStatus.GameOver) return -1;
-		
-		if(pgame.getLives() == 0) return 0;
-		
-		return 1;
 	}
 }
