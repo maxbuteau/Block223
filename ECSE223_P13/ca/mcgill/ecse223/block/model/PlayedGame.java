@@ -866,6 +866,9 @@ public class PlayedGame implements Serializable
 					}
 				}
 			}
+			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
+				return null;
+			}
 			return closest;
 
 		} else {
@@ -873,7 +876,7 @@ public class PlayedGame implements Serializable
 		}
   }
 
-  // line 146 "../../../../../Block223States.ump"
+  // line 149 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock){
     Rectangle2D blockRect = new Rectangle2D.Double();
 		Line2D l = new Line2D.Double();
@@ -900,12 +903,12 @@ public class PlayedGame implements Serializable
 
 			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
 					Ball.BALL_DIAMETER/2.,Math.PI/2,Math.PI,false);
-			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX()+Block.SIZE,pblock.getY()),
 					Ball.BALL_DIAMETER/2.,0,Math.PI/2,false);
-			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
-					Ball.BALL_DIAMETER/2.,Math.PI,((3/2)*Math.PI),false);
-			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
-					Ball.BALL_DIAMETER/2.,((3/2)*Math.PI),0,false);
+			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()+Block.SIZE),
+					Ball.BALL_DIAMETER/2.,Math.PI,1.5*Math.PI,false);
+			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX()+Block.SIZE,pblock.getY()+Block.SIZE),
+					Ball.BALL_DIAMETER/2.,1.5*Math.PI,0,false);
 
 			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
 			ArrayList<math.geom2d.Point2D> FIntersections = F.intersections(l1);
@@ -934,25 +937,25 @@ public class PlayedGame implements Serializable
 			}
 
 			for(int a = 0; a<EIntersections.size();a++) {
-				if(currentBallX>pblock.getX())
+				if(ballDirectionX<0)
 					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				counter++;
 			}	
 			for(int a = 0; a<FIntersections.size();a++) {
-				if(currentBallX>pblock.getX()+Block.SIZE)
+				if(ballDirectionX<=0)
 					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
 			}
 			for(int a = 0; a<GIntersections.size();a++) {
-				if(currentBallX>pblock.getX())
+				if(ballDirectionX<0)
 					intersect.add(new BouncePoint(GIntersections.get(a).getX(), GIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				else intersect.add(new BouncePoint(GIntersections.get(a).getX(), GIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				counter++;
 			}
 			for(int a = 0; a<HIntersections.size();a++) {
-				if(currentBallX>pblock.getX()+Block.SIZE)
+				if(ballDirectionX<0)
 					intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				else intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
@@ -975,128 +978,58 @@ public class PlayedGame implements Serializable
 					}
 				}
 			}
+			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
+				return null;
+			}
 			return closest;	
 		}
 		
 		return null;
   }
 
-  // line 254 "../../../../../Block223States.ump"
+  // line 260 "../../../../../Block223States.ump"
    private void bounceBall(){
-    // get params
-		double distanceX = ballDirectionX;
-		double distanceY = getBallDirectionY();
-		double positionX = getCurrentBallX();
-		double positionY = getCurrentBallY();
-		double bouncePointX = getBounce().getX();
-		double bouncePointY = getBounce().getY();
-		double distanceLeftX = Math.abs(distanceX - Math.abs(bouncePointX - positionX));
-		double distanceLeftY = Math.abs(distanceY - Math.abs(bouncePointY - positionY));
-		int signX = 1;
-		int signY = 1;
+    double distanceX = getBallDirectionX();
+	   double distanceY = getBallDirectionY();
+	   double positionX = getCurrentBallX();
+	   double positionY = getCurrentBallY();
+	   double bouncePointX = getBounce().getX();
+	   double bouncePointY = getBounce().getY();
+	   double distanceOutgoingX = (distanceX) - Math.abs(bouncePointX - positionX);
+	   double distanceOutgoingY = (distanceY) - Math.abs(bouncePointY - positionY);
 
-		BounceDirection BD = getBounce().getDirection();
-		// flip the direction
-		if (distanceLeftX != 0 || distanceLeftY != 0) {
-			if (BD == BounceDirection.FLIP_BOTH) {
-
-				ballDirectionX *= -1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-			}
-			if (BD == BounceDirection.FLIP_Y) {
-				if (ballDirectionX < 0)
-					signX = -1;
-				ballDirectionX = ballDirectionX +0.1 * Math.abs(distanceY) * signX;
-				signX = 1;
-				signY = 1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY) * signX;
-				currentBallX = bouncePointX;
-			}
-			if (BD == BounceDirection.FLIP_X) {
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
-				signX = 1;
-				signY = 1;
-				ballDirectionX *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX) * signY;
-				currentBallY = bouncePointY;
-
-			}
-		} else {
-			if (BD == BounceDirection.FLIP_BOTH) {
-				ballDirectionX *= -1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-			}
-			if (BD == BounceDirection.FLIP_Y) {
-				if (ballDirectionX < 0)
-					signX = -1;
-				ballDirectionX += 0.1 * Math.abs(distanceY) * signX;
-				signX = 1;
-				signY = 1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				 currentBallY = bouncePointY;
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY) * signX;
-				 currentBallX =bouncePointX;
-			}
-			if (BD == BounceDirection.FLIP_X) {
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
-				signX = 1;
-				signY = 1;
-				ballDirectionX *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX) * signY;
-				currentBallY = bouncePointY;
-			}
-		}
+	   BounceDirection bounceDirection = getBounce().getDirection();
+		   if(bounceDirection.equals(BounceDirection.FLIP_BOTH)) {
+			   ballDirectionX *= -1;
+			   ballDirectionY *= -1;
+			   currentBallX = bouncePointX + distanceOutgoingX / distanceX * ballDirectionX;
+			   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
+		   }
+		   if(bounceDirection.equals(BounceDirection.FLIP_X)) {
+			   ballDirectionX *= -1;
+			   if(ballDirectionY==0) {
+				   ballDirectionY=0.1*Math.abs(ballDirectionX);
+			   }
+			   else
+			   ballDirectionY += Math.signum(ballDirectionY) * 0.1 * Math.abs(ballDirectionX);
+			   currentBallX = bouncePointX + distanceOutgoingX / distanceX * ballDirectionX;
+			   currentBallY = bouncePointY + distanceOutgoingX / distanceX * ballDirectionY;
+		   }
+		   if(bounceDirection.equals(BounceDirection.FLIP_Y)) {
+			   if(ballDirectionX==0) {
+				   ballDirectionX=0.1*Math.abs(ballDirectionY);
+			   }
+			   else
+			   ballDirectionX += Math.signum(ballDirectionX) * 0.1 * Math.abs(ballDirectionY);
+			   ballDirectionY *= -1;
+			   currentBallX = bouncePointX + distanceOutgoingY / distanceY * ballDirectionX;
+			   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
+		   }
+	   
+	   setBounce(null);
   }
 
-  // line 369 "../../../../../Block223States.ump"
+  // line 301 "../../../../../Block223States.ump"
    private boolean isOutOfBoundsAndLastLife(){
     boolean outOfBounds = false;
     
@@ -1106,13 +1039,13 @@ public class PlayedGame implements Serializable
     return outOfBounds;
   }
 
-  // line 378 "../../../../../Block223States.ump"
+  // line 310 "../../../../../Block223States.ump"
    private boolean isOutOfBounds(){
     boolean outOfBounds = this.isBallOutOfBounds();
     return outOfBounds;
   }
 
-  // line 382 "../../../../../Block223States.ump"
+  // line 314 "../../../../../Block223States.ump"
    private Point calculateIntersectionPoint(Line2D s, Line2D d){
     double a1 = s.getY2() - s.getY1();
 		double b1 = s.getX1() - s.getX2();
@@ -1129,7 +1062,7 @@ public class PlayedGame implements Serializable
 		return pt;
   }
 
-  // line 398 "../../../../../Block223States.ump"
+  // line 330 "../../../../../Block223States.ump"
    private boolean hitLastBlockAndLastLevel(){
     Game game = this.getGame();
     	int nrLevels = game.numberOfLevels();
@@ -1146,7 +1079,7 @@ public class PlayedGame implements Serializable
     return false;
   }
 
-  // line 414 "../../../../../Block223States.ump"
+  // line 346 "../../../../../Block223States.ump"
    private boolean hitLastBlock(){
     int nrBlocks = this.numberOfBlocks();
     	this.setBounce(null);
@@ -1159,7 +1092,7 @@ public class PlayedGame implements Serializable
     return false;
   }
 
-  // line 426 "../../../../../Block223States.ump"
+  // line 358 "../../../../../Block223States.ump"
    private boolean hitBlock(){
     int nrBlocks = this.numberOfBlocks();
     	this.setBounce(null);
@@ -1176,14 +1109,14 @@ public class PlayedGame implements Serializable
     	return this.getBounce() != null;
   }
 
-  // line 442 "../../../../../Block223States.ump"
+  // line 374 "../../../../../Block223States.ump"
    private boolean hitWall(){
     BouncePoint bp = calculateBouncePointWall();
     this.setBounce(bp);
     return bp != null;
   }
 
-  // line 448 "../../../../../Block223States.ump"
+  // line 380 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     BouncePoint bp = null;
 		Line2D l = new Line2D.Double();
@@ -1230,6 +1163,9 @@ public class PlayedGame implements Serializable
 			bp = new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
 					BounceDirection.FLIP_Y);
 		}
+		if (bp != null && getCurrentBallX() + ballDirectionX == bp.getX() && getCurrentBallY() + ballDirectionY == bp.getY()){
+			return null;
+		}
 
 		return bp;
   }
@@ -1238,7 +1174,7 @@ public class PlayedGame implements Serializable
   /**
    * Actions
    */
-  // line 500 "../../../../../Block223States.ump"
+  // line 435 "../../../../../Block223States.ump"
    private void doSetup(){
     this.resetCurrentBallX();
 	   this.resetCurrentBallY();
@@ -1304,12 +1240,12 @@ public class PlayedGame implements Serializable
 	   }
   }
 
-  // line 566 "../../../../../Block223States.ump"
+  // line 501 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     this.bounceBall();
   }
 
-  // line 570 "../../../../../Block223States.ump"
+  // line 505 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     this.setLives(lives - 1);
     this.resetCurrentBallX();
@@ -1319,7 +1255,7 @@ public class PlayedGame implements Serializable
     this.resetCurrentPaddleX();
   }
 
-  // line 579 "../../../../../Block223States.ump"
+  // line 514 "../../../../../Block223States.ump"
    private void doHitBlock(){
     int score = this.getScore();
     BouncePoint bounce = this.getBounce();
@@ -1331,7 +1267,7 @@ public class PlayedGame implements Serializable
     this.bounceBall();
   }
 
-  // line 591 "../../../../../Block223States.ump"
+  // line 526 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     this.doHitBlock();
     int level = this.getCurrentLevel();
@@ -1341,7 +1277,7 @@ public class PlayedGame implements Serializable
     this.setWaitTime(INITIAL_WAIT_TIME*Math.pow(this.getGame().getBall().getBallSpeedIncreaseFactor(),(double)(this.getCurrentLevel()-1)));
   }
 
-  // line 601 "../../../../../Block223States.ump"
+  // line 536 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
 	double y = getCurrentBallY();
@@ -1352,7 +1288,7 @@ public class PlayedGame implements Serializable
 	setCurrentBallY(y + dy);
   }
 
-  // line 611 "../../../../../Block223States.ump"
+  // line 546 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = this.getBlock223();
     

@@ -40,7 +40,7 @@ class PlayedGame {
   }
   
     private BouncePoint calculateBouncePointPaddle() {
-			Rectangle2D paddleRect = new Rectangle2D.Double();
+	Rectangle2D paddleRect = new Rectangle2D.Double();
 		Line2D l = new Line2D.Double();
 		ArrayList<BouncePoint> intersect = new ArrayList<>();
 		int counter = 0;
@@ -134,6 +134,9 @@ class PlayedGame {
 					}
 				}
 			}
+			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
+				return null;
+			}
 			return closest;
 
 		} else {
@@ -143,7 +146,7 @@ class PlayedGame {
   }
 
  private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment pblock){
-Rectangle2D blockRect = new Rectangle2D.Double();
+    Rectangle2D blockRect = new Rectangle2D.Double();
 		Line2D l = new Line2D.Double();
 		ArrayList<BouncePoint> intersect = new ArrayList<>();
 		int counter = 0;
@@ -168,12 +171,12 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 
 			CircleArc2D E = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
 					Ball.BALL_DIAMETER/2.,Math.PI/2,Math.PI,false);
-			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
+			CircleArc2D F = new CircleArc2D(new math.geom2d.Point2D(pblock.getX()+Block.SIZE,pblock.getY()),
 					Ball.BALL_DIAMETER/2.,0,Math.PI/2,false);
-			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
-					Ball.BALL_DIAMETER/2.,Math.PI,((3/2)*Math.PI),false);
-			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()),
-					Ball.BALL_DIAMETER/2.,((3/2)*Math.PI),0,false);
+			CircleArc2D G = new CircleArc2D(new math.geom2d.Point2D(pblock.getX(),pblock.getY()+Block.SIZE),
+					Ball.BALL_DIAMETER/2.,Math.PI,1.5*Math.PI,false);
+			CircleArc2D H = new CircleArc2D(new math.geom2d.Point2D(pblock.getX()+Block.SIZE,pblock.getY()+Block.SIZE),
+					Ball.BALL_DIAMETER/2.,1.5*Math.PI,0,false);
 
 			ArrayList<math.geom2d.Point2D> EIntersections = E.intersections(l1);
 			ArrayList<math.geom2d.Point2D> FIntersections = F.intersections(l1);
@@ -202,25 +205,25 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 			}
 
 			for(int a = 0; a<EIntersections.size();a++) {
-				if(currentBallX>pblock.getX())
+				if(ballDirectionX<0)
 					intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				else intersect.add(new BouncePoint(EIntersections.get(a).getX(), EIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				counter++;
 			}	
 			for(int a = 0; a<FIntersections.size();a++) {
-				if(currentBallX>pblock.getX()+Block.SIZE)
+				if(ballDirectionX<=0)
 					intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				else intersect.add(new BouncePoint(FIntersections.get(a).getX(), FIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
 			}
 			for(int a = 0; a<GIntersections.size();a++) {
-				if(currentBallX>pblock.getX())
+				if(ballDirectionX<0)
 					intersect.add(new BouncePoint(GIntersections.get(a).getX(), GIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				else intersect.add(new BouncePoint(GIntersections.get(a).getX(), GIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				counter++;
 			}
 			for(int a = 0; a<HIntersections.size();a++) {
-				if(currentBallX>pblock.getX()+Block.SIZE)
+				if(ballDirectionX<0)
 					intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_X));
 				else intersect.add(new BouncePoint(HIntersections.get(a).getX(), HIntersections.get(a).getY(), BounceDirection.FLIP_Y));
 				counter++;
@@ -243,6 +246,9 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 					}
 				}
 			}
+			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
+				return null;
+			}
 			return closest;	
 		}
 		
@@ -251,118 +257,44 @@ Rectangle2D blockRect = new Rectangle2D.Double();
 
 
   private void bounceBall() {
-	// get params
-		double distanceX = ballDirectionX;
-		double distanceY = getBallDirectionY();
-		double positionX = getCurrentBallX();
-		double positionY = getCurrentBallY();
-		double bouncePointX = getBounce().getX();
-		double bouncePointY = getBounce().getY();
-		double distanceLeftX = Math.abs(distanceX - Math.abs(bouncePointX - positionX));
-		double distanceLeftY = Math.abs(distanceY - Math.abs(bouncePointY - positionY));
-		int signX = 1;
-		int signY = 1;
+	   double distanceX = getBallDirectionX();
+	   double distanceY = getBallDirectionY();
+	   double positionX = getCurrentBallX();
+	   double positionY = getCurrentBallY();
+	   double bouncePointX = getBounce().getX();
+	   double bouncePointY = getBounce().getY();
+	   double distanceOutgoingX = (distanceX) - Math.abs(bouncePointX - positionX);
+	   double distanceOutgoingY = (distanceY) - Math.abs(bouncePointY - positionY);
 
-		BounceDirection BD = getBounce().getDirection();
-		// flip the direction
-		if (distanceLeftX != 0 || distanceLeftY != 0) {
-			if (BD == BounceDirection.FLIP_BOTH) {
-
-				ballDirectionX *= -1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-			}
-			if (BD == BounceDirection.FLIP_Y) {
-				if (ballDirectionX < 0)
-					signX = -1;
-				ballDirectionX = ballDirectionX +0.1 * Math.abs(distanceY) * signX;
-				signX = 1;
-				signY = 1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY) * signX;
-				currentBallX = bouncePointX;
-			}
-			if (BD == BounceDirection.FLIP_X) {
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
-				signX = 1;
-				signY = 1;
-				ballDirectionX *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX) * signY;
-				currentBallY = bouncePointY;
-
-			}
-		} else {
-			if (BD == BounceDirection.FLIP_BOTH) {
-				ballDirectionX *= -1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				currentBallY = bouncePointY;
-			}
-			if (BD == BounceDirection.FLIP_Y) {
-				if (ballDirectionX < 0)
-					signX = -1;
-				ballDirectionX += 0.1 * Math.abs(distanceY) * signX;
-				signX = 1;
-				signY = 1;
-				ballDirectionY *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallY = bouncePointY + distanceLeftY * signY;
-				 currentBallY = bouncePointY;
-				currentBallX = bouncePointX + (distanceLeftX + 0.1 * distanceLeftY) * signX;
-				 currentBallX =bouncePointX;
-			}
-			if (BD == BounceDirection.FLIP_X) {
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				ballDirectionY += 0.1 * Math.abs(distanceX) * signY;
-				signX = 1;
-				signY = 1;
-				ballDirectionX *= -1;
-				if (Math.signum(ballDirectionY) < 0)
-					signY = -1;
-				if (Math.signum(ballDirectionX) < 0)
-					signX = -1;
-
-				currentBallX = bouncePointX + distanceLeftX * signX;
-				currentBallX = bouncePointX;
-				currentBallY = bouncePointY + (distanceLeftY + 0.1 * distanceLeftX) * signY;
-				currentBallY = bouncePointY;
-			}
-		}
-
+	   BounceDirection bounceDirection = getBounce().getDirection();
+		   if(bounceDirection.equals(BounceDirection.FLIP_BOTH)) {
+			   ballDirectionX *= -1;
+			   ballDirectionY *= -1;
+			   currentBallX = bouncePointX + distanceOutgoingX / distanceX * ballDirectionX;
+			   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
+		   }
+		   if(bounceDirection.equals(BounceDirection.FLIP_X)) {
+			   ballDirectionX *= -1;
+			   if(ballDirectionY==0) {
+				   ballDirectionY=0.1*Math.abs(ballDirectionX);
+			   }
+			   else
+			   ballDirectionY += Math.signum(ballDirectionY) * 0.1 * Math.abs(ballDirectionX);
+			   currentBallX = bouncePointX + distanceOutgoingX / distanceX * ballDirectionX;
+			   currentBallY = bouncePointY + distanceOutgoingX / distanceX * ballDirectionY;
+		   }
+		   if(bounceDirection.equals(BounceDirection.FLIP_Y)) {
+			   if(ballDirectionX==0) {
+				   ballDirectionX=0.1*Math.abs(ballDirectionY);
+			   }
+			   else
+			   ballDirectionX += Math.signum(ballDirectionX) * 0.1 * Math.abs(ballDirectionY);
+			   ballDirectionY *= -1;
+			   currentBallX = bouncePointX + distanceOutgoingY / distanceY * ballDirectionX;
+			   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
+		   }
+	   
+	   setBounce(null);
 }
 
   private boolean isOutOfBoundsAndLastLife() {
@@ -445,7 +377,7 @@ Rectangle2D blockRect = new Rectangle2D.Double();
   }
   
     private BouncePoint calculateBouncePointWall() {
-BouncePoint bp = null;
+ BouncePoint bp = null;
 		Line2D l = new Line2D.Double();
 		l.setLine(getCurrentBallX(), getCurrentBallY(), getCurrentBallX() + ballDirectionX,
 				getCurrentBallY() + ballDirectionY);
@@ -489,6 +421,9 @@ BouncePoint bp = null;
 
 			bp = new BouncePoint(calculateIntersectionPoint(B, l).x, calculateIntersectionPoint(B, l).y,
 					BounceDirection.FLIP_Y);
+		}
+		if (bp != null && getCurrentBallX() + ballDirectionX == bp.getX() && getCurrentBallY() + ballDirectionY == bp.getY()){
+			return null;
 		}
 
 		return bp;
