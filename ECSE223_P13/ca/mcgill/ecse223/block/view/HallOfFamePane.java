@@ -32,7 +32,7 @@ public class HallOfFamePane extends VBox{
 
 	public HallOfFamePane() {
 		index = 0;
-		
+
 		//error
 		HoFError = new Label();
 
@@ -64,14 +64,15 @@ public class HallOfFamePane extends VBox{
 			if(index > toHF.getEntries().size() / 10.0) {
 				index = (int) Math.floor(toHF.getEntries().size() / 10.0);
 			}	
+			refreshHallOfFamePane();
 		});
 
 		prevHFButton.setOnMousePressed(e -> {	
 			index--;
-			System.out.println(index);
 			if(index < 0) {
 				index = 0;
 			}
+			refreshHallOfFamePane();
 		});
 
 		//Creating tableView for HoF
@@ -107,7 +108,6 @@ public class HallOfFamePane extends VBox{
 			HoFError.setText("");
 			toHF = Block223Controller.getHallOfFame(index * rowsPerPage + 1, (index + 1) * rowsPerPage);
 			for (TOHallOfFameEntry to : toHF.getEntries()) {
-				//ca rentre pas dans ce loop !!!!!!!!
 				hallOfFameListData.add(to);
 			}
 		} catch(InvalidInputException e) {
