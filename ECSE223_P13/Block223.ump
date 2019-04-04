@@ -28,10 +28,11 @@ class Block223 {
 	   
 	   for(User user : users) {
 		   for(UserRole role : user.getRoles()) {
-			   if(role == player) break;
+			   if(role == player){
 			   username = user.getUsername();
 			   found = true;
 			   break;
+			   }
 		   }
 		   if(found) break;
 	   }
