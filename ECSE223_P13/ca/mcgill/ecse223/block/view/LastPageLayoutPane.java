@@ -13,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
@@ -27,7 +26,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -65,7 +63,6 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 	private Button testButton;
 
 	private int currentLvl = 1;
-	private static double Spacing;
 	private double spacing;
 	
 	private static boolean testStarted = false;
@@ -91,7 +88,6 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 		}
 
 		this.spacing = spacing;
-		Spacing = spacing;
 		// Instantiate all fields
 
 		designPane = new DesignGridPane(currentLvl, this);

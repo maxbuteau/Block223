@@ -1,8 +1,5 @@
 package ca.mcgill.ecse223.block.view;
 
-import ca.mcgill.ecse223.block.controller.Block223Controller;
-import ca.mcgill.ecse223.block.controller.InvalidInputException;
-import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,7 +17,6 @@ public class GameFinishedPane extends VBox {
 	//Gaps
 	private static final int V_GAP = 20;
 	private static final int SCORE_GAP = 40;
-	private static final int LEVEL_GAP = 40;
 	private static final int LIVES_GAP = 40;
 	private static final int BUTTON_GAP = 20;
 	private static final int H_GAP = 150;

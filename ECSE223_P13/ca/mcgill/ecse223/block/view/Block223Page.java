@@ -31,7 +31,6 @@ import java.awt.Toolkit;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.controller.*;
-import ca.mcgill.ecse223.block.model.Game;
 
 public class Block223Page extends Application{
 
