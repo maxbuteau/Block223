@@ -1,11 +1,14 @@
 package ca.mcgill.ecse223.block.view;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
+import ca.mcgill.ecse223.block.model.Block223;
+import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -237,6 +240,9 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			@Override
 			public void run() {
 				Block223Page.setGameOverScene(primaryStage, nrOfLives, hof);		
+				pgame.delete();
+				Block223 block223 = Block223Application.getBlock223();
+				Block223Persistence.save(block223);
 			}
 		});	
 	}
