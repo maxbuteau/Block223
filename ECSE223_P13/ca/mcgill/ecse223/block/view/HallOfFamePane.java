@@ -1,28 +1,20 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.util.List;
-
-import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
-import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFame;
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -35,10 +27,12 @@ public class HallOfFamePane extends VBox{
 	private static Button prevHFButton;
 	private HBox navigationButtonBox;
 	private final static int rowsPerPage = 10;
-	private static int index = 0;
+	private static int index;
 	private static TOHallOfFame toHF;
 
 	public HallOfFamePane() {
+		index = 0;
+		
 		//error
 		HoFError = new Label();
 
@@ -65,10 +59,8 @@ public class HallOfFamePane extends VBox{
 		navigationButtonBox.setPadding(new Insets(10));
 		navigationButtonBox.setAlignment(Pos.CENTER);
 
-		System.out.println("1: "+ index);
 		nextHFButton.setOnMousePressed(e -> {	
 			index++;
-			System.out.println("2: "+ index);
 			if(index > toHF.getEntries().size() / 10.0) {
 				index = (int) Math.floor(toHF.getEntries().size() / 10.0);
 			}	
@@ -76,10 +68,10 @@ public class HallOfFamePane extends VBox{
 
 		prevHFButton.setOnMousePressed(e -> {	
 			index--;
-			System.out.println("3: "+ index);
+			System.out.println(index);
 			if(index < 0) {
 				index = 0;
-			}System.out.println("4: "+ index);
+			}
 		});
 
 		//Creating tableView for HoF
@@ -102,7 +94,6 @@ public class HallOfFamePane extends VBox{
 		hallOfFameList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
 		refreshHallOfFamePane();
 
-
 		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox);	
 		this.setPrefWidth(Block223Page.getScreenWidth()/4);
 		this.setPadding(new Insets(20));
@@ -116,7 +107,6 @@ public class HallOfFamePane extends VBox{
 			HoFError.setText("");
 			toHF = Block223Controller.getHallOfFame(index * rowsPerPage + 1, (index + 1) * rowsPerPage);
 			for (TOHallOfFameEntry to : toHF.getEntries()) {
-				System.out.println("yeah");
 				//ca rentre pas dans ce loop !!!!!!!!
 				hallOfFameListData.add(to);
 			}

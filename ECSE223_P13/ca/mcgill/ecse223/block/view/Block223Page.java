@@ -76,6 +76,9 @@ public class Block223Page extends Application{
 
 	//PLAY PAGE
 	private static Scene playScene;
+	
+	//TEST PAGE
+	private static Scene testScene;
 
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 100;
@@ -249,28 +252,39 @@ public class Block223Page extends Application{
 	}
 
 
-	private static void setGameUpdateScene(Stage primaryStage, double spacing) {
+	public static void setGameUpdateScene(Stage primaryStage, double spacing) {
 		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 
 		gameDesignScene = new Scene(l, SCREEN_WIDTH, SCREEN_HEIGHT); 
-		gameDesignScene.setOnKeyPressed(e -> {
-			if(LastPageLayoutPane.isTestStarted()) {
-				if(e.getCode() == KeyCode.RIGHT) LastPageLayoutPane.setInputs("r");
-				else if(e.getCode() == KeyCode.LEFT) LastPageLayoutPane.setInputs("l");
+		
+		primaryStage.setScene(gameDesignScene);
+		primaryStage.setResizable(false);
+
+	}
+	
+	public static void setTestingScene(Stage primaryStage) {
+		TestPane testPane = new TestPane(primaryStage);
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		testPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+
+		testScene = new Scene(testPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+		testScene.setOnKeyPressed(e -> {
+			if(TestPane.isTestStarted()) {
+				if(e.getCode() == KeyCode.RIGHT) TestPane.setInputs("r");
+				else if(e.getCode() == KeyCode.LEFT) TestPane.setInputs("l");
 				else if(e.getCode() == KeyCode.SPACE) {
-					LastPageLayoutPane.setInputs(" ");
-					l.getCenter().setDisable(true);
+					TestPane.setInputs(" ");
+					testPane.getCenter().setDisable(true);
 				}
 				else {
 					//We do nothing
 				}
 			}
 		});
-		primaryStage.setScene(gameDesignScene);
+		primaryStage.setScene(testScene);
 		primaryStage.setResizable(false);
-
 	}
 
 	public static void setPlayScene(Stage primaryStage) {
@@ -317,7 +331,7 @@ public class Block223Page extends Application{
 
 		playableGameSelectionPane = new VBox(80);
 		playableGameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
-		playableGameSelectionName = new Label("Game names");
+		playableGameSelectionName = new Label("Game Selection");
 		playableGameSelectionName.setMaxWidth(Double.MAX_VALUE);
 		playableGameSelectionName.setAlignment(Pos.CENTER);
 		playableGameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");

@@ -99,6 +99,15 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 						quit.setDisable(false);
 						logout.setDisable(false);
 						started = false;
+						
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								playArea.setDisable(true);
+								
+							}
+						});
 
 					} catch (InvalidInputException e) {}
 				}

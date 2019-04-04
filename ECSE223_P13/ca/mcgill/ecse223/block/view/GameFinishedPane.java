@@ -1,6 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -96,6 +97,7 @@ public class GameFinishedPane extends VBox {
 		buttonBox = new HBox(BUTTON_GAP);
 		buttonBox.getChildren().addAll(backToMenu, logOut);
 		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setPadding(new Insets(0, 0, 40, 0));
 		
 		//button functionality
 		
