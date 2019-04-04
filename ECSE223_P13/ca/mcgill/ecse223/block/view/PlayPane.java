@@ -244,7 +244,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			
 			@Override
 			public void run() {
-				Block223Page.setGameOverScene(primaryStage, toPgame);		
+				Block223Page.setGameOverScene(primaryStage, toPgame);
+				pgame.delete();
 			}
 		});	
 	}
