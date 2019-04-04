@@ -282,6 +282,7 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 		
 		finishTest = new Button("Finished Testing");
 		finishTest.setDisable(true);
+		finishTest.setFocusTraversable(false);
 		finishTest.setOnAction(e -> {
 			this.setLeft(gridBox);
 			this.setCenter(blockCreatorBox);
@@ -291,6 +292,7 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 		
 		resumeTest = new Button("Resume Test");
 		resumeTest.setDisable(true);
+		resumeTest.setFocusTraversable(false);
 		resumeTest.setOnAction(e -> {
 			resumeTest.setDisable(true);
 			Runnable task = new Runnable() {

@@ -260,7 +260,10 @@ public class Block223Page extends Application{
 			if(LastPageLayoutPane.isTestStarted()) {
 				if(e.getCode() == KeyCode.RIGHT) LastPageLayoutPane.setInputs("r");
 				else if(e.getCode() == KeyCode.LEFT) LastPageLayoutPane.setInputs("l");
-				else if(e.getCode() == KeyCode.SPACE) LastPageLayoutPane.setInputs(" ");
+				else if(e.getCode() == KeyCode.SPACE) {
+					LastPageLayoutPane.setInputs(" ");
+					l.getCenter().setDisable(true);
+				}
 				else {
 					//We do nothing
 				}
