@@ -232,6 +232,7 @@ public class LastPageLayoutPane extends BorderPane {
 				error.setText("");
 				Block223Controller.saveGame();
 			} catch (InvalidInputException e1) {
+				System.out.println(e1.getMessage());
 				errorSFX.stop();
 				errorSFX.play();
 				error.setText(e1.getMessage());
