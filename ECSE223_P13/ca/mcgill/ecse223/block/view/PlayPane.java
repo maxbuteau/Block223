@@ -6,6 +6,7 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import javafx.application.Platform;
@@ -49,7 +50,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
-
+	
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
 	private static ImageView imageView;
@@ -233,12 +234,12 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
 	}
 	
-	public void endGame(TOCurrentlyPlayedGame toPgame) {
+	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				Block223Page.setGameOverScene(primaryStage, toPgame);
+				Block223Page.setGameOverScene(primaryStage, nrOfLives, hof);		
 				pgame.delete();
 				Block223 block223 = Block223Application.getBlock223();
 				Block223Persistence.save(block223);
@@ -246,3 +247,4 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		});	
 	}
 }
+
