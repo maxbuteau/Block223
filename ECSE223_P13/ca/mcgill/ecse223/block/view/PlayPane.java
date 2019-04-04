@@ -11,7 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
@@ -58,7 +57,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static Stage primaryStage;
 
 	public PlayPane(Stage primaryStage) {
-		this.primaryStage = primaryStage;
+		PlayPane.primaryStage = primaryStage;
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
 			constants = Block223Controller.getConstants();
@@ -148,7 +147,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		this.setPadding(new Insets(0,0,40,0));
 
 		displayPlayArea();
-
+		
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 	}
 
@@ -238,10 +237,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		paddle.setTranslateX(pgame.getCurrentPaddleX());
 		paddle.setWidth(pgame.getCurrentPaddleLength());
 		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
-	}
-
-	public static HBox getButtonsBox() {
-		return buttonsBox;
 	}
 	
 	public void endGame(TOCurrentlyPlayedGame toPgame) {
