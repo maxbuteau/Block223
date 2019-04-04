@@ -56,6 +56,7 @@ public class TestPane extends BorderPane implements Block223PlayModeInterface {
 		resumeTest.setDisable(true);
 		resumeTest.setFocusTraversable(false);
 		resumeTest.setOnAction(e -> {
+			testStarted = true;
 			resumeTest.setDisable(true);
 			Runnable task = new Runnable() {
 				public void run() {

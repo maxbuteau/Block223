@@ -791,7 +791,6 @@ public class Block223Controller {
 		if (game.getPlayStatus() == PlayStatus.GameOver) {
 			ui.endGame(game.getLives(), new TOHallOfFameEntry(-1, game.getPlayername(), game.getScore(), new TOHallOfFame("")));
 			Block223Application.setCurrentPlayableGame(null);
-			Block223Persistence.save(Block223Application.getBlock223());
 		}
 
 		else if (game.getPlayer() != null) {
