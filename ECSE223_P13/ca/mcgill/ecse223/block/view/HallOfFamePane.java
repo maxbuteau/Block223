@@ -114,4 +114,17 @@ public class HallOfFamePane extends VBox{
 			HoFError.setText((e.getMessage()));
 		}
 	}
+	
+	public void refreshForLastPage(String gameName) {
+		hallOfFameList.getItems().clear();
+		try {
+			HoFError.setText("");
+			toHF = Block223Controller.getHallOfFameWithName(gameName);
+			for (TOHallOfFameEntry to : toHF.getEntries()) {
+				hallOfFameListData.add(to);
+			}
+		} catch(InvalidInputException e) {
+			HoFError.setText((e.getMessage()));
+		}
+	}
 }
