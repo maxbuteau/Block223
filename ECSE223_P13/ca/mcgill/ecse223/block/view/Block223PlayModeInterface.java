@@ -1,6 +1,6 @@
 package ca.mcgill.ecse223.block.view;
 
-import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 
 public interface Block223PlayModeInterface {
 	
@@ -8,5 +8,5 @@ public interface Block223PlayModeInterface {
 	
 	public void refresh();
 	
-	public void endGame(TOCurrentlyPlayedGame toPgame);
+	public void endGame(int nrOfLives, TOHallOfFameEntry hof);
 }

@@ -297,8 +297,8 @@ public class Block223Page extends Application{
 		primaryStage.setResizable(false);
 	}
 
-	public static void setGameOverScene(Stage primaryStage, TOCurrentlyPlayedGame pgame) {
-		GameFinishedPane fp = new GameFinishedPane(primaryStage, pgame);
+	public static void setGameOverScene(Stage primaryStage, int nrOfLives, TOHallOfFameEntry hof) {
+		GameFinishedPane fp = new GameFinishedPane(primaryStage, nrOfLives, hof);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		fp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 

@@ -5,6 +5,7 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -47,8 +48,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
 	
-	private static Button gameOver;
-
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
 	private static ImageView imageView;
@@ -81,13 +80,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		buttonsBox = new HBox(20);
 		buttonsBox.setAlignment(Pos.CENTER);
-		
-		//Sorry
-		gameOver = new Button("Game Over!");
-		gameOver.setFocusTraversable(false);
-		gameOver.setOnAction(e->{
-			Block223Page.setGameOverScene(primaryStage, pgame);
-		});
 
 		startGame = new Button("Start Game");
 		startGame.setFocusTraversable(false);
@@ -132,7 +124,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			primaryStage.setScene(Block223Page.getLoginScene());	
 		});
 		
-		buttonsBox.getChildren().addAll(startGame,quit, logout, gameOver);
+		buttonsBox.getChildren().addAll(startGame,quit, logout);
 		buttonsBox.setPadding(new Insets(0, hofPane.getPrefWidth(), 0, 0));
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
@@ -239,12 +231,12 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
 	}
 	
-	public void endGame(TOCurrentlyPlayedGame toPgame) {
+	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				Block223Page.setGameOverScene(primaryStage, toPgame);		
+				Block223Page.setGameOverScene(primaryStage, nrOfLives, hof);		
 			}
 		});	
 	}

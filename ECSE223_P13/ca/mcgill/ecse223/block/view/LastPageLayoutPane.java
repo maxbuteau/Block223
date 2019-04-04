@@ -6,6 +6,7 @@ import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOGame;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -433,7 +434,7 @@ public class LastPageLayoutPane extends BorderPane implements Block223PlayModeIn
 	}
 
 	@Override
-	public void endGame(TOCurrentlyPlayedGame toPgame) {
+	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
 		// TODO Auto-generated method stub
 		
 	}
