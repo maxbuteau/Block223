@@ -913,7 +913,7 @@ public class Block223Controller {
 		List<PlayedBlockAssignment> pblocks = pgame.getBlocks();
 
 		for (PlayedBlockAssignment pblock : pblocks) {
-			TOCurrentBlock to = new TOCurrentBlock(pblock.getBlock().getRed(), pblock.getBlock().getGreen(),
+			new TOCurrentBlock(pblock.getBlock().getRed(), pblock.getBlock().getGreen(),
 					pblock.getBlock().getBlue(), pblock.getBlock().getPoints(), pblock.getX(), pblock.getY(), result);
 		}
 
