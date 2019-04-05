@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -51,15 +53,32 @@ public class GameFinishedPane extends VBox {
 			pLives = nrOfLives;
 			pScore = hof.getScore();
 
+			
+			HBox gameOverBox = new HBox(20);
+
 		//Game Over message
 		if (pLives == 0) {
-			gameOver = new Text("Game Over!");
-			settingFont(gameOver, Color.RED, 64);
+//			gameOver = new Text("Game Over!");
+//			settingFont(gameOver, Color.RED, 64);
+			ImageView imv = new ImageView();
+			Image hofImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameOver.png"));
+			imv.setImage(hofImage);
+			imv.setFitWidth(Block223Page.getScreenWidth() / 2);
+			imv.setPreserveRatio(true);
+			gameOverBox.getChildren().add(imv);
 		}
 		else {
-			gameOver = new Text("Congratulations!");
-			settingFont(gameOver, Color.GOLD, 64);
+//			gameOver = new Text("Congratulations!");
+//			settingFont(gameOver, Color.GOLD, 64);
+			ImageView imv = new ImageView();
+			Image hofImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/congrats.png"));
+			imv.setImage(hofImage);
+			imv.setFitWidth(Block223Page.getScreenWidth() / 2);
+			imv.setPreserveRatio(true);
+			gameOverBox.getChildren().add(imv);
 		}
+		
+		gameOverBox.setAlignment(Pos.CENTER);
 		
 		//Score
 		scoreTitle = new Text("Score:");
@@ -115,7 +134,7 @@ public class GameFinishedPane extends VBox {
 		
 		//Master VBox
 		outerBox = new VBox(V_GAP);
-		outerBox.getChildren().addAll(gameOver, statsAndHofBox, buttonBox);
+		outerBox.getChildren().addAll(gameOverBox, statsAndHofBox, buttonBox);
 		outerBox.setAlignment(Pos.CENTER);
 		this.getChildren().add(outerBox);
 	}
