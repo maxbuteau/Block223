@@ -85,8 +85,7 @@ public class GameFinishedPane extends VBox {
 		innerBox.getChildren().addAll(scoreBox, livesBox);
 		innerBox.setAlignment(Pos.CENTER);
 		//Hall Of Fame
-		hofPane = new HallOfFamePane();
-		hofPane.refreshForLastPage(hof.getTOHallOfFame().getGamename());
+		hofPane = new HallOfFamePane(hof.getTOHallOfFame().getGamename());
 		
 		//Buttons
 		backToMenu = new Button("Games Menu");

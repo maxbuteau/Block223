@@ -30,7 +30,7 @@ public class HallOfFamePane extends VBox{
 	private static int index;
 	private static TOHallOfFame toHF;
 
-	public HallOfFamePane() {
+	public HallOfFamePane(String gameName) {
 		index = 0;
 
 		//error
@@ -65,7 +65,7 @@ public class HallOfFamePane extends VBox{
 			if(index > toHF.getEntries().size() / 10.0) {
 				index = (int) Math.floor(toHF.getEntries().size() / 10.0);
 			}	
-			refreshHallOfFamePane();
+			refreshHallOfFamePane(gameName);
 		});
 
 		prevHFButton.setOnMousePressed(e -> {
@@ -74,7 +74,7 @@ public class HallOfFamePane extends VBox{
 			if(index < 0) {
 				index = 0;
 			}
-			refreshHallOfFamePane();
+			refreshHallOfFamePane(gameName);
 		});
 
 		//Creating tableView for HoF
@@ -95,7 +95,7 @@ public class HallOfFamePane extends VBox{
 		scoreCol.setMinWidth(Block223Page.getScreenWidth()/8);
 
 		hallOfFameList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
-		refreshHallOfFamePane();
+		refreshHallOfFamePane(gameName);
 
 		this.getChildren().addAll(headerRegion, hallOfFameList, navigationButtonBox);	
 		this.setPrefWidth(Block223Page.getScreenWidth()/4);
@@ -104,29 +104,28 @@ public class HallOfFamePane extends VBox{
 
 	}
 
-	private static void refreshHallOfFamePane() {
+	private static void refreshHallOfFamePane(String gameName) {
 		hallOfFameList.getItems().clear();
-		try {
-			HoFError.setText("");
-			toHF = Block223Controller.getHallOfFame(index * rowsPerPage + 1, (index + 1) * rowsPerPage);
-			for (TOHallOfFameEntry to : toHF.getEntries()) {
-				hallOfFameListData.add(to);
+		if(gameName.equals("")) {
+			try {
+				HoFError.setText("");
+				toHF = Block223Controller.getHallOfFame(index * rowsPerPage + 1, (index + 1) * rowsPerPage);
+				for (TOHallOfFameEntry to : toHF.getEntries()) {
+					hallOfFameListData.add(to);
+				}
+			} catch(InvalidInputException e) {
+				HoFError.setText((e.getMessage()));
 			}
-		} catch(InvalidInputException e) {
-			HoFError.setText((e.getMessage()));
-		}
-	}
-	
-	public void refreshForLastPage(String gameName) {
-		hallOfFameList.getItems().clear();
-		try {
-			HoFError.setText("");
-			toHF = Block223Controller.getHallOfFameWithName(gameName);
-			for (TOHallOfFameEntry to : toHF.getEntries()) {
-				hallOfFameListData.add(to);
+		} else {
+			try {
+				HoFError.setText("");
+				toHF = Block223Controller.getHallOfFameWithName(gameName);
+				for (TOHallOfFameEntry to : toHF.getEntries()) {
+					hallOfFameListData.add(to);
+				}
+			} catch(InvalidInputException e) {
+				HoFError.setText((e.getMessage()));
 			}
-		} catch(InvalidInputException e) {
-			HoFError.setText((e.getMessage()));
 		}
 	}
 }
