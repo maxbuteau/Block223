@@ -621,10 +621,11 @@ public class Block223 implements Serializable
 	   
 	   for(User user : users) {
 		   for(UserRole role : user.getRoles()) {
-			   if(role == player) break;
+			   if(role == player){
 			   username = user.getUsername();
 			   found = true;
 			   break;
+			   }
 		   }
 		   if(found) break;
 	   }
@@ -632,7 +633,7 @@ public class Block223 implements Serializable
 	   return username;
   }
 
-  // line 43 "../../../../../Block223.ump"
+  // line 44 "../../../../../Block223.ump"
    public PlayedGame findPlayableGame(int id){
     PlayedGame playableGame = null;
 	   

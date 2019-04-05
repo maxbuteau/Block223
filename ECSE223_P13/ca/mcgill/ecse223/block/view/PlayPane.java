@@ -5,13 +5,13 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
@@ -48,8 +48,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static TOCurrentlyPlayedGame pgame;
 	private static TOConstant constants;
 	
-	private static Button gameOver;
-
 	private static MediaPlayer mediaPlayer;
 	private static MediaView mediaView;
 	private static ImageView imageView;
@@ -58,7 +56,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static Stage primaryStage;
 
 	public PlayPane(Stage primaryStage) {
-		this.primaryStage = primaryStage;
+		PlayPane.primaryStage = primaryStage;
 		try {
 			pgame = Block223Controller.getCurrentPlayableGame();
 			constants = Block223Controller.getConstants();
@@ -82,13 +80,6 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		buttonsBox = new HBox(20);
 		buttonsBox.setAlignment(Pos.CENTER);
-		
-		//Sorry
-		gameOver = new Button("Game Over!");
-		gameOver.setFocusTraversable(false);
-		gameOver.setOnAction(e->{
-			Block223Page.setGameOverScene(primaryStage, pgame);
-		});
 
 		startGame = new Button("Start Game");
 		startGame.setFocusTraversable(false);
@@ -108,6 +99,15 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 						quit.setDisable(false);
 						logout.setDisable(false);
 						started = false;
+						
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								playArea.setDisable(true);
+								
+							}
+						});
 
 					} catch (InvalidInputException e) {}
 				}
@@ -133,7 +133,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			primaryStage.setScene(Block223Page.getLoginScene());	
 		});
 		
-		buttonsBox.getChildren().addAll(startGame,quit, logout, gameOver);
+		buttonsBox.getChildren().addAll(startGame,quit, logout);
 		buttonsBox.setPadding(new Insets(0, hofPane.getPrefWidth(), 0, 0));
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
@@ -148,7 +148,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		this.setPadding(new Insets(0,0,40,0));
 
 		displayPlayArea();
-
+		
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 	}
 
@@ -239,18 +239,15 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		paddle.setWidth(pgame.getCurrentPaddleLength());
 		PlayHeader.refreshHeader(pgame.getCurrentLevel(), pgame.getLives(), pgame.getScore());
 	}
-
-	public static HBox getButtonsBox() {
-		return buttonsBox;
-	}
 	
-	public void endGame(TOCurrentlyPlayedGame toPgame) {
+	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				Block223Page.setGameOverScene(primaryStage, toPgame);		
+				Block223Page.setGameOverScene(primaryStage, nrOfLives, hof);		
 			}
 		});	
 	}
 }
+

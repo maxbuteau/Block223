@@ -1,8 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 
-import ca.mcgill.ecse223.block.controller.Block223Controller;
-import ca.mcgill.ecse223.block.controller.InvalidInputException;
-import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -19,7 +18,6 @@ public class GameFinishedPane extends VBox {
 	//Gaps
 	private static final int V_GAP = 20;
 	private static final int SCORE_GAP = 40;
-	private static final int LEVEL_GAP = 40;
 	private static final int LIVES_GAP = 40;
 	private static final int BUTTON_GAP = 20;
 	private static final int H_GAP = 150;
@@ -28,8 +26,6 @@ public class GameFinishedPane extends VBox {
 	private Text gameOver;
 	private Text scoreTitle;
 	private Text score;
-	private Text levelReachedTitle;
-	private Text levelReached;
 	private Text livesRemainingTitle;
 	private Text livesRemaining;
 	
@@ -41,26 +37,22 @@ public class GameFinishedPane extends VBox {
 	private VBox outerBox;
 	private VBox innerBox;
 	private HBox scoreBox;
-	private HBox levelBox;
 	private HBox livesBox;
 	private HBox buttonBox;
 	private HBox statsAndHofBox;
 	
 	//Stuff that updates
 	private static HallOfFamePane hofPane;
-	private int pLevel;
 	private int pLives;
 	private int pScore;
 	
-	public GameFinishedPane(Stage primaryStage, TOCurrentlyPlayedGame pgame) {
+	public GameFinishedPane(Stage primaryStage, int nrOfLives, TOHallOfFameEntry hof) {
 		this.setAlignment(Pos.CENTER);
-
-			pLevel = pgame.getCurrentLevel();
-			pLives = pgame.getLives();
-			pScore = pgame.getScore();
+			pLives = nrOfLives;
+			pScore = hof.getScore();
 
 		//Game Over message
-		if (pgame.getLives() == 0) {
+		if (pLives == 0) {
 			gameOver = new Text("Game Over!");
 			settingFont(gameOver, Color.RED, 64);
 		}
@@ -79,16 +71,6 @@ public class GameFinishedPane extends VBox {
 		scoreBox.getChildren().addAll(scoreTitle, score);
 		scoreBox.setAlignment(Pos.CENTER);
 		
-		//Level Reached
-		levelReachedTitle = new Text("Level Reached:");
-		settingFont(levelReachedTitle, Color.LIGHTGOLDENRODYELLOW, 32);
-		levelReached = new Text(""+pLevel);
-		settingFont(levelReached, Color.WHITE, 32);
-		
-		levelBox = new HBox(LEVEL_GAP);
-		levelBox.getChildren().addAll(levelReachedTitle, levelReached);
-		levelBox.setAlignment(Pos.CENTER);
-		
 		//Lives Remaining
 		livesRemainingTitle = new Text("Lives Remaining:");
 		settingFont(livesRemainingTitle, Color.LIGHTGOLDENRODYELLOW, 32);
@@ -100,11 +82,11 @@ public class GameFinishedPane extends VBox {
 		livesBox.setAlignment(Pos.CENTER);
 		
 		innerBox = new VBox(V_GAP);
-		innerBox.getChildren().addAll(scoreBox, levelBox, livesBox);
+		innerBox.getChildren().addAll(scoreBox, livesBox);
 		innerBox.setAlignment(Pos.CENTER);
 		//Hall Of Fame
 		hofPane = new HallOfFamePane();
-		
+		hofPane.refreshForLastPage(hof.getTOHallOfFame().getGamename());
 		
 		//Buttons
 		backToMenu = new Button("Games Menu");
@@ -114,6 +96,7 @@ public class GameFinishedPane extends VBox {
 		buttonBox = new HBox(BUTTON_GAP);
 		buttonBox.getChildren().addAll(backToMenu, logOut);
 		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setPadding(new Insets(0, 0, 40, 0));
 		
 		//button functionality
 		

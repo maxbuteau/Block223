@@ -28,8 +28,8 @@ public class SettingsPane extends Pane{
 	private final double MIN_INCR = 0;
 	private final double MAX_PADDLE = constants.getPlayAreaSide();
 	private final double MIN_PADDLE = 1; //arbitrarily set the minimum length to 1 pixel
-	private final double MAX_SPEED = 25; //maximum speed arbitrarily set to 50pix/s
-	private final double MIN_SPEED = 1; //arbitrarily set the minimum speed to 1 pixel/second
+	private final double MAX_SPEED = 20; //maximum speed arbitrarily set to 20pix/s
+	private final double MIN_SPEED = 0; //arbitrarily set the minimum speed to 1 pixel/second
 	
 	//Create the sliders
 	//default value bad, need to be that of model get via togame
@@ -78,13 +78,14 @@ public class SettingsPane extends Pane{
 		maxPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMaxPaddleLength());
 		minPaddleSlider = new Slider(MIN_PADDLE, MAX_PADDLE, game.getMinPaddleLength());
 		increasingFactorSlider = new Slider(MIN_INCR, MAX_INCR, game.getBallSpeedIncreaseFactor());
+		increasingFactorSlider.setBlockIncrement(0.05);
 		nrLevelsSlider = new Slider(MIN_LEVELS, MAX_LEVELS, game.getNrLevels());
 		nrBlocksSlider = new Slider(MIN_BLOCKS, MAX_BLOCKS, game.getNrBlocksPerLevel());
 		
 		//initialize the labels
 		nrBlocksValue = new Label(""+game.getNrBlocksPerLevel());
 		nrLevelsValue = new Label(""+game.getNrLevels());
-		increasingFactorValue = new Label((double) ((int) (100 * game.getBallSpeedIncreaseFactor())) / 100 + " px/s");
+		increasingFactorValue = new Label((double) ((int) (100 * game.getBallSpeedIncreaseFactor())) / 100+"");
 		minPaddleValue = new Label(""+game.getMinPaddleLength()+ " px");
 		maxPaddleValue = new Label(""+game.getMaxPaddleLength()+" px");
 		minXSpeedValue = new Label(""+game.getMinBallSpeedX()+" px/s");
@@ -175,7 +176,7 @@ public class SettingsPane extends Pane{
 			maxPaddleValue.setText((int) maxPaddleSlider.getValue() + " px");
 		});
 		increasingFactorSlider.valueProperty().addListener(e->{
-			increasingFactorValue.setText((double) ((int) (100 * increasingFactorSlider.getValue())) / 100 + " px/s");
+			increasingFactorValue.setText((double) ((int) (Math.ceil(100 * increasingFactorSlider.getValue()))) / 100+"");
 		});
 		nrBlocksSlider.valueProperty().addListener(e->{
 			nrBlocksValue.setText((int)nrBlocksSlider.getValue()+ "");

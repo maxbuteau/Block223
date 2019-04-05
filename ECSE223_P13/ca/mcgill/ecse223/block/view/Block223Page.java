@@ -31,7 +31,6 @@ import java.awt.Toolkit;
 import java.util.List;
 
 import ca.mcgill.ecse223.block.controller.*;
-import ca.mcgill.ecse223.block.model.Game;
 
 public class Block223Page extends Application{
 
@@ -57,7 +56,7 @@ public class Block223Page extends Application{
 	private static Button gameSelectionLogoutButton;
 	private static Button gameSelectionDeleteButton;
 	private static Label gameSelectionName;
-	
+
 	//PLAYABLE GAME SELECTION
 	private static Scene playableGameSelectionScene;
 	private static VBox playableGameSelectionPane;
@@ -74,22 +73,25 @@ public class Block223Page extends Application{
 
 	//DESIGN PAGE
 	private static Scene gameDesignScene;
-	
+
 	//PLAY PAGE
 	private static Scene playScene;
+	
+	//TEST PAGE
+	private static Scene testScene;
 
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 100;
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
-	
+
 	//GAME OVER PAGE
 	private static Scene gameOverScene;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
+
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		ImageView bg = new ImageView(background);
 		bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -101,33 +103,33 @@ public class Block223Page extends Application{
 		primaryStage.setResizable(false);
 
 		//REGISTER SCENE
-	
+
 		RegisterPane registerPane = new RegisterPane(primaryStage);
 		registerPane.setSpacing(20);
 		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		//LOGIN SCENE
-		
+
 		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
 		loginPane.setSpacing(20);
-	
+
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
-		
+
 		buttonPressSound();
 		//change the values accordingly ^
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 	}
-	
+
 	public static Scene getLoginScene() {
 		return loginScene;
 	}
-	
+
 	public static Scene getRegisterScene() {
 		return registerScene;
 	}
@@ -146,7 +148,7 @@ public class Block223Page extends Application{
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		gameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
-		
+
 		//Buttons
 		gameSelectionButtonRow = new HBox(30);
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
@@ -250,27 +252,41 @@ public class Block223Page extends Application{
 	}
 
 
-	private static void setGameUpdateScene(Stage primaryStage, double spacing) {
+	public static void setGameUpdateScene(Stage primaryStage, double spacing) {
 		LastPageLayoutPane l = new LastPageLayoutPane(primaryStage, spacing);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		l.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 
 		gameDesignScene = new Scene(l, SCREEN_WIDTH, SCREEN_HEIGHT); 
-		gameDesignScene.setOnKeyPressed(e -> {
-			if(LastPageLayoutPane.isTestStarted()) {
-				if(e.getCode() == KeyCode.RIGHT) LastPageLayoutPane.setInputs("r");
-				else if(e.getCode() == KeyCode.LEFT) LastPageLayoutPane.setInputs("l");
-				else if(e.getCode() == KeyCode.SPACE) LastPageLayoutPane.setInputs(" ");
-				else {
-					//We do nothing
-				}
-			}
-		});
+		
 		primaryStage.setScene(gameDesignScene);
 		primaryStage.setResizable(false);
 
 	}
 	
+	public static void setTestingScene(Stage primaryStage) {
+		TestPane testPane = new TestPane(primaryStage);
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+		testPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+
+		testScene = new Scene(testPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+		testScene.setOnKeyPressed(e -> {
+			if(TestPane.isTestStarted()) {
+				if(e.getCode() == KeyCode.RIGHT) TestPane.setInputs("r");
+				else if(e.getCode() == KeyCode.LEFT) TestPane.setInputs("l");
+				else if(e.getCode() == KeyCode.SPACE) {
+					TestPane.setInputs(" ");
+					testPane.getCenter().setDisable(true);
+				}
+				else {
+					//We do nothing
+				}
+			}
+		});
+		primaryStage.setScene(testScene);
+		primaryStage.setResizable(false);
+	}
+
 	public static void setPlayScene(Stage primaryStage) {
 		PlayPane pp = new PlayPane(primaryStage);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
@@ -283,7 +299,7 @@ public class Block223Page extends Application{
 				else if(e.getCode() == KeyCode.LEFT) PlayPane.setInputs("l");
 				else if(e.getCode() == KeyCode.SPACE) {
 					PlayPane.setInputs(" ");
-					PlayPane.getButtonsBox().toFront();
+					pp.getCenter().setDisable(true);
 				}
 				else {
 					//We do nothing
@@ -293,70 +309,73 @@ public class Block223Page extends Application{
 		primaryStage.setScene(playScene);
 		primaryStage.setResizable(false);
 	}
-	
-	public static void setGameOverScene(Stage primaryStage, TOCurrentlyPlayedGame pgame) {
-		GameFinishedPane fp = new GameFinishedPane(primaryStage, pgame);
+
+	public static void setGameOverScene(Stage primaryStage, int nrOfLives, TOHallOfFameEntry hof) {
+		GameFinishedPane fp = new GameFinishedPane(primaryStage, nrOfLives, hof);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		fp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
-		
+
 		gameOverScene = new Scene(fp, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
+
 		primaryStage.setScene(gameOverScene);
 		primaryStage.setResizable(false);
 	}
-	
+
 	public static void logOutAfterGameOver(Stage primaryStage) {
 		Block223Controller.logout();
 		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
 	}
-	
+
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
 
 		playableGameSelectionPane = new VBox(80);
 		playableGameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
-		playableGameSelectionName = new Label("Game names");
+		playableGameSelectionName = new Label("Game Selection");
 		playableGameSelectionName.setMaxWidth(Double.MAX_VALUE);
 		playableGameSelectionName.setAlignment(Pos.CENTER);
 		playableGameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
 
 		playableGameSelectionScene = new Scene(playableGameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
+
 		playableGameSelectionButtonRow = new HBox(30);
 		playableGameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		playableGameSelectionPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
-		
+
 		//Buttons
 		playableGameSelectionLogoutButton = new Button("Logout");
 		playableGameSelectionLogoutButton.setOnAction(e -> {
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
 		});
-		
+
 		playableGameSelectionSelectButton =  new Button("Select Game");
 		playableGameSelectionSelectButton.setOnAction(e -> {
-			TOPlayableGame pgame = playableGameSelectionList.getSelectionModel().getSelectedItem();
-			String name = pgame.getName();
-			int id = pgame.getNumber();
-			if(id != -1) name = null;
-			
 			try {
+				TOPlayableGame pgame = playableGameSelectionList.getSelectionModel().getSelectedItem();
+				String name = pgame.getName();
+				int id = pgame.getNumber();
+				if(id != -1) name = null;
+
 				Block223Controller.selectPlayableGame(name, id);
 				Block223Page.setPlayScene(primaryStage);
 			}
 			catch(InvalidInputException iie) {
 				playableGameSelectionError.setText(iie.getMessage());
 			}
+			catch(NullPointerException n) {
+				playableGameSelectionError.setText("A game must be selected to play it.");
+			}
 		});
 
 		playableGameSelectionButtonRow.getChildren().addAll(playableGameSelectionLogoutButton, playableGameSelectionSelectButton);
 		playableGameSelectionButtonRow.setAlignment(Pos.CENTER);
-		
+
 		//List
 		playableGameSelectionListData = FXCollections.observableArrayList();
-		
+
 		playableGameSelectionList = new TableView<>();
 		playableGameSelectionList.setItems(playableGameSelectionListData);
 		columnName = new TableColumn<>("Game Name");
@@ -371,7 +390,7 @@ public class Block223Page extends Application{
 		columnLevel.setMinWidth((SCREEN_WIDTH - playableGameSelectionPane.getPadding().getLeft() - playableGameSelectionPane.getPadding().getRight()) / playableGameSelectionList.getColumns().size()-1);
 
 		playableGameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
-		
+
 		playableGameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
 		playableGameSelectionList.setOnMouseClicked(e -> {
 			if(e.getClickCount() == 2 && e.getButton() == MouseButton.PRIMARY) {
@@ -402,7 +421,7 @@ public class Block223Page extends Application{
 			e2.printStackTrace();
 		}
 	}
-	
+
 	private static void refreshPlayableGameSelection() {
 		playableGameSelectionList.getItems().clear();
 		try {
@@ -441,7 +460,7 @@ public class Block223Page extends Application{
 	public static double getScreenHeight() {
 		return SCREEN_HEIGHT;
 	}
-	
+
 }
 
 class ChosenBlock {

@@ -34,9 +34,7 @@ public class DesignGridPane extends Pane {
 		designGridPane.setPadding(new Insets(toConstants.getWallPadding()));
 		designPane.getChildren().add(designGridPane);
 		displayGrid();
-		this.setOnDragExited(e -> {System.out.println("1");});
-		refresh();
-		
+		refresh();		
 	}
 
 	public static void refresh() {
@@ -110,11 +108,12 @@ public class DesignGridPane extends Pane {
 					blockBox.startFullDrag();
 				});
 
-				blockBox.setOnMouseDragged(e -> {
+				blockBox.setOnMouseDragged(e -> {					
 					if (blockBox.getOpacity() > 0.6) {
-						blockBox.toBack();
+						blockBox.toFront();
 						blockBox.setTranslateX(e.getX() + blockBox.getTranslateX() - toConstants.getSize()/2);
 						blockBox.setTranslateY(e.getY() + blockBox.getTranslateY() - toConstants.getSize()/2);
+						blockBox.setDisable(true);
 					}
 				});
 

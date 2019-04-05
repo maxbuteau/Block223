@@ -18,15 +18,11 @@ public class PlayHeader extends HBox{
 	private HBox livesBox;
 	private HBox scoreBox;
 	private VBox level_lives_score_container;
-	private Label headerText;
 	private TOCurrentlyPlayedGame pGame;
 	private int pLevel;
 	private int pLives;
 	private int pScore;
-	private Label scoreLabel;
-	private Label levelLabel;
 	private static Label levelNumber;
-	private Label livesLabel;
 	private static Label livesNumber;
 	private static Label scoreNumber;
 
