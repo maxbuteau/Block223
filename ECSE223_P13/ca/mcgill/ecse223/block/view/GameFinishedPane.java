@@ -79,6 +79,7 @@ public class GameFinishedPane extends VBox {
 		}
 		
 		gameOverBox.setAlignment(Pos.CENTER);
+		gameOverBox.setPadding(new Insets(5,0,0,0));
 		
 		//Score
 		scoreTitle = new Text("Score:");
