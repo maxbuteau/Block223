@@ -28,8 +28,8 @@ public class SettingsPane extends Pane{
 	private final double MIN_INCR = 0;
 	private final double MAX_PADDLE = constants.getPlayAreaSide();
 	private final double MIN_PADDLE = 1; //arbitrarily set the minimum length to 1 pixel
-	private final double MAX_SPEED = 25; //maximum speed arbitrarily set to 50pix/s
-	private final double MIN_SPEED = 1; //arbitrarily set the minimum speed to 1 pixel/second
+	private final double MAX_SPEED = 20; //maximum speed arbitrarily set to 20pix/s
+	private final double MIN_SPEED = 0; //arbitrarily set the minimum speed to 1 pixel/second
 	
 	//Create the sliders
 	//default value bad, need to be that of model get via togame
