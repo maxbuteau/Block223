@@ -989,7 +989,7 @@ public class PlayedGame implements Serializable
 					}
 				}
 			}
-			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
+			if (closest != null && currentBallX + ballDirectionX == Math.round(closest.getX()) && currentBallY + ballDirectionY == Math.round(closest.getY())){
 				return null;
 			}
 			return closest;	
