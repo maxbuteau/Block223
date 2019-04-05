@@ -78,7 +78,8 @@ public class RegisterPane extends VBox {
 		buttonBox.setAlignment(Pos.CENTER);
 		
 		registerButton = new Button("Register");
-		registerButton.setOnAction(e -> {			
+		registerButton.setOnAction(e -> {		
+			Block223Page.buttonPressSound();
 			if(registerPasswordPlayerField.getText().equals(registerConfirmPasswordPlayerField.getText()) && registerPasswordAdminField.getText().equals(registerConfirmPasswordAdminField.getText())) {
 				try {
 					Block223Controller.register(registerUsernamePlayerField.getText(), registerPasswordPlayerField.getText(), registerPasswordAdminField.getText());
@@ -100,6 +101,7 @@ public class RegisterPane extends VBox {
 		
 		backLoginButton = new Button("Back to Login Screen");
 		backLoginButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			primaryStage.setScene(Block223Page.getLoginScene());
 		});
 		buttonBox.getChildren().addAll(registerButton, backLoginButton);

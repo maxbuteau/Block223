@@ -116,11 +116,6 @@ public class Block223Page extends Application{
 
 		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-
-
-		buttonPressSound();
-		//change the values accordingly ^
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
@@ -157,6 +152,7 @@ public class Block223Page extends Application{
 		gameSelectionDeleteButton = new Button("Delete game");
 
 		gameSelectionCreateGameButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			Stage createGameStage = new Stage();
 			createGameBox = new VBox(20);
 			Label createGameNameLabel = new Label("Game name : ");
@@ -195,6 +191,7 @@ public class Block223Page extends Application{
 
 		gameSelectionUpdateGameButton = new Button("Update Game");
 		gameSelectionUpdateGameButton.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			try {
 				Block223Controller.selectGame(gameSelectionList.getSelectionModel().getSelectedItem());
 				setGameUpdateScene(primaryStage, 20);
@@ -210,6 +207,7 @@ public class Block223Page extends Application{
 
 		gameSelectionLogoutButton = new Button("Logout");
 		gameSelectionLogoutButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
 		});
@@ -227,6 +225,7 @@ public class Block223Page extends Application{
 		gameSelectionListData = FXCollections.observableArrayList();
 
 		gameSelectionDeleteButton.setOnAction(f->{
+			Block223Page.buttonPressSound();
 			try {
 				Block223Controller.deleteGame(gameSelectionList.getSelectionModel().getSelectedItem());
 				refreshGameSelection();
@@ -347,12 +346,14 @@ public class Block223Page extends Application{
 		//Buttons
 		playableGameSelectionLogoutButton = new Button("Logout");
 		playableGameSelectionLogoutButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
 		});
 
 		playableGameSelectionSelectButton =  new Button("Select Game");
 		playableGameSelectionSelectButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			try {
 				TOPlayableGame pgame = playableGameSelectionList.getSelectionModel().getSelectedItem();
 				String name = pgame.getName();
@@ -393,6 +394,7 @@ public class Block223Page extends Application{
 
 		playableGameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
 		playableGameSelectionList.setOnMouseClicked(e -> {
+			
 			if(e.getClickCount() == 2 && e.getButton() == MouseButton.PRIMARY) {
 				playableGameSelectionSelectButton.fire();
 			}
@@ -439,7 +441,7 @@ public class Block223Page extends Application{
 		return ClassLoader.getSystemResource(res).toString();
 	}
 
-	private static void buttonPressSound() {
+	public static void buttonPressSound() {
 		sound.stop();
 		sound.play();
 		sound.setVolume(1);

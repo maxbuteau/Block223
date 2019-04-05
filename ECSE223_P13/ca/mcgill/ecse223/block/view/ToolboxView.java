@@ -135,6 +135,7 @@ public class ToolboxView extends VBox {
 			}
 
 			toolboxUpdateButton.setOnAction(e -> {
+				Block223Page.buttonPressSound();
 				ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 				Color color = toolboxColorPicker.getValue();
 				int worth = (int)toolboxWorthSlider.getValue();
@@ -153,6 +154,7 @@ public class ToolboxView extends VBox {
 			});
 
 			toolboxDeleteButton.setOnAction(e -> {
+				Block223Page.buttonPressSound();
 				ChosenBlock chosenBlock = Block223Page.getChosenBlock();
 
 				if(chosenBlock != null) {

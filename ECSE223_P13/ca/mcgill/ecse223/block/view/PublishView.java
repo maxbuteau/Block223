@@ -30,6 +30,7 @@ public class PublishView extends VBox {
 		publishError.setStyle("-fx-text-fill: #DC143C");
 		
 		yes.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			try {
 				Block223Controller.publishGame();
 				LastPageLayoutPane.closePublishStage();
@@ -41,6 +42,7 @@ public class PublishView extends VBox {
 		});
 		
 		no.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			LastPageLayoutPane.closePublishStage();
 		});
 		

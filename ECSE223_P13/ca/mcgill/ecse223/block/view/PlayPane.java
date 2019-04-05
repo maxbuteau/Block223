@@ -84,6 +84,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		startGame = new Button("Start Game");
 		startGame.setFocusTraversable(false);
 		startGame.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			startGame.setDisable(true);
 			quit.setDisable(true);
 			logout.setDisable(true);
@@ -121,6 +122,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		quit = new Button("Quit");
 		quit.setFocusTraversable(false);
 		quit.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			mediaPlayer.stop();
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
@@ -128,6 +130,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		logout = new Button("Log out");
 		logout.setFocusTraversable(false);
 		logout.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			mediaPlayer.stop();
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());	

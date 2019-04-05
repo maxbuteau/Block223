@@ -50,6 +50,7 @@ public class LoginPane extends VBox{
 
 		loginButton = new Button("Login");
 		loginButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			try {
 				Block223Controller.login(loginUsernameField.getText(), loginPasswordField.getText());
 				loginPasswordField.clear();
@@ -75,6 +76,7 @@ public class LoginPane extends VBox{
 
 		createItButton = new Button("Create it here");
 		createItButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			
 			primaryStage.setScene(Block223Page.getRegisterScene());
 			loginUsernameField.clear();

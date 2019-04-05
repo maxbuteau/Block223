@@ -49,6 +49,7 @@ public class TestPane extends BorderPane implements Block223PlayModeInterface {
 		finishTest.setDisable(true);
 		finishTest.setFocusTraversable(false);
 		finishTest.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			Block223Page.setGameUpdateScene(primaryStage, 20);
 		});
 		
@@ -56,6 +57,7 @@ public class TestPane extends BorderPane implements Block223PlayModeInterface {
 		resumeTest.setDisable(true);
 		resumeTest.setFocusTraversable(false);
 		resumeTest.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			testStarted = true;
 			resumeTest.setDisable(true);
 			Runnable task = new Runnable() {

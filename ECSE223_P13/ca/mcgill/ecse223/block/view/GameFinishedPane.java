@@ -101,10 +101,12 @@ public class GameFinishedPane extends VBox {
 		//button functionality
 		
 		backToMenu.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
 		
 		logOut.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			Block223Page.logOutAfterGameOver(primaryStage);
 		});
 		

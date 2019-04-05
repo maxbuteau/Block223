@@ -170,6 +170,7 @@ public class LastPageLayoutPane extends BorderPane {
 		previousLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl > 1) {
+				Block223Page.buttonPressSound();
 				((VBox) this.getLeft()).getChildren().remove(0);
 				currentLvl -= 1;
 				designPane = new DesignGridPane(currentLvl, this);
@@ -184,6 +185,7 @@ public class LastPageLayoutPane extends BorderPane {
 		nextLvl.setOnMouseClicked(e -> {
 			errorSFX.stop();
 			if (currentLvl < game.getNrLevels()) {
+				Block223Page.buttonPressSound();
 				((VBox) this.getLeft()).getChildren().remove(0);
 				currentLvl += 1;
 				designPane = new DesignGridPane(currentLvl, this);
@@ -197,6 +199,7 @@ public class LastPageLayoutPane extends BorderPane {
 		});
 
 		blockToolbox.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			blockToolboxStage = new Stage();
 			blockToolboxStage.setAlwaysOnTop(true);
 			blockToolboxStage.initOwner(primaryStage);
@@ -209,11 +212,13 @@ public class LastPageLayoutPane extends BorderPane {
 			});
 		});
 		quitButton.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
 
 		});
 		helpButton.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			helpStage = new Stage();
 			helpStage.setAlwaysOnTop(true);
 			helpStage.initOwner(primaryStage);
@@ -228,8 +233,10 @@ public class LastPageLayoutPane extends BorderPane {
 
 		});
 		saveGame.setOnAction(e->{
+			
 			try {
 				error.setText("");
+				Block223Page.buttonPressSound();
 				Block223Controller.saveGame();
 			} catch (InvalidInputException e1) {
 				System.out.println(e1.getMessage());
@@ -240,14 +247,17 @@ public class LastPageLayoutPane extends BorderPane {
 		});
 		
 		backToGameButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			Block223Page.changeToGameSelectionScene(primaryStage);
 		});
 		
 		testButton.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			Block223Page.setTestingScene(primaryStage);
 		});
 		
 		publishButton.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			publishStage = new Stage();
 			publishStage.setAlwaysOnTop(true);
 			publishStage.initOwner(primaryStage);

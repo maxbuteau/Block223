@@ -193,6 +193,7 @@ public class SettingsPane extends Pane{
 		
 		//Button action listener
 		save.setOnAction(e->{
+			Block223Page.buttonPressSound();
 			try {
 				errorMsg.setText("");
 				String gameName = gameTF.getText();

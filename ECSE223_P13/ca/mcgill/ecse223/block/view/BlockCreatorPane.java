@@ -43,6 +43,7 @@ public class BlockCreatorPane extends VBox {
 		blockCreatorColorLabel =  new Label("Color : ");
 		blockCreatorColorPicker = new ColorPicker();
 		blockCreatorColorPicker.setOnAction(e -> {
+			Block223Page.buttonPressSound();
 			Color color = blockCreatorColorPicker.getValue();
 			try {
 			String hexFormat = "#"+Integer.toHexString(color.hashCode()).substring(0, 6).toUpperCase();
@@ -79,6 +80,7 @@ public class BlockCreatorPane extends VBox {
 			catch(InvalidInputException iie) {
 				errorMessage.setText(iie.getMessage());
 			}
+			Block223Page.buttonPressSound();
 			ToolboxView.refreshToolbox();
 		});
 		addToToolBox.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");

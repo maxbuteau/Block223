@@ -60,6 +60,7 @@ public class HallOfFamePane extends VBox{
 		navigationButtonBox.setAlignment(Pos.CENTER);
 
 		nextHFButton.setOnMousePressed(e -> {	
+			Block223Page.buttonPressSound();
 			index++;
 			if(index > toHF.getEntries().size() / 10.0) {
 				index = (int) Math.floor(toHF.getEntries().size() / 10.0);
@@ -67,7 +68,8 @@ public class HallOfFamePane extends VBox{
 			refreshHallOfFamePane();
 		});
 
-		prevHFButton.setOnMousePressed(e -> {	
+		prevHFButton.setOnMousePressed(e -> {
+			Block223Page.buttonPressSound();
 			index--;
 			if(index < 0) {
 				index = 0;
