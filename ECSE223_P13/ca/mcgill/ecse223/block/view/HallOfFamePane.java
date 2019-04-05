@@ -62,9 +62,6 @@ public class HallOfFamePane extends VBox{
 		nextHFButton.setOnMousePressed(e -> {	
 			Block223Page.buttonPressSound();
 			index++;
-			if(index > toHF.getEntries().size() / 10.0) {
-				index = (int) Math.floor(toHF.getEntries().size() / 10.0);
-			}	
 			refreshHallOfFamePane(gameName);
 		});
 
@@ -117,6 +114,8 @@ public class HallOfFamePane extends VBox{
 				HoFError.setText((e.getMessage()));
 			}
 		} else {
+			nextHFButton.setVisible(false);
+			prevHFButton.setVisible(false);
 			try {
 				HoFError.setText("");
 				toHF = Block223Controller.getHallOfFameWithName(gameName);
