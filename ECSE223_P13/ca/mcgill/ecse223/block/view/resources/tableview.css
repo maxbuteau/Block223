@@ -2,6 +2,8 @@
   -fx-background-color: #8A2BE2;
   -fx-text-fill: white;
   -fx-text-align: center;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
 
 }
 

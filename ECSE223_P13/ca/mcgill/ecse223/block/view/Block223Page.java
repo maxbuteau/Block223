@@ -136,11 +136,21 @@ public class Block223Page extends Application{
 		//SELECTION GAME
 		gameSelectionPane = new VBox(80);
 		gameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
-		gameSelectionName = new Label("Game names");
-		gameSelectionName.setMaxWidth(Double.MAX_VALUE);
-		gameSelectionName.setAlignment(Pos.CENTER);
-		gameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
+//		gameSelectionName = new Label("Game names");
+//		gameSelectionName.setMaxWidth(Double.MAX_VALUE);
+//		gameSelectionName.setAlignment(Pos.CENTER);
+//		gameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
 
+		HBox gameNameBox = new HBox(20);
+		ImageView imvGameName = new ImageView();
+		Image gameNameImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameNames.png"));
+		imvGameName.setImage(gameNameImage);
+		imvGameName.setFitHeight(Block223Page.getScreenHeight() / 6);
+		imvGameName.setPreserveRatio(true);
+		gameNameBox.getChildren().add(imvGameName);
+		gameNameBox.setAlignment(Pos.CENTER);
+		
+		
 		gameSelectionScene = new Scene(gameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
@@ -220,6 +230,7 @@ public class Block223Page extends Application{
 		gameSelectionButtonRow.setAlignment(Pos.CENTER);
 		//List
 		gameSelectionList = new ListView<String>();
+		gameSelectionList.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/listview.css");
 		gameSelectionList.setStyle("-fx-font:18 Garamond; -fx-font-weight: bold;");
 		gameSelectionList.setOnMouseClicked(e -> {
 			if(e.getClickCount() == 2 && e.getButton() == MouseButton.PRIMARY) {
@@ -248,7 +259,7 @@ public class Block223Page extends Application{
 
 		refreshGameSelection();
 		gameSelectionList.setItems(gameSelectionListData);
-		gameSelectionPane.getChildren().addAll(gameSelectionName,gameSelectionList, gameSelectionButtonRow, gameSelectionError);
+		gameSelectionPane.getChildren().addAll(gameNameBox,gameSelectionList, gameSelectionButtonRow, gameSelectionError);
 		primaryStage.setScene(gameSelectionScene);
 		gameSelectionScene.getStylesheets().add(getResource("ca/mcgill/ecse223/block/view/resources/style.css"));
 		primaryStage.setResizable(false);
