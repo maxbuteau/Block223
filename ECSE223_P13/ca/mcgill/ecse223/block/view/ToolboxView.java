@@ -13,6 +13,10 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -59,18 +63,25 @@ public class ToolboxView extends VBox {
 		//Toolbox buttons
 		toolboxColorPicker = new ColorPicker();
 		toolboxDeleteButton = new Button("Delete block");
+		toolboxDeleteButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+		
 		toolboxUpdateButton = new Button("Update");
+		toolboxUpdateButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		toolboxWorthSlider = new Slider(constants.getMinPoints(), constants.getMaxPoints(), (constants.getMaxPoints()+constants.getMinPoints())/2);
 		toolboxError = new Label();
 		toolboxError.setStyle("-fx-text-fill: #DC143C");
 
 		//Initialize toolbox worth slider
 		toolboxWorthSliderTitle = new Label("Worth");
+		toolboxWorthSliderTitle.setStyle("-fx-text-color: #FFFFFF;");
 		toolboxWorthSliderValue = new Label(""+(int)toolboxWorthSlider.getValue());
 		
 		toolboxSliderBox = new HBox(20);
 		toolboxSliderBox.getChildren().addAll(toolboxWorthSliderTitle, toolboxWorthSlider, toolboxWorthSliderValue);
 		
+		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/lightPurpleBG.png"));
+		this.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(this.getWidth(), this.getHeight(), false, false, false, false))));
+
 		this.getChildren().addAll(blockFlowPane, toolboxDeleteButton, toolboxColorPicker, toolboxSliderBox, toolboxUpdateButton, toolboxError);
 		this.setAlignment(Pos.CENTER);
 
@@ -169,6 +180,10 @@ public class ToolboxView extends VBox {
 				}
 			});	
 		}
+	}
+	public static String getResource(String res)
+	{
+		return ClassLoader.getSystemResource(res).toString();
 	}
 }
 
