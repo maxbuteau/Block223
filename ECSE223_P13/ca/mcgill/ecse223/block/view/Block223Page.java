@@ -26,6 +26,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.Toolkit;
 import java.util.List;
@@ -156,6 +157,7 @@ public class Block223Page extends Application{
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Block223Page.buttonPressSound();
 			Stage createGameStage = new Stage();
+			createGameStage.initStyle(StageStyle.TRANSPARENT);
 			createGameBox = new VBox(20);
 			Label createGameNameLabel = new Label("Game name : ");
 			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);

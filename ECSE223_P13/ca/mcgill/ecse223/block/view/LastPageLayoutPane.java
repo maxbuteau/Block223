@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LastPageLayoutPane extends BorderPane {
 
@@ -201,6 +202,7 @@ public class LastPageLayoutPane extends BorderPane {
 		blockToolbox.setOnAction(e->{
 			Block223Page.buttonPressSound();
 			blockToolboxStage = new Stage();
+			blockToolboxStage.initStyle(StageStyle.TRANSPARENT);
 			blockToolboxStage.setAlwaysOnTop(true);
 			blockToolboxStage.initOwner(primaryStage);
 			blockToolboxStage.setScene(new Scene(new ToolboxView()));
@@ -220,6 +222,7 @@ public class LastPageLayoutPane extends BorderPane {
 		helpButton.setOnAction(e->{
 			Block223Page.buttonPressSound();
 			helpStage = new Stage();
+			helpStage.initStyle(StageStyle.TRANSPARENT);
 			helpStage.setAlwaysOnTop(true);
 			helpStage.initOwner(primaryStage);
 			helpStage.setScene(new Scene(new HelpView()));
