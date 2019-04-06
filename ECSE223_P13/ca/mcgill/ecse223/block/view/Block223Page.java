@@ -325,13 +325,18 @@ public class Block223Page extends Application{
 	}
 
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
-MusicShuffler.playSelectMusic();
+		MusicShuffler.playSelectMusic();
 		playableGameSelectionPane = new VBox(80);
-		playableGameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
-		playableGameSelectionName = new Label("Game Selection");
-		playableGameSelectionName.setMaxWidth(Double.MAX_VALUE);
-		playableGameSelectionName.setAlignment(Pos.CENTER);
-		playableGameSelectionName.setStyle("-fx-text-fill: #FFFFFF;-fx-font-weight: bold;-fx-font:35 Garamond;-fx-font-weight: bold;");
+		playableGameSelectionPane.setPadding(new Insets(10,SCREEN_WIDTH/4,10,SCREEN_WIDTH/4));
+
+		ImageView imv = new ImageView();
+		Image gameSelectionImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameSelection.png"));
+		imv.setImage(gameSelectionImage);
+		imv.setFitWidth(Block223Page.getScreenWidth() / 2);
+		imv.setPreserveRatio(true);
+		HBox playableGameSelectionNameBox = new HBox(20);
+		playableGameSelectionNameBox.getChildren().add(imv);
+		playableGameSelectionNameBox.setAlignment(Pos.CENTER);
 
 		playableGameSelectionScene = new Scene(playableGameSelectionPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -404,7 +409,7 @@ MusicShuffler.playSelectMusic();
 		playableGameSelectionError.setStyle("-fx-text-fill: #DC143C");
 
 		refreshPlayableGameSelection();
-		playableGameSelectionPane.getChildren().addAll(playableGameSelectionName,playableGameSelectionList, playableGameSelectionButtonRow, playableGameSelectionError);
+		playableGameSelectionPane.getChildren().addAll(playableGameSelectionNameBox,playableGameSelectionList, playableGameSelectionButtonRow, playableGameSelectionError);
 		primaryStage.setScene(playableGameSelectionScene);
 		playableGameSelectionScene.getStylesheets().add(getResource("ca/mcgill/ecse223/block/view/resources/style.css"));
 		primaryStage.setResizable(false);
