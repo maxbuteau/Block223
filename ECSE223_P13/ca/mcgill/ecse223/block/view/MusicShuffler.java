@@ -24,9 +24,9 @@ public class MusicShuffler {
 	}
 	
 	public static void playNextPlayedMusic() {
-		if (mp!=null)
+		if (mp!=null) {
 		mp.stop();
-		mp.dispose();
+		mp.dispose();}
 		Collections.shuffle(gamePlayedMusic);
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
 		mp.setCycleCount(5);
@@ -38,17 +38,17 @@ public class MusicShuffler {
 		});
 	}
 	public static void playAdminMusic() {
-		if (mp!=null)
+		if (mp!=null) {
 		mp.stop();
-		mp.dispose();
+		mp.dispose();}
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
 		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
 	}
 	public static void playSelectMusic() {
-		if (mp!=null)
+		if (mp!=null) {
 		mp.stop();
-		mp.dispose();
+		mp.dispose();}
 		mp = new MediaPlayer(selectMusic);
 		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
