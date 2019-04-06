@@ -39,7 +39,7 @@ public class Block223Page extends Application{
 
 private static ChosenBlock chosenBlock;	
 	
-	//pixar
+//pixar
 	private static MediaView mvPixar;
 	private static Media mPixar = new Media(getResource("ca/mcgill/ecse223/block/view/resources/Pixar.1.mp4"));
 	private static MediaPlayer mpPixar = new MediaPlayer(mPixar);
@@ -103,6 +103,7 @@ private static ChosenBlock chosenBlock;
 		p.getChildren().add(mvPixar);
 		mvPixar.setFitHeight(SCREEN_HEIGHT);
 		mvPixar.setFitWidth(SCREEN_WIDTH);
+		mvPixar.setPreserveRatio(false);
 		mpPixar.play();
 		primaryStage.initStyle(StageStyle.UNDECORATED);
 		mpPixar.setOnEndOfMedia(()->{
@@ -134,7 +135,7 @@ private static ChosenBlock chosenBlock;
 			loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 			loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 			primaryStage.setScene(loginScene);
-			primaryStage.initStyle(StageStyle.UTILITY);
+			//primaryStage.initStyle(StageStyle.UTILITY);
 		});
 		
 		primaryStage.setScene(new Scene(p));
@@ -188,7 +189,7 @@ private static ChosenBlock chosenBlock;
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Block223Page.buttonPressSound();
 			Stage createGameStage = new Stage();
-			createGameStage.initStyle(StageStyle.UTILITY);
+			createGameStage.initStyle(StageStyle.UNIFIED);
 			createGameStage.setTitle("Enter the game name and press ENTER");
 			createGameBox = new VBox(20);
 //			Label createGameNameLabel = new Label("Game name : ");
