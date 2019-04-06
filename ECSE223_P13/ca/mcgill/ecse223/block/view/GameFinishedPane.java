@@ -81,28 +81,39 @@ public class GameFinishedPane extends VBox {
 		gameOverBox.setPadding(new Insets(5,0,0,0));
 		
 		//Score
-		scoreTitle = new Text("Score:");
-		settingFont(scoreTitle, Color.LIGHTGOLDENRODYELLOW, 32);
+		HBox scoreTitleBox = new HBox(20);
+		ImageView imvScore = new ImageView();
+		Image scoreImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/score3.png"));
+		imvScore.setImage(scoreImage);
+		imvScore.setFitHeight(Block223Page.getScreenHeight() / 8);
+		imvScore.setPreserveRatio(true);
+		scoreTitleBox.getChildren().add(imvScore);
 		score = new Text(""+pScore);
 		settingFont(score, Color.WHITE, 32);
 		
 		scoreBox = new HBox(SCORE_GAP);
-		scoreBox.getChildren().addAll(scoreTitle, score);
+		scoreBox.getChildren().addAll(scoreTitleBox, score);
 		scoreBox.setAlignment(Pos.CENTER);
 		
 		//Lives Remaining
-		livesRemainingTitle = new Text("Lives Remaining:");
-		settingFont(livesRemainingTitle, Color.LIGHTGOLDENRODYELLOW, 32);
+		HBox livesTitleBox = new HBox(20);
+		ImageView imvLives = new ImageView();
+		Image livesImage = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/livesRemaining.png"));
+		imvLives.setImage(livesImage);
+		imvLives.setFitHeight(Block223Page.getScreenHeight() / 8);
+		imvLives.setPreserveRatio(true);
+		livesTitleBox.getChildren().add(imvLives);
 		livesRemaining = new Text(""+pLives);
 		settingFont(livesRemaining, Color.WHITE, 32);
 		
 		livesBox = new HBox(LIVES_GAP);
-		livesBox.getChildren().addAll(livesRemainingTitle, livesRemaining);
+		livesBox.getChildren().addAll(livesTitleBox, livesRemaining);
 		livesBox.setAlignment(Pos.CENTER);
 		
 		innerBox = new VBox(V_GAP);
 		innerBox.getChildren().addAll(scoreBox, livesBox);
 		innerBox.setAlignment(Pos.CENTER);
+		
 		//Hall Of Fame
 		hofPane = new HallOfFamePane(hof.getTOHallOfFame().getGamename());
 		
