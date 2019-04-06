@@ -13,7 +13,7 @@
         linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
     -fx-border-radius: 30;
     -fx-border-color: black;
-    -fx-border-width: 0.5px;
+    -fx-border-width: 0px;
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,2,3,0;
     -fx-text-fill: #FFFFFF;

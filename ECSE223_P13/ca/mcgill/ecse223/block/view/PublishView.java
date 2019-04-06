@@ -24,8 +24,14 @@ public class PublishView extends VBox {
 	
 	public PublishView(Stage primaryStage) {
 		publishCheck = new Label("Are you sure you want to publish the game "+Block223Application.getCurrentGame().getName()+" ? A published game cannot be edited anymore!");
+		publishCheck.setStyle(
+				"-fx-text-fill: #4B0082;" 
+				+ "-fx-padding: 20px;"
+				+ "-fx-font:14 Garamond;");
 		yes = new Button("Publish");
+		yes.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		no = new Button("Cancel");
+		no.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 		publishError = new Label();
 		publishError.setStyle("-fx-text-fill: #DC143C");
 		

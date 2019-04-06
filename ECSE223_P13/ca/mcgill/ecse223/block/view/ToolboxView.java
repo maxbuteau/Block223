@@ -82,8 +82,8 @@ public class ToolboxView extends VBox {
 		toolboxSliderBox = new HBox(20);
 		toolboxSliderBox.getChildren().addAll(toolboxWorthSliderTitle, toolboxWorthSlider, toolboxWorthSliderValue);
 		
-		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/lightPurpleBG.png"));
-		this.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(this.getWidth(), this.getHeight(), false, false, false, false))));
+//		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/lightPurpleBG.png"));
+//		this.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(this.getWidth(), this.getHeight(), false, false, false, false))));
 
 		this.getChildren().addAll(blockFlowPane, toolboxDeleteButton, toolboxColorPicker, toolboxSliderBox, toolboxUpdateButton, toolboxError);
 		this.setAlignment(Pos.CENTER);
