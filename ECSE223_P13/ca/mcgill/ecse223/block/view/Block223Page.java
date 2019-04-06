@@ -157,7 +157,8 @@ public class Block223Page extends Application{
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Block223Page.buttonPressSound();
 			Stage createGameStage = new Stage();
-			createGameStage.initStyle(StageStyle.TRANSPARENT);
+			createGameStage.initStyle(StageStyle.UTILITY);
+			createGameStage.setTitle("Enter the game name and press ENTER");
 			createGameBox = new VBox(20);
 			Label createGameNameLabel = new Label("Game name : ");
 			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);
