@@ -3,29 +3,20 @@ package ca.mcgill.ecse223.block.view;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
-import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
 import ca.mcgill.ecse223.block.controller.TOGame;
-import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -66,15 +57,6 @@ public class LastPageLayoutPane extends BorderPane {
 	private int currentLvl = 1;
 	private double spacing;
 	
-	private static boolean testStarted = false;
-	private static Pane testArea;
-	private static Rectangle paddle;
-	private static Circle ball;
-	private static String inputs;
-	private static TOCurrentlyPlayedGame pgame;
-	private static Button finishTest;
-	private static Button resumeTest;
-	private static HBox buttonBox;
 
 	// Default constructor that initializes said nodes and containers
 	public LastPageLayoutPane(Stage primaryStage, double spacing) {

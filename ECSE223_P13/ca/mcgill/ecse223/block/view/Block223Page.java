@@ -67,7 +67,6 @@ public class Block223Page extends Application{
 	private static TableColumn<TOPlayableGame, Integer> columnId;	
 	private static TableColumn<TOPlayableGame, Integer> columnLevel;
 	private static ObservableList<TOPlayableGame> playableGameSelectionListData;
-	private static Label playableGameSelectionName;
 	private static Button playableGameSelectionLogoutButton;
 	private static Button playableGameSelectionSelectButton;
 	private static Label playableGameSelectionError;

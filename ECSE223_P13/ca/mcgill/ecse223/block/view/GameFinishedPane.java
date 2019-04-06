@@ -25,7 +25,6 @@ public class GameFinishedPane extends VBox {
 	private static final int H_GAP = 150;
 	
 	//Text fields
-	private Text gameOver;
 	private Text scoreTitle;
 	private Text score;
 	private Text livesRemainingTitle;
