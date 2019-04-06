@@ -180,8 +180,10 @@ private static ChosenBlock chosenBlock;
 		gameSelectionButtonRow = new HBox(30);
 		gameSelectionButtonRow.setPadding(new Insets(10, 10, 10, 10));
 		gameSelectionCreateGameButton = new Button("Create Game");
+		gameSelectionCreateGameButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		gameSelectionDeleteButton = new Button("Delete game");
+		gameSelectionDeleteButton.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
 
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Block223Page.buttonPressSound();
@@ -189,8 +191,17 @@ private static ChosenBlock chosenBlock;
 			createGameStage.initStyle(StageStyle.UTILITY);
 			createGameStage.setTitle("Enter the game name and press ENTER");
 			createGameBox = new VBox(20);
-			Label createGameNameLabel = new Label("Game name : ");
-			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);
+//			Label createGameNameLabel = new Label("Game name : ");
+//			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);
+			ImageView imvNewgame = new ImageView();
+			Image createGameHeaderImg = new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/newGame.png"));
+			imvNewgame.setImage(createGameHeaderImg);
+			HBox createGameHeader = new HBox(20);
+			imvNewgame.setFitHeight(Block223Page.getScreenHeight() / 10);
+			imvNewgame.setPreserveRatio(true);
+			createGameHeader.getChildren().add(imvNewgame);
+			createGameHeader.setAlignment(Pos.CENTER);
+
 			TextField createGameNameField = new TextField();
 
 			createGameNameField.setOnKeyPressed(ev -> {
@@ -210,7 +221,7 @@ private static ChosenBlock chosenBlock;
 
 
 
-			createGameBox.getChildren().addAll(createGameNameLabel, createGameNameField);
+			createGameBox.getChildren().addAll(createGameHeader, createGameNameField);
 			createGameScene = new Scene(createGameBox, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 6);
 			createGameStage.setScene(createGameScene);
 			createGameStage.show();

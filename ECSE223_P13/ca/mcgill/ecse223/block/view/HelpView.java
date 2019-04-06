@@ -18,13 +18,25 @@ public class HelpView extends Pane {
 	
 	public HelpView() {
 		helpLabel1 = new Label("- To select a block that was added to the game, click on toolbox and then on the desired block;");
-		helpLabel1.setStyle("-fx-font:22 Garamond;");
+		helpLabel1.setStyle(
+				"-fx-text-fill: #4B0082;" 
+				+ "-fx-padding: 20px;"
+				+ "-fx-font:20 Garamond;");
 		helpLabel2 = new Label("- When a block is selected, click anywhere in the grid to place it;");
-		helpLabel2.setStyle("-fx-font:22 Garamond;");
+		helpLabel2.setStyle(
+				"-fx-text-fill: #4B0082;" 
+				+ "-fx-padding: 20px;"
+				+ "-fx-font:20 Garamond;");
 		helpLabel3 = new Label("- To move a block in the grid, drag it to the new location;");
-		helpLabel3.setStyle("-fx-font:22 Garamond;");
+		helpLabel3.setStyle(
+				"-fx-text-fill: #4B0082;" 
+				+ "-fx-padding: 20px;"
+				+ "-fx-font:20 Garamond;");
 		helpLabel4 = new Label("- To remove a block from the grid, right-click on it;");
-		helpLabel4.setStyle("-fx-font:22 Garamond;");
+		helpLabel4.setStyle(
+				"-fx-text-fill: #4B0082;" 
+				+ "-fx-padding: 20px;"
+				+ "-fx-font:20 Garamond;");
 		
 		
 		helpGrid = new GridPane();
