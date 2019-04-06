@@ -10,16 +10,17 @@ public class MusicShuffler {
 
 	private static ArrayList<Media> gamePlayedMusic = new ArrayList<>();
 	private static Media selectMusic;
-	private static ArrayList<Media> adminMusic = new ArrayList<>();
+	//private static ArrayList<Media> adminMusic = new ArrayList<>();
 	private static MediaPlayer mp;
 	
 	public MusicShuffler() {
 		//populate the plaulists
-		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/EDM1.wav")));
-		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/DL.mp3")));
-		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Chill.wav")));
-		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/PimPoy.wav")));
-		adminMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Intro.mp3")));
+//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/EDM1.wav")));
+//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/DL.mp3")));
+//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Chill.wav")));
+//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/PimPoy.wav")));
+		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/XYOU.mp3")));
+		//adminMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Intro.mp3")));
 		selectMusic=new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Space"));
 	}
 	
@@ -37,14 +38,14 @@ public class MusicShuffler {
 //			playNextPlayedMusic();}
 //		});
 	}
-	public static void playAdminMusic() {
-		if (mp!=null) {
-		mp.stop();
-		mp.dispose();}
-		mp = new MediaPlayer(gamePlayedMusic.get(0));
-		mp.setCycleCount(Integer.MAX_VALUE);
-		mp.play();
-	}
+//	public static void playAdminMusic() {
+//		if (mp!=null) {
+//		mp.stop();
+//		mp.dispose();}
+//		mp = new MediaPlayer(gamePlayedMusic.get(0));
+//		mp.setCycleCount(Integer.MAX_VALUE);
+//		mp.play();
+//	}
 	public static void playSelectMusic() {
 		if (mp!=null) {
 		mp.stop();

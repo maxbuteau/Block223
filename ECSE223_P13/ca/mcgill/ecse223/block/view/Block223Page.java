@@ -92,7 +92,7 @@ public class Block223Page extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		new MusicShuffler();
-		MusicShuffler.playAdminMusic();
+		MusicShuffler.playSelectMusic();
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		ImageView bg = new ImageView(background);
 		bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -319,13 +319,13 @@ public class Block223Page extends Application{
 
 	public static void logOutAfterGameOver(Stage primaryStage) {
 		Block223Controller.logout();
-		MusicShuffler.playAdminMusic();
+		MusicShuffler.playSelectMusic();
 		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
 	}
 
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
-		MusicShuffler.playSelectMusic();
+		//MusicShuffler.playSelectMusic();
 		playableGameSelectionPane = new VBox(80);
 		playableGameSelectionPane.setPadding(new Insets(10,SCREEN_WIDTH/4,10,SCREEN_WIDTH/4));
 
@@ -349,7 +349,7 @@ public class Block223Page extends Application{
 		//Buttons
 		playableGameSelectionLogoutButton = new Button("Logout");
 		playableGameSelectionLogoutButton.setOnAction(e -> {
-			MusicShuffler.playAdminMusic();
+			MusicShuffler.playSelectMusic();
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	

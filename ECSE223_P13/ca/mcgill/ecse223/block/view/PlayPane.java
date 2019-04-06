@@ -145,7 +145,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		logout = new Button("Log out");
 		logout.setFocusTraversable(false);
 		logout.setOnAction(e -> {
-			MusicShuffler.playAdminMusic();
+			//MusicShuffler.playAdminMusic();
+			MusicShuffler.playSelectMusic();
 			Block223Page.buttonPressSound();
 			mediaPlayer.stop();
 			Block223Controller.logout();
