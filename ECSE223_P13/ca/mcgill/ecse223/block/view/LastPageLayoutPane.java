@@ -255,8 +255,22 @@ public class LastPageLayoutPane extends BorderPane {
 		});
 		
 		testButton.setOnAction(e->{
-			Block223Page.buttonPressSound();
-			Block223Page.setTestingScene(primaryStage);
+			error.setText("");
+			try {
+				if(Block223Controller.getBlocksOfCurrentDesignableGame().size()==0) {
+					errorSFX.stop();
+					errorSFX.isAutoPlay();
+					error.setText("A block must be created before a game can be tested.");
+				}
+				else {
+					Block223Page.buttonPressSound();
+					Block223Page.setTestingScene(primaryStage);
+				}
+			} catch (InvalidInputException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		});
 		
 		publishButton.setOnAction(e -> {
