@@ -261,7 +261,7 @@ class PlayedGame {
 
 
   private void bounceBall() {
-	   double distanceX = getBallDirectionX();
+	       double distanceX = getBallDirectionX();
 	   double distanceY = getBallDirectionY();
 	   double positionX = getCurrentBallX();
 	   double positionY = getCurrentBallY();
@@ -298,6 +298,24 @@ class PlayedGame {
 			   currentBallY = bouncePointY + distanceOutgoingY / distanceY * ballDirectionY;
 		   }
 	   
+		   //as of april 6, we need to divide the speed by 10 if it is greater than 10
+		   if(ballDirectionX>=10)
+			   ballDirectionX/=10;
+		   if(ballDirectionY>=10)
+			   ballDirectionY/=10;
+		   //also have to make sure the ball is still in play
+		   if(currentBallX<Ball.BALL_DIAMETER/2) {
+			   currentBallX = Ball.BALL_DIAMETER/2;
+			   ballDirectionX*=-1;
+		   }
+		   if(currentBallX>Game.PLAY_AREA_SIDE-Ball.BALL_DIAMETER/2) {
+			   currentBallX = Game.PLAY_AREA_SIDE-Ball.BALL_DIAMETER/2;
+			   ballDirectionX*=-1;
+		   }
+		   if(currentBallY<Ball.BALL_DIAMETER/2) {
+			   currentBallY = Ball.BALL_DIAMETER/2;
+			   ballDirectionY*=-1;
+		   }
 	   setBounce(null);
 }
 
