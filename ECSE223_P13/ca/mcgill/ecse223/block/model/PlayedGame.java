@@ -942,6 +942,7 @@ public class PlayedGame implements Serializable
 				counter++;
 			}
 			if (D.intersectsLine(l)) {
+				
 				intersect.add(new BouncePoint(calculateIntersectionPoint(D, l).getX(), calculateIntersectionPoint(D, l).getY(),
 						BounceDirection.FLIP_Y));
 				counter++;
@@ -989,7 +990,11 @@ public class PlayedGame implements Serializable
 					}
 				}
 			}
-			if (closest != null && currentBallX + ballDirectionX == Math.round(closest.getX()) && currentBallY + ballDirectionY == Math.round(closest.getY())){
+			if(closest!=null) {
+				closest.setX(Math.round(closest.getX()*2)/2.0);
+				closest.setY(Math.round(closest.getY()*2)/2.0);
+			}
+			if (closest != null && Math.round(currentBallX*10)/10.0 + ballDirectionX == Math.round(closest.getX()*2)/2.0 && Math.round(currentBallY + ballDirectionY) == Math.round(closest.getY()*2)/2.0){
 				return null;
 			}
 			return closest;	
