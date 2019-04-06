@@ -344,6 +344,7 @@ MusicShuffler.playSelectMusic();
 		//Buttons
 		playableGameSelectionLogoutButton = new Button("Logout");
 		playableGameSelectionLogoutButton.setOnAction(e -> {
+			MusicShuffler.playAdminMusic();
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
