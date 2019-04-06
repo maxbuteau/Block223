@@ -1,0 +1,29 @@
+.table-view{
+  -fx-background-color: #9370DB;
+  -fx-text-fill: white;
+  -fx-text-align: center;
+
+}
+
+.table-view .column-header{
+  -fx-background-color: #8A2BE2;
+  -fx-text-fill: white;
+  -fx-text-align: center;
+}
+
+.table-row-cell:odd{
+  -fx-background-color: #E6E6FA;
+  -fx-text-fill: #8A2BE2; 
+  -fx-text-align: center;
+}
+
+.table-row-cell:even{
+  -fx-background-color: #F0F8FF;
+  -fx-text-fill: #8A2BE2;
+  -fx-text-align: center;
+
+}
+
+.table-row-cell:selected{
+    -fx-background-color: #9370DB;
+}

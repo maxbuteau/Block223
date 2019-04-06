@@ -78,6 +78,7 @@ public class HallOfFamePane extends VBox{
 		hallOfFameListData = FXCollections.observableArrayList();
 
 		hallOfFameList = new TableView<>();
+		hallOfFameList.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/tableview.css");
 		hallOfFameList.setItems(hallOfFameListData);
 		hallOfFameList.setFocusTraversable(false);
 
