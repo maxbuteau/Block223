@@ -202,7 +202,8 @@ public class LastPageLayoutPane extends BorderPane {
 		blockToolbox.setOnAction(e->{
 			Block223Page.buttonPressSound();
 			blockToolboxStage = new Stage();
-			blockToolboxStage.initStyle(StageStyle.TRANSPARENT);
+			blockToolboxStage.initStyle(StageStyle.UTILITY);
+			helpStage.setTitle("BlockToolbox");
 			blockToolboxStage.setAlwaysOnTop(true);
 			blockToolboxStage.initOwner(primaryStage);
 			blockToolboxStage.setScene(new Scene(new ToolboxView()));
@@ -222,7 +223,7 @@ public class LastPageLayoutPane extends BorderPane {
 		helpButton.setOnAction(e->{
 			Block223Page.buttonPressSound();
 			helpStage = new Stage();
-			helpStage.initStyle(StageStyle.TRANSPARENT);
+			helpStage.initStyle(StageStyle.UTILITY);
 			helpStage.setAlwaysOnTop(true);
 			helpStage.initOwner(primaryStage);
 			helpStage.setScene(new Scene(new HelpView()));
