@@ -119,6 +119,7 @@ public class Block223Page extends Application{
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
+		primaryStage.setTitle("Block223");
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 	}
 
