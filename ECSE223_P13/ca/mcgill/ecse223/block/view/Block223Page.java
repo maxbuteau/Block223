@@ -21,9 +21,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -35,7 +37,12 @@ import ca.mcgill.ecse223.block.controller.*;
 
 public class Block223Page extends Application{
 
-	private static ChosenBlock chosenBlock;	
+private static ChosenBlock chosenBlock;	
+	
+	//pixar
+	private static MediaView mvPixar;
+	private static Media mPixar = new Media(getResource("ca/mcgill/ecse223/block/view/resources/Pixar.1.mp4"));
+	private static MediaPlayer mpPixar = new MediaPlayer(mPixar);
 
 	private static Label gameSelectionError;
 	//LOGIN
@@ -91,33 +98,46 @@ public class Block223Page extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		new MusicShuffler();
-		MusicShuffler.playSelectMusic();
-		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
-		ImageView bg = new ImageView(background);
-		bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
-		bg.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
-		Image background2 = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
-		ImageView bg2 = new ImageView(background2);
-		bg2.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
-		bg2.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
-		primaryStage.setResizable(false);
+		mvPixar = new MediaView(mpPixar);
+		Pane p = new Pane();
+		p.getChildren().add(mvPixar);
+		mvPixar.setFitHeight(SCREEN_HEIGHT);
+		mvPixar.setFitWidth(SCREEN_WIDTH);
+		mpPixar.play();
+		primaryStage.initStyle(StageStyle.UNDECORATED);
+		mpPixar.setOnEndOfMedia(()->{
+			mpPixar.dispose();
+			new MusicShuffler();
+			MusicShuffler.playSelectMusic();
+			Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+			ImageView bg = new ImageView(background);
+			bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			bg.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			Image background2 = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+			ImageView bg2 = new ImageView(background2);
+			bg2.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			bg2.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			primaryStage.setResizable(false);
 
-		//REGISTER SCENE
+			//REGISTER SCENE
 
-		RegisterPane registerPane = new RegisterPane(primaryStage);
-		registerPane.setSpacing(20);
-		registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
-		registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+			RegisterPane registerPane = new RegisterPane(primaryStage);
+			registerPane.setSpacing(20);
+			registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+			registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		//LOGIN SCENE
+			//LOGIN SCENE
 
-		LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
-		loginPane.setSpacing(20);
+			LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
+			loginPane.setSpacing(20);
 
-		loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
-		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
-		primaryStage.setScene(loginScene);
+			loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+			loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+			primaryStage.setScene(loginScene);
+			primaryStage.initStyle(StageStyle.UTILITY);
+		});
+		
+		primaryStage.setScene(new Scene(p));
 		primaryStage.show();
 		primaryStage.setTitle("Block223");
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
