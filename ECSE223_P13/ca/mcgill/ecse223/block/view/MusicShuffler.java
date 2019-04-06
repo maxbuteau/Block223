@@ -62,4 +62,17 @@ public class MusicShuffler {
 	public static boolean isPlaying() {
 		 return mp.getStatus()==MediaPlayer.Status.PLAYING;
 	}
+	public static boolean isMuted() {
+		return mp.isMute();
+	}
+
+	public static void unmuteMusic() {
+		mp.setMute(false);
+		
+	}
+
+	public static void muteMusic() {
+		mp.setMute(true);
+		
+	}
 }

@@ -54,6 +54,16 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 	private static String inputs = "";
 	
 	private static Stage primaryStage;
+	
+	//adding the music objects
+	private static HBox musicContainer = new HBox(20);
+	private static Button play;
+	private static Button mute;
+	private static Button nextSong;
+	private static ImageView playimg;
+	private static ImageView pauseimg;
+	private static ImageView muteimg;
+	private static ImageView unmuteimg;
 
 	public PlayPane(Stage primaryStage) {
 		PlayPane.primaryStage = primaryStage;
@@ -80,6 +90,9 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		buttonsBox = new HBox(20);
 		buttonsBox.setAlignment(Pos.CENTER);
+		
+		prepareMusic();
+
 
 		startGame = new Button("Start Game");
 		startGame.setFocusTraversable(false);
@@ -151,11 +164,62 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		this.setTop(playHeader);
 		this.setBottom(buttonsBox);
 		this.setRight(hofPane);
+		this.setLeft(musicContainer);
 		this.setPadding(new Insets(0,0,40,0));
 
 		displayPlayArea();
 		
 		this.getStylesheets().add("ca/mcgill/ecse223/block/view/resources/style.css");
+	}
+
+	private void prepareMusic() {
+		playimg = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/play.png")));
+		playimg.setFitHeight(20);
+		playimg.setFitWidth(20);
+		pauseimg = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/pause.png")));
+		pauseimg.setFitHeight(20);
+		pauseimg.setFitWidth(20);
+		unmuteimg = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/mutemusic.png")));
+		unmuteimg.setFitHeight(20);
+		unmuteimg.setFitWidth(20);
+		muteimg = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/music.png")));
+		muteimg.setFitHeight(20);
+		muteimg.setFitWidth(20);
+		ImageView next = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/nextsong.png")));
+		next.setFitHeight(20);
+		next.setFitWidth(20);
+		nextSong = new Button("",next);
+		play = new Button("",pauseimg);
+		mute = new Button("",muteimg);
+		musicContainer.getChildren().addAll(nextSong,mute,play);
+		musicContainer.setAlignment(Pos.CENTER);
+		
+		nextSong.setOnAction(e->{
+			MusicShuffler.playNextPlayedMusic();
+		});
+		
+		play.setOnAction(e->{
+			if(MusicShuffler.isPlaying()) {
+				MusicShuffler.pauseMusic();
+				play.setGraphic(playimg);
+			}
+			else {
+				MusicShuffler.resumeMusic();
+				play.setGraphic(pauseimg);
+				
+			}
+		});
+		
+		mute.setOnAction(e->{
+			if(MusicShuffler.isMuted()) {
+				MusicShuffler.unmuteMusic();
+				mute.setGraphic(muteimg);
+			}
+			else {
+				MusicShuffler.muteMusic();
+				mute.setGraphic(unmuteimg);
+			}
+		});
 	}
 
 	public static void setInputs(String str) {
