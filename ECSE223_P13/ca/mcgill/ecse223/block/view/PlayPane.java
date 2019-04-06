@@ -74,7 +74,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		catch(InvalidInputException iie ) {
 			//TODO
 		}
-		
+		musicContainer.getChildren().clear();
 		playArea = new Pane();
 		playArea.setMaxSize(constants.getPlayAreaSide(), constants.getPlayAreaSide());
 		playArea.setBorder(new Border(new BorderStroke(Color.WHITE, 
@@ -157,7 +157,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);
-		mediaView.setFitWidth(Block223Page.getScreenWidth()/2);
+		mediaView.setFitWidth(Block223Page.getScreenWidth()/3);
 		mediaPlayer.play();
 		
 		this.setCenter(mediaView);
@@ -193,7 +193,9 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		mute = new Button("",muteimg);
 		musicContainer.getChildren().addAll(nextSong,mute,play);
 		musicContainer.setAlignment(Pos.CENTER);
-		
+		nextSong.setFocusTraversable(false);
+		play.setFocusTraversable(false);
+		mute.setFocusTraversable(false);
 		nextSong.setOnAction(e->{
 			MusicShuffler.playNextPlayedMusic();
 		});
