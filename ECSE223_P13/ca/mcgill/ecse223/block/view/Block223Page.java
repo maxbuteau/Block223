@@ -91,7 +91,8 @@ public class Block223Page extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
+		new MusicShuffler();
+		MusicShuffler.playAdminMusic();
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		ImageView bg = new ImageView(background);
 		bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
@@ -287,6 +288,7 @@ public class Block223Page extends Application{
 	}
 
 	public static void setPlayScene(Stage primaryStage) {
+		MusicShuffler.pauseMusic();
 		PlayPane pp = new PlayPane(primaryStage);
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		pp.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
@@ -299,9 +301,6 @@ public class Block223Page extends Application{
 				else if(e.getCode() == KeyCode.SPACE) {
 					PlayPane.setInputs(" ");
 					pp.getCenter().setDisable(true);
-				}
-				else {
-					//We do nothing
 				}
 			}
 		});
@@ -327,7 +326,7 @@ public class Block223Page extends Application{
 	}
 
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
-
+MusicShuffler.playSelectMusic();
 		playableGameSelectionPane = new VBox(80);
 		playableGameSelectionPane.setPadding(new Insets(60,SCREEN_WIDTH/4,60,SCREEN_WIDTH/4));
 		playableGameSelectionName = new Label("Game Selection");

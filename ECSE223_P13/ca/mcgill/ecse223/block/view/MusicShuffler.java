@@ -9,7 +9,6 @@ import javafx.scene.media.MediaPlayer;
 public class MusicShuffler {
 
 	private static ArrayList<Media> gamePlayedMusic = new ArrayList<>();
-	private static ArrayList<Media> introMusic = new ArrayList<>();
 	private static Media selectMusic;
 	private static ArrayList<Media> adminMusic = new ArrayList<>();
 	private static MediaPlayer mp;
@@ -21,7 +20,7 @@ public class MusicShuffler {
 		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Chill.wav")));
 		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/PimPoy.wav")));
 		adminMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Intro.mp3")));
-		selectMusic=new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Space.wav"));
+		selectMusic=new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Space"));
 	}
 	
 	public static void playNextPlayedMusic() {

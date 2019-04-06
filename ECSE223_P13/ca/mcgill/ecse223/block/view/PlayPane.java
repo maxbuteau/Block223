@@ -90,6 +90,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			logout.setDisable(true);
 			started = true;
 			mediaPlayer.stop();
+			MusicShuffler.playNextPlayedMusic();
 			this.setCenter(playArea);
 			// initiating a thread to start the game loop
 			Runnable task = new Runnable() {
@@ -123,6 +124,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		quit.setFocusTraversable(false);
 		quit.setOnAction(e -> {
 			Block223Page.buttonPressSound();
+			MusicShuffler.playSelectMusic();
 			mediaPlayer.stop();
 			Block223Page.changeToPlayableGameSelectionScene(primaryStage);
 		});
@@ -130,6 +132,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		logout = new Button("Log out");
 		logout.setFocusTraversable(false);
 		logout.setOnAction(e -> {
+			MusicShuffler.playAdminMusic();
 			Block223Page.buttonPressSound();
 			mediaPlayer.stop();
 			Block223Controller.logout();
