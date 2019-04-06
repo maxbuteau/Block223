@@ -26,6 +26,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.Toolkit;
 import java.util.List;
@@ -66,7 +67,6 @@ public class Block223Page extends Application{
 	private static TableColumn<TOPlayableGame, Integer> columnId;	
 	private static TableColumn<TOPlayableGame, Integer> columnLevel;
 	private static ObservableList<TOPlayableGame> playableGameSelectionListData;
-	private static Label playableGameSelectionName;
 	private static Button playableGameSelectionLogoutButton;
 	private static Button playableGameSelectionSelectButton;
 	private static Label playableGameSelectionError;
@@ -119,6 +119,7 @@ public class Block223Page extends Application{
 		loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
+		primaryStage.setTitle("Block223");
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
 	}
 
@@ -155,6 +156,8 @@ public class Block223Page extends Application{
 		gameSelectionCreateGameButton.setOnAction(e -> {
 			Block223Page.buttonPressSound();
 			Stage createGameStage = new Stage();
+			createGameStage.initStyle(StageStyle.UTILITY);
+			createGameStage.setTitle("Enter the game name and press ENTER");
 			createGameBox = new VBox(20);
 			Label createGameNameLabel = new Label("Game name : ");
 			createGameNameLabel.setTranslateX(SCREEN_WIDTH / 6);

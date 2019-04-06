@@ -49,6 +49,7 @@ public class ToolboxView extends VBox {
 		previousPane = new Pane();
 		Label toolboxLabel = new Label("Block toolbox");
 		toolboxLabel.setTranslateX(SCREEN_WIDTH/6);
+		toolboxLabel.setStyle("-fx-font:15 Garamond;");
 		constants = Block223Controller.getConstants();
 
 		//Grid of blocks for toolbox
@@ -73,8 +74,10 @@ public class ToolboxView extends VBox {
 
 		//Initialize toolbox worth slider
 		toolboxWorthSliderTitle = new Label("Worth");
+		toolboxWorthSliderTitle.setStyle("-fx-font:11 Garamond;");
 		toolboxWorthSliderTitle.setStyle("-fx-text-color: #FFFFFF;");
 		toolboxWorthSliderValue = new Label(""+(int)toolboxWorthSlider.getValue());
+		toolboxWorthSliderValue.setStyle("-fx-font:11 Garamond;");
 		
 		toolboxSliderBox = new HBox(20);
 		toolboxSliderBox.getChildren().addAll(toolboxWorthSliderTitle, toolboxWorthSlider, toolboxWorthSliderValue);
@@ -111,7 +114,9 @@ public class ToolboxView extends VBox {
 
 					//Getting worth and id for each block
 					Label toBlockId = new Label(String.valueOf(toBlock.getId()));
+					toBlockId.setStyle("-fx-font:11 Garamond;");
 					Label toBlockWorth = new Label(String.valueOf(toBlock.getPoints()));
+					toBlockWorth.setStyle("-fx-font:11 Garamond;");
 
 					//Adding color, worth, and id for each block in tile
 					toolboxVBox = new VBox();
