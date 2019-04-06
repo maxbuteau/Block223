@@ -88,7 +88,7 @@ private static ChosenBlock chosenBlock;
 	private static Scene testScene;
 
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 100;
+	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 50;
 
 	private static Media soundMedia = new Media(getResource("ca/mcgill/ecse223/block/view/resources/click.mp3"));
 	private static MediaPlayer sound = new MediaPlayer(soundMedia);
@@ -105,7 +105,7 @@ private static ChosenBlock chosenBlock;
 		mvPixar.setFitWidth(SCREEN_WIDTH);
 		mvPixar.setPreserveRatio(false);
 		mpPixar.play();
-		primaryStage.initStyle(StageStyle.UNDECORATED);
+		primaryStage.initStyle(StageStyle.UNIFIED);
 		mpPixar.setOnEndOfMedia(()->{
 			mpPixar.dispose();
 			new MusicShuffler();
