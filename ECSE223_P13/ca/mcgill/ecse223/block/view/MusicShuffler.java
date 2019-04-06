@@ -29,13 +29,13 @@ public class MusicShuffler {
 		mp.dispose();}
 		Collections.shuffle(gamePlayedMusic);
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
-		mp.setCycleCount(5);
+		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
-		mp.setOnEndOfMedia(new Runnable(){
-			@Override
-			public void run() {
-			playNextPlayedMusic();}
-		});
+//		mp.setOnEndOfMedia(new Runnable(){
+//			@Override
+//			public void run() {
+//			playNextPlayedMusic();}
+//		});
 	}
 	public static void playAdminMusic() {
 		if (mp!=null) {
