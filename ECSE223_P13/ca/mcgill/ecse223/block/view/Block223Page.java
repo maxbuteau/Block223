@@ -266,6 +266,7 @@ public class Block223Page extends Application{
 	
 	public static void setTestingScene(Stage primaryStage) {
 		TestPane testPane = new TestPane(primaryStage);
+		MusicShuffler.playNextPlayedMusic();
 		Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
 		testPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
 
@@ -277,9 +278,6 @@ public class Block223Page extends Application{
 				else if(e.getCode() == KeyCode.SPACE) {
 					TestPane.setInputs(" ");
 					testPane.getCenter().setDisable(true);
-				}
-				else {
-					//We do nothing
 				}
 			}
 		});
@@ -321,6 +319,7 @@ public class Block223Page extends Application{
 
 	public static void logOutAfterGameOver(Stage primaryStage) {
 		Block223Controller.logout();
+		MusicShuffler.playAdminMusic();
 		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
 	}
