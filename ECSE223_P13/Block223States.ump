@@ -127,11 +127,13 @@ class PlayedGame {
 				closest = intersect.get(0);
 			} else {
 				for (int a = 0; a < counter - 1; a++) {
+				if(intersect.size()>1){
 					if (isCloser(intersect.get(a), intersect.get(a + 1))) {
 						closest = intersect.get(a);
 					} else {
 						closest = intersect.get(a + 1);
-					}
+					}}
+					else{break;}
 				}
 			}
 			if (closest != null && getCurrentBallX() + ballDirectionX == closest.getX() && getCurrentBallY() + ballDirectionY == closest.getY()){
