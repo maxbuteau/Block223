@@ -12,6 +12,7 @@ public class MusicShuffler {
 	private static Media selectMusic;
 	//private static ArrayList<Media> adminMusic = new ArrayList<>();
 	private static MediaPlayer mp;
+	private static boolean gameMusicPlaying = false;
 	
 	public MusicShuffler() {
 		//populate the plaulists
@@ -30,6 +31,7 @@ public class MusicShuffler {
 		mp.dispose();}
 		Collections.shuffle(gamePlayedMusic);
 		if(gamePlayedMusic.size()>0) {
+			gameMusicPlaying = true;
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
 		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
@@ -54,6 +56,7 @@ public class MusicShuffler {
 		mp.stop();
 		mp.dispose();}
 		if(selectMusic != null) {
+			gameMusicPlaying = false;
 		mp = new MediaPlayer(selectMusic);
 		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
@@ -81,5 +84,8 @@ public class MusicShuffler {
 	public static void muteMusic() {
 		mp.setMute(true);
 		
+	}
+	public static boolean gameMusicPlaying() {
+		return gameMusicPlaying;
 	}
 }

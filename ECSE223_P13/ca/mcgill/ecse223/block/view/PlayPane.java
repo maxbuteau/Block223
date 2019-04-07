@@ -103,6 +103,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			logout.setDisable(true);
 			started = true;
 			mediaPlayer.stop();
+			if(!MusicShuffler.gameMusicPlaying())
 			MusicShuffler.playNextPlayedMusic();
 			this.setCenter(playArea);
 			// initiating a thread to start the game loop
