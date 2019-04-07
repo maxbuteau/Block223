@@ -87,6 +87,9 @@ private static ChosenBlock chosenBlock;
 	//TEST PAGE
 	private static Scene testScene;
 
+	//ciao gunty
+	private static Media ciaoM = new Media(getResource("ca/mcgill/ecse223/block/view/resources/Ciao.mp3"));
+	private static MediaPlayer ciaoMP = new MediaPlayer(ciaoM);
 	private final static double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private final static double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 50;
 
@@ -98,6 +101,8 @@ private static ChosenBlock chosenBlock;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		ciaoMP.setCycleCount(1);
+		ciaoMP.setVolume(1);
 		mvPixar = new MediaView(mpPixar);
 		Pane p = new Pane();
 		p.getChildren().add(mvPixar);
@@ -253,9 +258,11 @@ private static ChosenBlock chosenBlock;
 
 		gameSelectionLogoutButton = new Button("Logout");
 		gameSelectionLogoutButton.setOnAction(e -> {
+			
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
+			playCiaoGunty();
 		});
 
 		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton,gameSelectionDeleteButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
@@ -368,6 +375,7 @@ private static ChosenBlock chosenBlock;
 		MusicShuffler.playSelectMusic();
 		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
+		playCiaoGunty();
 	}
 
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
@@ -399,6 +407,7 @@ private static ChosenBlock chosenBlock;
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
+			playCiaoGunty();
 		});
 
 		playableGameSelectionSelectButton =  new Button("Select Game");
@@ -512,6 +521,10 @@ private static ChosenBlock chosenBlock;
 		return SCREEN_HEIGHT;
 	}
 
+	public static void playCiaoGunty() {
+		ciaoMP.stop();
+		ciaoMP.play();
+	}
 }
 
 class ChosenBlock {
