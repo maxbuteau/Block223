@@ -30,7 +30,7 @@ public class MusicShuffler {
 		mp.dispose();}
 		Collections.shuffle(gamePlayedMusic);
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
-		mp.setVolume(0.75);
+		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
 //		mp.setOnEndOfMedia(new Runnable(){
@@ -52,7 +52,7 @@ public class MusicShuffler {
 		mp.stop();
 		mp.dispose();}
 		mp = new MediaPlayer(selectMusic);
-		mp.setVolume(0.75);
+		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
 	}
