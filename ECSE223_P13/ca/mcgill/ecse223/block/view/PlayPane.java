@@ -165,7 +165,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			}, 2000);
 		});
 		buttonsBox.getChildren().addAll(startGame,quit, logout);
-		buttonsBox.setPadding(new Insets(0, hofPane.getPrefWidth(), 0, 0));
+		buttonsBox.setPadding(new Insets(0, hofPane.getPrefWidth()*1.15, 0, 0));
 
 		mediaPlayer = new MediaPlayer(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/gameVideo.mp4")));
 		mediaView = new MediaView(mediaPlayer);
