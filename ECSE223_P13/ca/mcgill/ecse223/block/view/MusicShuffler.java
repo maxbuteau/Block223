@@ -16,11 +16,12 @@ public class MusicShuffler {
 	
 	public MusicShuffler() {
 		//populate the plaulists
-//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/EDM1.wav")));
-//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/DL.mp3")));
-//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Chill.wav")));
-//		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/PimPoy.wav")));
 		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/XYOU.mp3")));
+		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/EDM1.wav")));
+		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/DL.mp3")));
+		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Chill.wav")));
+		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/PimPoy.wav")));
+		
 		//adminMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Intro.mp3")));
 		selectMusic=new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Space"));
 	}
@@ -29,13 +30,14 @@ public class MusicShuffler {
 		if (mp!=null) {
 		mp.stop();
 		mp.dispose();}
-		Collections.shuffle(gamePlayedMusic);
+		
 		if(gamePlayedMusic.size()>0) {
 			gameMusicPlaying = true;
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
 		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
+		Collections.shuffle(gamePlayedMusic);
 //		mp.setOnEndOfMedia(new Runnable(){
 //			@Override
 //			public void run() {
