@@ -293,8 +293,15 @@ private static ChosenBlock chosenBlock;
 			
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
-			primaryStage.setScene(loginScene);	
+			primaryStage.setScene(loginScene);
+			MusicShuffler.pauseMusic();
 			playCiaoGunty();
+			new java.util.Timer().schedule(new java.util.TimerTask() {
+				@Override
+				public void run() {
+					MusicShuffler.resumeMusic();
+				}
+			}, 2000);
 		});
 
 		gameSelectionButtonRow.getChildren().addAll(gameSelectionCreateGameButton,gameSelectionDeleteButton, gameSelectionUpdateGameButton, gameSelectionLogoutButton);
@@ -407,7 +414,14 @@ private static ChosenBlock chosenBlock;
 		MusicShuffler.playSelectMusic();
 		primaryStage.setScene(loginScene);
 		primaryStage.setResizable(false);
+		MusicShuffler.pauseMusic();
 		playCiaoGunty();
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+			@Override
+			public void run() {
+				MusicShuffler.resumeMusic();
+			}
+		}, 2000);
 	}
 
 	public static void changeToPlayableGameSelectionScene(Stage primaryStage) {
@@ -438,8 +452,15 @@ private static ChosenBlock chosenBlock;
 			//MusicShuffler.playSelectMusic();
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
-			primaryStage.setScene(loginScene);	
+			primaryStage.setScene(loginScene);
+			MusicShuffler.pauseMusic();
 			playCiaoGunty();
+			new java.util.Timer().schedule(new java.util.TimerTask() {
+				@Override
+				public void run() {
+					MusicShuffler.resumeMusic();
+				}
+			}, 2000);
 		});
 
 		playableGameSelectionSelectButton =  new Button("Select Game");

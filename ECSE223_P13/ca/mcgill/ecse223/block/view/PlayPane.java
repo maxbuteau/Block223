@@ -1,5 +1,8 @@
 package ca.mcgill.ecse223.block.view;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOConstant;
@@ -148,13 +151,19 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		logout.setOnAction(e -> {
 			//MusicShuffler.playAdminMusic();
 			MusicShuffler.playSelectMusic();
+			MusicShuffler.pauseMusic();
 			Block223Page.buttonPressSound();
 			mediaPlayer.stop();
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
 			Block223Page.playCiaoGunty();
+			new java.util.Timer().schedule(new java.util.TimerTask() {
+				@Override
+				public void run() {
+					MusicShuffler.resumeMusic();
+				}
+			}, 2000);
 		});
-		
 		buttonsBox.getChildren().addAll(startGame,quit, logout);
 		buttonsBox.setPadding(new Insets(0, hofPane.getPrefWidth(), 0, 0));
 

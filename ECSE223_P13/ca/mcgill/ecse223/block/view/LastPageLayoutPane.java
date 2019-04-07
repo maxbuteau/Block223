@@ -200,9 +200,16 @@ public class LastPageLayoutPane extends BorderPane {
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
+			MusicShuffler.pauseMusic();
 			Block223Page.playCiaoGunty();
-
+			new java.util.Timer().schedule(new java.util.TimerTask() {
+				@Override
+				public void run() {
+					MusicShuffler.resumeMusic();
+				}
+			}, 2000);
 		});
+
 		helpButton.setOnAction(e->{
 			Block223Page.buttonPressSound();
 			helpStage = new Stage();
