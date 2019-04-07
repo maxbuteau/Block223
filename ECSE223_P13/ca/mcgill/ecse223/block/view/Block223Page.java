@@ -111,7 +111,7 @@ private static ChosenBlock chosenBlock;
 		mvPixar.setPreserveRatio(false);
 		mpPixar.play();
 		Scene x = new Scene(p);
-		primaryStage.initStyle(StageStyle.UNIFIED);
+		//primaryStage.initStyle(StageStyle.UNIFIED);
 		x.setOnKeyPressed(a->{
 			mpPixar.dispose();
 			new MusicShuffler();
