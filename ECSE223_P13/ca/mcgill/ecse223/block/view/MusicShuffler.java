@@ -29,6 +29,7 @@ public class MusicShuffler {
 		mp.stop();
 		mp.dispose();}
 		Collections.shuffle(gamePlayedMusic);
+		if(gamePlayedMusic.size()>0) {
 		mp = new MediaPlayer(gamePlayedMusic.get(0));
 		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
@@ -38,6 +39,7 @@ public class MusicShuffler {
 //			public void run() {
 //			playNextPlayedMusic();}
 //		});
+		}
 	}
 //	public static void playAdminMusic() {
 //		if (mp!=null) {
@@ -51,10 +53,12 @@ public class MusicShuffler {
 		if (mp!=null) {
 		mp.stop();
 		mp.dispose();}
+		if(selectMusic != null) {
 		mp = new MediaPlayer(selectMusic);
 		mp.setVolume(0.6);
 		mp.setCycleCount(Integer.MAX_VALUE);
 		mp.play();
+		}
 	}
 	public static void pauseMusic() {
 		mp.pause();
