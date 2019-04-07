@@ -204,6 +204,7 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 		play = new Button("",pauseimg);
 		mute = new Button("",muteimg);
 		musicContainer.getChildren().addAll(nextSong,mute,play);
+		musicContainer.setPadding(new Insets(20,20,20,20));
 		musicContainer.setAlignment(Pos.CENTER);
 		nextSong.setFocusTraversable(false);
 		play.setFocusTraversable(false);
