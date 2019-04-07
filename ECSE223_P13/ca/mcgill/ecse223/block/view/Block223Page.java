@@ -435,7 +435,7 @@ private static ChosenBlock chosenBlock;
 		//Buttons
 		playableGameSelectionLogoutButton = new Button("Logout");
 		playableGameSelectionLogoutButton.setOnAction(e -> {
-			MusicShuffler.playSelectMusic();
+			//MusicShuffler.playSelectMusic();
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(loginScene);	
