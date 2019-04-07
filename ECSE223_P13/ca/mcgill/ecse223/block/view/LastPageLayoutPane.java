@@ -200,6 +200,7 @@ public class LastPageLayoutPane extends BorderPane {
 			Block223Page.buttonPressSound();
 			Block223Controller.logout();
 			primaryStage.setScene(Block223Page.getLoginScene());
+			Block223Page.playCiaoGunty();
 
 		});
 		helpButton.setOnAction(e->{

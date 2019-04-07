@@ -150,7 +150,8 @@ public class PlayPane extends BorderPane implements Block223PlayModeInterface {
 			Block223Page.buttonPressSound();
 			mediaPlayer.stop();
 			Block223Controller.logout();
-			primaryStage.setScene(Block223Page.getLoginScene());	
+			primaryStage.setScene(Block223Page.getLoginScene());
+			Block223Page.playCiaoGunty();
 		});
 		
 		buttonsBox.getChildren().addAll(startGame,quit, logout);
