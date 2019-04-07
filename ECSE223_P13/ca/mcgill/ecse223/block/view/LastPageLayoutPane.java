@@ -185,7 +185,7 @@ public class LastPageLayoutPane extends BorderPane {
 			Block223Page.buttonPressSound();
 			blockToolboxStage = new Stage();
 			blockToolboxStage.initStyle(StageStyle.UTILITY);
-			helpStage.setTitle("BlockToolbox");
+			blockToolboxStage.setTitle("BlockToolbox");
 			blockToolboxStage.setAlwaysOnTop(true);
 			blockToolboxStage.initOwner(primaryStage);
 			blockToolboxStage.setScene(new Scene(new ToolboxView()));
