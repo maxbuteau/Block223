@@ -110,7 +110,39 @@ private static ChosenBlock chosenBlock;
 		mvPixar.setFitWidth(SCREEN_WIDTH);
 		mvPixar.setPreserveRatio(false);
 		mpPixar.play();
+		Scene x = new Scene(p);
 		primaryStage.initStyle(StageStyle.UNIFIED);
+		x.setOnKeyPressed(a->{
+			mpPixar.dispose();
+			new MusicShuffler();
+			MusicShuffler.playSelectMusic();
+			Image background = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+			ImageView bg = new ImageView(background);
+			bg.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			bg.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			Image background2 = new Image(getResource("ca/mcgill/ecse223/block/view/resources/background.jpg"));
+			ImageView bg2 = new ImageView(background2);
+			bg2.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			bg2.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			primaryStage.setResizable(false);
+
+			//REGISTER SCENE
+
+			RegisterPane registerPane = new RegisterPane(primaryStage);
+			registerPane.setSpacing(20);
+			registerPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+			registerScene = new Scene(registerPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			//LOGIN SCENE
+
+			LoginPane loginPane = new LoginPane(primaryStage, gameSelectionScene);
+			loginPane.setSpacing(20);
+
+			loginPane.setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(SCREEN_WIDTH, SCREEN_HEIGHT, false, false, false, false))));
+			loginScene = new Scene(loginPane, SCREEN_WIDTH, SCREEN_HEIGHT);
+			primaryStage.setScene(loginScene);
+			//primaryStage.initStyle(StageStyle.UTILITY);
+		});
 		mpPixar.setOnEndOfMedia(()->{
 			mpPixar.dispose();
 			new MusicShuffler();
@@ -143,7 +175,7 @@ private static ChosenBlock chosenBlock;
 			//primaryStage.initStyle(StageStyle.UTILITY);
 		});
 		
-		primaryStage.setScene(new Scene(p));
+		primaryStage.setScene(x);
 		primaryStage.show();
 		primaryStage.setTitle("Block223");
 		primaryStage.getIcons().add(new Image("ca/mcgill/ecse223/block/view/resources/logo.jpg"));
