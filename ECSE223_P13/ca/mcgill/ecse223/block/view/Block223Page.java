@@ -41,7 +41,7 @@ private static ChosenBlock chosenBlock;
 	
 //pixar
 	private static MediaView mvPixar;
-	private static Media mPixar = new Media(getResource("ca/mcgill/ecse223/block/view/resources/Pixar.1.mp4"));
+	private static Media mPixar = new Media(getResource("ca/mcgill/ecse223/block/view/resources/Pixa.mp4"));
 	private static MediaPlayer mpPixar = new MediaPlayer(mPixar);
 
 	private static Label gameSelectionError;
