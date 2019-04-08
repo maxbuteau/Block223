@@ -1,6 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 
 import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -155,9 +156,10 @@ public class GameFinishedPane extends VBox {
 		new java.util.Timer().schedule(new java.util.TimerTask() {
 			@Override
 			public void run() {
-				scoreBox.getChildren().remove(alien);
+				Platform.runLater(()->{
+				scoreBox.getChildren().remove(alien);});
 			}
-		}, 2000);
+		}, 6000);
 	
 	}
 	
