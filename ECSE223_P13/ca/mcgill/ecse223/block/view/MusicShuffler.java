@@ -21,6 +21,7 @@ public class MusicShuffler {
 		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/DL.mp3")));
 		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Chill.wav")));
 		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/PimPoy.wav")));
+		gamePlayedMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/CiaoGunterv1[BadBassBoost].mp3")));
 		
 		//adminMusic.add(new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Intro.mp3")));
 		selectMusic=new Media(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/Space"));
