@@ -47,6 +47,8 @@ public class GameFinishedPane extends VBox {
 	private int pLives;
 	private int pScore;
 	
+	private ImageView alien;
+	
 	public GameFinishedPane(Stage primaryStage, int nrOfLives, TOHallOfFameEntry hof) {
 		this.setAlignment(Pos.CENTER);
 			pLives = nrOfLives;
@@ -64,6 +66,7 @@ public class GameFinishedPane extends VBox {
 			imv.setImage(hofImage);
 			imv.setFitWidth(Block223Page.getScreenWidth() / 2);
 			imv.setPreserveRatio(true);
+			alien = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/alienloss.gif")));
 			gameOverBox.getChildren().add(imv);
 		}
 		else {
@@ -74,6 +77,7 @@ public class GameFinishedPane extends VBox {
 			imv.setImage(hofImage);
 			imv.setFitWidth(Block223Page.getScreenWidth() / 2);
 			imv.setPreserveRatio(true);
+			alien = new ImageView(new Image(Block223Page.getResource("ca/mcgill/ecse223/block/view/resources/alienwin.gif")));
 			gameOverBox.getChildren().add(imv);
 		}
 		
@@ -92,7 +96,7 @@ public class GameFinishedPane extends VBox {
 		settingFont(score, Color.WHITE, 32);
 		
 		scoreBox = new HBox(SCORE_GAP);
-		scoreBox.getChildren().addAll(scoreTitleBox, score);
+		scoreBox.getChildren().addAll(scoreTitleBox, score,alien);
 		scoreBox.setAlignment(Pos.CENTER);
 		
 		//Lives Remaining
@@ -148,6 +152,13 @@ public class GameFinishedPane extends VBox {
 		outerBox.getChildren().addAll(gameOverBox, statsAndHofBox, buttonBox);
 		outerBox.setAlignment(Pos.CENTER);
 		this.getChildren().add(outerBox);
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+			@Override
+			public void run() {
+				scoreBox.getChildren().remove(alien);
+			}
+		}, 2000);
+	
 	}
 	
 	private static void settingFont(Text text, Color color, int size) {
